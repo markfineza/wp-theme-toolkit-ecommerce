@@ -1,0 +1,36 @@
+/* Freshtastic Toolkit — courier / pickup fields and order details. Neutral styles; themes may override. */
+.nexora-fulfilment[hidden] { display: none; }
+.nexora-fulfilment { margin: 16px 0 0; display: grid; gap: 14px; }
+.nexora-fulfilment .form-row { margin: 0; }
+.nexora-fulfilment__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.nexora-fulfilment__grid .form-row { width: auto !important; float: none !important; }
+.nexora-fulfilment select { width: 100%; }
+.nexora-fulfilment__steps { margin: 0; padding: 14px 16px 14px 36px; border-radius: 12px; background: var(--nx-surface-2, #f3f4f1); font-size: .9em; line-height: 1.5; }
+.nexora-fulfilment__steps li + li { margin-top: 6px; }
+.nexora-fulfilment__steps strong { display: block; }
+.nexora-fulfilment__muted { display: block; color: var(--nx-muted, #5f6676); font-size: .92em; }
+.nexora-fulfilment__note { margin: 0; color: var(--nx-muted, #5f6676); font-size: .9em; }
+.nexora-fulfilment__place,
+.nexora-fulfilment__location > span { display: grid; gap: 2px; }
+.nexora-fulfilment__place { padding: 14px 16px; border-radius: 12px; background: var(--nx-surface-2, #f3f4f1); }
+.nexora-fulfilment__locations { display: grid; gap: 8px; margin: 0; padding: 0; border: 0; }
+.nexora-fulfilment__locations legend { font-weight: 600; margin-bottom: 6px; }
+.nexora-fulfilment__location { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border: 1px solid var(--nx-border-strong, #d5d8e5); border-radius: 12px; cursor: pointer; }
+.nexora-fulfilment__location:has(input:checked) { border-color: var(--nx-primary, #12306E); box-shadow: inset 0 0 0 1px var(--nx-primary, #12306E); }
+.nexora-fulfilment__location input { margin-top: 4px; }
+.nexora-fulfilment__other { display: none; }
+.nexora-fulfilment:has(#nexora_courier option[value="other"]:checked) .nexora-fulfilment__other { display: block; }
+.nexora-fulfilment__ack label { display: flex !important; gap: 10px; align-items: flex-start; font-weight: 500; }
+.nexora-fulfilment__ack input { margin-top: 4px; flex-shrink: 0; }
+
+/* Pickup: the billing address and "ship to a different address" are not needed. */
+form.checkout:has(.nexora-fulfilment[data-type="pickup"]) :is(#billing_address_1_field, #billing_address_2_field, #billing_city_field, #billing_state_field, #billing_postcode_field, .woocommerce-shipping-fields) { display: none !important; }
+
+/* Order details card (thank-you page, My Account). */
+.nexora-fulfilment-card { margin: 0 0 28px; padding: 20px 22px; border-radius: 14px; border: 1px solid var(--nx-border, #e6e8f0); background: var(--nx-surface, #fff); }
+.nexora-fulfilment-card.is-ready { border-color: var(--nx-primary, #12306E); box-shadow: inset 4px 0 0 var(--nx-primary, #12306E); }
+.nexora-fulfilment-card__title { margin: 0 0 6px; font-size: 1.15em; }
+.nexora-fulfilment-card__status { margin: 0 0 14px; }
+.nexora-fulfilment-card__list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px 24px; margin: 0; }
+.nexora-fulfilment-card__list dt { font-size: .78em; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--nx-muted, #5f6676); }
+.nexora-fulfilment-card__list dd { margin: 2px 0 0; }

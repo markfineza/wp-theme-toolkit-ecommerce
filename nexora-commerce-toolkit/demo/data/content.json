@@ -1,0 +1,106 @@
+{
+	"_notice": "Demo editorial content for the Freshtastic market storefront. Replace before launch.",
+	"posts": [
+		{
+			"key": "fresh-fish",
+			"title": "How to Choose Fresh Fish at the Market",
+			"category": "Market Guides",
+			"image": "post-fresh-fish.jpg",
+			"excerpt": "Clear eyes, red gills, firm flesh: a quick checklist for buying bangus, tilapia and galunggong with confidence.",
+			"content": "<!-- wp:paragraph --><p>Fresh fish should smell like the sea, not \"fishy\". Whether you buy at the palengke or online, these checks help you pick the best of the day's catch.</p><!-- /wp:paragraph --><!-- wp:list --><ul><li><strong>Eyes:</strong> clear and bulging, not cloudy or sunken.</li><li><strong>Gills:</strong> bright red or pink, not brown.</li><li><strong>Flesh:</strong> firm and springs back when pressed.</li><li><strong>Scales:</strong> shiny and tightly attached.</li></ul><!-- /wp:list --><!-- wp:heading --><h2 class=\"wp-block-heading\">Keep it cold</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Cook fresh fish within a day, or clean, pat dry and freeze in portions. Our seafood is packed on ice for delivery (demo).</p><!-- /wp:paragraph --><!-- wp:paragraph {\"fontSize\":\"small\"} --><p class=\"has-small-font-size\"><em>Demo content created by the Freshtastic importer.</em></p><!-- /wp:paragraph -->"
+		},
+		{
+			"key": "rice-varieties",
+			"title": "Dinorado, Jasmine or Sinandomeng? Rice Varieties Explained",
+			"category": "Market Guides",
+			"image": "post-rice-varieties.jpg",
+			"excerpt": "Texture, aroma and price per kilo compared — so you can choose the right rice for your kitchen or business.",
+			"content": "<!-- wp:paragraph --><p>Rice is the biggest item in most Filipino grocery budgets. Here's how three popular varieties compare.</p><!-- /wp:paragraph --><!-- wp:table --><figure class=\"wp-block-table\"><table><thead><tr><th>Variety</th><th>Texture</th><th>Aroma</th><th>Best for</th></tr></thead><tbody><tr><td>Dinorado</td><td>Soft, slightly sticky</td><td>Strong</td><td>Family meals, special occasions</td></tr><tr><td>Jasmine</td><td>Light, fluffy</td><td>Fragrant</td><td>Fried rice, silog</td></tr><tr><td>Sinandomeng</td><td>Soft, everyday</td><td>Mild</td><td>Daily meals, carinderias</td></tr></tbody></table></figure><!-- /wp:table --><!-- wp:paragraph --><p>Buying by the sack lowers the price per kilo. Check the <em>price per kg</em> table on each rice product, and request a quotation for regular bulk deliveries.</p><!-- /wp:paragraph --><!-- wp:paragraph {\"fontSize\":\"small\"} --><p class=\"has-small-font-size\"><em>Prices on this site are illustrative demo prices.</em></p><!-- /wp:paragraph -->"
+		},
+		{
+			"key": "seasonal-vegetables",
+			"title": "A Seasonal Vegetables Guide for Smarter Market Runs",
+			"category": "Market Guides",
+			"image": "post-seasonal-vegetables.jpg",
+			"excerpt": "Why vegetable prices swing week to week, and how buying in season keeps your budget steady.",
+			"content": "<!-- wp:paragraph --><p>Vegetable prices move with weather, harvest cycles and transport. Highland crops like cabbage and carrots often dip after harvest season, while typhoons can push prices up quickly.</p><!-- /wp:paragraph --><!-- wp:list --><ul><li>Watch the price board for items that are trending down.</li><li>Swap ingredients: pechay for cabbage, sayote for upo.</li><li>Buy firm vegetables that keep well — carrots, cabbage, onions — when prices are low.</li></ul><!-- /wp:list --><!-- wp:paragraph {\"fontSize\":\"small\"} --><p class=\"has-small-font-size\"><em>Demo content created by the Freshtastic importer.</em></p><!-- /wp:paragraph -->"
+		},
+		{
+			"key": "bulk-buying",
+			"title": "Bulk Buying for Carinderias and Sari-Sari Stores",
+			"category": "Business Buyers",
+			"image": "post-bulk-buying.jpg",
+			"excerpt": "How to plan weekly supply, compare price per kilo, and use quotation requests for better rates.",
+			"content": "<!-- wp:paragraph --><p>Food businesses buy the same staples every week. Planning ahead lets you negotiate better prices and avoid running out.</p><!-- /wp:paragraph --><!-- wp:list {\"ordered\":true} --><ol><li>List your weekly staples: rice, cooking oil, onions, garlic, eggs, pork.</li><li>Compare the price per kilo or litre across pack sizes.</li><li>Send a quotation request with your quantity and delivery schedule.</li><li>Confirm the quote and set a regular delivery day.</li></ol><!-- /wp:list --><!-- wp:paragraph --><p>Use <a href=\"/request-a-quote/\">Request a Quote</a> for volumes larger than our listed packs.</p><!-- /wp:paragraph -->"
+		},
+		{
+			"key": "price-board",
+			"title": "Reading the Price Board: What the Arrows Mean",
+			"category": "Market Guides",
+			"image": "post-price-board.jpg",
+			"excerpt": "Our price board shows each item's change since its previous price update — here's how to use it.",
+			"content": "<!-- wp:paragraph --><p>Every time we update a product's price, the store records it. The arrow next to a price shows the change since the previous update:</p><!-- /wp:paragraph --><!-- wp:list --><ul><li><strong>▲ green</strong> — price went up since the last update.</li><li><strong>▼ red</strong> — price went down.</li><li>No arrow — no change recorded yet.</li></ul><!-- /wp:list --><!-- wp:paragraph --><p>Prices are our store's selling prices, not official government price monitoring. For bulk volumes, request a quotation.</p><!-- /wp:paragraph -->"
+		}
+	],
+	"pages": [
+		{
+			"key": "about",
+			"slug": "about",
+			"title": "About",
+			"content": "<!-- wp:paragraph {\"fontSize\":\"large\"} --><p class=\"has-large-font-size\">Freshtastic Market is a demo wet and dry market store created to showcase the Freshtastic Food Hub WordPress theme.</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>Replace this page with your own story: where you source, how you keep produce fresh, and who you serve — households, carinderias, sari-sari stores and restaurants.</p><!-- /wp:paragraph --><!-- wp:heading --><h2 class=\"wp-block-heading\">What we stand for</h2><!-- /wp:heading --><!-- wp:list --><ul><li>Honest weights and transparent prices.</li><li>Fresh items packed on the day of delivery.</li><li>Fair quotations for bulk and business buyers.</li></ul><!-- /wp:list -->"
+		},
+		{
+			"key": "request-a-quote",
+			"slug": "request-a-quote",
+			"title": "Request a Quote",
+			"content": "<!-- wp:paragraph --><p>Can't find an item, need it in bulk, or want a regular delivery? Tell us what you need and we'll check supply and send you a quotation — usually within one business day.</p><!-- /wp:paragraph --><!-- wp:shortcode -->[nexora_rfq_form]<!-- /wp:shortcode -->"
+		},
+		{
+			"key": "contact",
+			"slug": "contact",
+			"title": "Contact",
+			"content": "<!-- wp:paragraph --><p><strong>Demo contact details — replace before launch.</strong></p><!-- /wp:paragraph --><!-- wp:list --><ul><li>Email: orders@freshtastic.example</li><li>Phone: +63 900 000 0000 (demo)</li><li>Market hours: daily, 4 AM–8 PM (PHT)</li><li>Address: Stall 12, Sample Public Market, Quezon City (demo)</li></ul><!-- /wp:list -->"
+		},
+		{
+			"key": "shipping-returns",
+			"slug": "shipping-returns",
+			"title": "Delivery and Returns",
+			"content": "<!-- wp:paragraph --><p><strong>Sample policy — review and adapt to your business and to Philippine consumer law (RA 7394) before publishing.</strong></p><!-- /wp:paragraph --><!-- wp:heading --><h2 class=\"wp-block-heading\">Pickup and delivery</h2><!-- /wp:heading --><!-- wp:list --><ul><li><strong>Store pickup:</strong> choose a pickup point and time at checkout. We email you when the order is packed; bring your order number.</li><li><strong>Courier delivery (you book):</strong> choose a pickup time for your rider, then book Lalamove, Grab Express or any courier to collect from our stall. Courier fees are paid by you directly to the courier.</li><li>Fresh meat and seafood are packed cold.</li></ul><!-- /wp:list --><!-- wp:heading --><h2 class=\"wp-block-heading\">Weights and returns</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Items sold per kilo are weighed at packing. If an item is short or not fresh on arrival, message us within 24 hours with a photo for a refund or replacement.</p><!-- /wp:paragraph -->"
+		},
+		{
+			"key": "faq",
+			"slug": "faq",
+			"title": "FAQ",
+			"content": "<!-- wp:details --><details class=\"wp-block-details\"><summary>How are per-kilo items priced?</summary><!-- wp:paragraph --><p>The quantity in your cart is the number of kilos. Natural items vary slightly in weight; any shortfall is refunded.</p><!-- /wp:paragraph --></details><!-- /wp:details --><!-- wp:details --><details class=\"wp-block-details\"><summary>What do the green and red arrows mean?</summary><!-- wp:paragraph --><p>They show the change since that item's previous price update in our store.</p><!-- /wp:paragraph --></details><!-- /wp:details --><!-- wp:details --><details class=\"wp-block-details\"><summary>An item is out of stock. Can you still get it?</summary><!-- wp:paragraph --><p>Yes — use Request a Quote and we will check supply and get back to you.</p><!-- /wp:paragraph --></details><!-- /wp:details --><!-- wp:details --><details class=\"wp-block-details\"><summary>Are these real products?</summary><!-- wp:paragraph --><p>No. This store runs on fictional demo products created to preview the theme.</p><!-- /wp:paragraph --></details><!-- /wp:details -->"
+		},
+		{
+			"key": "terms",
+			"slug": "terms-and-conditions",
+			"title": "Terms and Conditions",
+			"content": "<!-- wp:paragraph --><p><strong>Placeholder terms for the demo store.</strong> Replace with terms prepared for your business, reviewed against Philippine e-commerce rules (RA 8792, RA 7394 and the Data Privacy Act, RA 10173).</p><!-- /wp:paragraph -->"
+		},
+		{
+			"key": "wishlist",
+			"slug": "wishlist",
+			"title": "Wishlist",
+			"content": "<!-- wp:shortcode -->[nexora_wishlist]<!-- /wp:shortcode -->"
+		},
+		{
+			"key": "journal",
+			"slug": "journal",
+			"title": "Market Journal",
+			"content": ""
+		},
+		{
+			"key": "home",
+			"slug": "home",
+			"title": "Home",
+			"content": ""
+		}
+	],
+	"testimonials": [
+		{ "name": "Sample buyer — carinderia owner, Quezon City", "role": "Demo testimonial", "rating": 5, "quote": "Placeholder testimonial: weekly rice and pork deliveries arrive on time and the weights are honest. Replace with a genuine customer quote, shared with permission." },
+		{ "name": "Sample buyer — sari-sari store, Cavite", "role": "Demo testimonial", "rating": 5, "quote": "Placeholder testimonial: the quotation for sugar and cooking oil by the sack was clear and fair." },
+		{ "name": "Sample buyer — home cook, Pasig", "role": "Demo testimonial", "rating": 4, "quote": "Placeholder testimonial: fresh bangus and vegetables, well packed on ice. Use real, verifiable feedback on a live store." }
+	]
+}

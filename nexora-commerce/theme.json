@@ -1,0 +1,50 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": true,
+		"useRootPaddingAwareAlignments": false,
+		"layout": { "contentSize": "760px", "wideSize": "1240px" },
+		"color": {
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"palette": [
+				{ "slug": "primary", "name": "Freshtastic navy", "color": "#12306E" },
+				{ "slug": "secondary", "name": "Freshtastic orange", "color": "#F0762B" },
+				{ "slug": "text", "name": "Main text", "color": "#0B1220" },
+				{ "slug": "background", "name": "Background", "color": "#F6F7F3" },
+				{ "slug": "surface", "name": "Surface", "color": "#FFFFFF" },
+				{ "slug": "dark", "name": "Terminal", "color": "#0E1626" },
+				{ "slug": "muted", "name": "Muted text", "color": "#5F6676" },
+				{ "slug": "border", "name": "Border", "color": "#E6E8F0" },
+				{ "slug": "up", "name": "Price up", "color": "#15803D" },
+				{ "slug": "sale", "name": "Price down / sale", "color": "#DC2626" }
+			],
+			"gradients": [
+				{ "slug": "market", "name": "Market", "gradient": "linear-gradient(120deg, #12306E 0%, #F0762B 100%)" },
+				{ "slug": "terminal", "name": "Terminal", "gradient": "radial-gradient(80% 80% at 80% 10%, #14532D 0%, #0E1626 70%)" }
+			]
+		},
+		"typography": {
+			"fluid": true,
+			"fontFamilies": [
+				{ "slug": "heading", "name": "Manrope", "fontFamily": "\"Manrope\", \"Inter\", ui-sans-serif, system-ui, sans-serif" },
+				{ "slug": "body", "name": "Inter", "fontFamily": "\"Inter\", ui-sans-serif, system-ui, sans-serif" }
+			],
+			"fontSizes": [
+				{ "slug": "small", "name": "Small", "size": "0.875rem", "fluid": false },
+				{ "slug": "medium", "name": "Medium", "size": "1.0625rem", "fluid": false },
+				{ "slug": "large", "name": "Large", "size": "1.5rem", "fluid": { "min": "1.25rem", "max": "1.5rem" } },
+				{ "slug": "x-large", "name": "Extra large", "size": "2.25rem", "fluid": { "min": "1.6rem", "max": "2.25rem" } },
+				{ "slug": "huge", "name": "Huge", "size": "3.5rem", "fluid": { "min": "2.4rem", "max": "3.5rem" } }
+			]
+		},
+		"spacing": { "units": [ "px", "rem", "%", "vw" ] },
+		"border": { "radius": true }
+	},
+	"styles": {
+		"elements": {
+			"button": { "border": { "radius": "999px" }, "color": { "background": "var(--wp--preset--color--dark)", "text": "#ffffff" } }
+		}
+	}
+}

@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Freshtastic Order Desk — modern skin for WooCommerce order screens (HPOS and legacy)
+   Scoped to body.nx-orders (order screens) and body.nx-desk (order-only staff).
+   ========================================================================== */
+
+.nx-orders, .nx-desk {
+	--nxd-bg: #F3F5F8;
+	--nxd-surface: #FFFFFF;
+	--nxd-ink: #0F172A;
+	--nxd-muted: #5B6475;
+	--nxd-border: #E3E7EE;
+	--nxd-border-strong: #CDD3DE;
+	--nxd-primary: #12306E;
+	--nxd-primary-ink: #0C2250;
+	--nxd-primary-soft: #E6ECF8;
+	--nxd-amber-soft: #FFF3DB;
+	--nxd-amber-ink: #8A4B00;
+	--nxd-blue-soft: #E6EFFD;
+	--nxd-blue-ink: #1D4ED8;
+	--nxd-red-soft: #FDE8EA;
+	--nxd-red-ink: #B3173B;
+	--nxd-violet-soft: #EFE9FE;
+	--nxd-violet-ink: #5B21B6;
+	--nxd-radius: 12px;
+	--nxd-shadow: 0 1px 2px rgba(15, 23, 42, .05), 0 1px 3px rgba(15, 23, 42, .04);
+	--nxd-font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Page ------------------------------------------------------------------- */
+.nx-orders #wpcontent, .nx-orders #wpbody-content { background: var(--nxd-bg); }
+.nx-orders #wpbody-content { font-family: var(--nxd-font); color: var(--nxd-ink); }
+.nx-orders .wrap { margin: 20px 24px 0 4px; }
+.nx-orders .wrap h1.wp-heading-inline { font-size: 26px; font-weight: 700; letter-spacing: -.02em; color: var(--nxd-ink); padding: 6px 0 10px; margin-right: 12px; }
+.nx-orders .wrap .page-title-action { top: -4px; padding: 6px 14px; border-radius: 8px; border: 0; background: var(--nxd-primary); color: #fff; font-weight: 600; box-shadow: var(--nxd-shadow); }
+.nx-orders .wrap .page-title-action:hover, .nx-orders .wrap .page-title-action:focus { background: var(--nxd-primary-ink); color: #fff; }
+.nx-orders .wp-header-end { margin-bottom: 4px; }
+.nx-orders .notice { border-radius: 10px; box-shadow: var(--nxd-shadow); }
+
+/* WooCommerce admin header bar. */
+.nx-orders .woocommerce-layout__header { background: var(--nxd-surface); border-bottom: 1px solid var(--nxd-border); box-shadow: none; }
+.nx-orders .woocommerce-layout__header-heading { font-weight: 650; }
+
+/* KPI strip ---------------------------------------------------------------- */
+.nx-kpis { margin: 8px 0 18px; }
+.nx-kpis__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 10px; }
+.nx-kpis__greet { margin: 0; font-size: 15px; font-weight: 600; color: var(--nxd-ink); }
+.nx-kpis__date { margin: 0; color: var(--nxd-muted); font-size: 13px; }
+.nx-kpis__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.nx-kpi { margin: 0; }
+.nx-kpi > a { display: grid; gap: 2px; height: 100%; box-sizing: border-box; padding: 14px 16px; border-radius: var(--nxd-radius); background: var(--nxd-surface); border: 1px solid var(--nxd-border); box-shadow: var(--nxd-shadow); text-decoration: none; color: var(--nxd-ink); position: relative; overflow: hidden; transition: border-color .15s, transform .15s; }
+.nx-kpi:not(:has(a)) { display: grid; gap: 2px; padding: 14px 16px; border-radius: var(--nxd-radius); background: var(--nxd-surface); border: 1px solid var(--nxd-border); box-shadow: var(--nxd-shadow); }
+.nx-kpi > a::before, .nx-kpi:not(:has(a))::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--nxd-border-strong); }
+.nx-kpi:not(:has(a)) { position: relative; overflow: hidden; }
+.nx-kpi > a:hover { border-color: var(--nxd-border-strong); transform: translateY(-1px); }
+.nx-kpi > a:focus { box-shadow: 0 0 0 2px var(--nxd-primary); outline: none; }
+.nx-kpi__label { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--nxd-muted); }
+.nx-kpi__value { font-size: 26px; line-height: 1.2; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.nx-kpi__hint { font-size: 12px; color: var(--nxd-muted); }
+.nx-kpi.is-primary > a::before { background: var(--nxd-blue-ink); }
+.nx-kpi.is-ready > a::before { background: var(--nxd-primary); }
+.nx-kpi.is-due > a::before { background: var(--nxd-violet-ink); }
+.nx-kpi.is-warn > a::before { background: #D97706; }
+.nx-kpi.is-money::before { background: var(--nxd-primary); }
+
+/* Status views (segmented tabs) ----------------------------------------- */
+.nx-orders--list .subsubsub { display: flex; flex-wrap: wrap; gap: 4px; float: none; margin: 4px 0 12px; padding: 4px; border-radius: 10px; background: #E8ECF2; width: fit-content; max-width: 100%; font-size: 13px; }
+.nx-orders--list .subsubsub li { margin: 0; color: transparent; font-size: 0; }
+.nx-orders--list .subsubsub li a { display: inline-block; padding: 6px 12px; border-radius: 7px; color: var(--nxd-muted); font-size: 13px; font-weight: 550; text-decoration: none; }
+.nx-orders--list .subsubsub li a:hover { color: var(--nxd-ink); background: rgba(255, 255, 255, .6); }
+.nx-orders--list .subsubsub li a.current { background: var(--nxd-surface); color: var(--nxd-ink); box-shadow: var(--nxd-shadow); }
+.nx-orders--list .subsubsub .count { color: var(--nxd-muted); font-weight: 500; }
+
+/* Toolbar --------------------------------------------------------------- */
+.nx-orders .search-box input[type="search"] { min-width: 260px; min-height: 36px; padding: 0 12px; border-radius: 8px; border-color: var(--nxd-border-strong); }
+.nx-orders .tablenav { height: auto; margin: 8px 0 10px; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.nx-orders .tablenav .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 0; float: none; overflow: visible; }
+.nx-orders .tablenav .tablenav-pages { margin: 0 0 0 auto; float: none; }
+.nx-orders .tablenav br.clear { display: none; }
+.nx-orders .tablenav select, .nx-orders .tablenav input[type="text"], .nx-orders .tablenav .select2-container .select2-selection { min-height: 36px; border-radius: 8px; border-color: var(--nxd-border-strong); margin: 0; }
+.nx-orders .tablenav .select2-container { margin: 0 !important; }
+.nx-orders .button, .nx-orders .button-secondary { border-radius: 8px; border-color: var(--nxd-border-strong); color: var(--nxd-ink); background: var(--nxd-surface); min-height: 34px; font-weight: 550; }
+.nx-orders .button:hover { border-color: #9AA3B2; background: #F8FAFC; color: var(--nxd-ink); }
+.nx-orders .button-primary { background: var(--nxd-primary); border-color: var(--nxd-primary); color: #fff; }
+.nx-orders .button-primary:hover, .nx-orders .button-primary:focus { background: var(--nxd-primary-ink); border-color: var(--nxd-primary-ink); color: #fff; }
+
+/* Table ----------------------------------------------------------------- */
+.nx-orders .wp-list-table { border: 1px solid var(--nxd-border); border-radius: var(--nxd-radius); overflow: hidden; box-shadow: var(--nxd-shadow); border-collapse: separate; border-spacing: 0; background: var(--nxd-surface); }
+.nx-orders .wp-list-table thead th, .nx-orders .wp-list-table thead td, .nx-orders .wp-list-table tfoot th, .nx-orders .wp-list-table tfoot td { background: #F8FAFC; border-color: var(--nxd-border); font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--nxd-muted); padding-top: 10px; padding-bottom: 10px; }
+.nx-orders .wp-list-table thead th a, .nx-orders .wp-list-table tfoot th a { color: var(--nxd-muted); }
+.nx-orders .wp-list-table tbody tr { background: var(--nxd-surface); }
+.nx-orders .wp-list-table.striped > tbody > :nth-child(odd) { background: var(--nxd-surface); }
+.nx-orders .wp-list-table tbody tr td, .nx-orders .wp-list-table tbody tr th { border-top: 1px solid #EEF1F5; padding-top: 12px; padding-bottom: 12px; vertical-align: middle; }
+.nx-orders .wp-list-table tbody tr:hover { background: #F7FAFF; }
+.nx-orders .wp-list-table tbody tr.type-shop_order td, .nx-orders .wp-list-table tbody tr td { color: var(--nxd-ink); }
+.nx-orders .wp-list-table .column-order_number .order-view { font-weight: 650; color: var(--nxd-ink); }
+.nx-orders .wp-list-table .column-order_number .order-view:hover { color: var(--nxd-primary); }
+.nx-orders .wp-list-table .column-order_total { font-variant-numeric: tabular-nums; font-weight: 600; }
+.nx-orders .wp-list-table .column-order_date, .nx-orders .wp-list-table .column-billing_address, .nx-orders .wp-list-table .column-shipping_address { color: var(--nxd-muted); }
+.nx-orders .wp-list-table .column-nx_fulfilment { width: 24ch; }
+.nx-orders .wp-list-table .order-preview { border-radius: 6px; }
+
+/* Status pills ------------------------------------------------------------ */
+.nx-orders .order-status, .nx-orders mark.order-status { display: inline-flex; align-items: center; gap: 6px; padding: 0 10px; border-radius: 999px; line-height: 24px; font-size: 12px; font-weight: 600; background: #EEF1F5; color: #475569; border: 0; }
+.nx-orders .order-status span { margin: 0; }
+.nx-orders .order-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.nx-orders .order-status.status-processing { background: var(--nxd-blue-soft); color: var(--nxd-blue-ink); }
+.nx-orders .order-status.status-nx-ready { background: var(--nxd-primary-soft); color: var(--nxd-primary-ink); }
+.nx-orders .order-status.status-completed { background: #E9EEF5; color: #334155; }
+.nx-orders .order-status.status-on-hold { background: var(--nxd-amber-soft); color: var(--nxd-amber-ink); }
+.nx-orders .order-status.status-pending { background: #F1F5F9; color: #475569; }
+.nx-orders .order-status.status-failed, .nx-orders .order-status.status-cancelled, .nx-orders .order-status.status-refunded { background: var(--nxd-red-soft); color: var(--nxd-red-ink); }
+
+/* Fulfilment column / badge -------------------------------------------- */
+.nx-ful { display: grid; gap: 2px; justify-items: start; font-size: 12.5px; }
+.nx-ful__badge { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .02em; text-transform: uppercase; }
+.nx-ful--pickup .nx-ful__badge { background: var(--nxd-violet-soft); color: var(--nxd-violet-ink); }
+.nx-ful--courier .nx-ful__badge { background: var(--nxd-amber-soft); color: var(--nxd-amber-ink); }
+.nx-ful__when { font-weight: 600; color: var(--nxd-ink); }
+.nx-ful__meta, .nx-ful--other, .nx-ful--none { color: var(--nxd-muted); }
+.nx-ful.is-overdue .nx-ful__when { color: var(--nxd-red-ink); }
+
+/* Row action buttons ----------------------------------------------------- */
+.nx-orders .wc-action-button { border-radius: 8px !important; }
+.nx-orders .wc-action-button-nx-ready::after { font-family: Dashicons !important; content: "\f513" !important; }
+.nx-orders .wc-action-button-nx-ready { color: var(--nxd-primary) !important; }
+
+/* Edit order ------------------------------------------------------------- */
+.nx-orders--edit #poststuff .postbox, .nx-orders--edit #order_data { border: 1px solid var(--nxd-border); border-radius: var(--nxd-radius); box-shadow: var(--nxd-shadow); overflow: hidden; background: var(--nxd-surface); }
+.nx-orders--edit #poststuff .postbox-header { border-bottom-color: var(--nxd-border); background: #FBFCFE; }
+.nx-orders--edit #poststuff .postbox-header h2, .nx-orders--edit #poststuff .postbox .hndle { font-size: 13px; font-weight: 650; letter-spacing: .01em; }
+.nx-orders--edit #order_data { padding: 22px 24px; }
+.nx-orders--edit #order_data h2 { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+.nx-orders--edit #order_data p.order_number { color: var(--nxd-muted); }
+.nx-orders--edit #order_data h3 { font-size: 13px; font-weight: 650; text-transform: uppercase; letter-spacing: .04em; color: var(--nxd-muted); }
+.nx-orders--edit #order_data .order_data_column { padding-right: 2%; }
+.nx-orders--edit #order_data .order_data_column .form-field input, .nx-orders--edit #order_data .order_data_column .form-field select, .nx-orders--edit #order_data .select2-container .select2-selection { border-radius: 8px; border-color: var(--nxd-border-strong); min-height: 34px; }
+.nx-orders--edit #woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items thead th { background: #F8FAFC; font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--nxd-muted); }
+.nx-orders--edit #woocommerce-order-items .wc-order-totals .total { font-variant-numeric: tabular-nums; }
+.nx-orders--edit #woocommerce-order-items .wc-order-data-row { background: #FBFCFE; }
+.nx-orders--edit .order_actions li { border-color: var(--nxd-border); }
+.nx-orders--edit ul.order_notes li .note_content { border-radius: 10px; background: #F1F5F9; }
+.nx-orders--edit ul.order_notes li.customer-note .note_content { background: var(--nxd-blue-soft); }
+.nx-orders--edit ul.order_notes li.system-note .note_content { background: #F5F3FF; }
+.nx-orders--edit ul.order_notes li .note_content::after { display: none; }
+
+/* Progress bar on the edit screen. */
+.nx-progress { display: flex; flex-wrap: wrap; gap: 0; margin: 4px 0 16px; padding: 14px 18px; list-style: none; border-radius: var(--nxd-radius); background: var(--nxd-surface); border: 1px solid var(--nxd-border); box-shadow: var(--nxd-shadow); font-family: var(--nxd-font); }
+.nx-progress li { flex: 1 1 140px; display: grid; grid-template-columns: 14px 1fr; column-gap: 10px; align-items: start; margin: 0; position: relative; padding-right: 16px; }
+.nx-progress li:not(:last-child)::after { content: ""; position: absolute; top: 10px; left: 30px; right: 8px; height: 2px; background: var(--nxd-border); z-index: 0; }
+.nx-progress li.is-done:not(:last-child)::after { background: var(--nxd-primary); }
+.nx-progress__dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--nxd-border-strong); background: var(--nxd-surface); box-sizing: border-box; position: relative; z-index: 1; margin-top: 3px; }
+.nx-progress li.is-done .nx-progress__dot { background: var(--nxd-primary); border-color: var(--nxd-primary); }
+.nx-progress__label { font-weight: 650; font-size: 13px; color: var(--nxd-ink); background: var(--nxd-surface); position: relative; z-index: 1; padding-right: 8px; width: fit-content; }
+.nx-progress li:not(.is-done) .nx-progress__label { color: var(--nxd-muted); font-weight: 550; }
+.nx-progress__time { grid-column: 2; font-size: 12px; color: var(--nxd-muted); }
+.nx-progress.is-stopped li.is-stopped .nx-progress__dot { background: var(--nxd-red-ink); border-color: var(--nxd-red-ink); }
+.nx-progress li.is-stopped .nx-progress__label { color: var(--nxd-red-ink); }
+
+/* Fulfilment box. */
+.nx-box__type { margin: 4px 0 10px; }
+.nx-box__list { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; margin: 0 0 10px; }
+.nx-box__list dt { color: var(--nxd-muted); font-size: 12px; }
+.nx-box__list dd { margin: 0; font-weight: 600; }
+.nx-box__edit summary { cursor: pointer; color: var(--nxd-primary-ink); font-weight: 600; }
+.nx-box__edit p { margin: 8px 0; }
+.nx-box__edit label { display: block; font-size: 12px; color: var(--nxd-muted); margin-bottom: 2px; }
+.nx-box__edit input { width: 100%; border-radius: 8px; }
+.nx-box-empty { color: var(--nxd-muted); }
+
+/* Order preview modal. */
+.nx-orders .wc-backbone-modal-content { border-radius: 14px; overflow: hidden; }
+.nx-orders .wc-backbone-modal-main header h1 { font-weight: 700; }
+
+/* ==========================================================================
+   Desk mode: order-only staff get a branded, focused admin
+   ========================================================================== */
+.nx-desk #adminmenuback, .nx-desk #adminmenuwrap, .nx-desk #adminmenu { background: #0A1A40; }
+.nx-desk #adminmenu a { color: #CBD5E1; }
+.nx-desk #adminmenu div.wp-menu-image::before { color: #94A3B8; }
+.nx-desk #adminmenu li.menu-top:hover, .nx-desk #adminmenu li.opensub > a.menu-top, .nx-desk #adminmenu li > a.menu-top:focus { background: #111B2E; color: #fff; }
+.nx-desk #adminmenu .wp-has-current-submenu .wp-submenu, .nx-desk #adminmenu .wp-submenu { background: #0F1A2C; }
+.nx-desk #adminmenu .wp-submenu a { color: #A9B4C6; }
+.nx-desk #adminmenu .wp-submenu a:hover, .nx-desk #adminmenu .wp-submenu li.current a { color: #fff; }
+.nx-desk #adminmenu li.wp-has-current-submenu a.wp-has-current-submenu, .nx-desk #adminmenu li.current a.menu-top { background: #F0762B; color: #0A1A40; }
+.nx-desk #adminmenu li.wp-has-current-submenu div.wp-menu-image::before { color: #0A1A40; }
+.nx-desk #adminmenu .wp-menu-arrow, .nx-desk #adminmenu .wp-menu-arrow div { display: none; }
+.nx-desk #collapse-button { color: #94A3B8; }
+.nx-desk #wpadminbar { background: #0A1A40; }
+.nx-desk #wpadminbar .nx-desk-node > .ab-item { background: #F0762B !important; color: #0A1A40 !important; font-weight: 700; letter-spacing: .02em; }
+.nx-desk #wpfooter { color: var(--nxd-muted); }
+.nx-desk .woocommerce-layout__header .woocommerce-layout__activity-panel { display: none; }

@@ -1,0 +1,20 @@
+/*
+Theme Name: Freshtastic Food Hub
+Theme URI: https://example.com/nexora-commerce
+Author: Freshtastic Food Hub Team
+Author URI: https://example.com
+Description: A wet and dry market WooCommerce theme with a trading-floor design: live price ticker, market board, price board with real price changes, units and origins, price-per-kg comparisons and request-for-quotation for items that are missing, out of stock or needed in bulk. Includes live search, AJAX filters, mini-cart drawer, sticky add-to-cart and a Customizer-driven homepage. Pair it with the Freshtastic Food Hub Toolkit plugin.
+Version: 2.2.0
+Requires at least: 6.5
+Tested up to: 7.1
+Requires PHP: 7.4
+WC requires at least: 8.5
+WC tested up to: 11.2
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: nexora-commerce
+Domain Path: /languages
+Tags: e-commerce, custom-logo, custom-menu, featured-images, footer-widgets, theme-options, translation-ready, wide-blocks, block-styles, accessibility-ready, two-columns, right-sidebar
+*/
+
+/* Styles live in assets/css/. This file only carries the theme header. */

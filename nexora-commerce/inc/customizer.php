@@ -1,0 +1,432 @@
+<?php
+/**
+ * Customizer settings. Every theme option is declared once in nexora_settings_schema()
+ * and read through nexora_option().
+ *
+ * @package NexoraCommerce
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Homepage section keys and labels, in default order.
+ *
+ * @return array<string,string>
+ */
+function nexora_home_sections() {
+	return apply_filters(
+		'nexora_home_sections',
+		array(
+			'hero'         => __( 'Hero and market board', 'nexora-commerce' ),
+			'categories'   => __( 'Market sections (categories)', 'nexora-commerce' ),
+			'price_board'  => __( 'Price board', 'nexora-commerce' ),
+			'featured'     => __( 'Featured products', 'nexora-commerce' ),
+			'trending'     => __( 'Trending now', 'nexora-commerce' ),
+			'campaign'     => __( 'Campaign banner', 'nexora-commerce' ),
+			'rfq_banner'   => __( 'Request a quotation banner', 'nexora-commerce' ),
+			'new_arrivals' => __( 'New arrivals', 'nexora-commerce' ),
+			'best_sellers' => __( 'Best sellers', 'nexora-commerce' ),
+			'benefits'     => __( 'Brand benefits', 'nexora-commerce' ),
+			'discovery'    => __( 'Personalized discovery', 'nexora-commerce' ),
+			'social_proof' => __( 'Reviews and testimonials', 'nexora-commerce' ),
+			'newsletter'   => __( 'Newsletter', 'nexora-commerce' ),
+			'editorial'    => __( 'Editorial / journal', 'nexora-commerce' ),
+			'page_content' => __( 'Front page editor content', 'nexora-commerce' ),
+			'final_cta'    => __( 'Final conversion banner', 'nexora-commerce' ),
+		)
+	);
+}
+
+/**
+ * Declarative schema: id => [ section, type, default, label, (description), (choices) ].
+ *
+ * @return array
+ */
+function nexora_settings_schema() {
+	static $schema = null;
+	if ( null !== $schema ) {
+		return $schema;
+	}
+
+	$benefits = array(
+		1 => array( 'leaf', __( 'Sourced from farms and ports', 'nexora-commerce' ), __( 'Produce from Benguet to Davao and fish from Navotas to Dagupan (demo sourcing).', 'nexora-commerce' ) ),
+		2 => array( 'snow', __( 'Cold-chain packing', 'nexora-commerce' ), __( 'Meat, poultry and seafood are packed cold for pickup or your rider.', 'nexora-commerce' ) ),
+		3 => array( 'scale', __( 'Honest weights', 'nexora-commerce' ), __( 'Per-kilo items are weighed at packing; short weights are refunded.', 'nexora-commerce' ) ),
+		4 => array( 'clipboard', __( 'Bulk quotations', 'nexora-commerce' ), __( 'Carinderias, stores and restaurants get quotes for volume and regular orders.', 'nexora-commerce' ) ),
+	);
+
+	$schema = array(
+		// Brand.
+		'color_primary'       => array( 'nexora_brand', 'color', '#12306E', __( 'Primary accent', 'nexora-commerce' ) ),
+		'color_secondary'     => array( 'nexora_brand', 'color', '#F0762B', __( 'Secondary accent', 'nexora-commerce' ) ),
+		'color_text'          => array( 'nexora_brand', 'color', '#0F1B3D', __( 'Main text', 'nexora-commerce' ) ),
+		'color_bg'            => array( 'nexora_brand', 'color', '#F5F7FB', __( 'Page background', 'nexora-commerce' ) ),
+		'color_dark'          => array( 'nexora_brand', 'color', '#0A1A40', __( 'Dark sections', 'nexora-commerce' ) ),
+		'color_sale'          => array( 'nexora_brand', 'color', '#DC2626', __( 'Sale accent', 'nexora-commerce' ) ),
+		'font_heading'        => array( 'nexora_brand', 'select', 'inter', __( 'Heading font', 'nexora-commerce' ), '', array( 'manrope' => 'Manrope', 'inter' => 'Inter', 'system' => __( 'System UI', 'nexora-commerce' ) ) ),
+		'font_body'           => array( 'nexora_brand', 'select', 'inter', __( 'Body font', 'nexora-commerce' ), '', array( 'inter' => 'Inter', 'manrope' => 'Manrope', 'system' => __( 'System UI', 'nexora-commerce' ) ) ),
+		'radius'              => array( 'nexora_brand', 'number', 14, __( 'Corner radius (px)', 'nexora-commerce' ) ),
+
+		// Announcement bar.
+		'announcement_enabled'     => array( 'nexora_announcement', 'checkbox', true, __( 'Show announcement bar', 'nexora-commerce' ) ),
+		'announcement_text'        => array( 'nexora_announcement', 'text', __( 'Order online, then pick up at the market or book your own rider · Choose your time at checkout', 'nexora-commerce' ), __( 'Message', 'nexora-commerce' ) ),
+		'announcement_link_label'  => array( 'nexora_announcement', 'text', __( "Today's deals", 'nexora-commerce' ), __( 'Link label', 'nexora-commerce' ) ),
+		'announcement_link_url'    => array( 'nexora_announcement', 'url', '', __( 'Link URL', 'nexora-commerce' ), __( 'Leave empty to link to the shop’s on-sale filter.', 'nexora-commerce' ) ),
+		'announcement_countdown'   => array( 'nexora_announcement', 'datetime', '', __( 'Countdown ends (site time)', 'nexora-commerce' ), __( 'Optional. Use only for a real promotion deadline. The countdown and bar hide automatically once it passes.', 'nexora-commerce' ) ),
+		'announcement_dismissible' => array( 'nexora_announcement', 'checkbox', true, __( 'Visitors can dismiss the bar', 'nexora-commerce' ) ),
+
+		// Header.
+		'header_sticky'       => array( 'nexora_header', 'checkbox', true, __( 'Sticky header', 'nexora-commerce' ) ),
+		'header_transparent'  => array( 'nexora_header', 'checkbox', false, __( 'Transparent header over the homepage hero', 'nexora-commerce' ) ),
+		'header_search'       => array( 'nexora_header', 'checkbox', true, __( 'Show product search', 'nexora-commerce' ) ),
+		'header_mega_menu'    => array( 'nexora_header', 'checkbox', true, __( 'Show category mega menu', 'nexora-commerce' ) ),
+		'header_rfq'          => array( 'nexora_header', 'checkbox', true, __( 'Show “Request a Quote” button', 'nexora-commerce' ) ),
+		'ticker_enabled'      => array( 'nexora_header', 'checkbox', true, __( 'Show price ticker under the header', 'nexora-commerce' ), __( 'Lists products whose price changed most recently (real price history recorded by the Freshtastic Food Hub Toolkit).', 'nexora-commerce' ) ),
+		'ticker_limit'        => array( 'nexora_header', 'number', 14, __( 'Ticker: number of items', 'nexora-commerce' ) ),
+		'market_open'         => array( 'nexora_header', 'text', '04:00', __( 'Market opens (24h, site time)', 'nexora-commerce' ), __( 'Shown as a live “Market open / closed” status. Leave empty to hide.', 'nexora-commerce' ) ),
+		'market_close'        => array( 'nexora_header', 'text', '20:00', __( 'Market closes (24h, site time)', 'nexora-commerce' ) ),
+
+		// Homepage: layout.
+		'home_layout'         => array( 'nexora_home_layout', 'sections', 'hero,categories,price_board,featured,campaign,rfq_banner,new_arrivals,best_sellers,benefits,discovery,social_proof,newsletter,editorial,-trending,page_content,final_cta', __( 'Sections and order', 'nexora-commerce' ), __( 'Tick to show a section; use the arrows to reorder.', 'nexora-commerce' ) ),
+
+		// Homepage: hero.
+		'hero_badge'          => array( 'nexora_home_hero', 'text', __( 'Meat, fish, vegetables, frozen goods and more', 'nexora-commerce' ), __( 'Badge', 'nexora-commerce' ) ),
+		'hero_title'          => array( 'nexora_home_hero', 'text', __( 'Fresh market prices, live.', 'nexora-commerce' ), __( 'Headline', 'nexora-commerce' ) ),
+		'hero_text'           => array( 'nexora_home_hero', 'textarea', __( 'Rice by the sack, vegetables by the kilo, meat and seafood packed cold — with transparent prices you can track like a trading board.', 'nexora-commerce' ), __( 'Supporting copy', 'nexora-commerce' ) ),
+		'hero_cta1_label'     => array( 'nexora_home_hero', 'text', __( 'Shop the market', 'nexora-commerce' ), __( 'Primary button label', 'nexora-commerce' ) ),
+		'hero_cta1_url'       => array( 'nexora_home_hero', 'url', '', __( 'Primary button URL', 'nexora-commerce' ), __( 'Defaults to the shop page.', 'nexora-commerce' ) ),
+		'hero_cta2_label'     => array( 'nexora_home_hero', 'text', __( 'Request a quote', 'nexora-commerce' ), __( 'Secondary button label', 'nexora-commerce' ) ),
+		'hero_cta2_url'       => array( 'nexora_home_hero', 'url', '', __( 'Secondary button URL', 'nexora-commerce' ), __( 'Defaults to the Request a Quote page (or the shop sorted by newest).', 'nexora-commerce' ) ),
+		'hero_board_title'    => array( 'nexora_home_hero', 'text', __( "Today's movers", 'nexora-commerce' ), __( 'Market board title', 'nexora-commerce' ) ),
+		'hero_image'          => array( 'nexora_home_hero', 'image', 0, __( 'Hero image', 'nexora-commerce' ) ),
+		'hero_product'        => array( 'nexora_home_hero', 'number', 0, __( 'Feature card product ID', 'nexora-commerce' ), __( 'Optional. Defaults to the first featured product; set -1 to hide the card.', 'nexora-commerce' ) ),
+
+		// Homepage: product sections.
+		'price_board_title'   => array( 'nexora_home_products', 'text', __( "Today's price board", 'nexora-commerce' ), __( 'Price board: title', 'nexora-commerce' ) ),
+		'price_board_limit'   => array( 'nexora_home_products', 'number', 14, __( 'Price board: number of items', 'nexora-commerce' ) ),
+		'categories_title'    => array( 'nexora_home_products', 'text', __( 'Market sections', 'nexora-commerce' ), __( 'Categories: title', 'nexora-commerce' ) ),
+		'home_categories'     => array( 'nexora_home_products', 'text', '', __( 'Categories: slugs to show', 'nexora-commerce' ), __( 'Comma-separated product category slugs. Empty shows top-level categories.', 'nexora-commerce' ) ),
+		'featured_title'      => array( 'nexora_home_products', 'text', __( "Today's picks", 'nexora-commerce' ), __( 'Featured: title', 'nexora-commerce' ) ),
+		'featured_limit'      => array( 'nexora_home_products', 'number', 8, __( 'Featured: number of products', 'nexora-commerce' ) ),
+		'trending_title'      => array( 'nexora_home_products', 'text', __( 'Trending now', 'nexora-commerce' ), __( 'Trending: title', 'nexora-commerce' ) ),
+		'trending_source'     => array( 'nexora_home_products', 'select', 'top_rated', __( 'Trending: source', 'nexora-commerce' ), '', array( 'top_rated' => __( 'Top rated', 'nexora-commerce' ), 'best_selling' => __( 'Best selling', 'nexora-commerce' ), 'on_sale' => __( 'On sale', 'nexora-commerce' ), 'manual' => __( 'Manual product IDs', 'nexora-commerce' ) ) ),
+		'trending_ids'        => array( 'nexora_home_products', 'text', '', __( 'Trending: manual product IDs', 'nexora-commerce' ), __( 'Comma-separated IDs, used when the source is Manual.', 'nexora-commerce' ) ),
+		'trending_limit'      => array( 'nexora_home_products', 'number', 4, __( 'Trending: number of products', 'nexora-commerce' ) ),
+		'new_title'           => array( 'nexora_home_products', 'text', __( 'Fresh arrivals', 'nexora-commerce' ), __( 'New arrivals: title', 'nexora-commerce' ) ),
+		'new_limit'           => array( 'nexora_home_products', 'number', 8, __( 'New arrivals: number of products', 'nexora-commerce' ) ),
+		'best_title'          => array( 'nexora_home_products', 'text', __( 'Most traded', 'nexora-commerce' ), __( 'Best sellers: title', 'nexora-commerce' ) ),
+		'best_limit'          => array( 'nexora_home_products', 'number', 4, __( 'Best sellers: number of products', 'nexora-commerce' ) ),
+		'discovery_title'     => array( 'nexora_home_products', 'text', __( 'Picked for your basket', 'nexora-commerce' ), __( 'Discovery: title', 'nexora-commerce' ) ),
+
+		// Homepage: campaign banner.
+		'campaign_eyebrow'    => array( 'nexora_home_campaign', 'text', __( 'Dry market', 'nexora-commerce' ), __( 'Eyebrow', 'nexora-commerce' ) ),
+		'campaign_title'      => array( 'nexora_home_campaign', 'text', __( 'Stock up by the sack.', 'nexora-commerce' ), __( 'Headline', 'nexora-commerce' ) ),
+		'campaign_text'       => array( 'nexora_home_campaign', 'textarea', __( 'Rice, sugar and cooking oil in bulk sizes with the lowest price per kilo — for households, carinderias and sari-sari stores.', 'nexora-commerce' ), __( 'Copy', 'nexora-commerce' ) ),
+		'campaign_cta_label'  => array( 'nexora_home_campaign', 'text', __( 'Shop the dry market', 'nexora-commerce' ), __( 'Button label', 'nexora-commerce' ) ),
+		'campaign_cta_url'    => array( 'nexora_home_campaign', 'url', '', __( 'Button URL', 'nexora-commerce' ), __( 'Defaults to the Dry Market category when it exists.', 'nexora-commerce' ) ),
+		'campaign_image'      => array( 'nexora_home_campaign', 'image', 0, __( 'Background image', 'nexora-commerce' ) ),
+		'campaign_start'      => array( 'nexora_home_campaign', 'datetime', '', __( 'Show from (optional)', 'nexora-commerce' ) ),
+		'campaign_end'        => array( 'nexora_home_campaign', 'datetime', '', __( 'Hide after (optional)', 'nexora-commerce' ) ),
+
+		// Homepage: content blocks.
+		'rfq_title'           => array( 'nexora_home_content', 'text', __( 'Can’t find it on the board? Request a quotation.', 'nexora-commerce' ), __( 'Quotation banner: title', 'nexora-commerce' ) ),
+		'rfq_text'            => array( 'nexora_home_content', 'textarea', __( 'Out-of-season items, bulk volumes or regular deliveries for your business — tell us what you need and we will source it and send a quote.', 'nexora-commerce' ), __( 'Quotation banner: copy', 'nexora-commerce' ) ),
+		'social_title'        => array( 'nexora_home_content', 'text', __( 'Trusted by kitchens and stores', 'nexora-commerce' ), __( 'Reviews: title', 'nexora-commerce' ) ),
+		'newsletter_title'    => array( 'nexora_home_content', 'text', __( 'Get weekly price alerts', 'nexora-commerce' ), __( 'Newsletter: title', 'nexora-commerce' ) ),
+		'newsletter_text'     => array( 'nexora_home_content', 'textarea', __( 'Price drops, restocks and seasonal produce in one short email a week — unsubscribe anytime.', 'nexora-commerce' ), __( 'Newsletter: copy', 'nexora-commerce' ) ),
+		'editorial_title'     => array( 'nexora_home_content', 'text', __( 'Market journal', 'nexora-commerce' ), __( 'Editorial: title', 'nexora-commerce' ) ),
+		'editorial_count'     => array( 'nexora_home_content', 'number', 3, __( 'Editorial: number of posts', 'nexora-commerce' ) ),
+		'final_cta_title'     => array( 'nexora_home_content', 'text', __( 'Your weekly market run, sorted.', 'nexora-commerce' ), __( 'Final banner: headline', 'nexora-commerce' ) ),
+		'final_cta_text'      => array( 'nexora_home_content', 'textarea', __( 'Browse the full market or catch this week’s price drops before they are gone.', 'nexora-commerce' ), __( 'Final banner: copy', 'nexora-commerce' ) ),
+		'final_cta_label'     => array( 'nexora_home_content', 'text', __( 'Browse the market', 'nexora-commerce' ), __( 'Final banner: button label', 'nexora-commerce' ) ),
+		'final_cta_url'       => array( 'nexora_home_content', 'url', '', __( 'Final banner: button URL', 'nexora-commerce' ) ),
+		'final_cta_image'     => array( 'nexora_home_content', 'image', 0, __( 'Final banner: image', 'nexora-commerce' ) ),
+
+		// Shop and products.
+		'free_shipping_threshold' => array( 'nexora_shop', 'number', 1500, __( 'Free-shipping threshold (store currency)', 'nexora-commerce' ), __( 'Display only — set the same minimum on your WooCommerce “Free shipping” method. Use 0 to hide the progress bar.', 'nexora-commerce' ) ),
+		'card_style'          => array( 'nexora_shop', 'select', 'elevated', __( 'Product card style', 'nexora-commerce' ), '', array( 'elevated' => __( 'Elevated', 'nexora-commerce' ), 'minimal' => __( 'Minimal', 'nexora-commerce' ) ) ),
+		'card_hover_image'    => array( 'nexora_shop', 'checkbox', true, __( 'Show first gallery image on hover', 'nexora-commerce' ) ),
+		'card_rating'         => array( 'nexora_shop', 'checkbox', true, __( 'Show ratings on cards', 'nexora-commerce' ) ),
+		'card_quick_add'      => array( 'nexora_shop', 'checkbox', true, __( 'Quick add-to-cart on cards', 'nexora-commerce' ) ),
+		'badge_new_days'      => array( 'nexora_shop', 'number', 30, __( '“New” badge: product age in days', 'nexora-commerce' ), __( 'Use 0 to disable the New badge.', 'nexora-commerce' ) ),
+		'badge_discount'      => array( 'nexora_shop', 'checkbox', true, __( 'Show discount percentage on sale badges', 'nexora-commerce' ) ),
+		'low_stock_threshold' => array( 'nexora_shop', 'number', 5, __( 'Low-stock message threshold', 'nexora-commerce' ), __( 'Shows “Only N left” when managed stock is at or below this number. Use 0 to disable.', 'nexora-commerce' ) ),
+		'sticky_atc'          => array( 'nexora_shop', 'checkbox', true, __( 'Sticky add-to-cart bar on product pages', 'nexora-commerce' ) ),
+		'buy_now'             => array( 'nexora_shop', 'checkbox', true, __( 'Show “Buy now” button', 'nexora-commerce' ) ),
+		'product_trust'       => array( 'nexora_shop', 'textarea', __( "Weighed at packing — short weights are refunded|scale\nMeat and seafood packed cold|snow\nPick up at the store or book your own rider|store", 'nexora-commerce' ), __( 'Product page trust lines', 'nexora-commerce' ), __( 'One per line as “Text|icon”. Icons: truck, return, shield, chat, sparkle, tag, scale, snow, leaf, chart, clipboard, store.', 'nexora-commerce' ) ),
+
+		// Store info and social.
+		'store_phone'         => array( 'nexora_store', 'text', '+63 900 000 0000 (demo)', __( 'Phone', 'nexora-commerce' ) ),
+		'store_email'         => array( 'nexora_store', 'text', 'orders@freshtastic.example', __( 'Email', 'nexora-commerce' ) ),
+		'store_address'       => array( 'nexora_store', 'textarea', __( 'Demo address — Stall 12, Sample Public Market, Quezon City', 'nexora-commerce' ), __( 'Address', 'nexora-commerce' ) ),
+		'store_hours'         => array( 'nexora_store', 'text', __( 'Daily, 4 AM–8 PM (PHT)', 'nexora-commerce' ), __( 'Support hours', 'nexora-commerce' ) ),
+		'social_facebook'     => array( 'nexora_store', 'url', '', 'Facebook URL' ),
+		'social_instagram'    => array( 'nexora_store', 'url', '', 'Instagram URL' ),
+		'social_tiktok'       => array( 'nexora_store', 'url', '', 'TikTok URL' ),
+		'social_youtube'      => array( 'nexora_store', 'url', '', 'YouTube URL' ),
+		'social_x'            => array( 'nexora_store', 'url', '', 'X (Twitter) URL' ),
+
+		// Footer.
+		'footer_about'        => array( 'nexora_footer', 'textarea', __( 'Freshtastic Food Hub by JEJOBO brings fresh meat, fish, vegetables, frozen goods and more to your table. Freshness you can always trust. This is a demo storefront; replace this text with your story.', 'nexora-commerce' ), __( 'Brand introduction', 'nexora-commerce' ) ),
+		'footer_payments'     => array( 'nexora_footer', 'select', 'auto', __( 'Payment methods display', 'nexora-commerce' ), __( 'Automatic lists only the WooCommerce gateways that are enabled, so customers never see a method you do not accept.', 'nexora-commerce' ), array( 'auto' => __( 'Automatic (enabled gateways)', 'nexora-commerce' ), 'manual' => __( 'Manual list', 'nexora-commerce' ), 'hidden' => __( 'Hidden', 'nexora-commerce' ) ) ),
+		'footer_payments_manual' => array( 'nexora_footer', 'text', '', __( 'Manual payment list', 'nexora-commerce' ), __( 'Comma-separated, e.g. “GCash, Maya, Visa, Mastercard”. Only list methods you actually accept.', 'nexora-commerce' ) ),
+		'footer_copyright'    => array( 'nexora_footer', 'text', '', __( 'Copyright text', 'nexora-commerce' ), __( 'Defaults to “© {year} Site name. All rights reserved.”', 'nexora-commerce' ) ),
+
+		// Performance.
+		'webp_subsizes'       => array( 'nexora_performance', 'checkbox', true, __( 'Generate WebP image sizes for new JPEG uploads (when the server supports WebP)', 'nexora-commerce' ) ),
+		'load_local_fonts'    => array( 'nexora_performance', 'checkbox', true, __( 'Load bundled Inter/Manrope font files (disable to use system fonts only)', 'nexora-commerce' ) ),
+	);
+
+	foreach ( $benefits as $i => $b ) {
+		$schema[ "benefit_{$i}_icon" ]  = array( 'nexora_home_content', 'select', $b[0], sprintf( /* translators: %d: benefit number */ __( 'Benefit %d: icon', 'nexora-commerce' ), $i ), '', nexora_icon_choices() );
+		$schema[ "benefit_{$i}_title" ] = array( 'nexora_home_content', 'text', $b[1], sprintf( /* translators: %d: benefit number */ __( 'Benefit %d: title', 'nexora-commerce' ), $i ) );
+		$schema[ "benefit_{$i}_text" ]  = array( 'nexora_home_content', 'textarea', $b[2], sprintf( /* translators: %d: benefit number */ __( 'Benefit %d: text', 'nexora-commerce' ), $i ) );
+	}
+
+	$schema = apply_filters( 'nexora_settings_schema', $schema );
+	return $schema;
+}
+
+/**
+ * Icons selectable for benefits/trust lines.
+ *
+ * @return array<string,string>
+ */
+function nexora_icon_choices() {
+	return array(
+		'shield'  => __( 'Shield', 'nexora-commerce' ),
+		'sparkle' => __( 'Sparkle', 'nexora-commerce' ),
+		'chat'    => __( 'Chat', 'nexora-commerce' ),
+		'truck'   => __( 'Truck', 'nexora-commerce' ),
+		'return'  => __( 'Return arrow', 'nexora-commerce' ),
+		'tag'     => __( 'Tag', 'nexora-commerce' ),
+		'heart'   => __( 'Heart', 'nexora-commerce' ),
+		'star'    => __( 'Star', 'nexora-commerce' ),
+		'scale'   => __( 'Scale', 'nexora-commerce' ),
+		'snow'    => __( 'Snowflake', 'nexora-commerce' ),
+		'leaf'    => __( 'Leaf', 'nexora-commerce' ),
+		'chart'   => __( 'Chart', 'nexora-commerce' ),
+		'clipboard' => __( 'Clipboard', 'nexora-commerce' ),
+		'store'   => __( 'Market stall', 'nexora-commerce' ),
+	);
+}
+
+/**
+ * Read a theme option with its schema default.
+ *
+ * @param string $key Option key.
+ * @return mixed
+ */
+function nexora_option( $key ) {
+	$schema  = nexora_settings_schema();
+	$default = isset( $schema[ $key ] ) ? $schema[ $key ][2] : null;
+	return apply_filters( "nexora_option_{$key}", get_theme_mod( 'nexora_' . $key, $default ) );
+}
+
+/**
+ * Sanitize a section-order string: comma list of known keys, disabled ones prefixed with "-".
+ *
+ * @param string $value Raw value.
+ * @return string
+ */
+function nexora_sanitize_sections( $value ) {
+	$known = array_keys( nexora_home_sections() );
+	$out   = array();
+	foreach ( explode( ',', (string) $value ) as $item ) {
+		$item = trim( $item );
+		$key  = ltrim( $item, '-' );
+		if ( in_array( $key, $known, true ) && ! in_array( $key, array_map( 'nexora_section_key', $out ), true ) ) {
+			$out[] = $item;
+		}
+	}
+	// Append sections added later (e.g. by a child theme) as enabled.
+	foreach ( $known as $key ) {
+		if ( ! in_array( $key, array_map( 'nexora_section_key', $out ), true ) ) {
+			$out[] = $key;
+		}
+	}
+	return implode( ',', $out );
+}
+
+/**
+ * Strip the disabled marker from a section token.
+ *
+ * @param string $token Token.
+ * @return string
+ */
+function nexora_section_key( $token ) {
+	return ltrim( $token, '-' );
+}
+
+/**
+ * Enabled homepage sections, in order.
+ *
+ * @return string[]
+ */
+function nexora_enabled_home_sections() {
+	$tokens = explode( ',', nexora_sanitize_sections( nexora_option( 'home_layout' ) ) );
+	return array_values( array_filter( $tokens, static function ( $t ) {
+		return '' !== $t && '-' !== $t[0];
+	} ) );
+}
+
+/**
+ * Sanitize a datetime-local value (Y-m-d\TH:i).
+ *
+ * @param string $value Raw value.
+ * @return string
+ */
+function nexora_sanitize_datetime( $value ) {
+	$value = trim( (string) $value );
+	return preg_match( '/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/', $value ) ? $value : '';
+}
+
+/**
+ * Convert a site-timezone datetime-local value to a UTC timestamp.
+ *
+ * @param string $value Datetime-local string.
+ * @return int|null
+ */
+function nexora_datetime_to_timestamp( $value ) {
+	if ( '' === (string) $value ) {
+		return null;
+	}
+	$date = date_create_immutable_from_format( 'Y-m-d\TH:i', $value, wp_timezone() );
+	return $date ? $date->getTimestamp() : null;
+}
+
+/**
+ * Sanitizers keyed by control type.
+ *
+ * @param string $type Type.
+ * @return callable
+ */
+function nexora_sanitizer_for( $type ) {
+	switch ( $type ) {
+		case 'color':
+			return 'sanitize_hex_color';
+		case 'checkbox':
+			return static function ( $v ) {
+				return (bool) $v;
+			};
+		case 'number':
+			return static function ( $v ) {
+				return (int) $v;
+			};
+		case 'image':
+			return 'absint';
+		case 'url':
+			return 'esc_url_raw';
+		case 'textarea':
+			return 'sanitize_textarea_field';
+		case 'sections':
+			return 'nexora_sanitize_sections';
+		case 'datetime':
+			return 'nexora_sanitize_datetime';
+		default:
+			return 'sanitize_text_field';
+	}
+}
+
+/**
+ * Register panels, sections, settings and controls.
+ *
+ * @param WP_Customize_Manager $wp_customize Manager.
+ */
+function nexora_customize_register( $wp_customize ) {
+	require_once NEXORA_DIR . '/inc/class-nexora-sections-control.php';
+
+	$wp_customize->add_panel( 'nexora_panel', array( 'title' => __( 'Freshtastic Theme', 'nexora-commerce' ), 'priority' => 25 ) );
+	$wp_customize->add_panel( 'nexora_home_panel', array( 'title' => __( 'Freshtastic Homepage', 'nexora-commerce' ), 'priority' => 26 ) );
+
+	$sections = array(
+		'nexora_brand'         => array( 'nexora_panel', __( 'Brand colors and typography', 'nexora-commerce' ) ),
+		'nexora_announcement'  => array( 'nexora_panel', __( 'Announcement bar', 'nexora-commerce' ) ),
+		'nexora_header'        => array( 'nexora_panel', __( 'Header', 'nexora-commerce' ) ),
+		'nexora_shop'          => array( 'nexora_panel', __( 'Shop and product pages', 'nexora-commerce' ) ),
+		'nexora_store'         => array( 'nexora_panel', __( 'Store info and social links', 'nexora-commerce' ) ),
+		'nexora_footer'        => array( 'nexora_panel', __( 'Footer', 'nexora-commerce' ) ),
+		'nexora_performance'   => array( 'nexora_panel', __( 'Performance', 'nexora-commerce' ) ),
+		'nexora_home_layout'   => array( 'nexora_home_panel', __( 'Sections and order', 'nexora-commerce' ) ),
+		'nexora_home_hero'     => array( 'nexora_home_panel', __( 'Hero', 'nexora-commerce' ) ),
+		'nexora_home_products' => array( 'nexora_home_panel', __( 'Product sections', 'nexora-commerce' ) ),
+		'nexora_home_campaign' => array( 'nexora_home_panel', __( 'Campaign banner', 'nexora-commerce' ) ),
+		'nexora_home_content'  => array( 'nexora_home_panel', __( 'Benefits, newsletter and banners', 'nexora-commerce' ) ),
+	);
+	foreach ( $sections as $id => $def ) {
+		$wp_customize->add_section( $id, array( 'title' => $def[1], 'panel' => $def[0] ) );
+	}
+
+	foreach ( nexora_settings_schema() as $key => $def ) {
+		list( $section, $type, $default, $label ) = $def;
+		$description = isset( $def[4] ) ? $def[4] : '';
+		$choices     = isset( $def[5] ) ? $def[5] : array();
+		$setting_id  = 'nexora_' . $key;
+
+		$wp_customize->add_setting(
+			$setting_id,
+			array(
+				'default'           => $default,
+				'sanitize_callback' => nexora_sanitizer_for( $type ),
+				'transport'         => 'refresh',
+			)
+		);
+
+		$args = array(
+			'label'       => $label,
+			'description' => $description,
+			'section'     => $section,
+		);
+
+		if ( 'color' === $type ) {
+			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting_id, $args ) );
+		} elseif ( 'image' === $type ) {
+			$wp_customize->add_control( new WP_Customize_Media_Control( $wp_customize, $setting_id, array_merge( $args, array( 'mime_type' => 'image' ) ) ) );
+		} elseif ( 'sections' === $type ) {
+			$wp_customize->add_control( new Nexora_Sections_Control( $wp_customize, $setting_id, array_merge( $args, array( 'choices' => nexora_home_sections() ) ) ) );
+		} else {
+			$control_type = 'datetime' === $type ? 'datetime-local' : $type;
+			$wp_customize->add_control( $setting_id, array_merge( $args, array( 'type' => $control_type, 'choices' => $choices ) ) );
+		}
+	}
+}
+add_action( 'customize_register', 'nexora_customize_register' );
+
+/**
+ * Output CSS custom properties from brand options.
+ *
+ * @return string
+ */
+function nexora_brand_css() {
+	$fonts = array(
+		'inter'   => '"Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+		'manrope' => '"Manrope", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif',
+		'system'  => 'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+	);
+	$heading = nexora_option( 'font_heading' );
+	$body    = nexora_option( 'font_body' );
+	if ( ! nexora_option( 'load_local_fonts' ) ) {
+		$heading = 'system';
+		$body    = 'system';
+	}
+
+	$vars = array(
+		'--nx-primary'      => nexora_option( 'color_primary' ),
+		'--nx-secondary'    => nexora_option( 'color_secondary' ),
+		'--nx-text'         => nexora_option( 'color_text' ),
+		'--nx-bg'           => nexora_option( 'color_bg' ),
+		'--nx-dark'         => nexora_option( 'color_dark' ),
+		'--nx-sale'         => nexora_option( 'color_sale' ),
+		'--nx-radius'       => max( 0, (int) nexora_option( 'radius' ) ) . 'px',
+		'--nx-font-heading' => isset( $fonts[ $heading ] ) ? $fonts[ $heading ] : $fonts['manrope'],
+		'--nx-font-body'    => isset( $fonts[ $body ] ) ? $fonts[ $body ] : $fonts['inter'],
+	);
+
+	$css = ':root{';
+	foreach ( $vars as $prop => $val ) {
+		if ( '' !== (string) $val ) {
+			$css .= $prop . ':' . $val . ';';
+		}
+	}
+	return $css . '}';
+}

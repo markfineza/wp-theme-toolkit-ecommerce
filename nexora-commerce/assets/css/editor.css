@@ -1,0 +1,6 @@
+/* Block editor: match front-end typography. */
+@font-face { font-family: "Inter"; font-weight: 100 900; font-display: swap; src: url("../fonts/inter-variable.woff2") format("woff2"); }
+@font-face { font-family: "Manrope"; font-weight: 200 800; font-display: swap; src: url("../fonts/manrope-variable.woff2") format("woff2"); }
+body { font-family: "Inter", ui-sans-serif, system-ui, sans-serif; color: #101323; line-height: 1.7; font-size: 1.06rem; }
+h1, h2, h3, h4, h5, h6, .editor-post-title__input { font-family: "Manrope", "Inter", ui-sans-serif, sans-serif; letter-spacing: -.02em; line-height: 1.15; }
+a { color: #4f42d9; }

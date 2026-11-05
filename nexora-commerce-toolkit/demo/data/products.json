@@ -1,0 +1,340 @@
+{
+	"_notice": "Fictional wet and dry market demo catalog for Freshtastic Food Hub. Prices, origins, stock, price history, sales figures and reviews are illustrative sample content, not real market quotations.",
+	"categories": [
+		{ "slug": "wet-market", "name": "Wet Market", "art": "fish", "color": "#0E7490", "tint": "#DDF3F7", "description": "Fresh produce, meat, poultry and seafood, sourced daily and packed cold." },
+		{ "slug": "dry-market", "name": "Dry Market", "art": "ricesack", "color": "#B45309", "tint": "#FBEBD3", "description": "Rice, grains, dried fish and pantry staples by the kilo, pack or sack." },
+		{ "slug": "vegetables", "parent": "wet-market", "name": "Vegetables", "art": "cabbage", "color": "#15803D", "tint": "#DFF5E3", "description": "Highland and lowland vegetables, priced per kilo or bundle." },
+		{ "slug": "fruits", "parent": "wet-market", "name": "Fruits", "art": "mango", "color": "#CA8A04", "tint": "#FDF3D0", "description": "Seasonal Philippine fruits, picked ripe for the week." },
+		{ "slug": "meat", "parent": "wet-market", "name": "Meat", "art": "porkbelly", "color": "#B91C1C", "tint": "#FBE3E3", "description": "Pork and beef cuts, chilled and portioned to order." },
+		{ "slug": "poultry-eggs", "parent": "wet-market", "name": "Poultry and Eggs", "art": "eggtray", "color": "#C2410C", "tint": "#FCE9DC", "description": "Dressed chicken, fillets and fresh eggs by the tray." },
+		{ "slug": "fish-seafood", "parent": "wet-market", "name": "Fish and Seafood", "art": "fish", "color": "#0369A1", "tint": "#DCEFFB", "description": "Daily catch on ice — bangus, tilapia, galunggong, shrimp and squid." },
+		{ "slug": "rice-grains", "parent": "dry-market", "name": "Rice and Grains", "art": "ricesack", "color": "#A16207", "tint": "#FBF0D6", "description": "Well-milled, premium and specialty rice from 1 kg packs to 50 kg sacks." },
+		{ "slug": "dry-goods", "parent": "dry-market", "name": "Dry Goods and Condiments", "art": "oilbottle", "color": "#7C2D12", "tint": "#F7E6DA", "description": "Sugar, salt, cooking oil, sauces and dried seafood." }
+	],
+	"products": [
+		{
+			"sku": "NX-RG-001", "name": "Dinorado Premium Rice", "slug": "dinorado-premium-rice", "type": "variable", "category": "rice-grains", "tags": ["rice", "premium", "bulk"],
+			"art": "ricesack", "color": "#D97706", "featured": true, "total_sales": 412, "unit": "pack", "origin": "Occidental Mindoro", "measure_unit": "kg", "history": { "previous": 62, "days_ago": 6 },
+			"short_description": "<p>Aromatic, soft and slightly sticky premium rice — a favourite for everyday meals and special occasions.</p><ul><li>Premium grade, low broken-grain ratio</li><li>Packed in food-grade sealed bags</li><li>Available from 1 kg packs to 25 kg sacks</li></ul>",
+			"description": "<p>Dinorado is prized for its natural aroma and tender texture. Our demo lots are milled in small batches and sealed to keep the grains fresh.</p><p>Choose a 1 kg pack to try it, or a 25 kg sack for households, carinderias and canteens. Need more than five sacks or a regular weekly delivery? Use <strong>Request a quotation</strong> for volume pricing.</p><h3>Storage</h3><p>Keep in a cool, dry place in an airtight container.</p>",
+			"attributes": [
+				{ "name": "Pack size", "options": ["1 kg", "5 kg", "25 kg sack"], "variation": true },
+				{ "name": "Grade", "options": ["Premium"] },
+				{ "name": "Origin", "options": ["Occidental Mindoro"] }
+			],
+			"variations": [
+				{ "attributes": { "pack-size": "1 kg" }, "regular_price": "68", "stock_qty": 180, "measure": 1 },
+				{ "attributes": { "pack-size": "5 kg" }, "regular_price": "330", "stock_qty": 60, "measure": 5 },
+				{ "attributes": { "pack-size": "25 kg sack" }, "regular_price": "1600", "stock_qty": 24, "measure": 25 }
+			],
+			"reviews": [
+				{ "author": "Sample Reviewer — carinderia owner", "rating": 5, "content": "Consistent quality per sack and delivered on time. (Sample review for demonstration.)" },
+				{ "author": "Sample Reviewer R.", "rating": 4, "content": "Fragrant and soft. The 5 kg pack is just right for our family. (Sample review for demonstration.)" }
+			]
+		},
+		{
+			"sku": "NX-RG-002", "name": "Jasmine Fragrant Rice", "slug": "jasmine-fragrant-rice", "type": "variable", "category": "rice-grains", "tags": ["rice", "bulk"],
+			"art": "ricesack", "color": "#15803D", "total_sales": 286, "unit": "pack", "origin": "Nueva Ecija", "measure_unit": "kg", "history": { "previous": 70, "days_ago": 4 },
+			"short_description": "<p>Long-grain fragrant rice with a light, fluffy texture.</p><ul><li>Long-grain, low moisture</li><li>Great for fried rice and silog</li><li>1 kg, 5 kg and 25 kg</li></ul>",
+			"description": "<p>A long-grain jasmine variety grown in Central Luzon. It cooks up light and separate — ideal for fried rice and everyday meals.</p>",
+			"attributes": [
+				{ "name": "Pack size", "options": ["1 kg", "5 kg", "25 kg sack"], "variation": true },
+				{ "name": "Origin", "options": ["Nueva Ecija"] }
+			],
+			"variations": [
+				{ "attributes": { "pack-size": "1 kg" }, "regular_price": "72", "stock_qty": 150, "measure": 1 },
+				{ "attributes": { "pack-size": "5 kg" }, "regular_price": "350", "stock_qty": 48, "measure": 5 },
+				{ "attributes": { "pack-size": "25 kg sack" }, "regular_price": "1700", "stock_qty": 18, "measure": 25 }
+			]
+		},
+		{
+			"sku": "NX-RG-003", "name": "Sinandomeng Well-Milled Rice", "slug": "sinandomeng-well-milled-rice", "type": "variable", "category": "rice-grains", "tags": ["rice", "bulk", "best-value"],
+			"art": "ricesack", "color": "#B91C1C", "total_sales": 530, "unit": "pack", "origin": "Nueva Ecija", "measure_unit": "kg", "history": { "previous": 47, "days_ago": 9 },
+			"short_description": "<p>The everyday well-milled rice for households and food businesses.</p><ul><li>Well-milled, clean grain</li><li>Best value per kilo in sacks</li><li>Up to 50 kg sacks</li></ul>",
+			"description": "<p>Sinandomeng is the reliable everyday rice of many Filipino kitchens — affordable, consistent and easy to cook.</p><p>The 50 kg sack gives the lowest price per kilo. For recurring supply to stores and canteens, request a quotation.</p>",
+			"attributes": [
+				{ "name": "Pack size", "options": ["1 kg", "5 kg", "25 kg sack", "50 kg sack"], "variation": true },
+				{ "name": "Grade", "options": ["Well-milled"] },
+				{ "name": "Origin", "options": ["Nueva Ecija"] }
+			],
+			"variations": [
+				{ "attributes": { "pack-size": "1 kg" }, "regular_price": "52", "stock_qty": 220, "measure": 1 },
+				{ "attributes": { "pack-size": "5 kg" }, "regular_price": "255", "stock_qty": 90, "measure": 5 },
+				{ "attributes": { "pack-size": "25 kg sack" }, "regular_price": "1250", "stock_qty": 35, "measure": 25 },
+				{ "attributes": { "pack-size": "50 kg sack" }, "regular_price": "2450", "stock_qty": 20, "measure": 50 }
+			],
+			"reviews": [ { "author": "Sample Reviewer — sari-sari store", "rating": 5, "content": "Good price per sack and clean grains. (Sample review for demonstration.)" } ]
+		},
+		{
+			"sku": "NX-RG-004", "name": "Brown Rice 2 kg", "slug": "brown-rice-2kg", "type": "simple", "category": "rice-grains", "tags": ["rice", "healthy"],
+			"art": "ricesack", "color": "#78350F", "regular_price": "160", "stock_qty": 40, "total_sales": 74, "unit": "pack", "origin": "Isabela", "measure_unit": "kg", "measure": 2,
+			"short_description": "<p>Whole-grain brown rice with a nutty flavour and more fibre.</p><ul><li>Unpolished whole grain</li><li>2 kg resealable pack</li></ul>",
+			"description": "<p>Brown rice keeps its bran layer for a chewier texture and nutty taste. Soak for 30 minutes before cooking for softer results.</p>",
+			"attributes": [ { "name": "Net weight", "options": ["2 kg"] }, { "name": "Origin", "options": ["Isabela"] } ]
+		},
+		{
+			"sku": "NX-RG-005", "name": "Malagkit Glutinous Rice", "slug": "malagkit-glutinous-rice", "type": "simple", "category": "rice-grains", "tags": ["rice", "kakanin"],
+			"art": "ricesack", "color": "#9CA3AF", "regular_price": "85", "stock_qty": 4, "total_sales": 61, "unit": "kg", "origin": "Pangasinan",
+			"short_description": "<p>Sticky glutinous rice for biko, suman and champorado.</p><ul><li>Sold per kilo</li><li>Ideal for kakanin</li></ul>",
+			"description": "<p>Malagkit becomes soft and sticky when cooked — the base of many Filipino rice cakes and desserts.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Pangasinan"] } ]
+		},
+		{
+			"sku": "NX-RG-006", "name": "Monggo (Mung Beans)", "slug": "monggo-mung-beans", "type": "simple", "category": "rice-grains", "tags": ["beans", "pantry"],
+			"art": "beanspouch", "color": "#4D7C0F", "regular_price": "120", "sale_price": "105", "stock_qty": 65, "total_sales": 98, "unit": "kg", "origin": "Ilocos Sur",
+			"short_description": "<p>Whole green mung beans for ginisang monggo and desserts.</p><ul><li>Sorted and cleaned</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Our mung beans are sorted to remove stones and broken beans. Rinse well and simmer until soft.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Ilocos Sur"] } ]
+		},
+		{
+			"sku": "NX-VG-001", "name": "Cabbage (Repolyo)", "slug": "cabbage-repolyo", "type": "simple", "category": "vegetables", "tags": ["highland", "leafy"],
+			"art": "cabbage", "color": "#65A30D", "regular_price": "90", "stock_qty": 85, "total_sales": 156, "unit": "kg", "origin": "Benguet", "history": { "previous": 110, "days_ago": 3 },
+			"short_description": "<p>Firm, crisp highland cabbage.</p><ul><li>Harvested in Benguet</li><li>Sold per kilo (whole heads)</li></ul>",
+			"description": "<p>Tight, heavy heads from the Cordillera highlands. Great for nilaga, pancit and coleslaw. Weight is rounded to the nearest whole head; we refund any shortfall.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Benguet"] } ]
+		},
+		{
+			"sku": "NX-VG-002", "name": "Tomatoes (Kamatis)", "slug": "tomatoes-kamatis", "type": "simple", "category": "vegetables", "tags": ["lowland"],
+			"art": "tomato", "color": "#DC2626", "regular_price": "80", "stock_qty": 70, "total_sales": 201, "unit": "kg", "origin": "Batangas", "history": { "previous": 70, "days_ago": 2 },
+			"short_description": "<p>Ripe, firm tomatoes for sawsawan and sauces.</p><ul><li>Mixed ripeness for the week</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Packed with a mix of ripe and turning tomatoes so they last through the week.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Batangas"] } ]
+		},
+		{
+			"sku": "NX-VG-003", "name": "Eggplant (Talong)", "slug": "eggplant-talong", "type": "simple", "category": "vegetables", "tags": ["lowland"],
+			"art": "eggplant", "color": "#6B21A8", "regular_price": "95", "stock_qty": 50, "total_sales": 112, "unit": "kg", "origin": "Pangasinan",
+			"short_description": "<p>Long purple eggplant for tortang talong and pinakbet.</p><ul><li>Glossy, firm skin</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Choose eggplants that feel heavy for their size. Store unwashed in the vegetable crisper.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Pangasinan"] } ]
+		},
+		{
+			"sku": "NX-VG-004", "name": "Red Onions (Sibuyas)", "slug": "red-onions-sibuyas", "type": "variable", "category": "vegetables", "tags": ["lowland", "bulk"],
+			"art": "onion", "color": "#9F1239", "featured": true, "total_sales": 244, "unit": "pack", "origin": "Nueva Ecija", "measure_unit": "kg", "history": { "previous": 160, "days_ago": 5 },
+			"short_description": "<p>Local red onions — a kitchen staple, priced per kilo or in 5 kg bags.</p><ul><li>Cured for longer storage</li><li>Mesh bags of 5 kg for food businesses</li></ul>",
+			"description": "<p>Locally grown red onions, cured and sorted. Store in a cool, airy place away from potatoes.</p>",
+			"attributes": [
+				{ "name": "Pack size", "options": ["1 kg", "5 kg mesh bag"], "variation": true },
+				{ "name": "Origin", "options": ["Nueva Ecija"] }
+			],
+			"variations": [
+				{ "attributes": { "pack-size": "1 kg" }, "regular_price": "150", "stock_qty": 60, "measure": 1 },
+				{ "attributes": { "pack-size": "5 kg mesh bag" }, "regular_price": "720", "stock_qty": 14, "measure": 5 }
+			]
+		},
+		{
+			"sku": "NX-VG-005", "name": "Native Garlic (Bawang)", "slug": "native-garlic-bawang", "type": "simple", "category": "vegetables", "tags": ["lowland", "seasonal"],
+			"art": "garlic", "color": "#E7E5E4", "regular_price": "220", "stock_qty": 0, "total_sales": 133, "unit": "kg", "origin": "Ilocos Norte",
+			"short_description": "<p>Small, pungent native garlic bulbs.</p><ul><li>Strong flavour, small cloves</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Ilocos native garlic is smaller than imported varieties but far more aromatic. Currently out of season — request a quotation and we will source it for you.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Ilocos Norte"] } ]
+		},
+		{
+			"sku": "NX-VG-006", "name": "Ampalaya (Bitter Gourd)", "slug": "ampalaya-bitter-gourd", "type": "simple", "category": "vegetables", "tags": ["lowland"],
+			"art": "ampalaya", "color": "#16A34A", "regular_price": "110", "sale_price": "95", "stock_qty": 38, "total_sales": 87, "unit": "kg", "origin": "Laguna",
+			"short_description": "<p>Firm, bright-green bitter gourd.</p><ul><li>For ginisang ampalaya and pinakbet</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Salt and squeeze sliced ampalaya before cooking to mellow its bitterness.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Laguna"] } ]
+		},
+		{
+			"sku": "NX-VG-007", "name": "Pechay Bundle", "slug": "pechay-bundle", "type": "simple", "category": "vegetables", "tags": ["leafy", "highland"],
+			"art": "leafy", "color": "#22C55E", "regular_price": "35", "stock_qty": 120, "total_sales": 178, "unit": "bundle", "origin": "Benguet",
+			"short_description": "<p>Tender pechay, about 500 g per bundle.</p><ul><li>Harvested within 48 hours of delivery</li><li>Sold per bundle</li></ul>",
+			"description": "<p>Tender Chinese cabbage for nilaga, sinigang and stir-fries. Keep wrapped in a damp paper towel in the fridge.</p>",
+			"attributes": [ { "name": "Approx. weight", "options": ["500 g per bundle"] }, { "name": "Origin", "options": ["Benguet"] } ]
+		},
+		{
+			"sku": "NX-VG-008", "name": "Carrots", "slug": "carrots", "type": "simple", "category": "vegetables", "tags": ["highland"],
+			"art": "carrots", "color": "#EA580C", "regular_price": "120", "stock_qty": 64, "total_sales": 121, "unit": "kg", "origin": "Benguet",
+			"short_description": "<p>Sweet, crunchy highland carrots.</p><ul><li>Washed and sorted</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Highland carrots with a natural sweetness — for menudo, afritada and salads.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Benguet"] } ]
+		},
+		{
+			"sku": "NX-FR-001", "name": "Saba Banana", "slug": "saba-banana", "type": "simple", "category": "fruits", "tags": ["fruit"],
+			"art": "banana", "color": "#EAB308", "regular_price": "60", "stock_qty": 90, "total_sales": 140, "unit": "kg", "origin": "Davao",
+			"short_description": "<p>Cooking banana for turon, banana cue and ginataan.</p><ul><li>Firm, just-ripening</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Saba bananas are best cooked — fried, boiled or simmered in coconut milk.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Davao"] } ]
+		},
+		{
+			"sku": "NX-FR-002", "name": "Carabao Mango", "slug": "carabao-mango", "type": "simple", "category": "fruits", "tags": ["fruit", "seasonal"],
+			"art": "mango", "color": "#F59E0B", "featured": true, "regular_price": "180", "stock_qty": 55, "total_sales": 190, "unit": "kg", "origin": "Guimaras", "history": { "previous": 160, "days_ago": 7 },
+			"short_description": "<p>Sweet, fragrant carabao mangoes.</p><ul><li>Packed at turning-ripe</li><li>Sold per kilo (about 3 pieces)</li></ul>",
+			"description": "<p>The famous sweet Philippine mango. Leave at room temperature for 1–2 days until fragrant and slightly soft.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Guimaras"] } ],
+			"reviews": [ { "author": "Sample Reviewer M.", "rating": 5, "content": "Very sweet and arrived well packed. (Sample review for demonstration.)" } ]
+		},
+		{
+			"sku": "NX-FR-003", "name": "Calamansi", "slug": "calamansi", "type": "simple", "category": "fruits", "tags": ["fruit", "citrus"],
+			"art": "calamansi", "color": "#65A30D", "regular_price": "90", "stock_qty": 3, "total_sales": 76, "unit": "kg", "origin": "Oriental Mindoro",
+			"short_description": "<p>Juicy native lime for sawsawan, juice and pancit.</p><ul><li>Sold per kilo</li></ul>",
+			"description": "<p>Calamansi keeps for about two weeks in the fridge. Roll before squeezing for more juice.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Oriental Mindoro"] } ]
+		},
+		{
+			"sku": "NX-MT-001", "name": "Pork Liempo (Belly)", "slug": "pork-liempo-belly", "type": "variable", "category": "meat", "tags": ["pork", "chilled"],
+			"art": "porkbelly", "color": "#F9A8A8", "featured": true, "total_sales": 365, "unit": "pack", "origin": "Batangas", "measure_unit": "kg", "history": { "previous": 360, "days_ago": 3 },
+			"short_description": "<p>Skin-on pork belly with even layers of meat and fat.</p><ul><li>Chilled, never frozen (demo)</li><li>Sliced for grilling or whole slab</li><li>500 g and 1 kg packs</li></ul>",
+			"description": "<p>Our liempo is cut from locally raised pigs and packed chilled. Ideal for inihaw, lechon kawali and sinigang.</p><p>Need regular kilos for your restaurant? Request a quotation for scheduled deliveries.</p>",
+			"attributes": [
+				{ "name": "Pack size", "options": ["500 g", "1 kg"], "variation": true },
+				{ "name": "Cut", "options": ["Skin-on belly"] },
+				{ "name": "Origin", "options": ["Batangas"] }
+			],
+			"variations": [
+				{ "attributes": { "pack-size": "500 g" }, "regular_price": "195", "stock_qty": 40, "measure": 0.5 },
+				{ "attributes": { "pack-size": "1 kg" }, "regular_price": "370", "stock_qty": 30, "measure": 1 }
+			],
+			"reviews": [ { "author": "Sample Reviewer J.", "rating": 5, "content": "Good meat-to-fat ratio and cleanly sliced. (Sample review for demonstration.)" } ]
+		},
+		{
+			"sku": "NX-MT-002", "name": "Pork Kasim (Shoulder)", "slug": "pork-kasim-shoulder", "type": "simple", "category": "meat", "tags": ["pork", "chilled"],
+			"art": "meatcut", "color": "#E11D48", "regular_price": "330", "stock_qty": 26, "total_sales": 142, "unit": "kg", "origin": "Batangas",
+			"short_description": "<p>Lean-to-medium pork shoulder for adobo and menudo.</p><ul><li>Cubed or whole</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Kasim has just enough fat to stay juicy in slow-cooked dishes.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Batangas"] } ]
+		},
+		{
+			"sku": "NX-MT-003", "name": "Ground Pork", "slug": "ground-pork", "type": "simple", "category": "meat", "tags": ["pork", "chilled"],
+			"art": "groundmeat", "color": "#FB7185", "regular_price": "300", "sale_price": "280", "stock_qty": 34, "total_sales": 167, "unit": "kg", "origin": "Batangas",
+			"short_description": "<p>Freshly ground pork, 80/20 lean to fat.</p><ul><li>Ground daily (demo)</li><li>Sold per kilo</li></ul>",
+			"description": "<p>For lumpia, embutido, picadillo and pasta sauces.</p>",
+			"attributes": [ { "name": "Lean ratio", "options": ["80/20"] } ]
+		},
+		{
+			"sku": "NX-MT-004", "name": "Beef Brisket", "slug": "beef-brisket", "type": "simple", "category": "meat", "tags": ["beef", "chilled"],
+			"art": "meatcut", "color": "#991B1B", "regular_price": "480", "stock_qty": 2, "total_sales": 58, "unit": "kg", "origin": "Bukidnon",
+			"short_description": "<p>Beef brisket for bulalo, kare-kare and nilaga.</p><ul><li>Sold per kilo</li></ul>",
+			"description": "<p>Slow-cook brisket for tender, flavourful beef. Limited daily supply — request a quotation for larger orders.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Bukidnon"] } ]
+		},
+		{
+			"sku": "NX-PE-001", "name": "Whole Dressed Chicken", "slug": "whole-dressed-chicken", "type": "simple", "category": "poultry-eggs", "tags": ["chicken", "chilled"],
+			"art": "chicken", "color": "#FDE68A", "regular_price": "220", "stock_qty": 45, "total_sales": 230, "unit": "kg", "origin": "Bulacan",
+			"short_description": "<p>Whole dressed chicken, about 1.1–1.4 kg each.</p><ul><li>Cleaned and chilled</li><li>Priced per kilo, billed by actual weight</li></ul>",
+			"description": "<p>For tinola, roast chicken and fried chicken. Ask us to cut it into 8 or 12 pieces in the order notes.</p>",
+			"attributes": [ { "name": "Approx. weight", "options": ["1.1–1.4 kg per bird"] }, { "name": "Origin", "options": ["Bulacan"] } ]
+		},
+		{
+			"sku": "NX-PE-002", "name": "Chicken Breast Fillet", "slug": "chicken-breast-fillet", "type": "simple", "category": "poultry-eggs", "tags": ["chicken", "chilled"],
+			"art": "fillet", "color": "#FECACA", "regular_price": "290", "stock_qty": 30, "total_sales": 120, "unit": "kg", "origin": "Bulacan",
+			"short_description": "<p>Skinless, boneless breast fillet.</p><ul><li>Trimmed and chilled</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Lean and versatile — for grilling, salads and chicken fingers.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Bulacan"] } ]
+		},
+		{
+			"sku": "NX-PE-003", "name": "Fresh Eggs (Tray of 30)", "slug": "fresh-eggs-tray", "type": "variable", "category": "poultry-eggs", "tags": ["eggs"],
+			"art": "eggtray", "color": "#FBBF24", "total_sales": 310, "unit": "tray", "origin": "Batangas", "history": { "previous": 230, "days_ago": 8 },
+			"short_description": "<p>Fresh chicken eggs, 30 pieces per tray.</p><ul><li>Graded by size</li><li>Packed in protective trays</li></ul>",
+			"description": "<p>Eggs from farms in Batangas, graded and packed within days of laying (demo). Keep refrigerated.</p>",
+			"attributes": [
+				{ "name": "Size", "taxonomy": "size", "options": ["Medium", "Large", "Jumbo"], "variation": true },
+				{ "name": "Origin", "options": ["Batangas"] }
+			],
+			"variations": [
+				{ "attributes": { "size": "Medium" }, "regular_price": "240", "stock_qty": 40 },
+				{ "attributes": { "size": "Large" }, "regular_price": "270", "stock_qty": 32 },
+				{ "attributes": { "size": "Jumbo" }, "regular_price": "300", "stock_qty": 12 }
+			]
+		},
+		{
+			"sku": "NX-FS-001", "name": "Bangus (Milkfish)", "slug": "bangus-milkfish", "type": "simple", "category": "fish-seafood", "tags": ["fish", "on-ice"],
+			"art": "fish", "color": "#94A3B8", "featured": true, "regular_price": "210", "stock_qty": 42, "total_sales": 260, "unit": "kg", "origin": "Dagupan, Pangasinan",
+			"short_description": "<p>Whole bangus, 2–3 pieces per kilo.</p><ul><li>Packed on ice</li><li>Free cleaning and slicing on request</li></ul>",
+			"description": "<p>The national fish — for sinigang, paksiw and daing. Add \"cleaned and butterflied\" in the order notes and we will prepare it for you.</p>",
+			"attributes": [ { "name": "Size", "options": ["2–3 pieces per kg"] }, { "name": "Origin", "options": ["Dagupan, Pangasinan"] } ],
+			"reviews": [ { "author": "Sample Reviewer L.", "rating": 5, "content": "Very fresh and nicely cleaned. (Sample review for demonstration.)" } ]
+		},
+		{
+			"sku": "NX-FS-002", "name": "Tilapia", "slug": "tilapia", "type": "simple", "category": "fish-seafood", "tags": ["fish", "on-ice"],
+			"art": "fish", "color": "#475569", "regular_price": "150", "stock_qty": 50, "total_sales": 175, "unit": "kg", "origin": "Pampanga",
+			"short_description": "<p>Farm-raised tilapia, 3–4 pieces per kilo.</p><ul><li>Packed on ice</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Mild white fish for fried, grilled or sinigang dishes.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Pampanga"] } ]
+		},
+		{
+			"sku": "NX-FS-003", "name": "Galunggong (Round Scad)", "slug": "galunggong-round-scad", "type": "simple", "category": "fish-seafood", "tags": ["fish", "on-ice"],
+			"art": "fishsmall", "color": "#3B82F6", "regular_price": "240", "stock_qty": 36, "total_sales": 198, "unit": "kg", "origin": "Navotas", "history": { "previous": 260, "days_ago": 2 },
+			"short_description": "<p>Small round scad, perfect for frying.</p><ul><li>Packed on ice</li><li>Sold per kilo</li></ul>",
+			"description": "<p>A Filipino breakfast favourite — fry until crisp and serve with rice and sawsawan.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Navotas"] } ]
+		},
+		{
+			"sku": "NX-FS-004", "name": "Suahe Shrimp", "slug": "suahe-shrimp", "type": "simple", "category": "fish-seafood", "tags": ["seafood", "on-ice"],
+			"art": "shrimp", "color": "#FB923C", "regular_price": "520", "stock_qty": 0, "total_sales": 88, "unit": "kg", "origin": "Bulacan",
+			"short_description": "<p>Sweet medium shrimp for sinigang and halabos.</p><ul><li>Packed on ice</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Supply depends on the daily catch. Currently unavailable — request a quotation and we will confirm price and availability.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Bulacan"] } ]
+		},
+		{
+			"sku": "NX-FS-005", "name": "Pusit (Squid)", "slug": "pusit-squid", "type": "simple", "category": "fish-seafood", "tags": ["seafood", "on-ice"],
+			"art": "squid", "color": "#E9D5FF", "regular_price": "380", "stock_qty": 20, "total_sales": 96, "unit": "kg", "origin": "Palawan",
+			"short_description": "<p>Whole squid for adobong pusit and calamares.</p><ul><li>Packed on ice</li><li>Sold per kilo</li></ul>",
+			"description": "<p>Cleaning on request — add a note at checkout.</p>",
+			"attributes": [ { "name": "Origin", "options": ["Palawan"] } ]
+		},
+		{
+			"sku": "NX-DG-001", "name": "Refined White Sugar", "slug": "refined-white-sugar", "type": "variable", "category": "dry-goods", "tags": ["pantry", "bulk"],
+			"art": "sugarbag", "color": "#E5E7EB", "total_sales": 205, "unit": "pack", "origin": "Negros Occidental", "measure_unit": "kg", "history": { "previous": 82, "days_ago": 10 },
+			"short_description": "<p>Fine refined sugar for cooking, baking and drinks.</p><ul><li>1 kg packs and 25 kg sacks</li></ul>",
+			"description": "<p>Refined cane sugar from Negros mills. The 25 kg sack is popular with bakeries and food businesses.</p>",
+			"attributes": [
+				{ "name": "Pack size", "options": ["1 kg", "25 kg sack"], "variation": true },
+				{ "name": "Origin", "options": ["Negros Occidental"] }
+			],
+			"variations": [
+				{ "attributes": { "pack-size": "1 kg" }, "regular_price": "85", "stock_qty": 140, "measure": 1 },
+				{ "attributes": { "pack-size": "25 kg sack" }, "regular_price": "1950", "stock_qty": 10, "measure": 25 }
+			]
+		},
+		{
+			"sku": "NX-DG-002", "name": "Iodized Sea Salt 1 kg", "slug": "iodized-sea-salt-1kg", "type": "simple", "category": "dry-goods", "tags": ["pantry"],
+			"art": "saltpack", "color": "#2563EB", "regular_price": "35", "stock_qty": 160, "total_sales": 150, "unit": "pack", "origin": "Pangasinan", "measure_unit": "kg", "measure": 1,
+			"short_description": "<p>Fine iodized sea salt, 1 kg pack.</p>",
+			"description": "<p>Sea salt with added iodine for everyday cooking.</p>",
+			"attributes": [ { "name": "Net weight", "options": ["1 kg"] } ]
+		},
+		{
+			"sku": "NX-DG-003", "name": "Coconut Cooking Oil", "slug": "coconut-cooking-oil", "type": "variable", "category": "dry-goods", "tags": ["pantry", "bulk"],
+			"art": "oilbottle", "color": "#FACC15", "total_sales": 222, "unit": "bottle", "origin": "Quezon", "measure_unit": "L", "history": { "previous": 115, "days_ago": 6 },
+			"short_description": "<p>Refined coconut cooking oil for frying and sautéing.</p><ul><li>1 L bottle and 4 L jug</li></ul>",
+			"description": "<p>A high smoke-point coconut oil for everyday frying. The 4 L jug gives a lower price per litre.</p>",
+			"attributes": [
+				{ "name": "Volume", "options": ["1 L", "4 L jug"], "variation": true },
+				{ "name": "Origin", "options": ["Quezon"] }
+			],
+			"variations": [
+				{ "attributes": { "volume": "1 L" }, "regular_price": "120", "stock_qty": 80, "measure": 1 },
+				{ "attributes": { "volume": "4 L jug" }, "regular_price": "440", "stock_qty": 25, "measure": 4 }
+			]
+		},
+		{
+			"sku": "NX-DG-004", "name": "Soy Sauce 1 L", "slug": "soy-sauce-1l", "type": "simple", "category": "dry-goods", "tags": ["condiments"],
+			"art": "soybottle", "color": "#3F1D0B", "regular_price": "65", "stock_qty": 90, "total_sales": 131, "unit": "bottle", "origin": "Local", "measure_unit": "L", "measure": 1,
+			"short_description": "<p>All-purpose soy sauce, 1 litre.</p>",
+			"description": "<p>For adobo, marinades and dipping sauces.</p>",
+			"attributes": [ { "name": "Volume", "options": ["1 L"] } ]
+		},
+		{
+			"sku": "NX-DG-005", "name": "Cane Vinegar 1 L", "slug": "cane-vinegar-1l", "type": "simple", "category": "dry-goods", "tags": ["condiments"],
+			"art": "vinegarbottle", "color": "#FEF3C7", "regular_price": "55", "sale_price": "48", "stock_qty": 85, "total_sales": 119, "unit": "bottle", "origin": "Ilocos", "measure_unit": "L", "measure": 1,
+			"short_description": "<p>Naturally fermented sugarcane vinegar, 1 litre.</p>",
+			"description": "<p>Sukang Iloko-style cane vinegar for paksiw, adobo and sawsawan.</p>",
+			"attributes": [ { "name": "Volume", "options": ["1 L"] } ]
+		},
+		{
+			"sku": "NX-DG-006", "name": "Tuyo (Dried Herring) 250 g", "slug": "tuyo-dried-herring", "type": "simple", "category": "dry-goods", "tags": ["dried-fish"],
+			"art": "driedfish", "color": "#A16207", "regular_price": "95", "stock_qty": 0, "total_sales": 102, "unit": "pack", "origin": "Cebu", "measure_unit": "kg", "measure": 0.25,
+			"short_description": "<p>Salted dried herring, 250 g pack.</p>",
+			"description": "<p>Fry briefly until crisp. Pairs well with garlic rice and vinegar. Restocking — request a quotation for bulk packs.</p>",
+			"attributes": [ { "name": "Net weight", "options": ["250 g"] }, { "name": "Origin", "options": ["Cebu"] } ]
+		},
+		{
+			"sku": "NX-DG-007", "name": "Dried Pusit 100 g", "slug": "dried-pusit", "type": "simple", "category": "dry-goods", "tags": ["dried-fish"],
+			"art": "driedsquid", "color": "#D6A76C", "regular_price": "180", "stock_qty": 28, "total_sales": 64, "unit": "pack", "origin": "Cebu", "measure_unit": "kg", "measure": 0.1,
+			"short_description": "<p>Sun-dried squid, 100 g pack.</p>",
+			"description": "<p>Grill or fry lightly; serve with spiced vinegar.</p>",
+			"attributes": [ { "name": "Net weight", "options": ["100 g"] }, { "name": "Origin", "options": ["Cebu"] } ]
+		}
+	]
+}

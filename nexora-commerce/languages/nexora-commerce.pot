@@ -1,0 +1,2349 @@
+# Copyright (C) 2026 Freshtastic Food Hub Team
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Freshtastic Food Hub 2.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/nexora-commerce\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-11-04T17:26:39+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: nexora-commerce\n"
+
+#. Theme Name of the theme
+#: style.css
+msgid "Freshtastic Food Hub"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://example.com/nexora-commerce"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "A wet and dry market WooCommerce theme with a trading-floor design: live price ticker, market board, price board with real price changes, units and origins, price-per-kg comparisons and request-for-quotation for items that are missing, out of stock or needed in bulk. Includes live search, AJAX filters, mini-cart drawer, sticky add-to-cart and a Customizer-driven homepage. Pair it with the Freshtastic Food Hub Toolkit plugin."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "Freshtastic Food Hub Team"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://example.com"
+msgstr ""
+
+#: 404.php:16
+msgid "This page drifted out of orbit."
+msgstr ""
+
+#: 404.php:17
+msgid "The link may be broken or the page may have moved. Try a search or head back to the shop."
+msgstr ""
+
+#: 404.php:20
+msgid "Go to the shop"
+msgstr ""
+
+#: 404.php:21
+msgid "Back to home"
+msgstr ""
+
+#. translators: %d: comment count
+#: comments.php:19
+#, php-format
+msgid "%d comment"
+msgid_plural "%d comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:28
+msgid "Comments are closed."
+msgstr ""
+
+#: footer.php:20
+msgid "Join the newsletter"
+msgstr ""
+
+#: footer.php:28
+msgid "Contact"
+msgstr ""
+
+#: footer.php:60
+#: footer.php:66
+msgid "Legal"
+msgstr ""
+
+#: footer.php:71
+msgid "Accepted payment methods"
+msgstr ""
+
+#: header.php:19
+msgid "Skip to content"
+msgstr ""
+
+#: header.php:27
+msgid "Open menu"
+msgstr ""
+
+#: header.php:34
+msgid "Primary"
+msgstr ""
+
+#: header.php:39
+msgid "Categories"
+msgstr ""
+
+#: header.php:69
+msgid "Request a Quote"
+msgstr ""
+
+#: header.php:74
+#: template-parts/footer/columns.php:46
+#: template-parts/header/mobile-drawer.php:51
+msgid "My account"
+msgstr ""
+
+#: header.php:80
+#: inc/woocommerce.php:201
+#: template-parts/header/mobile-drawer.php:53
+msgid "Wishlist"
+msgstr ""
+
+#: header.php:86
+msgid "Cart"
+msgstr ""
+
+#: home.php:16
+msgid "Journal"
+msgstr ""
+
+#: home.php:17
+msgid "Latest stories"
+msgstr ""
+
+#: home.php:18
+msgid "Shopping guides, product comparisons and ideas for everyday upgrades."
+msgstr ""
+
+#: inc/account.php:138
+msgid "Good morning"
+msgstr ""
+
+#: inc/account.php:140
+msgid "Good afternoon"
+msgstr ""
+
+#: inc/account.php:140
+msgid "Good evening"
+msgstr ""
+
+#: inc/account.php:153
+msgid "Order placed"
+msgstr ""
+
+#: inc/account.php:154
+msgid "Packing"
+msgstr ""
+
+#: inc/account.php:155
+msgid "Ready"
+msgstr ""
+
+#: inc/account.php:156
+msgid "Collected"
+msgstr ""
+
+#: inc/assets.php:68
+msgid "Searching…"
+msgstr ""
+
+#: inc/assets.php:69
+msgid "No products found. Try a different search."
+msgstr ""
+
+#: inc/assets.php:70
+msgid "View all results"
+msgstr ""
+
+#. translators: %d: number of results
+#: inc/assets.php:71
+#, php-format
+msgid "%d products found"
+msgstr ""
+
+#. translators: %d: number of results
+#: inc/assets.php:72
+msgid "Added to cart"
+msgstr ""
+
+#: inc/assets.php:73
+msgid "Sorry, that item could not be added. Please try again."
+msgstr ""
+
+#: inc/assets.php:74
+msgid "Loading…"
+msgstr ""
+
+#: inc/assets.php:75
+msgid "Filters could not be applied. Reloading the page…"
+msgstr ""
+
+#: inc/assets.php:76
+msgid "d"
+msgstr ""
+
+#: inc/assets.php:77
+#: inc/woocommerce.php:421
+msgid "You have unlocked free shipping!"
+msgstr ""
+
+#: inc/assets.php:78
+msgid "Market open"
+msgstr ""
+
+#: inc/assets.php:79
+msgid "Market closed"
+msgstr ""
+
+#: inc/assets.php:80
+msgid "opens"
+msgstr ""
+
+#: inc/assets.php:81
+msgid "closes"
+msgstr ""
+
+#. translators: %s: amount remaining
+#. translators: %s: formatted amount remaining
+#: inc/assets.php:83
+#: inc/woocommerce.php:424
+#, php-format
+msgid "Add %s more for free shipping"
+msgstr ""
+
+#: inc/checkout.php:33
+msgid "Notes for the store"
+msgstr ""
+
+#: inc/checkout.php:34
+msgid "For example: choose ripe mangoes, cut the bangus into steaks, call when the order is packed."
+msgstr ""
+
+#: inc/checkout.php:51
+msgid "Mobile number"
+msgstr ""
+
+#: inc/checkout.php:64
+#: woocommerce/checkout/form-checkout.php:43
+#: woocommerce/myaccount/dashboard.php:174
+msgid "Your details"
+msgstr ""
+
+#. translators: %d: package number
+#: inc/checkout.php:66
+#: inc/checkout.php:154
+#: woocommerce/checkout/form-checkout.php:54
+msgid "Delivery or pickup"
+msgstr ""
+
+#: inc/checkout.php:68
+#: woocommerce/checkout/form-checkout.php:70
+msgid "Review and pay"
+msgstr ""
+
+#: inc/checkout.php:99
+msgid "Free"
+msgstr ""
+
+#: inc/checkout.php:126
+msgid "Collect your order at the store."
+msgstr ""
+
+#: inc/checkout.php:128
+msgid "Delivered to your address at no charge."
+msgstr ""
+
+#: inc/checkout.php:130
+msgid "Delivered to your address."
+msgstr ""
+
+#: inc/checkout.php:149
+msgid "There are no delivery options for this address yet. Check your address, or contact us and we will help."
+msgstr ""
+
+#. translators: %d: package number
+#: inc/checkout.php:154
+#, php-format
+msgid "Package %d"
+msgstr ""
+
+#: inc/checkout.php:223
+msgid "Delivery"
+msgstr ""
+
+#: inc/checkout.php:224
+msgid "Choose in step 2"
+msgstr ""
+
+#. translators: %s: section name
+#: inc/class-nexora-sections-control.php:54
+#, php-format
+msgid "Move %s up"
+msgstr ""
+
+#. translators: %s: section name
+#: inc/class-nexora-sections-control.php:55
+#, php-format
+msgid "Move %s down"
+msgstr ""
+
+#: inc/customizer.php:20
+msgid "Hero and market board"
+msgstr ""
+
+#: inc/customizer.php:21
+msgid "Market sections (categories)"
+msgstr ""
+
+#: inc/customizer.php:22
+msgid "Price board"
+msgstr ""
+
+#: inc/customizer.php:23
+msgid "Featured products"
+msgstr ""
+
+#: inc/customizer.php:24
+#: inc/customizer.php:111
+msgid "Trending now"
+msgstr ""
+
+#: inc/customizer.php:25
+#: inc/customizer.php:353
+msgid "Campaign banner"
+msgstr ""
+
+#: inc/customizer.php:26
+msgid "Request a quotation banner"
+msgstr ""
+
+#: inc/customizer.php:27
+#: template-parts/header/mega-menu.php:66
+msgid "New arrivals"
+msgstr ""
+
+#: inc/customizer.php:28
+#: template-parts/header/mega-menu.php:67
+msgid "Best sellers"
+msgstr ""
+
+#: inc/customizer.php:29
+msgid "Brand benefits"
+msgstr ""
+
+#: inc/customizer.php:30
+msgid "Personalized discovery"
+msgstr ""
+
+#: inc/customizer.php:31
+msgid "Reviews and testimonials"
+msgstr ""
+
+#: inc/customizer.php:32
+#: template-parts/homepage/newsletter.php:18
+msgid "Newsletter"
+msgstr ""
+
+#: inc/customizer.php:33
+msgid "Editorial / journal"
+msgstr ""
+
+#: inc/customizer.php:34
+msgid "Front page editor content"
+msgstr ""
+
+#: inc/customizer.php:35
+msgid "Final conversion banner"
+msgstr ""
+
+#: inc/customizer.php:52
+msgid "Sourced from farms and ports"
+msgstr ""
+
+#: inc/customizer.php:52
+msgid "Produce from Benguet to Davao and fish from Navotas to Dagupan (demo sourcing)."
+msgstr ""
+
+#: inc/customizer.php:53
+msgid "Cold-chain packing"
+msgstr ""
+
+#: inc/customizer.php:53
+msgid "Meat, poultry and seafood are packed cold for pickup or your rider."
+msgstr ""
+
+#: inc/customizer.php:54
+#: template-parts/homepage/hero.php:51
+msgid "Honest weights"
+msgstr ""
+
+#: inc/customizer.php:54
+msgid "Per-kilo items are weighed at packing; short weights are refunded."
+msgstr ""
+
+#: inc/customizer.php:55
+msgid "Bulk quotations"
+msgstr ""
+
+#: inc/customizer.php:55
+msgid "Carinderias, stores and restaurants get quotes for volume and regular orders."
+msgstr ""
+
+#: inc/customizer.php:60
+msgid "Primary accent"
+msgstr ""
+
+#: inc/customizer.php:61
+msgid "Secondary accent"
+msgstr ""
+
+#: inc/customizer.php:62
+msgid "Main text"
+msgstr ""
+
+#: inc/customizer.php:63
+msgid "Page background"
+msgstr ""
+
+#: inc/customizer.php:64
+msgid "Dark sections"
+msgstr ""
+
+#: inc/customizer.php:65
+msgid "Sale accent"
+msgstr ""
+
+#: inc/customizer.php:66
+msgid "Heading font"
+msgstr ""
+
+#: inc/customizer.php:66
+#: inc/customizer.php:67
+msgid "System UI"
+msgstr ""
+
+#: inc/customizer.php:67
+msgid "Body font"
+msgstr ""
+
+#: inc/customizer.php:68
+msgid "Corner radius (px)"
+msgstr ""
+
+#: inc/customizer.php:71
+msgid "Show announcement bar"
+msgstr ""
+
+#: inc/customizer.php:72
+msgid "Order online, then pick up at the market or book your own rider · Choose your time at checkout"
+msgstr ""
+
+#: inc/customizer.php:72
+msgid "Message"
+msgstr ""
+
+#: inc/customizer.php:73
+msgid "Today's deals"
+msgstr ""
+
+#: inc/customizer.php:73
+msgid "Link label"
+msgstr ""
+
+#: inc/customizer.php:74
+msgid "Link URL"
+msgstr ""
+
+#: inc/customizer.php:74
+msgid "Leave empty to link to the shop’s on-sale filter."
+msgstr ""
+
+#: inc/customizer.php:75
+msgid "Countdown ends (site time)"
+msgstr ""
+
+#: inc/customizer.php:75
+msgid "Optional. Use only for a real promotion deadline. The countdown and bar hide automatically once it passes."
+msgstr ""
+
+#: inc/customizer.php:76
+msgid "Visitors can dismiss the bar"
+msgstr ""
+
+#: inc/customizer.php:79
+msgid "Sticky header"
+msgstr ""
+
+#: inc/customizer.php:80
+msgid "Transparent header over the homepage hero"
+msgstr ""
+
+#: inc/customizer.php:81
+msgid "Show product search"
+msgstr ""
+
+#: inc/customizer.php:82
+msgid "Show category mega menu"
+msgstr ""
+
+#: inc/customizer.php:83
+msgid "Show “Request a Quote” button"
+msgstr ""
+
+#: inc/customizer.php:84
+msgid "Show price ticker under the header"
+msgstr ""
+
+#: inc/customizer.php:84
+msgid "Lists products whose price changed most recently (real price history recorded by the Freshtastic Food Hub Toolkit)."
+msgstr ""
+
+#: inc/customizer.php:85
+msgid "Ticker: number of items"
+msgstr ""
+
+#: inc/customizer.php:86
+msgid "Market opens (24h, site time)"
+msgstr ""
+
+#: inc/customizer.php:86
+msgid "Shown as a live “Market open / closed” status. Leave empty to hide."
+msgstr ""
+
+#: inc/customizer.php:87
+msgid "Market closes (24h, site time)"
+msgstr ""
+
+#: inc/customizer.php:90
+#: inc/customizer.php:350
+msgid "Sections and order"
+msgstr ""
+
+#: inc/customizer.php:90
+msgid "Tick to show a section; use the arrows to reorder."
+msgstr ""
+
+#: inc/customizer.php:93
+msgid "Meat, fish, vegetables, frozen goods and more"
+msgstr ""
+
+#: inc/customizer.php:93
+msgid "Badge"
+msgstr ""
+
+#: inc/customizer.php:94
+msgid "Fresh market prices, live."
+msgstr ""
+
+#: inc/customizer.php:94
+#: inc/customizer.php:123
+msgid "Headline"
+msgstr ""
+
+#: inc/customizer.php:95
+msgid "Rice by the sack, vegetables by the kilo, meat and seafood packed cold — with transparent prices you can track like a trading board."
+msgstr ""
+
+#: inc/customizer.php:95
+msgid "Supporting copy"
+msgstr ""
+
+#: inc/customizer.php:96
+#: woocommerce/myaccount/dashboard.php:40
+msgid "Shop the market"
+msgstr ""
+
+#: inc/customizer.php:96
+msgid "Primary button label"
+msgstr ""
+
+#: inc/customizer.php:97
+msgid "Primary button URL"
+msgstr ""
+
+#: inc/customizer.php:97
+msgid "Defaults to the shop page."
+msgstr ""
+
+#: inc/customizer.php:98
+#: woocommerce/myaccount/dashboard.php:42
+msgid "Request a quote"
+msgstr ""
+
+#: inc/customizer.php:98
+msgid "Secondary button label"
+msgstr ""
+
+#: inc/customizer.php:99
+msgid "Secondary button URL"
+msgstr ""
+
+#: inc/customizer.php:99
+msgid "Defaults to the Request a Quote page (or the shop sorted by newest)."
+msgstr ""
+
+#: inc/customizer.php:100
+msgid "Today's movers"
+msgstr ""
+
+#: inc/customizer.php:100
+msgid "Market board title"
+msgstr ""
+
+#: inc/customizer.php:101
+msgid "Hero image"
+msgstr ""
+
+#: inc/customizer.php:102
+msgid "Feature card product ID"
+msgstr ""
+
+#: inc/customizer.php:102
+msgid "Optional. Defaults to the first featured product; set -1 to hide the card."
+msgstr ""
+
+#: inc/customizer.php:105
+msgid "Today's price board"
+msgstr ""
+
+#: inc/customizer.php:105
+msgid "Price board: title"
+msgstr ""
+
+#: inc/customizer.php:106
+msgid "Price board: number of items"
+msgstr ""
+
+#: inc/customizer.php:107
+msgid "Market sections"
+msgstr ""
+
+#: inc/customizer.php:107
+msgid "Categories: title"
+msgstr ""
+
+#: inc/customizer.php:108
+msgid "Categories: slugs to show"
+msgstr ""
+
+#: inc/customizer.php:108
+msgid "Comma-separated product category slugs. Empty shows top-level categories."
+msgstr ""
+
+#: inc/customizer.php:109
+msgid "Today's picks"
+msgstr ""
+
+#: inc/customizer.php:109
+msgid "Featured: title"
+msgstr ""
+
+#: inc/customizer.php:110
+msgid "Featured: number of products"
+msgstr ""
+
+#: inc/customizer.php:111
+msgid "Trending: title"
+msgstr ""
+
+#: inc/customizer.php:112
+msgid "Trending: source"
+msgstr ""
+
+#: inc/customizer.php:112
+msgid "Top rated"
+msgstr ""
+
+#: inc/customizer.php:112
+msgid "Best selling"
+msgstr ""
+
+#: inc/customizer.php:112
+#: inc/shop-filters.php:188
+#: inc/shop-filters.php:253
+msgid "On sale"
+msgstr ""
+
+#: inc/customizer.php:112
+msgid "Manual product IDs"
+msgstr ""
+
+#: inc/customizer.php:113
+msgid "Trending: manual product IDs"
+msgstr ""
+
+#: inc/customizer.php:113
+msgid "Comma-separated IDs, used when the source is Manual."
+msgstr ""
+
+#: inc/customizer.php:114
+msgid "Trending: number of products"
+msgstr ""
+
+#: inc/customizer.php:115
+msgid "Fresh arrivals"
+msgstr ""
+
+#: inc/customizer.php:115
+msgid "New arrivals: title"
+msgstr ""
+
+#: inc/customizer.php:116
+msgid "New arrivals: number of products"
+msgstr ""
+
+#: inc/customizer.php:117
+msgid "Most traded"
+msgstr ""
+
+#: inc/customizer.php:117
+msgid "Best sellers: title"
+msgstr ""
+
+#: inc/customizer.php:118
+msgid "Best sellers: number of products"
+msgstr ""
+
+#: inc/customizer.php:119
+msgid "Picked for your basket"
+msgstr ""
+
+#: inc/customizer.php:119
+msgid "Discovery: title"
+msgstr ""
+
+#: inc/customizer.php:122
+msgid "Dry market"
+msgstr ""
+
+#: inc/customizer.php:122
+msgid "Eyebrow"
+msgstr ""
+
+#: inc/customizer.php:123
+msgid "Stock up by the sack."
+msgstr ""
+
+#: inc/customizer.php:124
+msgid "Rice, sugar and cooking oil in bulk sizes with the lowest price per kilo — for households, carinderias and sari-sari stores."
+msgstr ""
+
+#: inc/customizer.php:124
+msgid "Copy"
+msgstr ""
+
+#: inc/customizer.php:125
+msgid "Shop the dry market"
+msgstr ""
+
+#: inc/customizer.php:125
+msgid "Button label"
+msgstr ""
+
+#: inc/customizer.php:126
+msgid "Button URL"
+msgstr ""
+
+#: inc/customizer.php:126
+msgid "Defaults to the Dry Market category when it exists."
+msgstr ""
+
+#: inc/customizer.php:127
+msgid "Background image"
+msgstr ""
+
+#: inc/customizer.php:128
+msgid "Show from (optional)"
+msgstr ""
+
+#: inc/customizer.php:129
+msgid "Hide after (optional)"
+msgstr ""
+
+#: inc/customizer.php:132
+msgid "Can’t find it on the board? Request a quotation."
+msgstr ""
+
+#: inc/customizer.php:132
+msgid "Quotation banner: title"
+msgstr ""
+
+#: inc/customizer.php:133
+msgid "Out-of-season items, bulk volumes or regular deliveries for your business — tell us what you need and we will source it and send a quote."
+msgstr ""
+
+#: inc/customizer.php:133
+msgid "Quotation banner: copy"
+msgstr ""
+
+#: inc/customizer.php:134
+msgid "Trusted by kitchens and stores"
+msgstr ""
+
+#: inc/customizer.php:134
+msgid "Reviews: title"
+msgstr ""
+
+#: inc/customizer.php:135
+msgid "Get weekly price alerts"
+msgstr ""
+
+#: inc/customizer.php:135
+msgid "Newsletter: title"
+msgstr ""
+
+#: inc/customizer.php:136
+msgid "Price drops, restocks and seasonal produce in one short email a week — unsubscribe anytime."
+msgstr ""
+
+#: inc/customizer.php:136
+msgid "Newsletter: copy"
+msgstr ""
+
+#: inc/customizer.php:137
+msgid "Market journal"
+msgstr ""
+
+#: inc/customizer.php:137
+msgid "Editorial: title"
+msgstr ""
+
+#: inc/customizer.php:138
+msgid "Editorial: number of posts"
+msgstr ""
+
+#: inc/customizer.php:139
+msgid "Your weekly market run, sorted."
+msgstr ""
+
+#: inc/customizer.php:139
+msgid "Final banner: headline"
+msgstr ""
+
+#: inc/customizer.php:140
+msgid "Browse the full market or catch this week’s price drops before they are gone."
+msgstr ""
+
+#: inc/customizer.php:140
+msgid "Final banner: copy"
+msgstr ""
+
+#: inc/customizer.php:141
+#: woocommerce/loop/no-products-found.php:49
+msgid "Browse the market"
+msgstr ""
+
+#: inc/customizer.php:141
+msgid "Final banner: button label"
+msgstr ""
+
+#: inc/customizer.php:142
+msgid "Final banner: button URL"
+msgstr ""
+
+#: inc/customizer.php:143
+msgid "Final banner: image"
+msgstr ""
+
+#: inc/customizer.php:146
+msgid "Free-shipping threshold (store currency)"
+msgstr ""
+
+#: inc/customizer.php:146
+msgid "Display only — set the same minimum on your WooCommerce “Free shipping” method. Use 0 to hide the progress bar."
+msgstr ""
+
+#: inc/customizer.php:147
+msgid "Product card style"
+msgstr ""
+
+#: inc/customizer.php:147
+msgid "Elevated"
+msgstr ""
+
+#: inc/customizer.php:147
+msgid "Minimal"
+msgstr ""
+
+#: inc/customizer.php:148
+msgid "Show first gallery image on hover"
+msgstr ""
+
+#: inc/customizer.php:149
+msgid "Show ratings on cards"
+msgstr ""
+
+#: inc/customizer.php:150
+msgid "Quick add-to-cart on cards"
+msgstr ""
+
+#: inc/customizer.php:151
+msgid "“New” badge: product age in days"
+msgstr ""
+
+#: inc/customizer.php:151
+msgid "Use 0 to disable the New badge."
+msgstr ""
+
+#: inc/customizer.php:152
+msgid "Show discount percentage on sale badges"
+msgstr ""
+
+#: inc/customizer.php:153
+msgid "Low-stock message threshold"
+msgstr ""
+
+#: inc/customizer.php:153
+msgid "Shows “Only N left” when managed stock is at or below this number. Use 0 to disable."
+msgstr ""
+
+#: inc/customizer.php:154
+msgid "Sticky add-to-cart bar on product pages"
+msgstr ""
+
+#: inc/customizer.php:155
+msgid "Show “Buy now” button"
+msgstr ""
+
+#: inc/customizer.php:156
+msgid ""
+"Weighed at packing — short weights are refunded|scale\n"
+"Meat and seafood packed cold|snow\n"
+"Pick up at the store or book your own rider|store"
+msgstr ""
+
+#: inc/customizer.php:156
+msgid "Product page trust lines"
+msgstr ""
+
+#: inc/customizer.php:156
+msgid "One per line as “Text|icon”. Icons: truck, return, shield, chat, sparkle, tag, scale, snow, leaf, chart, clipboard, store."
+msgstr ""
+
+#: inc/customizer.php:159
+msgid "Phone"
+msgstr ""
+
+#: inc/customizer.php:160
+msgid "Email"
+msgstr ""
+
+#: inc/customizer.php:161
+msgid "Demo address — Stall 12, Sample Public Market, Quezon City"
+msgstr ""
+
+#: inc/customizer.php:161
+msgid "Address"
+msgstr ""
+
+#: inc/customizer.php:162
+msgid "Daily, 4 AM–8 PM (PHT)"
+msgstr ""
+
+#: inc/customizer.php:162
+msgid "Support hours"
+msgstr ""
+
+#: inc/customizer.php:170
+msgid "Freshtastic Food Hub by JEJOBO brings fresh meat, fish, vegetables, frozen goods and more to your table. Freshness you can always trust. This is a demo storefront; replace this text with your story."
+msgstr ""
+
+#: inc/customizer.php:170
+msgid "Brand introduction"
+msgstr ""
+
+#: inc/customizer.php:171
+msgid "Payment methods display"
+msgstr ""
+
+#: inc/customizer.php:171
+msgid "Automatic lists only the WooCommerce gateways that are enabled, so customers never see a method you do not accept."
+msgstr ""
+
+#: inc/customizer.php:171
+msgid "Automatic (enabled gateways)"
+msgstr ""
+
+#: inc/customizer.php:171
+msgid "Manual list"
+msgstr ""
+
+#: inc/customizer.php:171
+msgid "Hidden"
+msgstr ""
+
+#: inc/customizer.php:172
+msgid "Manual payment list"
+msgstr ""
+
+#: inc/customizer.php:172
+msgid "Comma-separated, e.g. “GCash, Maya, Visa, Mastercard”. Only list methods you actually accept."
+msgstr ""
+
+#: inc/customizer.php:173
+msgid "Copyright text"
+msgstr ""
+
+#: inc/customizer.php:173
+msgid "Defaults to “© {year} Site name. All rights reserved.”"
+msgstr ""
+
+#: inc/customizer.php:176
+msgid "Generate WebP image sizes for new JPEG uploads (when the server supports WebP)"
+msgstr ""
+
+#: inc/customizer.php:177
+msgid "Load bundled Inter/Manrope font files (disable to use system fonts only)"
+msgstr ""
+
+#. translators: %d: benefit number
+#: inc/customizer.php:181
+#, php-format
+msgid "Benefit %d: icon"
+msgstr ""
+
+#. translators: %d: benefit number
+#: inc/customizer.php:182
+#, php-format
+msgid "Benefit %d: title"
+msgstr ""
+
+#. translators: %d: benefit number
+#: inc/customizer.php:183
+#, php-format
+msgid "Benefit %d: text"
+msgstr ""
+
+#: inc/customizer.php:197
+msgid "Shield"
+msgstr ""
+
+#: inc/customizer.php:198
+msgid "Sparkle"
+msgstr ""
+
+#: inc/customizer.php:199
+msgid "Chat"
+msgstr ""
+
+#: inc/customizer.php:200
+msgid "Truck"
+msgstr ""
+
+#: inc/customizer.php:201
+msgid "Return arrow"
+msgstr ""
+
+#: inc/customizer.php:202
+msgid "Tag"
+msgstr ""
+
+#: inc/customizer.php:203
+msgid "Heart"
+msgstr ""
+
+#: inc/customizer.php:204
+msgid "Star"
+msgstr ""
+
+#: inc/customizer.php:205
+msgid "Scale"
+msgstr ""
+
+#: inc/customizer.php:206
+msgid "Snowflake"
+msgstr ""
+
+#: inc/customizer.php:207
+msgid "Leaf"
+msgstr ""
+
+#: inc/customizer.php:208
+msgid "Chart"
+msgstr ""
+
+#: inc/customizer.php:209
+msgid "Clipboard"
+msgstr ""
+
+#: inc/customizer.php:210
+msgid "Market stall"
+msgstr ""
+
+#: inc/customizer.php:339
+msgid "Freshtastic Theme"
+msgstr ""
+
+#: inc/customizer.php:340
+msgid "Freshtastic Homepage"
+msgstr ""
+
+#: inc/customizer.php:343
+msgid "Brand colors and typography"
+msgstr ""
+
+#: inc/customizer.php:344
+msgid "Announcement bar"
+msgstr ""
+
+#: inc/customizer.php:345
+msgid "Header"
+msgstr ""
+
+#: inc/customizer.php:346
+msgid "Shop and product pages"
+msgstr ""
+
+#: inc/customizer.php:347
+msgid "Store info and social links"
+msgstr ""
+
+#: inc/customizer.php:348
+msgid "Footer"
+msgstr ""
+
+#: inc/customizer.php:349
+msgid "Performance"
+msgstr ""
+
+#: inc/customizer.php:351
+msgid "Hero"
+msgstr ""
+
+#: inc/customizer.php:352
+msgid "Product sections"
+msgstr ""
+
+#: inc/customizer.php:354
+msgid "Benefits, newsletter and banners"
+msgstr ""
+
+#: inc/integrations.php:77
+msgid "Freshtastic Food Hub works best with its companion plugin, Freshtastic Food Hub Toolkit (included in the theme package). It adds the demo importer, wishlist, newsletter providers and analytics events."
+msgstr ""
+
+#: inc/integrations.php:79
+msgid "Dismiss"
+msgstr ""
+
+#. translators: %s: percent
+#: inc/market.php:50
+#, php-format
+msgid "up %s since the previous price"
+msgstr ""
+
+#. translators: %s: percent
+#: inc/market.php:52
+#, php-format
+msgid "down %s since the previous price"
+msgstr ""
+
+#. translators: %s: percent
+#: inc/market.php:54
+#, php-format
+msgid "unchanged (%s)"
+msgstr ""
+
+#. translators: %s: date
+#: inc/market.php:57
+#, php-format
+msgid "Price updated %s"
+msgstr ""
+
+#: inc/market.php:102
+#: woocommerce/content-product.php:88
+msgid "Request quote"
+msgstr ""
+
+#. translators: %s: product
+#: inc/market.php:110
+#, php-format
+msgid "for %s"
+msgstr ""
+
+#: inc/market.php:156
+#: inc/market.php:238
+#: inc/market.php:327
+msgid "Out of stock"
+msgstr ""
+
+#: inc/market.php:161
+#: inc/shop-filters.php:256
+msgid "In stock"
+msgstr ""
+
+#. translators: %s: quantity, e.g. "3 kg"
+#: inc/market.php:168
+#, php-format
+msgid "Only %s left"
+msgstr ""
+
+#. translators: %s: quantity, e.g. "3 kg"
+#: inc/market.php:168
+#, php-format
+msgid "%s in stock"
+msgstr ""
+
+#: inc/market.php:237
+msgid "Quote"
+msgstr ""
+
+#. translators: %s: product
+#: inc/market.php:251
+#, php-format
+msgid "Add one %s to cart"
+msgstr ""
+
+#: inc/market.php:267
+msgid "Add"
+msgstr ""
+
+#: inc/market.php:270
+msgid "Options"
+msgstr ""
+
+#: inc/market.php:291
+msgid "vs previous price"
+msgstr ""
+
+#. translators: 1: price, 2: kg or L
+#: inc/market.php:296
+#: woocommerce/content-product.php:76
+#, php-format
+msgid "From %1$s / %2$s"
+msgstr ""
+
+#. translators: %s: origin
+#: inc/market.php:300
+#, php-format
+msgid "Origin: %s"
+msgstr ""
+
+#. translators: %s: kg or L
+#: inc/market.php:320
+#, php-format
+msgid "Price per %s by pack size"
+msgstr ""
+
+#. translators: %s: kg or L
+#: inc/market.php:320
+msgid "Pack"
+msgstr ""
+
+#. translators: %s: kg or L
+#: inc/market.php:320
+#: inc/shop-filters.php:171
+#: template-parts/homepage/price-board.php:72
+#: template-parts/homepage/price-board.php:94
+msgid "Price"
+msgstr ""
+
+#. translators: %s: kg or L
+#: inc/market.php:320
+#, php-format
+msgid "Per %s"
+msgstr ""
+
+#: inc/market.php:325
+msgid "Best value"
+msgstr ""
+
+#: inc/market.php:354
+msgid "Currently unavailable"
+msgstr ""
+
+#: inc/market.php:355
+msgid "Tell us how much you need and when — we will check supply and send you a quotation."
+msgstr ""
+
+#: inc/market.php:356
+#: template-parts/homepage/categories.php:68
+#: template-parts/homepage/price-board.php:104
+#: template-parts/homepage/rfq-banner.php:26
+#: woocommerce/loop/no-products-found.php:54
+#: woocommerce/single-product/nexora-sticky-atc.php:36
+msgid "Request a quotation"
+msgstr ""
+
+#: inc/market.php:363
+msgid "Buying in bulk or for your business?"
+msgstr ""
+
+#: inc/market.php:365
+msgid "Request a volume quotation"
+msgstr ""
+
+#: inc/setup.php:64
+msgid "Primary navigation"
+msgstr ""
+
+#: inc/setup.php:65
+msgid "Mobile drawer (falls back to Primary)"
+msgstr ""
+
+#: inc/setup.php:66
+msgid "Footer: Shop"
+msgstr ""
+
+#: inc/setup.php:67
+msgid "Footer: Customer service"
+msgstr ""
+
+#: inc/setup.php:68
+msgid "Footer: Company"
+msgstr ""
+
+#: inc/setup.php:69
+msgid "Footer: Legal links"
+msgstr ""
+
+#: inc/setup.php:98
+#: sidebar.php:14
+msgid "Blog sidebar"
+msgstr ""
+
+#: inc/setup.php:100
+msgid "Shown beside blog posts and archives."
+msgstr ""
+
+#: inc/setup.php:108
+msgid "Shop filters (extra)"
+msgstr ""
+
+#: inc/setup.php:110
+msgid "Optional widgets shown below the built-in shop filters."
+msgstr ""
+
+#: inc/setup.php:118
+msgid "Footer extra"
+msgstr ""
+
+#: inc/setup.php:120
+msgid "Optional widgets shown in a row above the footer bottom bar."
+msgstr ""
+
+#: inc/setup.php:141
+msgid "Freshtastic Food Hub:"
+msgstr ""
+
+#: inc/setup.php:142
+msgid "WooCommerce is not active. The blog, pages and navigation still work, but shop sections, cart and product templates are hidden until WooCommerce is activated."
+msgstr ""
+
+#: inc/setup.php:144
+msgid "Install WooCommerce"
+msgstr ""
+
+#: inc/shop-filters.php:144
+msgid "Category"
+msgstr ""
+
+#: inc/shop-filters.php:146
+msgid "All products"
+msgstr ""
+
+#: inc/shop-filters.php:174
+msgid "Min"
+msgstr ""
+
+#: inc/shop-filters.php:179
+msgid "Max"
+msgstr ""
+
+#: inc/shop-filters.php:186
+#: template-parts/homepage/price-board.php:75
+#: template-parts/homepage/price-board.php:97
+msgid "Availability"
+msgstr ""
+
+#: inc/shop-filters.php:187
+msgid "In stock only"
+msgstr ""
+
+#: inc/shop-filters.php:215
+msgid "Rating"
+msgstr ""
+
+#. translators: %d: star rating
+#: inc/shop-filters.php:221
+#: inc/shop-filters.php:263
+#, php-format
+msgid "%d star"
+msgid_plural "%d stars"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/shop-filters.php:228
+msgid "Apply filters"
+msgstr ""
+
+#. translators: %s: price
+#: inc/shop-filters.php:246
+#, php-format
+msgid "Min %s"
+msgstr ""
+
+#. translators: %s: price
+#: inc/shop-filters.php:250
+#, php-format
+msgid "Max %s"
+msgstr ""
+
+#: inc/shop-filters.php:291
+msgid "Active filters"
+msgstr ""
+
+#: inc/shop-filters.php:298
+msgid "(remove filter)"
+msgstr ""
+
+#: inc/shop-filters.php:301
+msgid "Clear all"
+msgstr ""
+
+#: inc/template-tags.php:120
+#: inc/template-tags.php:124
+#: inc/template-tags.php:132
+#: inc/template-tags.php:154
+msgid "Breadcrumb"
+msgstr ""
+
+#: inc/template-tags.php:142
+msgid "Home"
+msgstr ""
+
+#: inc/template-tags.php:152
+#: search.php:16
+#: searchform.php:15
+#: template-parts/header/search.php:25
+msgid "Search"
+msgstr ""
+
+#: inc/template-tags.php:176
+#: woocommerce/myaccount/dashboard.php:135
+msgid "View all"
+msgstr ""
+
+#. translators: %s: social network
+#: inc/template-tags.php:202
+#, php-format
+msgid "%s (opens in a new tab)"
+msgstr ""
+
+#. translators: 1: year, 2: site name
+#: inc/template-tags.php:245
+#, php-format
+msgid "© %1$s %2$s. All rights reserved."
+msgstr ""
+
+#. translators: %d: minutes
+#: inc/template-tags.php:259
+#, php-format
+msgid "%d min read"
+msgid_plural "%d min read"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %s: rating
+#: inc/template-tags.php:324
+#, php-format
+msgid "Rated %s out of 5"
+msgstr ""
+
+#. translators: %d: discount percentage
+#: inc/woocommerce.php:118
+#, php-format
+msgid "-%d%%"
+msgstr ""
+
+#. translators: %d: maximum discount percentage
+#: inc/woocommerce.php:121
+#, php-format
+msgid "Up to -%d%%"
+msgstr ""
+
+#: inc/woocommerce.php:134
+msgid "Sold out"
+msgstr ""
+
+#: inc/woocommerce.php:137
+msgid "Sale"
+msgstr ""
+
+#: inc/woocommerce.php:143
+msgid "New"
+msgstr ""
+
+#: inc/woocommerce.php:150
+msgid "Low stock"
+msgstr ""
+
+#. translators: %s: product name
+#: inc/woocommerce.php:194
+#, php-format
+msgid "Save %s to wishlist"
+msgstr ""
+
+#: inc/woocommerce.php:230
+msgid "View product"
+msgstr ""
+
+#: inc/woocommerce.php:434
+msgid "Progress towards free shipping"
+msgstr ""
+
+#: inc/woocommerce.php:492
+msgid "Popular right now"
+msgstr ""
+
+#: inc/woocommerce.php:492
+msgid "Browse the shop"
+msgstr ""
+
+#. translators: %d: stock quantity
+#: inc/woocommerce.php:545
+#, php-format
+msgid "Only %d left in stock"
+msgid_plural "Only %d left in stock"
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/woocommerce.php:566
+#: inc/woocommerce.php:573
+msgid "Buy now"
+msgstr ""
+
+#: inc/woocommerce.php:613
+msgid "Pay with:"
+msgstr ""
+
+#: inc/woocommerce.php:648
+msgid "Frequently bought together"
+msgstr ""
+
+#: inc/woocommerce.php:673
+msgid "Recently viewed"
+msgstr ""
+
+#: inc/woocommerce.php:714
+msgid "Payments are handled by the payment provider you select. We never store your card details on this site."
+msgstr ""
+
+#. translators: %s: search query
+#: search.php:20
+#, php-format
+msgid "Results for “%s”"
+msgstr ""
+
+#: searchform.php:13
+msgid "Search for:"
+msgstr ""
+
+#: searchform.php:14
+msgid "Search…"
+msgstr ""
+
+#: single.php:46
+msgid "Previous"
+msgstr ""
+
+#: single.php:47
+msgid "Next"
+msgstr ""
+
+#: template-parts/content/archive-loop.php:22
+msgid "Previous page"
+msgstr ""
+
+#: template-parts/content/archive-loop.php:23
+msgid "Next page"
+msgstr ""
+
+#: template-parts/content/none.php:12
+msgid "Nothing found"
+msgstr ""
+
+#: template-parts/content/none.php:13
+msgid "No results matched your search. Try different keywords."
+msgstr ""
+
+#: template-parts/content/none.php:13
+msgid "There is nothing here yet. Check back soon."
+msgstr ""
+
+#: template-parts/content/none.php:14
+#: woocommerce/myaccount/dashboard.php:166
+msgid "Browse products"
+msgstr ""
+
+#: template-parts/footer/columns.php:11
+#: template-parts/header/default-links.php:12
+msgid "Shop"
+msgstr ""
+
+#: template-parts/footer/columns.php:12
+msgid "Customer service"
+msgstr ""
+
+#: template-parts/footer/columns.php:13
+msgid "Company"
+msgstr ""
+
+#: template-parts/footer/columns.php:56
+#: template-parts/marketing/newsletter-form.php:42
+msgid "Privacy policy"
+msgstr ""
+
+#: template-parts/header/announcement.php:29
+msgid "Offer ends"
+msgstr ""
+
+#: template-parts/header/announcement.php:40
+msgid "Dismiss announcement"
+msgstr ""
+
+#: template-parts/header/cart-drawer.php:14
+msgid "Your cart"
+msgstr ""
+
+#: template-parts/header/cart-drawer.php:17
+msgid "Close cart"
+msgstr ""
+
+#: template-parts/header/default-links.php:13
+msgid "New Arrivals"
+msgstr ""
+
+#: template-parts/header/default-links.php:14
+msgid "Best Sellers"
+msgstr ""
+
+#: template-parts/header/default-links.php:15
+#: template-parts/header/mega-menu.php:68
+msgid "Deals"
+msgstr ""
+
+#: template-parts/header/default-links.php:19
+msgid "About"
+msgstr ""
+
+#. translators: %d: product count
+#: template-parts/header/mega-menu.php:38
+#, php-format
+msgid "%d product"
+msgid_plural "%d products"
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/header/mega-menu.php:60
+msgid "Featured"
+msgstr ""
+
+#: template-parts/header/mobile-drawer.php:14
+msgid "Menu"
+msgstr ""
+
+#: template-parts/header/mobile-drawer.php:17
+msgid "Close menu"
+msgstr ""
+
+#: template-parts/header/mobile-drawer.php:21
+msgid "Mobile"
+msgstr ""
+
+#: template-parts/header/mobile-drawer.php:43
+msgid "Shop by category"
+msgstr ""
+
+#: template-parts/header/mobile-drawer.php:51
+msgid "Sign in / Register"
+msgstr ""
+
+#: template-parts/header/search.php:13
+msgid "Open search"
+msgstr ""
+
+#: template-parts/header/search.php:17
+msgid "Search products"
+msgstr ""
+
+#: template-parts/header/search.php:20
+msgid "Search rice, bangus, pechay, eggs…"
+msgstr ""
+
+#: template-parts/header/search.php:27
+msgid "Search suggestions"
+msgstr ""
+
+#: template-parts/header/ticker.php:38
+msgid "Market prices"
+msgstr ""
+
+#. translators: 1: opening time, 2: closing time
+#: template-parts/header/ticker.php:45
+#, php-format
+msgid "Market hours %1$s–%2$s"
+msgstr ""
+
+#: template-parts/header/ticker.php:57
+msgid "Pause price ticker"
+msgstr ""
+
+#: template-parts/homepage/benefits.php:10
+msgid "Why shop with us"
+msgstr ""
+
+#: template-parts/homepage/best-sellers.php:18
+msgid "Most popular"
+msgstr ""
+
+#: template-parts/homepage/best-sellers.php:20
+msgid "See all best sellers"
+msgstr ""
+
+#: template-parts/homepage/categories.php:43
+#: template-parts/homepage/price-board.php:55
+msgid "Open full market"
+msgstr ""
+
+#: template-parts/homepage/categories.php:43
+msgid "Wet and dry market"
+msgstr ""
+
+#. translators: %d: product count
+#. translators: %d: number of items
+#: template-parts/homepage/categories.php:54
+#: woocommerce/checkout/form-checkout.php:91
+#, php-format
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: template-parts/homepage/categories.php:67
+msgid "Not on the list?"
+msgstr ""
+
+#: template-parts/homepage/discovery.php:28
+msgid "Personalized"
+msgstr ""
+
+#: template-parts/homepage/discovery.php:29
+msgid "Top-rated picks to start with. As you browse, this space adapts to products you view — stored only in your browser."
+msgstr ""
+
+#: template-parts/homepage/editorial.php:25
+msgid "Read the journal"
+msgstr ""
+
+#: template-parts/homepage/editorial.php:25
+msgid "Guides and stories"
+msgstr ""
+
+#: template-parts/homepage/featured.php:18
+msgid "Hand-picked"
+msgstr ""
+
+#: template-parts/homepage/final-cta.php:27
+msgid "View current deals"
+msgstr ""
+
+#: template-parts/homepage/hero.php:40
+msgid "Pick up or book your own rider"
+msgstr ""
+
+#. translators: %s: free delivery threshold
+#: template-parts/homepage/hero.php:46
+#, php-format
+msgid "Free delivery over %s"
+msgstr ""
+
+#: template-parts/homepage/hero.php:50
+msgid "Packed cold"
+msgstr ""
+
+#: template-parts/homepage/hero.php:80
+msgid "Prices today"
+msgstr ""
+
+#: template-parts/homepage/hero.php:95
+msgid "Full price board"
+msgstr ""
+
+#: template-parts/homepage/new-arrivals.php:18
+msgid "Just landed"
+msgstr ""
+
+#: template-parts/homepage/new-arrivals.php:20
+msgid "Shop new arrivals"
+msgstr ""
+
+#: template-parts/homepage/price-board.php:43
+msgid "Market board"
+msgstr ""
+
+#. translators: %s: date
+#: template-parts/homepage/price-board.php:49
+#, php-format
+msgid "Last price update %s."
+msgstr ""
+
+#: template-parts/homepage/price-board.php:51
+msgid "Arrows show the change since each item’s previous price. Store selling prices, not official price monitoring."
+msgstr ""
+
+#: template-parts/homepage/price-board.php:59
+msgid "Filter the price board by section"
+msgstr ""
+
+#: template-parts/homepage/price-board.php:60
+msgid "All"
+msgstr ""
+
+#: template-parts/homepage/price-board.php:71
+msgid "Item"
+msgstr ""
+
+#: template-parts/homepage/price-board.php:73
+#: template-parts/homepage/price-board.php:95
+msgid "Change"
+msgstr ""
+
+#: template-parts/homepage/price-board.php:74
+#: template-parts/homepage/price-board.php:96
+msgid "Trend"
+msgstr ""
+
+#: template-parts/homepage/price-board.php:76
+msgid "Action"
+msgstr ""
+
+#: template-parts/homepage/price-board.php:104
+msgid "Nothing listed in this section right now."
+msgstr ""
+
+#: template-parts/homepage/rfq-banner.php:14
+msgid "Tell us the item"
+msgstr ""
+
+#: template-parts/homepage/rfq-banner.php:14
+msgid "Quantity, unit, target price and delivery date."
+msgstr ""
+
+#: template-parts/homepage/rfq-banner.php:15
+msgid "We source it"
+msgstr ""
+
+#: template-parts/homepage/rfq-banner.php:15
+msgid "We check farms, ports and suppliers for supply and price."
+msgstr ""
+
+#: template-parts/homepage/rfq-banner.php:16
+msgid "Get your quote"
+msgstr ""
+
+#: template-parts/homepage/rfq-banner.php:16
+msgid "Usually within one business day, by email or phone."
+msgstr ""
+
+#: template-parts/homepage/rfq-banner.php:23
+msgid "Request for quotation"
+msgstr ""
+
+#: template-parts/homepage/social-proof.php:65
+msgid "Reviews"
+msgstr ""
+
+#: template-parts/homepage/social-proof.php:76
+msgid "Verified owner"
+msgstr ""
+
+#: template-parts/homepage/social-proof.php:79
+msgid "Sample content"
+msgstr ""
+
+#: template-parts/homepage/trending.php:20
+msgid "What shoppers love"
+msgstr ""
+
+#: template-parts/marketing/newsletter-form.php:18
+msgid "Admin note: activate the Freshtastic Food Hub Toolkit plugin to enable newsletter signups. Visitors do not see this message."
+msgstr ""
+
+#: template-parts/marketing/newsletter-form.php:23
+msgid "I agree to receive marketing emails and accept the privacy policy. I can unsubscribe at any time."
+msgstr ""
+
+#: template-parts/marketing/newsletter-form.php:29
+msgid "Leave this field empty"
+msgstr ""
+
+#: template-parts/marketing/newsletter-form.php:33
+msgid "Email address"
+msgstr ""
+
+#: template-parts/marketing/newsletter-form.php:34
+msgid "you@example.com"
+msgstr ""
+
+#: template-parts/marketing/newsletter-form.php:35
+msgid "Subscribe"
+msgstr ""
+
+#: woocommerce/archive-product.php:48
+#: woocommerce/archive-product.php:65
+msgid "Filters"
+msgstr ""
+
+#: woocommerce/archive-product.php:51
+msgid "Close filters"
+msgstr ""
+
+#: woocommerce/archive-product.php:69
+msgid "Product layout"
+msgstr ""
+
+#: woocommerce/archive-product.php:70
+msgid "Grid view"
+msgstr ""
+
+#: woocommerce/archive-product.php:71
+msgid "List view"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:29
+msgid "Checkout steps"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:43
+msgid "We send order updates to this email and mobile number."
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:54
+msgid "Choose how you will get your order, then pick a time."
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:70
+msgid "Add a note for the store if you need to, then choose how to pay."
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:82
+#: woocommerce/checkout/form-checkout.php:89
+msgid "Order summary"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:103
+msgid "Secure checkout"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:104
+msgid "Packed fresh on your schedule"
+msgstr ""
+
+#: woocommerce/checkout/form-checkout.php:105
+msgid "Questions? Reply to your order email"
+msgstr ""
+
+#: woocommerce/checkout/form-shipping.php:22
+msgid "Deliver to a different address?"
+msgstr ""
+
+#. translators: %s: customer first name
+#: woocommerce/checkout/thankyou.php:44
+#, php-format
+msgid "Thank you, %s!"
+msgstr ""
+
+#. translators: %s: customer first name
+#: woocommerce/checkout/thankyou.php:44
+msgid "Thank you!"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:88
+msgid "Continue shopping"
+msgstr ""
+
+#: woocommerce/checkout/thankyou.php:90
+msgid "Track this order"
+msgstr ""
+
+#. translators: %s: search term
+#: woocommerce/loop/no-products-found.php:28
+#, php-format
+msgid "“%s” isn’t on the market board today"
+msgstr ""
+
+#: woocommerce/loop/no-products-found.php:30
+msgid "Nothing posted here right now"
+msgstr ""
+
+#: woocommerce/loop/no-products-found.php:37
+msgid "Try removing a filter or widening the price range — or ask us to source it for you."
+msgstr ""
+
+#: woocommerce/loop/no-products-found.php:39
+msgid "Supply changes daily. Send a quotation request and we will check farms, ports and suppliers for you."
+msgstr ""
+
+#: woocommerce/loop/no-products-found.php:41
+msgid "Check the spelling or try a more general term, like “rice” or “fish”."
+msgstr ""
+
+#: woocommerce/loop/no-products-found.php:47
+msgid "Clear all filters"
+msgstr ""
+
+#. translators: %d: number of orders
+#: woocommerce/myaccount/dashboard.php:32
+#, php-format
+msgid "You have %d order in progress."
+msgid_plural "You have %d orders in progress."
+msgstr[0] ""
+msgstr[1] ""
+
+#: woocommerce/myaccount/dashboard.php:34
+msgid "Fresh meat, fish, vegetables and frozen goods are ready for your next order."
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:62
+msgid "Ready to collect"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:62
+msgid "Packed: book your rider now"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:64
+msgid "Your next pickup"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:64
+msgid "Your next rider collection"
+msgstr ""
+
+#. translators: %s: order number
+#: woocommerce/myaccount/dashboard.php:70
+#: woocommerce/myaccount/dashboard.php:146
+#, php-format
+msgid "Order #%s"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:83
+msgid "Order progress"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:94
+msgid "Account summary"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:99
+msgid "In progress"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:106
+msgid "Total orders"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:114
+msgid "Quotations"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:123
+msgid "Saved items"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:133
+msgid "Recent orders"
+msgstr ""
+
+#. translators: 1: order date, 2: number of items
+#: woocommerce/myaccount/dashboard.php:151
+#, php-format
+msgid "%1$s · %2$d item"
+msgid_plural "%1$s · %2$d items"
+msgstr[0] ""
+msgstr[1] ""
+
+#: woocommerce/myaccount/dashboard.php:164
+msgid "No orders yet"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:165
+msgid "Your orders and pickup times will appear here after you check out."
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:175
+msgid "Edit"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:187
+msgid "Add your address for a faster checkout"
+msgstr ""
+
+#. translators: 1: display name, 2: opening link tag, 3: closing link tag
+#: woocommerce/myaccount/dashboard.php:192
+#, php-format
+msgid "Not %1$s? %2$sLog out%3$s"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:197
+msgid "Spent with us"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:207
+msgid "Buy again"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:208
+msgid "Shop all"
+msgstr ""
+
+#. translators: %s: product name
+#: woocommerce/myaccount/dashboard.php:219
+#, php-format
+msgid "Buy %s again"
+msgstr ""
+
+#. translators: %s: product name
+#: woocommerce/myaccount/dashboard.php:219
+msgid "Add to cart"
+msgstr ""
+
+#. translators: %s: product name
+#: woocommerce/myaccount/dashboard.php:219
+#: woocommerce/single-product/nexora-sticky-atc.php:34
+msgid "Choose options"
+msgstr ""
+
+#. translators: %s: registration date
+#: woocommerce/myaccount/form-edit-account.php:22
+#, php-format
+msgid "Member since %s"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:33
+msgid "Personal details"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:34
+msgid "Used on your orders and receipts."
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:64
+msgid "Password"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:65
+msgid "Leave these empty to keep your current password."
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:70
+msgid "Current password"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-account.php:74
+msgid "New password"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-address.php:24
+msgid "All addresses"
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-address.php:26
+msgid "Printed on receipts and used to contact you about orders."
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-address.php:26
+msgid "Where your orders are delivered. Store pickup orders do not need it."
+msgstr ""
+
+#: woocommerce/myaccount/form-edit-address.php:45
+msgid "Cancel"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:26
+msgid "Freshness you can always trust"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:27
+msgid "Meat, fish, vegetables, frozen goods and more, packed when you need them."
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:29
+msgid "Track orders and pickup times"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:30
+msgid "Check out faster with saved details"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:31
+msgid "Request quotes for bulk orders"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:38
+msgid "Your account"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:39
+#: woocommerce/myaccount/form-login.php:72
+#: woocommerce/myaccount/form-login.php:131
+msgid "Sign in"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:40
+#: woocommerce/myaccount/form-login.php:124
+msgid "Create account"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:45
+msgid "Welcome back"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:46
+msgid "Sign in to see your orders and pickup times."
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:53
+msgid "Email or username"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:67
+msgid "Forgot your password?"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:80
+msgid "New to Freshtastic?"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:80
+msgid "Create an account"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:86
+msgid "Create your account"
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:87
+msgid "It only takes a minute. We use your details for your orders and pickups."
+msgstr ""
+
+#: woocommerce/myaccount/form-login.php:131
+msgid "Already have an account?"
+msgstr ""
+
+#: woocommerce/myaccount/my-address.php:34
+msgid "Addresses"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Freshtastic navy"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Freshtastic orange"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Main text"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Background"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Surface"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Terminal"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Muted text"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Border"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Price up"
+msgstr ""
+
+#: theme.json
+msgctxt "Color name"
+msgid "Price down / sale"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Market"
+msgstr ""
+
+#: theme.json
+msgctxt "Gradient name"
+msgid "Terminal"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Manrope"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Inter"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Huge"
+msgstr ""
