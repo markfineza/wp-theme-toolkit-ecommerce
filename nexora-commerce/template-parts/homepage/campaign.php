@@ -14,7 +14,7 @@ if ( ( $nexora_start && $nexora_start > time() ) || ( $nexora_end && $nexora_end
 }
 
 $nexora_url = nexora_option( 'campaign_cta_url' );
-if ( ! $nexora_url && nexora_is_woocommerce_active() ) {
+if ( ! $nexora_url && nexora_has_store() ) {
 	$nexora_term = get_term_by( 'slug', 'dry-market', 'product_cat' );
 	$nexora_url  = $nexora_term ? get_term_link( $nexora_term ) : nexora_shop_url();
 }

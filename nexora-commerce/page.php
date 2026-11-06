@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 
 get_header();
-$nexora_is_wc_page = nexora_is_woocommerce_active() && ( is_cart() || is_checkout() || is_account_page() );
+$nexora_is_wc_page = nexora_is_native_store() ? Nexora_Store::is_page() : ( nexora_is_woocommerce_active() && ( is_cart() || is_checkout() || is_account_page() ) );
 ?>
 <main id="primary" class="site-main<?php echo $nexora_is_wc_page ? ' nx-wc-page' : ''; ?>">
 	<div class="nx-container">

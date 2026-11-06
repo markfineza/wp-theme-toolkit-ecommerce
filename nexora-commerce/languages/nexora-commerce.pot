@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Freshtastic Food Hub 2.2.0\n"
+"Project-Id-Version: Freshtastic Food Hub 2.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/nexora-commerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-04T17:26:39+00:00\n"
+"POT-Creation-Date: 2026-11-05T15:48:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: nexora-commerce\n"
@@ -111,7 +111,7 @@ msgid "My account"
 msgstr ""
 
 #: header.php:80
-#: inc/woocommerce.php:201
+#: inc/shop-common.php:126
 #: template-parts/header/mobile-drawer.php:53
 msgid "Wishlist"
 msgstr ""
@@ -160,70 +160,70 @@ msgstr ""
 msgid "Collected"
 msgstr ""
 
-#: inc/assets.php:68
+#: inc/assets.php:71
 msgid "Searching…"
 msgstr ""
 
-#: inc/assets.php:69
+#: inc/assets.php:72
 msgid "No products found. Try a different search."
 msgstr ""
 
-#: inc/assets.php:70
+#: inc/assets.php:73
 msgid "View all results"
 msgstr ""
 
 #. translators: %d: number of results
-#: inc/assets.php:71
+#: inc/assets.php:74
 #, php-format
 msgid "%d products found"
 msgstr ""
 
 #. translators: %d: number of results
-#: inc/assets.php:72
+#: inc/assets.php:75
 msgid "Added to cart"
 msgstr ""
 
-#: inc/assets.php:73
+#: inc/assets.php:76
 msgid "Sorry, that item could not be added. Please try again."
 msgstr ""
 
-#: inc/assets.php:74
+#: inc/assets.php:77
 msgid "Loading…"
 msgstr ""
 
-#: inc/assets.php:75
+#: inc/assets.php:78
 msgid "Filters could not be applied. Reloading the page…"
 msgstr ""
 
-#: inc/assets.php:76
+#: inc/assets.php:79
 msgid "d"
 msgstr ""
 
-#: inc/assets.php:77
-#: inc/woocommerce.php:421
+#: inc/assets.php:80
+#: inc/woocommerce.php:302
 msgid "You have unlocked free shipping!"
 msgstr ""
 
-#: inc/assets.php:78
+#: inc/assets.php:81
 msgid "Market open"
 msgstr ""
 
-#: inc/assets.php:79
+#: inc/assets.php:82
 msgid "Market closed"
 msgstr ""
 
-#: inc/assets.php:80
+#: inc/assets.php:83
 msgid "opens"
 msgstr ""
 
-#: inc/assets.php:81
+#: inc/assets.php:84
 msgid "closes"
 msgstr ""
 
 #. translators: %s: amount remaining
 #. translators: %s: formatted amount remaining
-#: inc/assets.php:83
-#: inc/woocommerce.php:424
+#: inc/assets.php:86
+#: inc/woocommerce.php:305
 #, php-format
 msgid "Add %s more for free shipping"
 msgstr ""
@@ -1144,111 +1144,111 @@ msgid "Dismiss"
 msgstr ""
 
 #. translators: %s: percent
-#: inc/market.php:50
+#: inc/market.php:64
 #, php-format
 msgid "up %s since the previous price"
 msgstr ""
 
 #. translators: %s: percent
-#: inc/market.php:52
+#: inc/market.php:66
 #, php-format
 msgid "down %s since the previous price"
 msgstr ""
 
 #. translators: %s: percent
-#: inc/market.php:54
+#: inc/market.php:68
 #, php-format
 msgid "unchanged (%s)"
 msgstr ""
 
 #. translators: %s: date
-#: inc/market.php:57
+#: inc/market.php:71
 #, php-format
 msgid "Price updated %s"
 msgstr ""
 
-#: inc/market.php:102
+#: inc/market.php:116
 #: woocommerce/content-product.php:88
 msgid "Request quote"
 msgstr ""
 
 #. translators: %s: product
-#: inc/market.php:110
+#: inc/market.php:124
 #, php-format
 msgid "for %s"
 msgstr ""
 
-#: inc/market.php:156
-#: inc/market.php:238
-#: inc/market.php:327
+#: inc/market.php:170
+#: inc/market.php:252
+#: inc/market.php:341
 msgid "Out of stock"
 msgstr ""
 
-#: inc/market.php:161
+#: inc/market.php:175
 #: inc/shop-filters.php:256
 msgid "In stock"
 msgstr ""
 
 #. translators: %s: quantity, e.g. "3 kg"
-#: inc/market.php:168
+#: inc/market.php:182
 #, php-format
 msgid "Only %s left"
 msgstr ""
 
 #. translators: %s: quantity, e.g. "3 kg"
-#: inc/market.php:168
+#: inc/market.php:182
 #, php-format
 msgid "%s in stock"
 msgstr ""
 
-#: inc/market.php:237
+#: inc/market.php:251
 msgid "Quote"
 msgstr ""
 
 #. translators: %s: product
-#: inc/market.php:251
+#: inc/market.php:265
 #, php-format
 msgid "Add one %s to cart"
 msgstr ""
 
-#: inc/market.php:267
+#: inc/market.php:281
 msgid "Add"
 msgstr ""
 
-#: inc/market.php:270
+#: inc/market.php:284
 msgid "Options"
 msgstr ""
 
-#: inc/market.php:291
+#: inc/market.php:305
 msgid "vs previous price"
 msgstr ""
 
 #. translators: 1: price, 2: kg or L
-#: inc/market.php:296
+#: inc/market.php:310
 #: woocommerce/content-product.php:76
 #, php-format
 msgid "From %1$s / %2$s"
 msgstr ""
 
 #. translators: %s: origin
-#: inc/market.php:300
+#: inc/market.php:314
 #, php-format
 msgid "Origin: %s"
 msgstr ""
 
 #. translators: %s: kg or L
-#: inc/market.php:320
+#: inc/market.php:334
 #, php-format
 msgid "Price per %s by pack size"
 msgstr ""
 
 #. translators: %s: kg or L
-#: inc/market.php:320
+#: inc/market.php:334
 msgid "Pack"
 msgstr ""
 
 #. translators: %s: kg or L
-#: inc/market.php:320
+#: inc/market.php:334
 #: inc/shop-filters.php:171
 #: template-parts/homepage/price-board.php:72
 #: template-parts/homepage/price-board.php:94
@@ -1256,24 +1256,24 @@ msgid "Price"
 msgstr ""
 
 #. translators: %s: kg or L
-#: inc/market.php:320
+#: inc/market.php:334
 #, php-format
 msgid "Per %s"
 msgstr ""
 
-#: inc/market.php:325
+#: inc/market.php:339
 msgid "Best value"
 msgstr ""
 
-#: inc/market.php:354
+#: inc/market.php:368
 msgid "Currently unavailable"
 msgstr ""
 
-#: inc/market.php:355
+#: inc/market.php:369
 msgid "Tell us how much you need and when — we will check supply and send you a quotation."
 msgstr ""
 
-#: inc/market.php:356
+#: inc/market.php:370
 #: template-parts/homepage/categories.php:68
 #: template-parts/homepage/price-board.php:104
 #: template-parts/homepage/rfq-banner.php:26
@@ -1282,11 +1282,11 @@ msgstr ""
 msgid "Request a quotation"
 msgstr ""
 
-#: inc/market.php:363
+#: inc/market.php:377
 msgid "Buying in bulk or for your business?"
 msgstr ""
 
-#: inc/market.php:365
+#: inc/market.php:379
 msgid "Request a volume quotation"
 msgstr ""
 
@@ -1349,6 +1349,40 @@ msgstr ""
 
 #: inc/setup.php:144
 msgid "Install WooCommerce"
+msgstr ""
+
+#. translators: %d: discount percentage
+#: inc/shop-common.php:43
+#, php-format
+msgid "-%d%%"
+msgstr ""
+
+#. translators: %d: maximum discount percentage
+#: inc/shop-common.php:46
+#, php-format
+msgid "Up to -%d%%"
+msgstr ""
+
+#: inc/shop-common.php:59
+msgid "Sold out"
+msgstr ""
+
+#: inc/shop-common.php:62
+msgid "Sale"
+msgstr ""
+
+#: inc/shop-common.php:68
+msgid "New"
+msgstr ""
+
+#: inc/shop-common.php:75
+msgid "Low stock"
+msgstr ""
+
+#. translators: %s: product name
+#: inc/shop-common.php:119
+#, php-format
+msgid "Save %s to wishlist"
 msgstr ""
 
 #: inc/shop-filters.php:144
@@ -1448,13 +1482,13 @@ msgid "%s (opens in a new tab)"
 msgstr ""
 
 #. translators: 1: year, 2: site name
-#: inc/template-tags.php:245
+#: inc/template-tags.php:248
 #, php-format
 msgid "© %1$s %2$s. All rights reserved."
 msgstr ""
 
 #. translators: %d: minutes
-#: inc/template-tags.php:259
+#: inc/template-tags.php:262
 #, php-format
 msgid "%d min read"
 msgid_plural "%d min read"
@@ -1462,87 +1496,53 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: rating
-#: inc/template-tags.php:324
+#: inc/template-tags.php:327
 #, php-format
 msgid "Rated %s out of 5"
 msgstr ""
 
-#. translators: %d: discount percentage
-#: inc/woocommerce.php:118
-#, php-format
-msgid "-%d%%"
-msgstr ""
-
-#. translators: %d: maximum discount percentage
-#: inc/woocommerce.php:121
-#, php-format
-msgid "Up to -%d%%"
-msgstr ""
-
-#: inc/woocommerce.php:134
-msgid "Sold out"
-msgstr ""
-
-#: inc/woocommerce.php:137
-msgid "Sale"
-msgstr ""
-
-#: inc/woocommerce.php:143
-msgid "New"
-msgstr ""
-
-#: inc/woocommerce.php:150
-msgid "Low stock"
-msgstr ""
-
-#. translators: %s: product name
-#: inc/woocommerce.php:194
-#, php-format
-msgid "Save %s to wishlist"
-msgstr ""
-
-#: inc/woocommerce.php:230
+#: inc/woocommerce.php:111
 msgid "View product"
 msgstr ""
 
-#: inc/woocommerce.php:434
+#: inc/woocommerce.php:315
 msgid "Progress towards free shipping"
 msgstr ""
 
-#: inc/woocommerce.php:492
+#: inc/woocommerce.php:373
 msgid "Popular right now"
 msgstr ""
 
-#: inc/woocommerce.php:492
+#: inc/woocommerce.php:373
 msgid "Browse the shop"
 msgstr ""
 
 #. translators: %d: stock quantity
-#: inc/woocommerce.php:545
+#: inc/woocommerce.php:426
 #, php-format
 msgid "Only %d left in stock"
 msgid_plural "Only %d left in stock"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/woocommerce.php:566
-#: inc/woocommerce.php:573
+#: inc/woocommerce.php:447
+#: inc/woocommerce.php:454
 msgid "Buy now"
 msgstr ""
 
-#: inc/woocommerce.php:613
+#: inc/woocommerce.php:494
 msgid "Pay with:"
 msgstr ""
 
-#: inc/woocommerce.php:648
+#: inc/woocommerce.php:529
 msgid "Frequently bought together"
 msgstr ""
 
-#: inc/woocommerce.php:673
+#: inc/woocommerce.php:554
 msgid "Recently viewed"
 msgstr ""
 
-#: inc/woocommerce.php:714
+#: inc/woocommerce.php:595
 msgid "Payments are handled by the payment provider you select. We never store your card details on this site."
 msgstr ""
 

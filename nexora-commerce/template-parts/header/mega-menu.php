@@ -52,7 +52,7 @@ $nexora_promo = nexora_get_product_ids( 'featured', 1 );
 		</ul>
 		<div class="nx-mega__aside">
 			<?php
-			$nexora_p = $nexora_promo ? wc_get_product( $nexora_promo[0] ) : null;
+			$nexora_p = $nexora_promo ? nexora_get_product( $nexora_promo[0] ) : null;
 			if ( $nexora_p ) :
 				?>
 				<a class="nx-mega__promo" href="<?php echo esc_url( $nexora_p->get_permalink() ); ?>">

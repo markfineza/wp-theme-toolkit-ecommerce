@@ -31,7 +31,7 @@ foreach ( $nexora_columns as $nexora_location => $nexora_title ) :
 			);
 		} else {
 			$nexora_links = array();
-			if ( 'footer-1' === $nexora_location && nexora_is_woocommerce_active() ) {
+			if ( 'footer-1' === $nexora_location && nexora_has_store() ) {
 				foreach ( nexora_menu_categories() as $nexora_cat ) {
 					$nexora_links[] = array( get_term_link( $nexora_cat ), $nexora_cat->name );
 				}
@@ -42,8 +42,8 @@ foreach ( $nexora_columns as $nexora_location => $nexora_title ) :
 						$nexora_links[] = array( get_permalink( $nexora_page ), get_the_title( $nexora_page ) );
 					}
 				}
-				if ( nexora_is_woocommerce_active() ) {
-					$nexora_links[] = array( wc_get_page_permalink( 'myaccount' ), __( 'My account', 'nexora-commerce' ) );
+				if ( nexora_has_store() ) {
+					$nexora_links[] = array( nexora_account_url(), __( 'My account', 'nexora-commerce' ) );
 				}
 			} elseif ( 'footer-3' === $nexora_location ) {
 				foreach ( array( 'about', 'terms-and-conditions' ) as $nexora_slug ) {

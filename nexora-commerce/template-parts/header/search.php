@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
 			<input type="search" id="nx-search-input" name="s" value="<?php echo esc_attr( get_search_query() ); ?>"
 				placeholder="<?php esc_attr_e( 'Search rice, bangus, pechay, eggs…', 'nexora-commerce' ); ?>"
 				autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="nx-search-results">
-			<?php if ( nexora_is_woocommerce_active() ) : ?>
+			<?php if ( nexora_has_store() ) : ?>
 				<input type="hidden" name="post_type" value="product">
 			<?php endif; ?>
 			<button type="submit" class="nx-btn nx-btn--primary nx-btn--sm"><?php esc_html_e( 'Search', 'nexora-commerce' ); ?></button>

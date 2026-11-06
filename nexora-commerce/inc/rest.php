@@ -36,7 +36,7 @@ function nexora_register_rest_routes() {
 		)
 	);
 
-	if ( nexora_is_woocommerce_active() ) {
+	if ( nexora_has_store() ) {
 		register_rest_route(
 			'nexora/v1',
 			'/cards',
@@ -98,6 +98,31 @@ function nexora_rest_search( $request ) {
 			}
 		}
 		$all_url = add_query_arg( array( 's' => rawurlencode( $term ), 'post_type' => 'product' ), home_url( '/' ) );
+	} elseif ( nexora_is_native_store() ) {
+		$query = new WP_Query(
+			array(
+				's'              => $term,
+				'post_type'      => 'product',
+				'post_status'    => 'publish',
+				'posts_per_page' => 6,
+				'no_found_rows'  => true,
+			)
+		);
+		foreach ( $query->posts as $post ) {
+			$product = Nexora_Store_Product::get( $post->ID );
+			if ( ! $product || ! $product->is_visible() ) {
+				continue;
+			}
+			$image     = wp_get_attachment_image_url( $product->get_image_id(), 'woocommerce_gallery_thumbnail' );
+			$results[] = array(
+				'id'    => $product->get_id(),
+				'title' => wp_strip_all_tags( $product->get_name() ),
+				'url'   => esc_url_raw( $product->get_permalink() ),
+				'price' => wp_kses_post( $product->get_price_html() ),
+				'image' => $image ? esc_url_raw( $image ) : '',
+			);
+		}
+		$all_url = add_query_arg( array( 's' => rawurlencode( $term ), 'post_type' => 'product' ), home_url( '/' ) );
 	} else {
 		$query = new WP_Query(
 			array(
@@ -140,13 +165,15 @@ function nexora_rest_cards( $request ) {
 	$ids = array_filter( array_map( 'absint', explode( ',', (string) $request['ids'] ) ) );
 	if ( $request['related'] ) {
 		// Related products (same categories/tags), excluding anything already in the visitor's history.
-		$ids = wc_get_related_products( (int) $request['related'], 4, array_merge( array( (int) $request['related'] ), $ids ) );
+		$ids = nexora_is_native_store()
+			? Nexora_Store_Catalog::related_ids( (int) $request['related'], 4, $ids )
+			: wc_get_related_products( (int) $request['related'], 4, array_merge( array( (int) $request['related'] ), $ids ) );
 	}
 	$ids = array_values(
 		array_filter(
 			$ids,
 			static function ( $id ) {
-				$product = wc_get_product( $id );
+				$product = nexora_get_product( $id );
 				return $product && $product->is_visible();
 			}
 		)

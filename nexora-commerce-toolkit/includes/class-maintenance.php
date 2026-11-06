@@ -49,6 +49,7 @@ class Nexora_Toolkit_Maintenance {
 		add_action( 'template_redirect', array( __CLASS__, 'gate' ), 0 );
 		add_filter( 'rest_pre_dispatch', array( __CLASS__, 'gate_rest' ), 10, 3 );
 		add_filter( 'woocommerce_is_purchasable', array( __CLASS__, 'purchasable' ), 99 );
+		add_filter( 'nexora_store_purchasable', array( __CLASS__, 'purchasable' ), 99 );
 		add_action( 'wp_footer', array( __CLASS__, 'preview_bar' ), 99 );
 	}
 
@@ -405,6 +406,9 @@ class Nexora_Toolkit_Maintenance {
 		if ( 'shop' !== self::settings()['scope'] ) {
 			return true;
 		}
+		if ( Nexora_Store::active() ) {
+			return Nexora_Store::is_store_request();
+		}
 		return function_exists( 'is_woocommerce' ) && ( is_woocommerce() || is_cart() || is_checkout() || is_account_page() );
 	}
 
@@ -435,7 +439,7 @@ class Nexora_Toolkit_Maintenance {
 			return $result;
 		}
 		$route = $request->get_route();
-		$block = 0 === strpos( $route, '/wc/store' );
+		$block = 0 === strpos( $route, '/wc/store' ) || 0 === strpos( $route, '/nexora/v1/store' );
 		// With the whole storefront closed, lead forms are closed too; in shop-only mode they stay open.
 		if ( 'site' === self::settings()['scope'] && ( 0 === strpos( $route, '/nexora/v1/rfq' ) || 0 === strpos( $route, '/nexora/v1/subscribe' ) ) ) {
 			$block = true;

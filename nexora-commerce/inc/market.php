@@ -1,7 +1,7 @@
 <?php
 /**
  * Market storefront helpers: units, origin, price change, price-per-kg tables, board data and
- * quotation (RFQ) links. Loaded only when WooCommerce is active.
+ * quotation (RFQ) links. Loaded while either store engine runs.
  *
  * Market data comes from the Freshtastic Food Hub Toolkit (filters `nexora_market_data`,
  * `nexora_unit_prices`, `nexora_market_movers`, `nexora_rfq_enabled`, `nexora_rfq_url`).
@@ -11,6 +11,20 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+/**
+ * Product categories of a product.
+ *
+ * @param int $id Product.
+ * @return WP_Term[]
+ */
+function nexora_product_terms( $id ) {
+	if ( function_exists( 'wc_get_product_terms' ) ) {
+		return wc_get_product_terms( $id, 'product_cat' );
+	}
+	$terms = get_the_terms( $id, 'product_cat' );
+	return $terms && ! is_wp_error( $terms ) ? $terms : array();
+}
 
 /**
  * Market data for a product.
@@ -195,7 +209,7 @@ function nexora_board_products( $limit = 12, $movers_only = false ) {
 		$ids = array_merge( $ids, nexora_get_product_ids( 'best_selling', 24 ) );
 	}
 	$ids      = array_slice( array_values( array_unique( $ids ) ), 0, max( 1, (int) $limit ) );
-	$products = array_filter( array_map( 'wc_get_product', $ids ) );
+	$products = array_filter( array_map( 'nexora_get_product', $ids ) );
 	return array_values(
 		array_filter(
 			$products,
@@ -214,7 +228,7 @@ function nexora_board_products( $limit = 12, $movers_only = false ) {
  */
 function nexora_product_cat_slugs( $product ) {
 	$slugs = array();
-	foreach ( wc_get_product_terms( $product->get_id(), 'product_cat' ) as $term ) {
+	foreach ( nexora_product_terms( $product->get_id() ) as $term ) {
 		$slugs[] = $term->slug;
 		foreach ( get_ancestors( $term->term_id, 'product_cat' ) as $ancestor ) {
 			$a = get_term( $ancestor, 'product_cat' );

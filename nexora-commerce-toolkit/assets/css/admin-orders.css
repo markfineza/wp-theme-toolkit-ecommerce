@@ -189,3 +189,17 @@
 .nx-desk #wpadminbar .nx-desk-node > .ab-item { background: #F0762B !important; color: #0A1A40 !important; font-weight: 700; letter-spacing: .02em; }
 .nx-desk #wpfooter { color: var(--nxd-muted); }
 .nx-desk .woocommerce-layout__header .woocommerce-layout__activity-panel { display: none; }
+
+/* Built-in store: dashboard and order page. */
+.nx-store-order-layout { display: grid; grid-template-columns: minmax(0, 1.8fr) minmax(280px, 1fr); gap: 16px; align-items: start; }
+.nx-store-admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin: 16px 0; }
+.nx-store-admin-card { margin: 0 0 16px; padding: 18px 20px; border-radius: var(--nxd-radius); background: var(--nxd-surface); border: 1px solid var(--nxd-border); box-shadow: var(--nxd-shadow); }
+.nx-store-admin-card h2 { margin: 0 0 12px; font-size: 14px; font-weight: 650; }
+.nx-store-admin-card .widefat { border-color: var(--nxd-border); }
+.nx-store-note-form { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.nx-store-note-form input[type="text"] { flex: 1 1 200px; min-width: 0; }
+.nx-store-notes { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.nx-store-notes li { margin: 0; padding: 8px 12px; border-radius: 10px; background: #F1F5F9; }
+.nx-store-notes small { display: block; color: var(--nxd-muted); }
+.nx-orders #nx-status { margin-right: 4px; }
+@media (max-width: 960px) { .nx-store-order-layout { grid-template-columns: minmax(0, 1fr); } }

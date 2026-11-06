@@ -13,6 +13,9 @@ defined( 'ABSPATH' ) || exit;
  * @return bool
  */
 function nexora_is_shop_context() {
+	if ( nexora_is_native_store() ) {
+		return Nexora_Store::is_store_request() || is_page( 'wishlist' );
+	}
 	if ( ! nexora_is_woocommerce_active() ) {
 		return false;
 	}
@@ -32,7 +35,7 @@ function nexora_enqueue_assets() {
 
 	if ( nexora_is_shop_context() ) {
 		wp_enqueue_style( 'nexora-woocommerce', NEXORA_URI . '/assets/css/woocommerce.css', array( 'nexora-main' ), NEXORA_VERSION . '.' . filemtime( NEXORA_DIR . '/assets/css/woocommerce.css' ) );
-		if ( is_checkout() || is_account_page() ) {
+		if ( nexora_is_native_store() ? ( Nexora_Store::is_page( 'checkout' ) || Nexora_Store::is_page( 'account' ) ) : ( is_checkout() || is_account_page() ) ) {
 			wp_enqueue_style( 'nexora-forms', NEXORA_URI . '/assets/css/forms.css', array( 'nexora-woocommerce' ), NEXORA_VERSION . '.' . filemtime( NEXORA_DIR . '/assets/css/forms.css' ) );
 		}
 	}
@@ -95,6 +98,12 @@ function nexora_script_data() {
 			'decimal'   => wc_get_price_decimal_separator(),
 			'thousand'  => wc_get_price_thousand_separator(),
 		);
+	}
+
+	if ( nexora_is_native_store() ) {
+		$data['shopUrl']      = esc_url_raw( Nexora_Store::shop_url() );
+		$data['cartUrl']      = esc_url_raw( Nexora_Store::url( 'cart' ) );
+		$data['freeShipping'] = 0;
 	}
 
 	return apply_filters( 'nexora_script_data', $data );

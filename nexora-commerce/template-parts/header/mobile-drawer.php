@@ -37,7 +37,7 @@ defined( 'ABSPATH' ) || exit;
 					?>
 				</ul>
 			</nav>
-			<?php if ( nexora_is_woocommerce_active() ) : ?>
+			<?php if ( nexora_has_store() ) : ?>
 				<?php $nexora_cats = nexora_menu_categories(); ?>
 				<?php if ( $nexora_cats ) : ?>
 					<h3 class="nx-drawer__subtitle"><?php esc_html_e( 'Shop by category', 'nexora-commerce' ); ?></h3>
@@ -48,9 +48,9 @@ defined( 'ABSPATH' ) || exit;
 					</ul>
 				<?php endif; ?>
 				<ul class="nx-mobile-account">
-					<li><a href="<?php echo esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"><?php echo nexora_icon( 'user', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo is_user_logged_in() ? esc_html__( 'My account', 'nexora-commerce' ) : esc_html__( 'Sign in / Register', 'nexora-commerce' ); ?></a></li>
+					<li><a href="<?php echo esc_url( nexora_account_url() ); ?>"><?php echo nexora_icon( 'user', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo is_user_logged_in() ? esc_html__( 'My account', 'nexora-commerce' ) : esc_html__( 'Sign in / Register', 'nexora-commerce' ); ?></a></li>
 					<?php if ( nexora_wishlist_enabled() ) : ?>
-						<li><a href="<?php echo esc_url( apply_filters( 'nexora_wishlist_url', wc_get_account_endpoint_url( 'wishlist' ) ) ); ?>"><?php echo nexora_icon( 'heart', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Wishlist', 'nexora-commerce' ); ?></a></li>
+						<li><a href="<?php echo esc_url( apply_filters( 'nexora_wishlist_url', nexora_account_url( 'wishlist' ) ) ); ?>"><?php echo nexora_icon( 'heart', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Wishlist', 'nexora-commerce' ); ?></a></li>
 					<?php endif; ?>
 				</ul>
 			<?php endif; ?>

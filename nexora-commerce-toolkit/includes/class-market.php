@@ -36,6 +36,16 @@ class Nexora_Toolkit_Market {
 	}
 
 	/**
+	 * Load a product from whichever store engine is running.
+	 *
+	 * @param int $id Product.
+	 * @return WC_Product|Nexora_Store_Product|false|null
+	 */
+	public static function product( $id ) {
+		return function_exists( 'wc_get_product' ) ? wc_get_product( $id ) : Nexora_Store_Product::get( $id );
+	}
+
+	/**
 	 * Selling units offered in the product editor.
 	 *
 	 * @return array<string,string>
@@ -196,7 +206,7 @@ class Nexora_Toolkit_Market {
 	 * @param int $product_id Product.
 	 */
 	public static function record( $product_id ) {
-		$product = wc_get_product( $product_id );
+		$product = self::product( $product_id );
 		if ( ! $product || $product->is_type( 'variation' ) ) {
 			return;
 		}
@@ -276,13 +286,13 @@ class Nexora_Toolkit_Market {
 			return $rows;
 		}
 		$rows  = array();
-		$items = $product->is_type( 'variable' ) ? array_filter( array_map( 'wc_get_product', $product->get_children() ) ) : array( $product );
+		$items = $product->is_type( 'variable' ) ? array_filter( array_map( array( __CLASS__, 'product' ), $product->get_children() ) ) : array( $product );
 		foreach ( $items as $item ) {
 			$measure = (float) $item->get_meta( '_nexora_measure' );
-			$price   = (float) wc_get_price_to_display( $item );
+			$price   = (float) ( function_exists( 'wc_get_price_to_display' ) ? wc_get_price_to_display( $item ) : $item->get_price() );
 			if ( $measure > 0 && $price > 0 && $item->is_purchasable() ) {
 				$rows[] = array(
-					'label'    => $item->is_type( 'variation' ) ? wc_get_formatted_variation( $item, true, false ) : $product->get_name(),
+					'label'    => $item->is_type( 'variation' ) ? ( function_exists( 'wc_get_formatted_variation' ) ? wc_get_formatted_variation( $item, true, false ) : $item->option_label() ) : $product->get_name(),
 					'price'    => $price,
 					'per'      => $price / $measure,
 					'measure'  => $mu,
@@ -349,7 +359,7 @@ class Nexora_Toolkit_Market {
 			);
 			$list = array();
 			foreach ( $ids as $id ) {
-				$product = wc_get_product( $id );
+				$product = self::product( $id );
 				if ( ! $product || ! $product->is_visible() ) {
 					continue;
 				}

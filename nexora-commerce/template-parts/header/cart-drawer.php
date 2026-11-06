@@ -20,7 +20,13 @@ defined( 'ABSPATH' ) || exit;
 		<div class="nx-drawer__body">
 			<?php echo nexora_free_shipping_progress( 'drawer' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<div class="nx-mini-cart-content widget_shopping_cart_content">
-				<?php woocommerce_mini_cart(); ?>
+				<?php
+				if ( nexora_is_native_store() ) {
+					echo Nexora_Store_Cart::mini_cart(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped when built.
+				} else {
+					woocommerce_mini_cart();
+				}
+				?>
 			</div>
 		</div>
 	</div>

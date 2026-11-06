@@ -23,7 +23,7 @@ $nexora_img = (int) nexora_option( 'final_cta_image' );
 				<p><?php echo esc_html( nexora_option( 'final_cta_text' ) ); ?></p>
 				<div class="nx-btn-row">
 					<a class="nx-btn nx-btn--primary nx-btn--lg" href="<?php echo esc_url( nexora_url_option( 'final_cta_url', nexora_shop_url() ) ); ?>"><?php echo esc_html( nexora_option( 'final_cta_label' ) ); ?></a>
-					<?php if ( nexora_is_woocommerce_active() ) : ?>
+					<?php if ( nexora_has_store() ) : ?>
 						<a class="nx-btn nx-btn--ghost nx-btn--lg" href="<?php echo esc_url( nexora_shop_url( array( 'on_sale' => 1 ) ) ); ?>"><?php esc_html_e( 'View current deals', 'nexora-commerce' ); ?></a>
 					<?php endif; ?>
 				</div>

@@ -1,0 +1,139 @@
+/* Freshtastic Toolkit: built-in store storefront. Works with the theme's shop and form styles; these rules add what WooCommerce's own stylesheet used to provide. */
+.nx-store-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.nx-store-option { display: block; color: var(--nx-muted, #5f6676); font-size: .85em; }
+.nx-store-lead { margin: 6px 0 0; color: var(--nx-muted, #5f6676); max-width: 70ch; }
+.nx-store-link { padding: 0; border: 0; background: none; font: inherit; font-size: .85em; color: var(--nx-primary, #12306e); text-decoration: underline; cursor: pointer; }
+
+/* Notices. */
+.woocommerce-message, .woocommerce-error, .woocommerce-info { list-style: none; margin: 0 0 16px; padding: 14px 16px; border-radius: 12px; }
+.nexora-store .woocommerce-message { background: var(--nx-success-bg, #e3f5ee); color: #0b5a45; }
+.nexora-store .woocommerce-error { background: var(--nx-sale-bg, #fde8ed); color: var(--nx-sale-ink, #b3173b); }
+.nexora-store .woocommerce-error li { margin: 2px 0; }
+.nexora-store .woocommerce-error:focus { outline: 2px solid currentColor; outline-offset: 2px; }
+
+/* Shop grid. */
+.nexora-store ul.products { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; margin: 0 0 32px; padding: 0; list-style: none; }
+.nexora-store ul.products li.product { width: auto; margin: 0; float: none; }
+.nexora-store ul.products .nx-card__img, .nexora-store ul.products .nx-card__image-link img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.nexora-store .nx-card__actions .button { width: 100%; text-align: center; }
+@media (max-width: 1023px) { .nexora-store ul.products { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 767px) { .nexora-store ul.products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; } }
+.nx-store-catnav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.nx-store-catnav a { padding: 7px 14px; border-radius: 999px; border: 1px solid var(--nx-border-strong, #d5d8e5); background: var(--nx-surface, #fff); font-size: var(--nx-fs-sm, .875rem); font-weight: 600; color: var(--nx-text, #0f1b3d); text-decoration: none; }
+.nx-store-catnav a:hover { border-color: var(--nx-primary, #12306e); }
+.nx-store-catnav a[aria-current] { background: var(--nx-primary, #12306e); border-color: var(--nx-primary, #12306e); color: #fff; }
+.nx-store-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin: 0 0 20px; }
+.nx-store-toolbar__count { margin: 0 auto 0 0; color: var(--nx-muted, #5f6676); font-size: var(--nx-fs-sm, .875rem); }
+.nx-store-toolbar label { display: inline-flex; gap: 6px; align-items: center; font-size: var(--nx-fs-sm, .875rem); }
+.nx-store-toolbar select { width: auto; min-height: 42px; padding: 0 12px; border-radius: 10px; border: 1px solid var(--nx-border-strong, #d5d8e5); background: var(--nx-surface, #fff); }
+.nexora-store .woocommerce-pagination ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.nexora-store .woocommerce-pagination a, .nexora-store .woocommerce-pagination span { display: grid; place-items: center; min-width: 42px; height: 42px; padding: 0 8px; border-radius: 10px; border: 1px solid var(--nx-border, #e6e8f0); text-decoration: none; }
+.nexora-store .woocommerce-pagination .current { background: var(--nx-primary, #12306e); border-color: var(--nx-primary, #12306e); color: #fff; }
+
+/* Product page. */
+.nx-store-single { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 48px); margin: 8px 0 40px; align-items: start; }
+.nx-store-single__main { position: relative; border-radius: var(--nx-radius-lg, 20px); overflow: hidden; background: var(--nx-surface, #fff); }
+.nx-store-single__main img { display: block; width: 100%; height: auto; }
+.nx-store-single__thumbs { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
+.nx-store-single__thumbs button { padding: 0; border: 2px solid transparent; border-radius: 10px; background: none; cursor: pointer; overflow: hidden; line-height: 0; }
+.nx-store-single__thumbs button:hover, .nx-store-single__thumbs button:focus-visible { border-color: var(--nx-primary, #12306e); }
+.nx-store-single__thumbs img { width: 68px; height: 68px; object-fit: cover; }
+.nx-store-single .product_title { margin: 4px 0 8px; font-size: var(--nx-fs-2xl, 2rem); }
+.nx-store-single .price { margin: 0 0 12px; font-size: var(--nx-fs-xl, 1.4rem); font-weight: 750; color: var(--nx-primary, #12306e); }
+.nx-store-single .price del { color: var(--nx-muted, #5f6676); font-weight: 500; }
+.nx-store-single .price ins { text-decoration: none; }
+.nx-store-single__rating { margin: 0 0 8px; }
+.nx-store-single__stock, .nx-store-single__sku { margin: 10px 0 0; font-size: var(--nx-fs-sm, .875rem); color: var(--nx-muted, #5f6676); }
+.nx-store-buy { margin: 16px 0; }
+.nx-store-buy .form-row { margin: 0 0 12px; }
+.nx-store-buy label { display: block; margin-bottom: 6px; font-weight: 600; }
+.nx-store-buy select { width: 100%; min-height: 50px; padding: 0 14px; border-radius: 12px; border: 1.5px solid var(--nx-border-strong, #d5d8e5); background: var(--nx-surface, #fff); font: inherit; }
+.nx-store-buy__row { display: flex; flex-wrap: wrap; gap: 10px; align-items: stretch; }
+.nx-store-buy__row .quantity input { width: 84px; min-height: 52px; text-align: center; border-radius: 12px; }
+.nx-store-buy__row .button { flex: 1 1 150px; min-height: 52px; }
+.nx-store-single__desc, .nx-store-single__reviews, .nexora-store .related.products { margin: 0 0 40px; }
+.nx-store-reviews { margin: 0 0 20px; padding: 0; list-style: none; display: grid; gap: 14px; }
+.nx-store-reviews li { padding: 14px 16px; border-radius: 14px; background: var(--nx-surface, #fff); border: 1px solid var(--nx-border, #e6e8f0); }
+.nx-store-reviews p { margin: 6px 0; }
+.nx-store-reviews small { color: var(--nx-muted, #5f6676); }
+.nx-store-stars { color: #b45309; letter-spacing: 1px; }
+.nx-store-stars__off { color: #9aa3b2; }
+.comment-form-rating select, .comment-form-comment textarea { display: block; width: 100%; max-width: 560px; margin-top: 4px; }
+@media (max-width: 767px) { .nx-store-single { grid-template-columns: minmax(0, 1fr); } }
+
+/* Cart. */
+.nexora-store.woocommerce-cart .nx-store-cart { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 400px); gap: 24px; align-items: start; }
+.nx-store-cart > .woocommerce-notices-wrapper, .nx-store-cart > .nx-empty { grid-column: 1 / -1; }
+.nx-store-cart .woocommerce-cart-form { min-width: 0; }
+.nx-store-cart .cart-collaterals { display: grid; gap: 16px; }
+.nx-store-cart .cart_totals th { text-align: left; }
+.nx-store-cart table.cart { width: 100%; border-collapse: collapse; }
+.nx-store-cart table.cart th, .nx-store-cart table.cart td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--nx-border, #e6e8f0); }
+.nx-store-cart table.cart .product-thumbnail img { width: 64px; height: 64px; object-fit: cover; border-radius: 10px; }
+.nx-store-cart .quantity input { width: 72px; min-height: 42px; text-align: center; }
+.nx-store-cart a.remove { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: var(--nx-sale-ink, #b3173b); font-size: 1.3em; text-decoration: none; }
+.nx-store-cart a.remove:hover { background: var(--nx-sale-bg, #fde8ed); }
+.nx-store-cart .cart_totals { padding: 20px; border-radius: var(--nx-radius-lg, 20px); background: var(--nx-surface, #fff); border: 1px solid var(--nx-border, #e6e8f0); }
+.nx-store-cart .cart_totals h2 { margin: 0 0 10px; font-size: var(--nx-fs-lg, 1.1rem); }
+.nx-store-cart .cart_totals table { width: 100%; margin: 0 0 14px; border-collapse: collapse; }
+.nx-store-cart .cart_totals th, .nx-store-cart .cart_totals td { padding: 9px 0; border-bottom: 1px solid var(--nx-border, #e6e8f0); }
+.nx-store-cart .cart_totals td { text-align: right; }
+.nx-store-cart .checkout-button { display: flex; align-items: center; justify-content: center; }
+.nx-store-coupon { display: grid; gap: 6px; }
+.nx-store-coupon label { font-weight: 600; font-size: var(--nx-fs-sm, .875rem); }
+.nx-store-coupon__row { display: flex; gap: 8px; }
+.nx-store-coupon__row .input-text { flex: 1 1 auto; min-width: 0; min-height: 44px; padding: 0 12px; border-radius: 10px; border: 1.5px solid var(--nx-border-strong, #d5d8e5); }
+.nx-store-coupon__remove { margin-left: 6px; font-size: .85em; }
+.nx-store-coupon--checkout { margin-top: 14px; padding: 14px 16px; border-radius: 16px; background: var(--nx-surface, #fff); color: var(--nx-text, #0f1b3d); }
+.nx-store-coupon__msg { margin: 0; font-size: var(--nx-fs-sm, .875rem); color: #0b5a45; }
+.nx-store-coupon__msg.is-error { color: var(--nx-sale-ink, #b3173b); }
+.nx-store-coupon__msg:empty { display: none; }
+@media (max-width: 1023px) { .nexora-store.woocommerce-cart .nx-store-cart { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 767px) {
+	.nx-store-cart table.cart thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+	.nx-store-cart table.cart tr { display: block; padding: 10px 0; border-bottom: 1px solid var(--nx-border, #e6e8f0); }
+	.nx-store-cart table.cart td { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 5px 0; border: 0; }
+	.nx-store-cart table.cart td::before { content: attr(data-title); font-weight: 600; font-size: .85em; color: var(--nx-muted, #5f6676); }
+	.nx-store-cart table.cart td.product-thumbnail { display: none; }
+}
+
+/* Checkout. */
+.nx-store-co-login { margin: 0 0 14px; font-size: var(--nx-fs-sm, .875rem); }
+.nx-store-address { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+.nx-store-address > .form-row-wide { grid-column: 1 / -1; }
+.woocommerce .nx-store-address .form-row { width: auto; float: none; }
+form.nx-co:has(input[name="shipping"][value="pickup"]:checked) .nx-store-address { display: none; }
+.nx-store-panel { display: none; }
+form.nx-co:has(input[name="shipping"][value="pickup"]:checked) .nx-store-panel[data-panel="pickup"],
+form.nx-co:has(input[name="shipping"][value="courier"]:checked) .nx-store-panel[data-panel="courier"] { display: grid; gap: 14px; }
+.nexora-store .nx-store-account-pass { display: none; }
+.nexora-store .woocommerce-account-fields:has(#createaccount:checked) .nx-store-account-pass { display: block; }
+.nexora-store #payment .payment_box { display: none; }
+.nexora-store #payment li:has(> input:checked) .payment_box { display: block; }
+.nexora-store #payment ul.payment_methods { list-style: none; margin: 0; }
+.nexora-store #payment li[hidden] { display: none; }
+.nexora-store #place_order { width: 100%; }
+
+/* Theme forms without WooCommerce's stylesheet. */
+.nexora-store .form-row { display: block; }
+.nexora-store .form-row label { display: block; }
+.nexora-store .form-row abbr.required { color: var(--nx-sale-ink, #b3173b); text-decoration: none; border: 0; }
+.nexora-store .form-row .woocommerce-input-wrapper { display: block; }
+.nexora-store .form-row-first, .nexora-store .form-row-last { min-width: 0; }
+.nexora-store .nexora-register-names .form-row, .nexora-store .form-row.form-row-wide { width: auto; }
+.nexora-store table.order_details { width: 100%; border-collapse: collapse; }
+.nexora-store table.order_details th, .nexora-store table.order_details td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--nx-border, #e6e8f0); }
+.nx-store-order-address { margin-top: 20px; }
+.nx-store-order-address address { font-style: normal; line-height: 1.6; }
+.nx-store-pager { display: flex; gap: 8px; margin-top: 14px; }
+
+/* Header mini cart. */
+.nexora-store .woocommerce-mini-cart { margin: 0; padding: 0; list-style: none; }
+.nexora-store .mini_cart_item { position: relative; display: grid; gap: 4px; padding: 12px 34px 12px 0; border-bottom: 1px solid var(--nx-border, #e6e8f0); }
+.nexora-store .mini_cart_item a { display: flex; gap: 10px; align-items: center; color: inherit; text-decoration: none; font-weight: 600; }
+.nexora-store .mini_cart_item img { width: 52px; height: 52px; object-fit: cover; border-radius: 8px; }
+.nexora-store .mini_cart_item .remove { position: absolute; top: 12px; right: 0; width: 28px; height: 28px; border: 0; border-radius: 50%; background: none; color: var(--nx-sale-ink, #b3173b); font-size: 1.3em; cursor: pointer; }
+.nexora-store .woocommerce-mini-cart__total { display: flex; justify-content: space-between; margin: 14px 0; }
+.nexora-store .woocommerce-mini-cart__buttons { display: grid; gap: 8px; margin: 0; }
+.nexora-store .woocommerce-mini-cart__buttons .button { text-align: center; }
+.nexora-store .nx-toast.is-error { border-left: 4px solid var(--nx-sale, #dc2626); }

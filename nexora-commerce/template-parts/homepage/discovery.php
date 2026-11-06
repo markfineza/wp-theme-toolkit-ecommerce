@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! nexora_is_woocommerce_active() ) {
+if ( ! nexora_has_store() ) {
 	return;
 }
 // Avoid repeating the products already shown in "Trending now".

@@ -32,6 +32,7 @@ Full instructions: [docs/SETUP.md](docs/SETUP.md).
 - [**Maintenance mode and temporary access**](docs/MAINTENANCE-MODE.md)
 - [**Checkout, pickup / courier delivery and the Order Desk**](docs/CHECKOUT-AND-ORDER-DESK.md)
 - [**Branding and customer accounts**](docs/BRANDING-AND-CUSTOMER-ACCOUNT.md)
+- [**Built-in store (no WooCommerce)**](docs/BUILT-IN-STORE.md)
 - [WooCommerce configuration checklist](docs/WOOCOMMERCE-CHECKLIST.md)
 - [Philippine store configuration (₱, shipping, GCash/Maya/cards)](docs/PHILIPPINES-STORE-SETUP.md)
 - [Marketing integrations (SEO, email, analytics, feeds)](docs/MARKETING.md)

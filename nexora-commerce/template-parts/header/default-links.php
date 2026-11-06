@@ -8,7 +8,7 @@
 defined( 'ABSPATH' ) || exit;
 
 $nexora_links = array();
-if ( nexora_is_woocommerce_active() ) {
+if ( nexora_has_store() ) {
 	$nexora_links[] = array( nexora_shop_url(), __( 'Shop', 'nexora-commerce' ) );
 	$nexora_links[] = array( nexora_shop_url( array( 'orderby' => 'date' ) ), __( 'New Arrivals', 'nexora-commerce' ) );
 	$nexora_links[] = array( nexora_shop_url( array( 'orderby' => 'popularity' ) ), __( 'Best Sellers', 'nexora-commerce' ) );

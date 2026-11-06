@@ -16,7 +16,7 @@ get_template_part(
 		'type'       => 'best_selling',
 		'limit'      => nexora_option( 'best_limit' ),
 		'eyebrow'    => __( 'Most popular', 'nexora-commerce' ),
-		'link'       => nexora_is_woocommerce_active() ? nexora_shop_url( array( 'orderby' => 'popularity' ) ) : '',
+		'link'       => nexora_has_store() ? nexora_shop_url( array( 'orderby' => 'popularity' ) ) : '',
 		'link_label' => __( 'See all best sellers', 'nexora-commerce' ),
 	)
 );

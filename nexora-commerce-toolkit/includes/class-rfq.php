@@ -127,10 +127,10 @@ class Nexora_Toolkit_RFQ {
 				),
 				'public'          => false,
 				'show_ui'         => true,
-				'show_in_menu'    => class_exists( 'WooCommerce' ) ? 'woocommerce' : true,
+				'show_in_menu'    => class_exists( 'WooCommerce' ) ? 'woocommerce' : ( Nexora_Store::active() ? 'nexora-store' : true ),
 				'menu_icon'       => 'dashicons-clipboard',
 				'supports'        => array( 'title' ),
-				'capability_type' => class_exists( 'WooCommerce' ) ? 'shop_order' : 'post',
+				'capability_type' => class_exists( 'WooCommerce' ) || Nexora_Store::active() ? 'shop_order' : 'post',
 				'capabilities'    => array( 'create_posts' => 'do_not_allow' ),
 				'map_meta_cap'    => true,
 			)
@@ -621,8 +621,8 @@ class Nexora_Toolkit_RFQ {
 					__( 'Reference', 'nexora-commerce-toolkit' )      => self::ref( $post_id ),
 					__( 'Item', 'nexora-commerce-toolkit' )           => (string) get_post_meta( $post_id, '_rfq_item', true ),
 					__( 'Quantity', 'nexora-commerce-toolkit' )       => get_post_meta( $post_id, '_rfq_quantity', true ) . ' ' . ( isset( $units[ $unit ] ) ? $units[ $unit ] : $unit ),
-					__( 'Price per unit', 'nexora-commerce-toolkit' ) => '' !== $fields['quote_price'] ? wp_strip_all_tags( wc_price( (float) $fields['quote_price'] ) ) : '',
-					__( 'Total', 'nexora-commerce-toolkit' )          => '' !== $fields['quote_total'] ? wp_strip_all_tags( wc_price( (float) $fields['quote_total'] ) ) : '',
+					__( 'Price per unit', 'nexora-commerce-toolkit' ) => '' !== $fields['quote_price'] ? wp_strip_all_tags( self::format_price( (float) $fields['quote_price'] ) ) : '',
+					__( 'Total', 'nexora-commerce-toolkit' )          => '' !== $fields['quote_total'] ? wp_strip_all_tags( self::format_price( (float) $fields['quote_total'] ) ) : '',
 					__( 'Valid until', 'nexora-commerce-toolkit' )    => $fields['quote_valid'],
 				);
 				self::mail(
@@ -751,6 +751,16 @@ class Nexora_Toolkit_RFQ {
 	}
 
 	/**
+	 * Price text with whichever store engine is running.
+	 *
+	 * @param float $amount Amount.
+	 * @return string
+	 */
+	private static function format_price( $amount ) {
+		return function_exists( 'wc_price' ) ? wc_price( $amount ) : ( Nexora_Store::active() ? Nexora_Store::price( $amount ) : number_format_i18n( $amount, 2 ) );
+	}
+
+	/**
 	 * Account tab.
 	 */
 	public static function account_tab() {
@@ -767,7 +777,7 @@ class Nexora_Toolkit_RFQ {
 			$m      = static function ( $k ) use ( $r ) {
 				return (string) get_post_meta( $r->ID, '_rfq_' . $k, true );
 			};
-			$quote = '' !== $m( 'quote_price' ) ? wp_strip_all_tags( wc_price( (float) $m( 'quote_price' ) ) ) . ' / ' . ( isset( $units[ $m( 'unit' ) ] ) ? $units[ $m( 'unit' ) ] : '' ) : '—';
+			$quote = '' !== $m( 'quote_price' ) ? wp_strip_all_tags( self::format_price( (float) $m( 'quote_price' ) ) ) . ' / ' . ( isset( $units[ $m( 'unit' ) ] ) ? $units[ $m( 'unit' ) ] : '' ) : '—';
 			printf(
 				'<tr><td data-title="%6$s">%1$s</td><td data-title="%7$s">%2$s</td><td data-title="%8$s">%3$s</td><td data-title="%9$s">%4$s</td><td data-title="%10$s">%5$s</td></tr>',
 				esc_html( self::ref( $r->ID ) ),

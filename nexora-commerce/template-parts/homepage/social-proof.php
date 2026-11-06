@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 
 $nexora_items = array();
 
-if ( nexora_is_woocommerce_active() && 'yes' === get_option( 'woocommerce_enable_reviews', 'yes' ) ) {
+if ( nexora_has_store() && 'yes' === get_option( 'woocommerce_enable_reviews', 'yes' ) ) {
 	$nexora_reviews = get_comments(
 		array(
 			'post_type'  => 'product',

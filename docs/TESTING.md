@@ -74,6 +74,20 @@
 | Phones | ✅ | No sideways scrolling on the dashboard and registration pages at 390px; account menu scrolls inside itself. |
 | axe-core | ✅ | 0 violations on home, shop, checkout, sign-in, registration and dashboard (desktop); registration and dashboard also on a phone. |
 
+## Built-in store (2.3) checks
+
+| Check | Result | Notes |
+|---|---|---|
+| WooCommerce mode unchanged | ✅ | Shop, checkout, orders and order screens work; the built-in store's scripts are not loaded; no PHP errors. |
+| Switching | ✅ | WooCommerce → built-in → WooCommerce → built-in. Products, categories and coupons carried over; a product created in the built-in store opened in WooCommerce with its options; each engine kept its own orders. |
+| Fresh site | ✅ | `NEXORA_STORE_ENGINE` set: WooCommerce never installed; 36 demo products seeded; order placed with an account created at checkout. |
+| Purchase | ✅ | Add to cart (button, link, options), mini cart, cart, coupon plus promotion, pickup and courier checkout, success page, emails. |
+| Stock race | ✅ | 6 simultaneous orders for the last unit: 1 succeeded, 5 refused; cancelling restored the stock. Asking for more than is in stock caps the quantity. |
+| Access control | ✅ | Wrong order key, another customer's order and customers opening wp-admin are all blocked; Order Desk staff are refused settings and export; cross-site cart requests get 403. |
+| Maintenance mode | ✅ | Shop scope: store pages and cart requests return 503, other pages stay open. |
+| axe-core | ✅ | 0 violations on home, shop, product, cart, checkout, success page, sign in, registration and account pages. |
+| Not tested | — | The built-in store with a theme other than this one; a real SMTP mail server (emails were captured, not delivered); a large catalogue under load. |
+
 ## Accessibility
 
 - **axe-core (WCAG 2.0/2.1/2.2 A and AA rules): 0 violations** on home (desktop and mobile), shop, product, cart, journal and a post. Issues found and fixed during testing: WooCommerce's breadcrumb grey contrast, and the add-to-cart button contrast before a variation is chosen.

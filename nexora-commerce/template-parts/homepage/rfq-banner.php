@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! nexora_is_woocommerce_active() || ! nexora_rfq_enabled() ) {
+if ( ! nexora_has_store() || ! nexora_rfq_enabled() ) {
 	return;
 }
 $nexora_steps = array(

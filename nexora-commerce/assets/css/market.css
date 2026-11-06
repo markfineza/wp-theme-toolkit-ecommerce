@@ -143,7 +143,7 @@
 .nx-pboard__action { text-align: right; white-space: nowrap; }
 .nx-pboard .nx-btn--ghost { color: #fff; border-color: rgba(255, 255, 255, .25); }
 .nx-pboard .nx-btn--ghost:hover { background: rgba(255, 255, 255, .08); color: #fff; }
-.nx-pboard .add_to_cart_button { background: var(--nx-secondary); color: var(--nx-accent-ink); }
+.nx-pboard a.button.add_to_cart_button, .nx-pboard a.button.add_to_cart_button:hover { background: var(--nx-secondary); color: var(--nx-accent-ink); }
 .nx-pboard .added_to_cart { display: none; }
 .nx-pboard__empty { margin: 14px 0 0; color: var(--nx-on-dark-muted); }
 @media (max-width: 767px) {

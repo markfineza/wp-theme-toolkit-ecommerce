@@ -15,7 +15,7 @@ $nexora_ends   = nexora_datetime_to_timestamp( nexora_option( 'announcement_coun
 $nexora_link   = nexora_option( 'announcement_link_url' );
 $nexora_label  = nexora_option( 'announcement_link_label' );
 $nexora_hash   = substr( md5( nexora_option( 'announcement_text' ) . $nexora_ends ), 0, 8 );
-if ( ! $nexora_link && nexora_is_woocommerce_active() ) {
+if ( ! $nexora_link && nexora_has_store() ) {
 	$nexora_link = nexora_shop_url( array( 'on_sale' => 1 ) );
 }
 ?>

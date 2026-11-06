@@ -16,6 +16,6 @@ get_template_part(
 		'type'    => 'featured',
 		'limit'   => nexora_option( 'featured_limit' ),
 		'eyebrow' => __( 'Hand-picked', 'nexora-commerce' ),
-		'link'    => nexora_is_woocommerce_active() ? nexora_shop_url() : '',
+		'link'    => nexora_has_store() ? nexora_shop_url() : '',
 	)
 );

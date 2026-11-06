@@ -42,6 +42,9 @@ class Nexora_Toolkit_Dependencies {
 	 * @return array<string,string>
 	 */
 	public static function required() {
+		if ( 'native' === Nexora_Store::engine() ) {
+			return array(); // The built-in store needs no other plugin.
+		}
 		return (array) apply_filters( 'nexora_toolkit_required_plugins', array( 'woocommerce' => 'WooCommerce' ) );
 	}
 

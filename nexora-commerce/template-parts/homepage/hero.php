@@ -9,7 +9,7 @@
 defined( 'ABSPATH' ) || exit;
 
 $nexora_image_id = (int) nexora_option( 'hero_image' );
-$nexora_woo      = nexora_is_woocommerce_active();
+$nexora_woo      = nexora_has_store();
 $nexora_cta1     = nexora_url_option( 'hero_cta1_url', nexora_shop_url() );
 $nexora_cta2     = nexora_option( 'hero_cta2_url' );
 if ( ! $nexora_cta2 ) {
@@ -43,7 +43,7 @@ $nexora_threshold = (float) nexora_option( 'free_shipping_threshold' );
 						<?php echo nexora_icon( 'truck', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 						<?php
 						/* translators: %s: free delivery threshold */
-						printf( esc_html__( 'Free delivery over %s', 'nexora-commerce' ), wp_kses_post( wc_price( $nexora_threshold, array( 'decimals' => 0 ) ) ) );
+						printf( esc_html__( 'Free delivery over %s', 'nexora-commerce' ), wp_kses_post( nexora_price( $nexora_threshold, array( 'decimals' => 0 ) ) ) );
 						?>
 					</li>
 				<?php endif; ?>

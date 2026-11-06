@@ -108,11 +108,16 @@ class Nexora_Toolkit_Wishlist {
 	 */
 	public static function render_products( $ids ) {
 		$ids = array_values( array_filter( array_map( 'absint', $ids ), static function ( $id ) {
-			$p = wc_get_product( $id );
+			$p = Nexora_Toolkit_Market::product( $id );
 			return $p && $p->is_visible();
 		} ) );
 		if ( ! $ids ) {
-			return '<div class="nx-empty"><h2>' . esc_html__( 'Your wishlist is empty', 'nexora-commerce-toolkit' ) . '</h2><p>' . esc_html__( 'Tap the heart on any product to save it for later.', 'nexora-commerce-toolkit' ) . '</p><p><a class="button" href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '">' . esc_html__( 'Browse products', 'nexora-commerce-toolkit' ) . '</a></p></div>';
+			return '<div class="nx-empty"><h2>' . esc_html__( 'Your wishlist is empty', 'nexora-commerce-toolkit' ) . '</h2><p>' . esc_html__( 'Tap the heart on any product to save it for later.', 'nexora-commerce-toolkit' ) . '</p><p><a class="button" href="' . esc_url( ( Nexora_Store::active() ? Nexora_Store::shop_url() : wc_get_page_permalink( 'shop' ) ) ) . '">' . esc_html__( 'Browse products', 'nexora-commerce-toolkit' ) . '</a></p></div>';
+		}
+		if ( Nexora_Store::active() ) {
+			ob_start();
+			Nexora_Store_Catalog::grid( $ids, 4 );
+			return '<div class="woocommerce">' . ob_get_clean() . '</div>';
 		}
 		return do_shortcode( '[products ids="' . esc_attr( implode( ',', $ids ) ) . '" orderby="post__in" columns="4" limit="' . count( $ids ) . '"]' );
 	}

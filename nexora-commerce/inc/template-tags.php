@@ -221,6 +221,9 @@ function nexora_payment_labels() {
 	if ( 'manual' === $mode ) {
 		return array_filter( array_map( 'trim', explode( ',', (string) nexora_option( 'footer_payments_manual' ) ) ) );
 	}
+	if ( nexora_is_native_store() ) {
+		return array_values( wp_list_pluck( Nexora_Store_Checkout::gateways(), 'title' ) );
+	}
 	if ( ! nexora_is_woocommerce_active() || ! WC()->payment_gateways() ) {
 		return array();
 	}
@@ -289,7 +292,7 @@ function nexora_url_option( $key, $fallback ) {
  * @return string
  */
 function nexora_shop_url( $args = array() ) {
-	$base = nexora_is_woocommerce_active() ? wc_get_page_permalink( 'shop' ) : home_url( '/' );
+	$base = nexora_is_woocommerce_active() ? wc_get_page_permalink( 'shop' ) : ( nexora_is_native_store() ? Nexora_Store::shop_url() : home_url( '/' ) );
 	return $args ? add_query_arg( $args, $base ) : $base;
 }
 

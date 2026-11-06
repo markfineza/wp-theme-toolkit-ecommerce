@@ -16,7 +16,7 @@ get_template_part(
 		'type'       => 'latest',
 		'limit'      => nexora_option( 'new_limit' ),
 		'eyebrow'    => __( 'Just landed', 'nexora-commerce' ),
-		'link'       => nexora_is_woocommerce_active() ? nexora_shop_url( array( 'orderby' => 'date' ) ) : '',
+		'link'       => nexora_has_store() ? nexora_shop_url( array( 'orderby' => 'date' ) ) : '',
 		'link_label' => __( 'Shop new arrivals', 'nexora-commerce' ),
 	)
 );

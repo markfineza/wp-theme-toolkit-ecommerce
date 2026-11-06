@@ -355,7 +355,10 @@ class Nexora_Toolkit_Settings {
 				</table>
 				<?php submit_button(); ?>
 			</form>
-			<?php self::render_checkout_mode(); ?>
+			<?php Nexora_Store_Admin::render_engine_box(); ?>
+			<?php if ( class_exists( 'WooCommerce' ) ) : ?>
+				<?php self::render_checkout_mode(); ?>
+			<?php endif; ?>
 		</div>
 		<?php
 	}

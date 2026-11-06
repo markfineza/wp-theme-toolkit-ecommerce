@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! nexora_is_woocommerce_active() ) {
+if ( ! nexora_has_store() ) {
 	return;
 }
 
@@ -20,7 +20,7 @@ if ( ! $nexora_products ) {
 // Tabs: categories (leaf level) that appear on the board, in menu order.
 $nexora_tab_counts = array();
 foreach ( $nexora_products as $nexora_p ) {
-	foreach ( wc_get_product_terms( $nexora_p->get_id(), 'product_cat' ) as $nexora_t ) {
+	foreach ( nexora_product_terms( $nexora_p->get_id() ) as $nexora_t ) {
 		$nexora_tab_counts[ $nexora_t->slug ] = $nexora_t;
 	}
 }

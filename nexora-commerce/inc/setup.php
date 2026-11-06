@@ -129,7 +129,7 @@ add_action( 'widgets_init', 'nexora_widgets_init' );
  * Admin notice when WooCommerce is not active.
  */
 function nexora_missing_woocommerce_notice() {
-	if ( nexora_is_woocommerce_active() || ! current_user_can( 'install_plugins' ) ) {
+	if ( nexora_has_store() || ! current_user_can( 'install_plugins' ) ) {
 		return;
 	}
 	$screen = get_current_screen();
@@ -162,7 +162,7 @@ function nexora_body_classes( $classes ) {
 	if ( nexora_announcement_is_visible() ) {
 		$classes[] = 'has-announcement';
 	}
-	if ( ! nexora_is_woocommerce_active() ) {
+	if ( ! nexora_has_store() ) {
 		$classes[] = 'no-woocommerce';
 	}
 	$classes[] = 'card-style-' . sanitize_html_class( nexora_option( 'card_style' ) );

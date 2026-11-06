@@ -108,3 +108,13 @@ function nexora_brand_migrate_colors() {
 	set_theme_mod( 'nexora_brand_colors_v2', 1 );
 }
 add_action( 'init', 'nexora_brand_migrate_colors' );
+
+/**
+ * Logo in the built-in store's emails.
+ *
+ * @return string
+ */
+function nexora_brand_store_email_logo() {
+	return nexora_brand_asset( 'logo-192.png' );
+}
+add_filter( 'nexora_store_email_logo', 'nexora_brand_store_email_logo' );
