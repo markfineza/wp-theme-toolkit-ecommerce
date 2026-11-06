@@ -58,14 +58,15 @@ if ( post_type_exists( 'nexora_testimonial' ) ) {
 if ( ! $nexora_items ) {
 	return;
 }
-$nexora_items = array_slice( $nexora_items, 0, 6 );
+$nexora_items = array_slice( $nexora_items, 0, 3 );
 ?>
-<section class="nx-section nx-social-proof nx-section--tint" aria-labelledby="nx-social-title">
+<section class="nx-reviews nx-dark" aria-labelledby="nx-social-title">
 	<div class="nx-container">
-		<?php nexora_section_header( nexora_option( 'social_title' ), '', '', __( 'Reviews', 'nexora-commerce' ), 'nx-social-title' ); ?>
-		<ul class="nx-quotes" data-nexora-scroller>
+		<?php nexora_center_heading( nexora_option( 'social_title' ), __( 'Reviews', 'nexora-commerce' ), 'nx-social-title' ); ?>
+		<ul class="nx-quotes">
 			<?php foreach ( $nexora_items as $nexora_item ) : ?>
 				<li class="nx-quote">
+					<span class="nx-quote__avatar" aria-hidden="true"><?php echo esc_html( mb_strtoupper( mb_substr( $nexora_item['name'], 0, 1 ) ) ); ?></span>
 					<?php if ( $nexora_item['rating'] ) : ?>
 						<?php echo nexora_rating_html( $nexora_item['rating'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 					<?php endif; ?>

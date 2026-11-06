@@ -1,0 +1,5 @@
+/* Freshtastic Toolkit: free-item coupon box and first customers screen. */
+.nx-reward-select, .nx-reward-multi { width: 100%; max-width: 420px; }
+.nx-reward-admin__status { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; margin: 12px 0; padding: 12px 16px; border: 1px solid #dcdcde; border-radius: 8px; background: #fff; font-size: 14px; }
+.nx-reward-admin .widefat { max-width: 960px; }
+.nx-reward-admin__reset { margin-top: 16px; }

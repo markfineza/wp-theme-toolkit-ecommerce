@@ -22,7 +22,7 @@ $nexora_blog = get_option( 'page_for_posts' ) ? get_permalink( get_option( 'page
 ?>
 <section class="nx-section nx-editorial" aria-labelledby="nx-editorial-title">
 	<div class="nx-container">
-		<?php nexora_section_header( nexora_option( 'editorial_title' ), $nexora_blog, __( 'Read the journal', 'nexora-commerce' ), __( 'Guides and stories', 'nexora-commerce' ), 'nx-editorial-title' ); ?>
+		<?php nexora_center_heading( nexora_option( 'editorial_title' ), __( 'Guides and stories', 'nexora-commerce' ), 'nx-editorial-title' ); ?>
 		<div class="nx-post-grid">
 			<?php
 			while ( $nexora_posts->have_posts() ) {

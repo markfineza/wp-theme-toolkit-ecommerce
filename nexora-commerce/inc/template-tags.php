@@ -180,6 +180,58 @@ function nexora_section_header( $title, $link_url = '', $link_label = '', $eyebr
 }
 
 /**
+ * Centred section heading used by the storefront homepage.
+ *
+ * @param string $title   Title.
+ * @param string $eyebrow Small text above.
+ * @param string $id      Heading ID.
+ * @param string $text    Text below.
+ */
+function nexora_center_heading( $title, $eyebrow = '', $id = '', $text = '' ) {
+	?>
+	<div class="nx-center-head">
+		<?php if ( $eyebrow ) : ?>
+			<p class="nx-center-head__eyebrow"><?php echo esc_html( $eyebrow ); ?></p>
+		<?php endif; ?>
+		<h2 class="nx-center-head__title"<?php echo $id ? ' id="' . esc_attr( $id ) . '"' : ''; ?>><?php echo esc_html( $title ); ?></h2>
+		<?php if ( $text ) : ?>
+			<p class="nx-center-head__text"><?php echo esc_html( $text ); ?></p>
+		<?php endif; ?>
+	</div>
+	<?php
+}
+
+/**
+ * Promotional banners that should show right now.
+ *
+ * @return array[] eyebrow, title, text, badge, code, label, url, image, ends.
+ */
+function nexora_promo_slides() {
+	$slides = array();
+	foreach ( array( 1, 2, 3 ) as $n ) {
+		$title = trim( (string) nexora_option( "promo{$n}_title" ) );
+		$start = nexora_datetime_to_timestamp( nexora_option( "promo{$n}_start" ) );
+		$end   = nexora_datetime_to_timestamp( nexora_option( "promo{$n}_end" ) );
+		if ( '' === $title || ( $start && $start > time() ) || ( $end && $end < time() ) ) {
+			continue;
+		}
+		$image    = (int) nexora_option( "promo{$n}_image" );
+		$slides[] = array(
+			'eyebrow' => (string) nexora_option( "promo{$n}_eyebrow" ),
+			'title'   => $title,
+			'text'    => (string) nexora_option( "promo{$n}_text" ),
+			'badge'   => (string) nexora_option( "promo{$n}_badge" ),
+			'code'    => (string) nexora_option( "promo{$n}_code" ),
+			'label'   => (string) nexora_option( "promo{$n}_cta_label" ),
+			'url'     => (string) nexora_option( "promo{$n}_cta_url" ),
+			'image'   => $image ? $image : (int) nexora_option( 'hero_image' ),
+			'ends'    => $end,
+		);
+	}
+	return $slides;
+}
+
+/**
  * Social profile links from the Customizer.
  */
 function nexora_social_links() {

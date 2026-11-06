@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       Freshtastic Food Hub Toolkit
  * Plugin URI:        https://example.com/nexora-commerce
- * Description:       Companion plugin for the Freshtastic Food Hub theme: optional built-in store that runs without WooCommerce, market data (units, origin, price history), request for quotation, store pickup and customer-booked courier delivery with time slots, modern order screens and an Order Desk staff role, demo content importer and cleanup, wishlist, newsletter provider integrations (Mailchimp, Brevo, Klaviyo), consent-aware analytics events (GA4, GTM, Meta Pixel, Google Ads) and testimonials. Features keep working if you switch themes.
- * Version:           2.3.0
+ * Description:       Companion plugin for the Freshtastic Food Hub theme: optional built-in store that runs without WooCommerce, market data (units, origin, price history), request for quotation, store pickup and customer-booked courier delivery with time slots, modern order screens and an Order Desk staff role, registration consent records, reCAPTCHA and email login codes, demo content importer and cleanup, wishlist, newsletter provider integrations (Mailchimp, Brevo, Klaviyo), consent-aware analytics events (GA4, GTM, Meta Pixel, Google Ads) and testimonials. Features keep working if you switch themes.
+ * Version:           2.6.0
  * Requires at least: 6.5
  * Requires PHP:      7.4
  * Author:            Freshtastic Food Hub Team
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'NEXORA_TOOLKIT_VERSION', '2.3.0' );
+define( 'NEXORA_TOOLKIT_VERSION', '2.6.0' );
 define( 'NEXORA_TOOLKIT_FILE', __FILE__ );
 define( 'NEXORA_TOOLKIT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NEXORA_TOOLKIT_URL', plugin_dir_url( __FILE__ ) );
@@ -38,6 +38,11 @@ require NEXORA_TOOLKIT_DIR . 'includes/class-fulfilment.php';
 require NEXORA_TOOLKIT_DIR . 'includes/class-order-desk.php';
 require NEXORA_TOOLKIT_DIR . 'includes/class-accounts.php';
 require NEXORA_TOOLKIT_DIR . 'includes/class-schedule.php';
+require NEXORA_TOOLKIT_DIR . 'includes/class-rewards.php';
+require NEXORA_TOOLKIT_DIR . 'includes/class-security.php';
+require NEXORA_TOOLKIT_DIR . 'includes/class-captcha.php';
+require NEXORA_TOOLKIT_DIR . 'includes/class-consent.php';
+require NEXORA_TOOLKIT_DIR . 'includes/class-login-otp.php';
 require NEXORA_TOOLKIT_DIR . 'includes/class-demo-importer.php';
 require NEXORA_TOOLKIT_DIR . 'includes/store/class-store.php';
 require NEXORA_TOOLKIT_DIR . 'includes/store/class-store-product.php';
@@ -73,13 +78,18 @@ function nexora_toolkit_boot() {
 		Nexora_Toolkit_Market::init();
 	}
 	Nexora_Store::boot();
+	if ( class_exists( 'WooCommerce' ) || Nexora_Store::active() ) {
+		Nexora_Toolkit_Rewards::init();
+	}
 	Nexora_Toolkit_RFQ::init();
 	Nexora_Toolkit_Maintenance::init();
+	Nexora_Toolkit_Security::init();
+	Nexora_Toolkit_Consent::init();
+	Nexora_Toolkit_Captcha::init();
+	Nexora_Toolkit_Login_OTP::init();
 	if ( is_admin() ) {
 		Nexora_Toolkit_Dependencies::init();
-		if ( ! Nexora_Store::active() ) {
-			Nexora_Toolkit_Demo_Importer::init();
-		}
+		Nexora_Toolkit_Demo_Importer::init();
 	}
 }
 add_action( 'plugins_loaded', 'nexora_toolkit_boot', 20 );

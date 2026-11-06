@@ -98,9 +98,10 @@ class Nexora_Store_Coupons {
 		$m = static function ( $key ) use ( $id ) {
 			return get_post_meta( $id, $key, true );
 		};
-		$ids = static function ( $value ) {
+		$ids  = static function ( $value ) {
 			return array_values( array_filter( array_map( 'absint', is_array( $value ) ? $value : explode( ',', (string) $value ) ) ) );
 		};
+		$free = Nexora_Toolkit_Rewards::free_item( $id );
 		return array(
 			'id'             => $id,
 			'code'           => get_the_title( $id ),
@@ -110,13 +111,15 @@ class Nexora_Store_Coupons {
 			'min'            => (float) $m( 'minimum_amount' ),
 			'max'            => (float) $m( 'maximum_amount' ),
 			'limit'          => (int) $m( 'usage_limit' ),
-			'limit_user'     => (int) $m( 'usage_limit_per_user' ),
+			'limit_user'     => $free || Nexora_Toolkit_Rewards::owner( $id ) ? 1 : (int) $m( 'usage_limit_per_user' ),
 			'count'          => (int) $m( 'usage_count' ),
 			'free_shipping'  => 'yes' === $m( 'free_shipping' ),
 			'individual'     => 'yes' === $m( 'individual_use' ),
 			'exclude_sale'   => 'yes' === $m( 'exclude_sale_items' ),
 			'products'       => $ids( $m( 'product_ids' ) ),
 			'categories'     => $ids( $m( 'product_categories' ) ),
+			'emails'         => array_values( array_filter( array_map( 'strval', (array) $m( 'customer_email' ) ) ) ),
+			'free_item'      => $free,
 		);
 	}
 
@@ -167,6 +170,26 @@ class Nexora_Store_Coupons {
 		if ( $coupon['expires'] && time() > $coupon['expires'] ) {
 			return $fail( __( 'This coupon has expired.', 'nexora-commerce-toolkit' ) );
 		}
+		$rule = Nexora_Toolkit_Rewards::check(
+			$coupon['id'],
+			$user,
+			array_map(
+				static function ( $line ) {
+					return array(
+						'product'   => $line['product']->get_id(),
+						'variation' => $line['item']->get_parent_id() ? $line['item']->get_id() : 0,
+						'qty'       => (int) $line['qty'],
+					);
+				},
+				array_values( $lines )
+			)
+		);
+		if ( is_wp_error( $rule ) ) {
+			return $rule;
+		}
+		if ( $coupon['emails'] && ! self::email_allowed( $coupon['emails'], $user, $email ) ) {
+			return $fail( __( 'This coupon is not available for your account.', 'nexora-commerce-toolkit' ) );
+		}
 		if ( $coupon['limit'] && $coupon['count'] >= $coupon['limit'] ) {
 			return $fail( __( 'This coupon has reached its usage limit.', 'nexora-commerce-toolkit' ) );
 		}
@@ -197,10 +220,56 @@ class Nexora_Store_Coupons {
 			/* translators: %s: amount */
 			return $fail( sprintf( __( 'This coupon is for orders up to %s.', 'nexora-commerce-toolkit' ), Nexora_Store::money( $coupon['max'] ) ) );
 		}
-		if ( $eligible <= 0 && ! $coupon['free_shipping'] ) {
+		if ( $eligible <= 0 && ! $coupon['free_shipping'] && ! $coupon['free_item'] ) {
 			return $fail( __( 'This coupon does not apply to the items in your cart.', 'nexora-commerce-toolkit' ) );
 		}
 		return true;
+	}
+
+	/**
+	 * Whether the customer matches a coupon's allowed emails. Checked again at checkout, once a guest has
+	 * given an email address. Like WooCommerce, "*" works as a wildcard.
+	 *
+	 * @param string[] $allowed Allowed emails.
+	 * @param int      $user    User.
+	 * @param string   $email   Email entered at checkout.
+	 * @return bool
+	 */
+	private static function email_allowed( $allowed, $user, $email ) {
+		$mine = array( $email );
+		if ( $user ) {
+			$account = get_userdata( $user );
+			$mine[]  = $account ? $account->user_email : '';
+			$mine[]  = (string) get_user_meta( $user, 'billing_email', true );
+		}
+		$mine = array_filter( $mine );
+		if ( ! $mine ) {
+			return true;
+		}
+		foreach ( $allowed as $pattern ) {
+			$regex = '/^' . str_replace( '\\*', '.*', preg_quote( $pattern, '/' ) ) . '$/i';
+			foreach ( $mine as $address ) {
+				if ( preg_match( $regex, $address ) ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * What a discount row shows: the amount, or a word when the reward is not money off.
+	 *
+	 * @param array $discount Discount row.
+	 * @param bool  $plain    Plain text instead of HTML.
+	 * @return string
+	 */
+	public static function discount_value( $discount, $plain = false ) {
+		if ( (float) $discount['amount'] > 0 ) {
+			return '-' . ( $plain ? Nexora_Store::money( $discount['amount'] ) : Nexora_Store::price( $discount['amount'] ) );
+		}
+		$word = ! empty( $discount['free_item'] ) ? __( 'Free item', 'nexora-commerce-toolkit' ) : __( 'Applied', 'nexora-commerce-toolkit' );
+		return $plain ? $word : esc_html( $word );
 	}
 
 	/**
@@ -236,7 +305,7 @@ class Nexora_Store_Coupons {
 	 * @param string[] $codes Coupon codes.
 	 * @param int      $user  User.
 	 * @param string   $email Email.
-	 * @return array{discounts:array,total:float,free_shipping:bool,invalid:array}
+	 * @return array{discounts:array,gifts:array,total:float,free_shipping:bool,invalid:array}
 	 */
 	public static function calculate( $lines, $codes, $user = 0, $email = '' ) {
 		$subtotal = 0.0;
@@ -247,6 +316,7 @@ class Nexora_Store_Coupons {
 		$discounts = array();
 		$free      = false;
 		$invalid   = array();
+		$gifts     = array();
 
 		$best = null;
 		foreach ( self::active_promotions() as $promo ) {
@@ -283,6 +353,9 @@ class Nexora_Store_Coupons {
 			}
 			$free   = $free || $coupon['free_shipping'];
 			$amount = 0.0;
+			if ( $coupon['free_item'] ) {
+				$gifts[ $coupon['id'] ] = $coupon['free_item'];
+			}
 			if ( 'fixed_cart' === $coupon['type'] ) {
 				$base = 0.0;
 				foreach ( $lines as $line ) {
@@ -305,14 +378,16 @@ class Nexora_Store_Coupons {
 			$remaining -= $amount;
 			$discounts[] = array(
 				/* translators: %s: coupon code */
-				'label'  => sprintf( __( 'Coupon: %s', 'nexora-commerce-toolkit' ), $coupon['code'] ),
-				'amount' => $amount,
-				'code'   => $coupon['code'],
-				'id'     => $coupon['id'],
+				'label'     => sprintf( __( 'Coupon: %s', 'nexora-commerce-toolkit' ), $coupon['code'] ),
+				'amount'    => $amount,
+				'code'      => $coupon['code'],
+				'id'        => $coupon['id'],
+				'free_item' => (bool) $coupon['free_item'],
 			);
 		}
 		return array(
 			'discounts'     => $discounts,
+			'gifts'         => $gifts,
 			'total'         => Nexora_Store::round( $subtotal - $remaining ),
 			'free_shipping' => $free,
 			'invalid'       => $invalid,
@@ -335,6 +410,15 @@ class Nexora_Store_Coupons {
 		}
 		if ( '' === (string) get_post_meta( $coupon['id'], 'usage_count', true ) ) {
 			update_post_meta( $coupon['id'], 'usage_count', 0 );
+		}
+		if ( $coupon['limit_user'] ) {
+			// Runs inside the order transaction: the row lock is held until commit, so one customer cannot
+			// spend a one-time coupon twice from two tabs or devices. Locking reads see the latest data.
+			$wpdb->get_var( $wpdb->prepare( "SELECT meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = 'usage_count' FOR UPDATE", $coupon['id'] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$rows = $wpdb->get_col( $wpdb->prepare( "SELECT meta_id FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = '_used_by' AND meta_value = %s FOR UPDATE", $coupon['id'], $who ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			if ( count( $rows ) >= $coupon['limit_user'] ) {
+				return false;
+			}
 		}
 		if ( $coupon['limit'] ) {
 			$done = $wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->postmeta} SET meta_value = meta_value + 1 WHERE post_id = %d AND meta_key = 'usage_count' AND meta_value + 0 < %d", $coupon['id'], $coupon['limit'] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
@@ -445,6 +529,7 @@ class Nexora_Store_Coupons {
 				<?php /* translators: %d: uses */ ?>
 				<p class="description"><?php echo esc_html( sprintf( __( 'Used %d times so far. Empty = unlimited.', 'nexora-commerce-toolkit' ), (int) $m( 'usage_count' ) ) ); ?></p></td></tr>
 			<tr><th><label for="usage_limit_per_user"><?php esc_html_e( 'Uses per customer', 'nexora-commerce-toolkit' ); ?></label></th><td><input type="number" min="0" step="1" id="usage_limit_per_user" name="usage_limit_per_user" value="<?php echo esc_attr( (string) $m( 'usage_limit_per_user' ) ); ?>"></td></tr>
+			<tr><th><label for="customer_email"><?php esc_html_e( 'Only these customers', 'nexora-commerce-toolkit' ); ?></label></th><td><textarea id="customer_email" name="customer_email" rows="2" class="large-text"><?php echo esc_textarea( implode( ', ', array_map( 'strval', (array) $m( 'customer_email' ) ) ) ); ?></textarea><p class="description"><?php esc_html_e( 'Email addresses separated by commas. Empty = any customer.', 'nexora-commerce-toolkit' ); ?></p></td></tr>
 			<tr><th><label for="product_categories"><?php esc_html_e( 'Only these categories', 'nexora-commerce-toolkit' ); ?></label></th><td><?php self::category_select( 'product_categories', array_map( 'absint', (array) $m( 'product_categories' ) ) ); ?></td></tr>
 			<tr><th><?php esc_html_e( 'Options', 'nexora-commerce-toolkit' ); ?></th><td>
 				<label><input type="checkbox" name="free_shipping" value="yes" <?php checked( 'yes', $m( 'free_shipping' ) ); ?>> <?php esc_html_e( 'Also removes the delivery or pickup fee', 'nexora-commerce-toolkit' ); ?></label><br>
@@ -478,6 +563,8 @@ class Nexora_Store_Coupons {
 		foreach ( array( 'free_shipping', 'individual_use', 'exclude_sale_items' ) as $key ) {
 			update_post_meta( $post_id, $key, isset( $_POST[ $key ] ) ? 'yes' : 'no' );
 		}
+		$emails = isset( $_POST['customer_email'] ) ? preg_split( '/[\s,;]+/', strtolower( sanitize_textarea_field( wp_unslash( $_POST['customer_email'] ) ) ) ) : array();
+		update_post_meta( $post_id, 'customer_email', array_values( array_filter( (array) $emails ) ) );
 		update_post_meta( $post_id, 'product_categories', isset( $_POST['product_categories'] ) ? array_map( 'absint', (array) wp_unslash( $_POST['product_categories'] ) ) : array() );
 		if ( '' === (string) get_post_meta( $post_id, 'usage_count', true ) ) {
 			update_post_meta( $post_id, 'usage_count', 0 );
@@ -560,7 +647,9 @@ class Nexora_Store_Coupons {
 		$m = static function ( $key ) use ( $post_id ) {
 			return get_post_meta( $post_id, $key, true );
 		};
-		if ( 'nx_amount' === $column ) {
+		if ( 'nx_amount' === $column && Nexora_Toolkit_Rewards::free_item( $post_id ) ) {
+			esc_html_e( 'Free item', 'nexora-commerce-toolkit' );
+		} elseif ( 'nx_amount' === $column ) {
 			echo esc_html( 'percent' === $m( 'discount_type' ) ? (float) $m( 'coupon_amount' ) . '%' : Nexora_Store::money( (float) $m( 'coupon_amount' ) ) );
 		} elseif ( 'nx_used' === $column ) {
 			echo esc_html( (int) $m( 'usage_count' ) . ( $m( 'usage_limit' ) ? ' / ' . (int) $m( 'usage_limit' ) : '' ) );

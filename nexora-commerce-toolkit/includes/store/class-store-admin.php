@@ -181,7 +181,7 @@ class Nexora_Store_Admin {
 		if ( empty( $submenu['nexora-store'] ) ) {
 			return;
 		}
-		$order = array( 'nexora-store', 'nexora-store-orders', 'edit.php?post_type=product', 'post-new.php?post_type=product', 'edit-tags.php?taxonomy=product_cat&post_type=product', 'edit.php?post_type=shop_coupon', 'edit.php?post_type=' . Nexora_Store_Coupons::PROMO, 'edit.php?post_type=nexora_rfq', 'nexora-store-settings' );
+		$order = array( 'nexora-store', 'nexora-store-orders', 'edit.php?post_type=product', 'post-new.php?post_type=product', 'edit-tags.php?taxonomy=product_cat&post_type=product', 'edit.php?post_type=shop_coupon', 'edit.php?post_type=' . Nexora_Store_Coupons::PROMO, Nexora_Toolkit_Rewards::PAGE, 'edit.php?post_type=nexora_rfq', 'nexora-store-settings' );
 		usort(
 			$submenu['nexora-store'],
 			static function ( $a, $b ) use ( $order ) {
@@ -405,7 +405,10 @@ class Nexora_Store_Admin {
 			$count = wp_count_posts( 'product' );
 			if ( empty( $count->publish ) ) {
 				echo '<div class="notice notice-info inline"><p>' . esc_html__( 'You have no products yet.', 'nexora-commerce-toolkit' ) . ' <a class="button button-primary" href="' . esc_url( admin_url( 'post-new.php?post_type=product' ) ) . '">' . esc_html__( 'Add a product', 'nexora-commerce-toolkit' ) . '</a> ';
-				echo '<a class="button" href="' . esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=nexora_store_seed' ), 'nexora_store_seed' ) ) . '">' . esc_html__( 'Load demo products', 'nexora-commerce-toolkit' ) . '</a></p></div>';
+				if ( current_user_can( 'manage_options' ) ) {
+					echo '<a class="button" href="' . esc_url( admin_url( 'tools.php?page=nexora-demo' ) ) . '">' . esc_html__( 'Import demo content', 'nexora-commerce-toolkit' ) . '</a>';
+				}
+				echo '</p></div>';
 			}
 
 			// phpcs:disable WordPress.DB.DirectDatabaseQuery
@@ -535,7 +538,7 @@ class Nexora_Store_Admin {
 							<tfoot>
 								<tr><th colspan="4"><?php esc_html_e( 'Subtotal', 'nexora-commerce-toolkit' ); ?></th><td><?php echo esc_html( Nexora_Store::money( $order->subtotal ) ); ?></td></tr>
 								<?php foreach ( $order->discounts as $d ) : ?>
-									<tr><th colspan="4"><?php echo esc_html( $d['label'] ); ?></th><td>-<?php echo esc_html( Nexora_Store::money( $d['amount'] ) ); ?></td></tr>
+									<tr><th colspan="4"><?php echo esc_html( $d['label'] ); ?></th><td><?php echo esc_html( Nexora_Store_Coupons::discount_value( $d, true ) ); ?></td></tr>
 								<?php endforeach; ?>
 								<tr><th colspan="4"><?php echo esc_html( ! empty( $f['method'] ) ? $f['method'] : __( 'Delivery', 'nexora-commerce-toolkit' ) ); ?></th><td><?php echo esc_html( Nexora_Store::money( $order->shipping_total ) ); ?></td></tr>
 								<tr><th colspan="4"><strong><?php esc_html_e( 'Total', 'nexora-commerce-toolkit' ); ?></strong></th><td><strong><?php echo esc_html( Nexora_Store::money( $order->total ) ); ?></strong></td></tr>

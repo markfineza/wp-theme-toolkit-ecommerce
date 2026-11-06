@@ -298,6 +298,14 @@ class Nexora_Store_Checkout {
 				if ( strlen( isset( $_POST['account_password'] ) ? (string) $_POST['account_password'] : '' ) < 8 ) {
 					$e['account_password'] = __( 'Please choose a password of at least 8 characters.', 'nexora-commerce-toolkit' );
 				}
+				$consent = Nexora_Toolkit_Consent::error();
+				if ( '' !== $consent ) {
+					$e['nx_terms'] = $consent;
+				}
+				$captcha = Nexora_Toolkit_Captcha::error();
+				if ( '' !== $captcha ) {
+					$e['nx_captcha'] = $captcha;
+				}
 			}
 		}
 
@@ -479,12 +487,12 @@ class Nexora_Store_Checkout {
 	public static function summary_html( $t ) {
 		$out = '<table class="shop_table woocommerce-checkout-review-order-table nx-co-review"><thead class="screen-reader-text"><tr><th>' . esc_html__( 'Product', 'nexora-commerce-toolkit' ) . '</th><th>' . esc_html__( 'Subtotal', 'nexora-commerce-toolkit' ) . '</th></tr></thead><tbody>';
 		foreach ( $t['lines'] as $line ) {
-			$out .= '<tr class="cart_item"><td class="product-name"><div class="nx-co-item"><span class="nx-co-item__thumb">' . $line['item']->get_image( 'woocommerce_gallery_thumbnail', array( 'alt' => '', 'loading' => 'lazy' ) ) . '<span class="nx-co-item__badge" aria-hidden="true">' . (int) $line['qty'] . '</span></span><span class="nx-co-item__text"><span class="nx-co-item__name">' . esc_html( $line['product']->get_name() ) . '</span>' . ( $line['option'] ? '<span class="nx-store-option">' . esc_html( $line['option'] ) . '</span>' : '' ) . '<strong class="product-quantity">&times;&nbsp;' . (int) $line['qty'] . '</strong></span></div></td><td class="product-total">' . Nexora_Store::price( $line['total'] ) . '</td></tr>';
+			$out .= '<tr class="cart_item"><td class="product-name"><div class="nx-co-item"><span class="nx-co-item__thumb">' . $line['item']->get_image( 'woocommerce_gallery_thumbnail', array( 'alt' => '', 'loading' => 'lazy' ) ) . '<span class="nx-co-item__badge" aria-hidden="true">' . (int) $line['qty'] . '</span></span><span class="nx-co-item__text"><span class="nx-co-item__name">' . esc_html( $line['product']->get_name() ) . '</span>' . ( $line['option'] ? '<span class="nx-store-option">' . esc_html( $line['option'] ) . '</span>' : '' ) . '<strong class="product-quantity">&times;&nbsp;' . (int) $line['qty'] . '</strong></span></div></td><td class="product-total">' . ( ! empty( $line['gift'] ) ? esc_html__( 'Free', 'nexora-commerce-toolkit' ) : Nexora_Store::price( $line['total'] ) ) . '</td></tr>';
 		}
 		$out .= '</tbody><tfoot><tr class="cart-subtotal"><th>' . esc_html__( 'Subtotal', 'nexora-commerce-toolkit' ) . '</th><td>' . Nexora_Store::price( $t['subtotal'] ) . '</td></tr>';
 		foreach ( $t['discounts'] as $d ) {
 			$remove = $d['code'] ? ' <button type="button" class="nx-store-link" data-nx-remove-coupon="' . esc_attr( $d['code'] ) . '">' . esc_html__( 'Remove', 'nexora-commerce-toolkit' ) . '</button>' : '';
-			$out   .= '<tr class="cart-discount"><th>' . esc_html( $d['label'] ) . $remove . '</th><td>-' . Nexora_Store::price( $d['amount'] ) . '</td></tr>';
+			$out   .= '<tr class="cart-discount"><th>' . esc_html( $d['label'] ) . $remove . '</th><td>' . Nexora_Store_Coupons::discount_value( $d ) . '</td></tr>';
 		}
 		foreach ( $t['invalid'] as $code => $message ) {
 			$out .= '<tr class="cart-discount is-invalid"><th colspan="2">' . esc_html( $code . ': ' . $message ) . ' <button type="button" class="nx-store-link" data-nx-remove-coupon="' . esc_attr( $code ) . '">' . esc_html__( 'Remove', 'nexora-commerce-toolkit' ) . '</button></th></tr>';
@@ -530,6 +538,7 @@ class Nexora_Store_Checkout {
 			}
 			echo '</ul>';
 		}
+		echo Nexora_Toolkit_Rewards::reward_card( true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped when built.
 		if ( ! $logged_in ) {
 			echo '<p class="nx-store-co-login">' . esc_html__( 'Already have an account?', 'nexora-commerce-toolkit' ) . ' <a href="' . esc_url( add_query_arg( 'redirect_to', rawurlencode( Nexora_Store::url( 'checkout' ) ), Nexora_Store::url( 'account' ) ) ) . '">' . esc_html__( 'Log in', 'nexora-commerce-toolkit' ) . '</a></p>';
 		}
@@ -577,6 +586,12 @@ class Nexora_Store_Checkout {
 								<label for="account_password"><?php esc_html_e( 'Choose a password (8 characters or more)', 'nexora-commerce-toolkit' ); ?></label>
 								<input type="password" class="input-text" name="account_password" id="account_password" autocomplete="new-password">
 							</p>
+							<div class="nx-store-account-pass">
+								<?php
+								Nexora_Toolkit_Consent::checkout_fields();
+								Nexora_Toolkit_Captcha::widget();
+								?>
+							</div>
 						</div>
 					<?php endif; ?>
 				</section>

@@ -32,6 +32,11 @@ function nexora_register_rest_routes() {
 						return is_string( $value ) && mb_strlen( trim( $value ) ) >= 2 && mb_strlen( $value ) <= 100;
 					},
 				),
+				'cat' => array(
+					'type'              => 'string',
+					'required'          => false,
+					'sanitize_callback' => 'sanitize_title',
+				),
 			),
 		)
 	);
@@ -76,13 +81,14 @@ add_action( 'rest_api_init', 'nexora_register_rest_routes' );
  */
 function nexora_rest_search( $request ) {
 	$term    = trim( (string) $request['q'] );
+	$cat     = (string) $request['cat'];
 	$results = array();
 
 	if ( nexora_is_woocommerce_active() ) {
-		$ids = WC_Data_Store::load( 'product' )->search_products( $term, '', false, false, 12 );
+		$ids = WC_Data_Store::load( 'product' )->search_products( $term, '', false, false, $cat ? 40 : 12 );
 		foreach ( array_filter( array_map( 'absint', $ids ) ) as $id ) {
 			$product = wc_get_product( $id );
-			if ( ! $product || ! $product->is_visible() ) {
+			if ( ! $product || ! $product->is_visible() || ( $cat && ! has_term( $cat, 'product_cat', $id ) ) ) {
 				continue;
 			}
 			$image     = wp_get_attachment_image_url( $product->get_image_id(), 'woocommerce_gallery_thumbnail' );
@@ -97,7 +103,7 @@ function nexora_rest_search( $request ) {
 				break;
 			}
 		}
-		$all_url = add_query_arg( array( 's' => rawurlencode( $term ), 'post_type' => 'product' ), home_url( '/' ) );
+		$all_url = add_query_arg( array_filter( array( 's' => rawurlencode( $term ), 'post_type' => 'product', 'product_cat' => $cat ) ), home_url( '/' ) );
 	} elseif ( nexora_is_native_store() ) {
 		$query = new WP_Query(
 			array(
@@ -106,6 +112,7 @@ function nexora_rest_search( $request ) {
 				'post_status'    => 'publish',
 				'posts_per_page' => 6,
 				'no_found_rows'  => true,
+				'tax_query'      => $cat ? array( array( 'taxonomy' => 'product_cat', 'field' => 'slug', 'terms' => $cat, 'include_children' => true ) ) : array(), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 			)
 		);
 		foreach ( $query->posts as $post ) {
@@ -122,7 +129,7 @@ function nexora_rest_search( $request ) {
 				'image' => $image ? esc_url_raw( $image ) : '',
 			);
 		}
-		$all_url = add_query_arg( array( 's' => rawurlencode( $term ), 'post_type' => 'product' ), home_url( '/' ) );
+		$all_url = add_query_arg( array_filter( array( 's' => rawurlencode( $term ), 'post_type' => 'product', 'product_cat' => $cat ) ), home_url( '/' ) );
 	} else {
 		$query = new WP_Query(
 			array(

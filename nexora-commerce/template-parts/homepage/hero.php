@@ -1,100 +1,96 @@
 <?php
 /**
- * Homepage hero with a live "market board" of recent price movers.
- * The hero image is the LCP element: it is preloaded and never lazy-loaded.
+ * Homepage hero: promotional banners from Customizer → Freshtastic Homepage → Hero promotional banner.
+ * With several banners it rotates, with pause, previous and next controls. The first image is the LCP
+ * element, so it is preloaded and never lazy-loaded.
  *
  * @package NexoraCommerce
  */
 
 defined( 'ABSPATH' ) || exit;
 
-$nexora_image_id = (int) nexora_option( 'hero_image' );
-$nexora_woo      = nexora_has_store();
-$nexora_cta1     = nexora_url_option( 'hero_cta1_url', nexora_shop_url() );
-$nexora_cta2     = nexora_option( 'hero_cta2_url' );
-if ( ! $nexora_cta2 ) {
-	$nexora_cta2 = $nexora_woo && nexora_rfq_enabled() ? nexora_rfq_url() : nexora_shop_url( array( 'orderby' => 'date' ) );
+$nexora_slides = nexora_promo_slides();
+if ( ! $nexora_slides ) {
+	return;
 }
-$nexora_board     = $nexora_woo && -1 !== (int) nexora_option( 'hero_product' ) ? nexora_board_products( 5 ) : array();
-$nexora_threshold = (float) nexora_option( 'free_shipping_threshold' );
+$nexora_count = count( $nexora_slides );
 ?>
-<section class="nx-hero nx-dark" aria-labelledby="nx-hero-title">
-	<div class="nx-hero__glow" aria-hidden="true"></div>
-	<div class="nx-container nx-hero__inner">
-		<div class="nx-hero__copy">
-			<?php if ( nexora_option( 'hero_badge' ) ) : ?>
-				<p class="nx-pill"><span class="nx-pill__dot" aria-hidden="true"></span><?php echo esc_html( nexora_option( 'hero_badge' ) ); ?></p>
-			<?php endif; ?>
-			<h1 class="nx-hero__title" id="nx-hero-title"><?php echo esc_html( nexora_option( 'hero_title' ) ); ?></h1>
-			<p class="nx-hero__text"><?php echo esc_html( nexora_option( 'hero_text' ) ); ?></p>
-			<div class="nx-btn-row">
-				<?php if ( nexora_option( 'hero_cta1_label' ) ) : ?>
-					<a class="nx-btn nx-btn--primary nx-btn--lg" href="<?php echo esc_url( $nexora_cta1 ); ?>"><?php echo esc_html( nexora_option( 'hero_cta1_label' ) ); ?> <?php echo nexora_icon( 'arrow-right', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-				<?php endif; ?>
-				<?php if ( nexora_option( 'hero_cta2_label' ) ) : ?>
-					<a class="nx-btn nx-btn--glass nx-btn--lg" href="<?php echo esc_url( $nexora_cta2 ); ?>"><?php echo nexora_icon( 'clipboard', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php echo esc_html( nexora_option( 'hero_cta2_label' ) ); ?></a>
-				<?php endif; ?>
-			</div>
-			<ul class="nx-hero__perks">
-				<?php if ( $nexora_woo && ! nexora_store_offers_free_shipping() ) : ?>
-					<li><?php echo nexora_icon( 'store', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Pick up or book your own rider', 'nexora-commerce' ); ?></li>
-				<?php elseif ( $nexora_threshold > 0 && $nexora_woo ) : ?>
-					<li>
-						<?php echo nexora_icon( 'truck', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-						<?php
-						/* translators: %s: free delivery threshold */
-						printf( esc_html__( 'Free delivery over %s', 'nexora-commerce' ), wp_kses_post( nexora_price( $nexora_threshold, array( 'decimals' => 0 ) ) ) );
-						?>
-					</li>
-				<?php endif; ?>
-				<li><?php echo nexora_icon( 'snow', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Packed cold', 'nexora-commerce' ); ?></li>
-				<li><?php echo nexora_icon( 'scale', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><?php esc_html_e( 'Honest weights', 'nexora-commerce' ); ?></li>
-			</ul>
-		</div>
-
-		<div class="nx-hero__media">
-			<div class="nx-hero__frame">
-				<?php
-				if ( $nexora_image_id ) {
-					echo wp_get_attachment_image(
-						$nexora_image_id,
-						'full',
-						false,
-						array(
-							'class'         => 'nx-hero__img',
-							'loading'       => 'eager',
-							'fetchpriority' => 'high',
-							'decoding'      => 'async',
-							'sizes'         => '(min-width: 1024px) 55vw, 100vw',
-						)
-					);
-				} else {
-					printf( '<img class="nx-hero__img" src="%1$s" width="1600" height="1200" alt="" fetchpriority="high" decoding="async">', esc_url( NEXORA_URI . '/assets/images/hero-fallback.jpg' ) );
-				}
-				?>
-			</div>
-			<?php if ( $nexora_board ) : ?>
-				<div class="nx-board">
-					<div class="nx-board__head">
-						<h2 class="nx-board__title"><?php echo esc_html( nexora_option( 'hero_board_title' ) ); ?></h2>
-						<span class="nx-board__live" data-nexora-market-status data-open="<?php echo esc_attr( (string) nexora_option( 'market_open' ) ); ?>" data-close="<?php echo esc_attr( (string) nexora_option( 'market_close' ) ); ?>" data-offset="<?php echo esc_attr( (string) ( wp_timezone()->getOffset( new DateTime( 'now', wp_timezone() ) ) / 60 ) ); ?>"><span class="nx-ticker__dot" aria-hidden="true"></span><span data-nexora-market-label><?php esc_html_e( 'Prices today', 'nexora-commerce' ); ?></span></span>
+<section class="nx-promo nx-dark" aria-label="<?php esc_attr_e( 'Promotions', 'nexora-commerce' ); ?>" data-nexora-promo>
+	<div class="nx-promo__shape" aria-hidden="true"></div>
+	<?php foreach ( $nexora_slides as $nexora_i => $nexora_slide ) : ?>
+		<?php
+		$nexora_heading = 0 === $nexora_i ? 'h1' : 'h2';
+		$nexora_url     = $nexora_slide['url'] ? $nexora_slide['url'] : ( nexora_has_store() ? nexora_shop_url( array( 'on_sale' => 1 ) ) : home_url( '/' ) );
+		?>
+		<div class="nx-promo__slide" data-nexora-slide<?php echo 0 === $nexora_i ? '' : ' hidden'; ?>>
+			<div class="nx-container nx-promo__inner">
+				<div class="nx-promo__copy">
+					<?php if ( $nexora_slide['badge'] ) : ?>
+						<p class="nx-promo__badge"><?php echo nexora_icon( 'tag', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php echo esc_html( $nexora_slide['badge'] ); ?></p>
+					<?php endif; ?>
+					<?php if ( $nexora_slide['eyebrow'] ) : ?>
+						<p class="nx-promo__eyebrow"><?php echo esc_html( $nexora_slide['eyebrow'] ); ?></p>
+					<?php endif; ?>
+					<<?php echo esc_html( $nexora_heading ); ?> class="nx-promo__title"><?php echo esc_html( $nexora_slide['title'] ); ?></<?php echo esc_html( $nexora_heading ); ?>>
+					<?php if ( $nexora_slide['text'] ) : ?>
+						<p class="nx-promo__text"><?php echo esc_html( $nexora_slide['text'] ); ?></p>
+					<?php endif; ?>
+					<?php if ( $nexora_slide['ends'] ) : ?>
+						<p class="nx-promo__ends" data-nexora-promo-ends="<?php echo esc_attr( (string) $nexora_slide['ends'] ); ?>">
+							<?php echo nexora_icon( 'clock', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<?php esc_html_e( 'Ends in', 'nexora-commerce' ); ?>
+							<time datetime="<?php echo esc_attr( gmdate( 'c', $nexora_slide['ends'] ) ); ?>" data-nexora-promo-time><?php echo esc_html( wp_date( get_option( 'date_format' ), $nexora_slide['ends'] ) ); ?></time>
+						</p>
+					<?php endif; ?>
+					<div class="nx-promo__actions">
+						<?php if ( $nexora_slide['label'] ) : ?>
+							<a class="nx-btn nx-btn--accent nx-btn--lg" href="<?php echo esc_url( $nexora_url ); ?>"><?php echo esc_html( $nexora_slide['label'] ); ?> <?php echo nexora_icon( 'arrow-right', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+						<?php endif; ?>
+						<?php if ( $nexora_slide['code'] ) : ?>
+							<button type="button" class="nx-code" data-nexora-copy="<?php echo esc_attr( $nexora_slide['code'] ); ?>">
+								<code><?php echo esc_html( $nexora_slide['code'] ); ?></code>
+								<span class="nx-code__action" data-nexora-copy-label><?php esc_html_e( 'Copy code', 'nexora-commerce' ); ?></span>
+							</button>
+						<?php endif; ?>
 					</div>
-					<ul class="nx-board__rows">
-						<?php foreach ( $nexora_board as $nexora_p ) : ?>
-							<?php $nexora_m = nexora_market( $nexora_p ); ?>
-							<li>
-								<a href="<?php echo esc_url( $nexora_p->get_permalink() ); ?>">
-									<span class="nx-board__thumb"><?php echo $nexora_p->get_image( 'woocommerce_gallery_thumbnail', array( 'alt' => '', 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-									<span class="nx-board__name"><?php echo esc_html( $nexora_p->get_name() ); ?></span>
-									<span class="nx-board__price price"><?php echo wp_kses_post( $nexora_p->get_price_html() ); ?></span>
-									<?php echo nexora_change_chip( $nexora_m['change'], $nexora_m['since'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-								</a>
-							</li>
-						<?php endforeach; ?>
-					</ul>
-					<a class="nx-board__more" href="#price-board"><?php esc_html_e( 'Full price board', 'nexora-commerce' ); ?> <?php echo nexora_icon( 'arrow-right', 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 				</div>
-			<?php endif; ?>
+				<div class="nx-promo__media">
+					<?php
+					if ( $nexora_slide['image'] ) {
+						echo wp_get_attachment_image(
+							$nexora_slide['image'],
+							'full',
+							false,
+							array(
+								'class'         => 'nx-promo__img',
+								'alt'           => '',
+								'loading'       => 0 === $nexora_i ? 'eager' : 'lazy',
+								'fetchpriority' => 0 === $nexora_i ? 'high' : 'auto',
+								'decoding'      => 'async',
+								'sizes'         => '(min-width: 1024px) 50vw, 100vw',
+							)
+						);
+					} else {
+						printf( '<img class="nx-promo__img" src="%1$s" width="1600" height="1200" alt="" %2$s decoding="async">', esc_url( NEXORA_URI . '/assets/images/hero-fallback.jpg' ), 0 === $nexora_i ? 'fetchpriority="high"' : 'loading="lazy"' );
+					}
+					?>
+				</div>
+			</div>
 		</div>
-	</div>
+	<?php endforeach; ?>
+	<?php if ( $nexora_count > 1 ) : ?>
+		<div class="nx-container nx-promo__controls">
+			<button type="button" class="nx-promo__btn" data-nexora-prev aria-label="<?php esc_attr_e( 'Previous banner', 'nexora-commerce' ); ?>"><?php echo nexora_icon( 'chevron-left', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
+			<?php for ( $nexora_d = 0; $nexora_d < $nexora_count; $nexora_d++ ) : ?>
+				<?php /* translators: %d: banner number */ ?>
+				<button type="button" class="nx-promo__dot" data-nexora-dot aria-label="<?php echo esc_attr( sprintf( __( 'Show banner %d', 'nexora-commerce' ), $nexora_d + 1 ) ); ?>"<?php echo 0 === $nexora_d ? ' aria-current="true"' : ''; ?>></button>
+			<?php endfor; ?>
+			<button type="button" class="nx-promo__btn" data-nexora-next aria-label="<?php esc_attr_e( 'Next banner', 'nexora-commerce' ); ?>"><?php echo nexora_icon( 'chevron-right', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>
+			<button type="button" class="nx-promo__btn nx-promo__pause" data-nexora-promo-pause>
+				<span class="nx-promo__icon-pause"><?php echo nexora_icon( 'pause', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<span class="nx-promo__icon-play"><?php echo nexora_icon( 'play', 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			</button>
+			<p class="screen-reader-text" aria-live="polite" data-nexora-promo-live></p>
+		</div>
+	<?php endif; ?>
 </section>

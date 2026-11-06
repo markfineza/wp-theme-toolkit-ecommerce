@@ -3,7 +3,7 @@ Contributors: nexoracommerce
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.3.0
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,15 @@ Yes. Blog, pages and menus work; shop sections are hidden and administrators see
 archive-product.php, content-product.php, loop/no-products-found.php, checkout/form-checkout.php, checkout/review-order.php, checkout/form-shipping.php, checkout/thankyou.php and myaccount/navigation.php, dashboard.php, form-login.php, form-edit-account.php, form-edit-address.php, my-address.php. All WooCommerce hooks are kept.
 
 == Changelog ==
+
+= 2.6.0 =
+* Footer links to the Terms and Conditions page when one is published. Needs Toolkit 2.6.0 for required consent, reCAPTCHA and email login codes.
+
+= 2.5.0 =
+* New storefront: search-first header, Browse Categories bar, promotional hero banners, category grid, product tabs, market basket collection, reviews band, questions and answers, coupons band.
+
+= 2.4.0 =
+* Customer account sidebar can collapse to an icon rail on desktop. The choice is remembered in the browser.
 
 = 2.3.0 =
 * Works with the toolkit's built-in store as well as WooCommerce; WooCommerce behaviour is unchanged.

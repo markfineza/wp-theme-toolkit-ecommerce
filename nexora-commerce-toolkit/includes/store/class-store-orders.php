@@ -427,6 +427,14 @@ class Nexora_Store_Orders {
 			}
 			self::bump_sales( (int) $line->product_id, (int) $line->qty );
 		}
+		// Cancelling gave the coupon uses back, so reopening has to take them again.
+		$who = $order->user_id ? (string) $order->user_id : strtolower( $order->email );
+		foreach ( $order->discounts as $discount ) {
+			if ( ! empty( $discount['code'] ) && ! Nexora_Store_Coupons::use_coupon( $discount['code'], $who ) ) {
+				/* translators: %s: coupon code */
+				self::add_note( $order->id, sprintf( __( 'Reopened, but coupon %s had already been used again. Please check the discount on this order.', 'nexora-commerce-toolkit' ), $discount['code'] ) );
+			}
+		}
 		return true;
 	}
 
@@ -529,11 +537,11 @@ class Nexora_Store_Orders {
 		foreach ( self::items( $order->id ) as $line ) {
 			$link = get_permalink( (int) $line->product_id );
 			$name = esc_html( $line->name . ( $line->option_label ? ' — ' . $line->option_label : '' ) );
-			$out .= '<tr class="order_item"><td class="product-name">' . ( $link && 'product' === get_post_type( (int) $line->product_id ) ? '<a href="' . esc_url( $link ) . '">' . $name . '</a>' : $name ) . ' <strong class="product-quantity">&times;&nbsp;' . (int) $line->qty . '</strong></td><td class="product-total">' . Nexora_Store::price( $line->line_total ) . '</td></tr>';
+			$out .= '<tr class="order_item"><td class="product-name">' . ( $link && 'product' === get_post_type( (int) $line->product_id ) ? '<a href="' . esc_url( $link ) . '">' . $name . '</a>' : $name ) . ' <strong class="product-quantity">&times;&nbsp;' . (int) $line->qty . '</strong></td><td class="product-total">' . ( (float) $line->line_total > 0 ? Nexora_Store::price( $line->line_total ) : esc_html__( 'Free', 'nexora-commerce-toolkit' ) ) . '</td></tr>';
 		}
 		$out .= '</tbody><tfoot><tr><th scope="row">' . esc_html__( 'Subtotal', 'nexora-commerce-toolkit' ) . '</th><td>' . Nexora_Store::price( $order->subtotal ) . '</td></tr>';
 		foreach ( $order->discounts as $d ) {
-			$out .= '<tr><th scope="row">' . esc_html( $d['label'] ) . '</th><td>-' . Nexora_Store::price( $d['amount'] ) . '</td></tr>';
+			$out .= '<tr><th scope="row">' . esc_html( $d['label'] ) . '</th><td>' . Nexora_Store_Coupons::discount_value( $d ) . '</td></tr>';
 		}
 		$f    = $order->fulfilment;
 		$out .= '<tr><th scope="row">' . esc_html( ! empty( $f['method'] ) ? $f['method'] : __( 'Delivery', 'nexora-commerce-toolkit' ) ) . '</th><td>' . ( (float) $order->shipping_total > 0 ? Nexora_Store::price( $order->shipping_total ) : esc_html__( 'Free', 'nexora-commerce-toolkit' ) ) . '</td></tr>';
@@ -605,10 +613,10 @@ class Nexora_Store_Orders {
 		$cell = 'padding:8px;border-bottom:1px solid #e6e8f0;';
 		$out  = '<table cellspacing="0" cellpadding="0" style="width:100%;border-collapse:collapse;margin:16px 0;">';
 		foreach ( self::items( $order->id ) as $line ) {
-			$out .= '<tr><td style="' . $cell . '">' . esc_html( $line->name . ( $line->option_label ? ' — ' . $line->option_label : '' ) ) . ' &times; ' . (int) $line->qty . '</td><td style="' . $cell . 'text-align:right;">' . esc_html( Nexora_Store::money( $line->line_total ) ) . '</td></tr>';
+			$out .= '<tr><td style="' . $cell . '">' . esc_html( $line->name . ( $line->option_label ? ' — ' . $line->option_label : '' ) ) . ' &times; ' . (int) $line->qty . '</td><td style="' . $cell . 'text-align:right;">' . esc_html( (float) $line->line_total > 0 ? Nexora_Store::money( $line->line_total ) : __( 'Free', 'nexora-commerce-toolkit' ) ) . '</td></tr>';
 		}
 		foreach ( $order->discounts as $d ) {
-			$out .= '<tr><td style="' . $cell . '">' . esc_html( $d['label'] ) . '</td><td style="' . $cell . 'text-align:right;">-' . esc_html( Nexora_Store::money( $d['amount'] ) ) . '</td></tr>';
+			$out .= '<tr><td style="' . $cell . '">' . esc_html( $d['label'] ) . '</td><td style="' . $cell . 'text-align:right;">' . esc_html( Nexora_Store_Coupons::discount_value( $d, true ) ) . '</td></tr>';
 		}
 		$f    = $order->fulfilment;
 		$out .= '<tr><td style="' . $cell . '">' . esc_html( ! empty( $f['method'] ) ? $f['method'] : '' ) . '</td><td style="' . $cell . 'text-align:right;">' . esc_html( Nexora_Store::money( $order->shipping_total ) ) . '</td></tr>';

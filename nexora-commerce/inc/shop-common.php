@@ -144,7 +144,19 @@ function nexora_menu_categories() {
 			'number'     => 8,
 		)
 	);
-	return is_wp_error( $terms ) ? array() : $terms;
+	if ( is_wp_error( $terms ) ) {
+		return array();
+	}
+	// Products usually sit in subcategories, so a parent's own count can be zero. WooCommerce fills this in itself.
+	foreach ( $terms as $term ) {
+		if ( ! $term->count ) {
+			foreach ( get_term_children( $term->term_id, 'product_cat' ) as $child ) {
+				$child_term   = get_term( $child, 'product_cat' );
+				$term->count += $child_term instanceof WP_Term ? (int) $child_term->count : 0;
+			}
+		}
+	}
+	return $terms;
 }
 
 /**

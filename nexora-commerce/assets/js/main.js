@@ -215,6 +215,8 @@
 		var controller = null;
 		var active = -1;
 		var cache = {};
+		var catSelect = $( '[data-nexora-search-cat]', wrap );
+		on( catSelect, 'change', function () { if ( input.value.trim().length > 1 ) { lookup(); } } );
 
 		on( toggle, 'click', function () {
 			var open = ! wrap.classList.contains( 'is-open' );
@@ -260,13 +262,15 @@
 		var lookup = debounce( function () {
 			var term = input.value.trim();
 			if ( term.length < 2 ) { close(); return; }
-			if ( cache[ term ] ) { render( term, cache[ term ] ); return; }
+			var cat = catSelect ? catSelect.value : '';
+			var cacheKey = cat + '|' + term;
+			if ( cache[ cacheKey ] ) { render( term, cache[ cacheKey ] ); return; }
 			if ( controller ) { controller.abort(); }
 			controller = window.AbortController ? new AbortController() : null;
 			if ( status ) { status.textContent = i18n.searching || ''; }
-			fetch( data.restUrl + 'search?q=' + encodeURIComponent( term ), { signal: controller ? controller.signal : undefined, credentials: 'omit' } )
+			fetch( data.restUrl + 'search?q=' + encodeURIComponent( term ) + ( cat ? '&cat=' + encodeURIComponent( cat ) : '' ), { signal: controller ? controller.signal : undefined, credentials: 'omit' } )
 				.then( function ( r ) { return r.ok ? r.json() : Promise.reject( r ); } )
-				.then( function ( res ) { cache[ term ] = res; if ( input.value.trim() === term ) { render( term, res ); } } )
+				.then( function ( res ) { cache[ cacheKey ] = res; if ( input.value.trim() === term && ( ! catSelect || catSelect.value === cat ) ) { render( term, res ); } } )
 				.catch( function () {} );
 		}, 220 );
 
@@ -764,6 +768,152 @@
 		} );
 	}
 
+	/* ------------------------------------------------- promotional banners */
+	function initPromo() {
+		var root = $( '[data-nexora-promo]' );
+		if ( ! root ) { return; }
+
+		$$( '[data-nexora-promo-ends]', root ).forEach( function ( box ) {
+			var ends = parseInt( box.getAttribute( 'data-nexora-promo-ends' ), 10 ) * 1000;
+			var out = $( '[data-nexora-promo-time]', box );
+			var pad = function ( n ) { return ( n < 10 ? '0' : '' ) + n; };
+			var tick = function () {
+				var left = ends - Date.now();
+				if ( left <= 0 ) { box.hidden = true; return; }
+				var d = Math.floor( left / 864e5 ), h = Math.floor( left / 36e5 ) % 24, m = Math.floor( left / 6e4 ) % 60, s = Math.floor( left / 1e3 ) % 60;
+				out.textContent = ( d ? d + ( i18n.countdownDays || 'd' ) + ' ' : '' ) + pad( h ) + ':' + pad( m ) + ':' + pad( s );
+			};
+			tick();
+			setInterval( tick, 1000 );
+		} );
+
+		var slides = $$( '[data-nexora-slide]', root );
+		if ( slides.length < 2 ) { return; }
+		var dots = $$( '[data-nexora-dot]', root );
+		var pause = $( '[data-nexora-promo-pause]', root );
+		var live = $( '[data-nexora-promo-live]', root );
+		var index = 0;
+		var still = window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
+		var paused = still; // The customer's motion setting starts it paused; the button can still play it.
+		var held = false; // Hover or keyboard focus inside the banner.
+		var timer = null;
+
+		function show( next, announce ) {
+			index = ( next + slides.length ) % slides.length;
+			slides.forEach( function ( s, i ) { s.hidden = i !== index; } );
+			dots.forEach( function ( d, i ) {
+				if ( i === index ) { d.setAttribute( 'aria-current', 'true' ); } else { d.removeAttribute( 'aria-current' ); }
+			} );
+			if ( announce && live ) { live.textContent = ( i18n.slideOf || '%1$d / %2$d' ).replace( '%1$d', index + 1 ).replace( '%2$d', slides.length ); }
+		}
+		function run() {
+			clearInterval( timer );
+			if ( ! paused && ! held ) { timer = setInterval( function () { show( index + 1, false ); }, 7000 ); }
+		}
+		function syncPause() {
+			pause.setAttribute( 'aria-label', paused ? i18n.playSlides : i18n.pauseSlides );
+			pause.title = pause.getAttribute( 'aria-label' );
+			pause.classList.toggle( 'is-paused', paused );
+		}
+		on( $( '[data-nexora-prev]', root ), 'click', function () { show( index - 1, true ); run(); } );
+		on( $( '[data-nexora-next]', root ), 'click', function () { show( index + 1, true ); run(); } );
+		dots.forEach( function ( d, i ) { on( d, 'click', function () { show( i, true ); run(); } ); } );
+		on( pause, 'click', function () { paused = ! paused; syncPause(); run(); } );
+		on( root, 'mouseenter', function () { held = true; run(); } );
+		on( root, 'mouseleave', function () { held = false; run(); } );
+		on( root, 'focusin', function () { held = true; run(); } );
+		on( root, 'focusout', function ( e ) { if ( ! root.contains( e.relatedTarget ) ) { held = false; run(); } } );
+		show( 0, false );
+		syncPause();
+		run();
+	}
+
+	/* ---------------------------------------------------------- product tabs */
+	function initTabs() {
+		$$( '[data-nexora-tabs]' ).forEach( function ( root ) {
+			var tabs = $$( '[role="tab"]', root );
+			var panels = $$( '[role="tabpanel"]', root );
+			function select( i, focus ) {
+				tabs.forEach( function ( t, n ) {
+					t.setAttribute( 'aria-selected', n === i ? 'true' : 'false' );
+					t.tabIndex = n === i ? 0 : -1;
+				} );
+				panels.forEach( function ( p, n ) { p.hidden = n !== i; } );
+				if ( focus ) { tabs[ i ].focus(); }
+			}
+			tabs.forEach( function ( t, i ) {
+				on( t, 'click', function () { select( i, false ); } );
+				on( t, 'keydown', function ( e ) {
+					var to = 'ArrowRight' === e.key ? i + 1 : ( 'ArrowLeft' === e.key ? i - 1 : ( 'Home' === e.key ? 0 : ( 'End' === e.key ? tabs.length - 1 : -2 ) ) );
+					if ( -2 !== to ) { e.preventDefault(); select( ( to + tabs.length ) % tabs.length, true ); }
+				} );
+			} );
+		} );
+	}
+
+	/* ----------------------------------------------------------- copy a code */
+	function initCopyCode() {
+		$$( '[data-nexora-copy]' ).forEach( function ( btn ) {
+			var label = $( '[data-nexora-copy-label]', btn );
+			var original = label ? label.textContent : '';
+			on( btn, 'click', function () {
+				var code = btn.getAttribute( 'data-nexora-copy' );
+				var done = function ( ok ) {
+					if ( label ) { label.textContent = ok ? i18n.copied : i18n.copyFailed; }
+					setTimeout( function () { if ( label ) { label.textContent = original; } }, 2200 );
+				};
+				var fallback = function () {
+					var area = doc.createElement( 'textarea' );
+					area.value = code;
+					area.style.position = 'fixed';
+					area.style.opacity = '0';
+					doc.body.appendChild( area );
+					area.select();
+					var ok = false;
+					try { ok = doc.execCommand( 'copy' ); } catch ( err ) { ok = false; }
+					area.remove();
+					btn.focus();
+					done( ok );
+				};
+				if ( navigator.clipboard && window.isSecureContext ) {
+					navigator.clipboard.writeText( code ).then( function () { done( true ); }, fallback );
+					return;
+				}
+				fallback();
+			} );
+		} );
+	}
+
+	/* -------------------------------------------- collapsible account sidebar */
+	function initAccountNav() {
+		var profile = doc.querySelector( '.nx-acc-nav__profile' );
+		if ( ! profile ) { return; }
+		var root  = doc.documentElement;
+		var links = profile.parentNode.querySelectorAll( 'ul a' );
+		var btn   = doc.createElement( 'button' );
+		btn.type = 'button';
+		btn.className = 'nx-acc-nav__toggle';
+		btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg>';
+
+		var sync = function () {
+			var collapsed = root.classList.contains( 'nx-acc-collapsed' );
+			var label     = collapsed ? i18n.expandNav : i18n.collapseNav;
+			btn.setAttribute( 'aria-label', label );
+			btn.title = label;
+			// With the labels hidden, tooltips say where each icon goes.
+			links.forEach( function ( a ) {
+				if ( collapsed ) { a.title = a.textContent.trim(); } else { a.removeAttribute( 'title' ); }
+			} );
+		};
+		btn.addEventListener( 'click', function () {
+			var collapsed = root.classList.toggle( 'nx-acc-collapsed' );
+			try { window.localStorage.setItem( 'nxAccNavCollapsed', collapsed ? '1' : '0' ); } catch ( e ) { /* Private window: it still works for this page. */ }
+			sync();
+		} );
+		profile.appendChild( btn );
+		sync();
+	}
+
 	/* ------------------------------------------------------------------ boot */
 	function boot() {
 		initMarket();
@@ -781,6 +931,10 @@
 		initNewsletter();
 		initCheckout();
 		initAuth();
+		initAccountNav();
+		initPromo();
+		initTabs();
+		initCopyCode();
 		window.addEventListener( 'load', labelEnhancedSelects );
 		if ( window.jQuery ) { window.jQuery( doc.body ).on( 'country_to_state_changed updated_checkout', function () { setTimeout( labelEnhancedSelects, 0 ); } ); }
 		if ( window.jQuery ) {

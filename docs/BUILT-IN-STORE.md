@@ -12,7 +12,7 @@ The toolkit can run the whole shop itself, without the WooCommerce plugin. It is
 define( 'NEXORA_STORE_ENGINE', 'native' );
 ```
 
-To load sample products, use **Load demo products** on the Store dashboard, or run `wp nexora store seed`. `wp nexora store clean` removes them.
+To load the demo store, go to **Tools → Freshtastic Demo Content**. It adds products, pages, menus, reviews and the homepage, and can remove them again. Store settings are not changed; set those under Store → Settings. On the command line, `wp nexora demo import --content --reviews --homepage` does the same, and `wp nexora store seed` adds products only.
 
 **Going back:** **Settings → Freshtastic Toolkit → Store engine → Use WooCommerce**. If the constant above is set, remove it first.
 
@@ -37,6 +37,7 @@ To load sample products, use **Load demo products** on the Store dashboard, or r
 - **Customer portal:** login, registration, dashboard, orders, address, profile, wishlist, quotations.
 - **Coupons** (Store → Coupons): percent or fixed amount, expiry, minimum and maximum order, usage limits, category limits.
 - **Promotions** (Store → Promotions): applied automatically between dates, with no code. If several qualify, the customer gets the biggest.
+- **Free-item coupons and the first customers promotion:** see [REWARDS.md](REWARDS.md). They work with WooCommerce too.
 - **Staff:** dashboard, orders with filters and CSV export, status changes, reschedule, notes, low stock list, Order Desk role.
 - **Also works here:** market prices and price board, quotations, maintenance mode, privacy export and erase.
 

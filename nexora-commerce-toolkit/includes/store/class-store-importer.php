@@ -20,27 +20,10 @@ class Nexora_Store_Importer {
 	 * Hook up.
 	 */
 	public static function init() {
-		add_action( 'admin_post_nexora_store_seed', array( __CLASS__, 'handle_seed' ) );
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			WP_CLI::add_command( 'nexora store seed', array( __CLASS__, 'cli_seed' ) );
 			WP_CLI::add_command( 'nexora store clean', array( __CLASS__, 'cli_clean' ) );
 		}
-	}
-
-	/**
-	 * Admin button.
-	 */
-	public static function handle_seed() {
-		if ( ! current_user_can( Nexora_Store_Admin::CAP_STORE ) ) {
-			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'nexora-commerce-toolkit' ), 403 );
-		}
-		check_admin_referer( 'nexora_store_seed' );
-		if ( function_exists( 'set_time_limit' ) ) {
-			@set_time_limit( 300 ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-		}
-		self::seed();
-		wp_safe_redirect( admin_url( 'edit.php?post_type=product' ) );
-		exit;
 	}
 
 	/**
@@ -98,11 +81,39 @@ class Nexora_Store_Importer {
 	 * @return int Products created.
 	 */
 	public static function seed() {
-		Nexora_Store_Catalog::register();
+		$created = 0;
+		$data    = self::data();
+		$total   = $data ? count( $data['products'] ) : 0;
+		for ( $offset = 0; $offset < $total; $offset += 10 ) {
+			$created += count( array_filter( self::seed_batch( $offset, 10 ) ) );
+		}
+		return $created;
+	}
+
+	/**
+	 * The demo catalogue.
+	 *
+	 * @return array|null
+	 */
+	private static function data() {
 		$raw  = file_get_contents( NEXORA_TOOLKIT_DIR . 'demo/data/products.json' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$data = json_decode( (string) $raw, true );
-		if ( ! is_array( $data ) ) {
-			return 0;
+		return is_array( $data ) ? $data : null;
+	}
+
+	/**
+	 * Import part of the catalogue, so a slow host can do it over several requests. Categories come first.
+	 *
+	 * @param int  $offset  First product.
+	 * @param int  $limit   How many.
+	 * @param bool $reviews Also add each product's sample reviews.
+	 * @return array<string,bool> Product name => created (false = it already existed).
+	 */
+	public static function seed_batch( $offset, $limit, $reviews = true ) {
+		Nexora_Store_Catalog::register();
+		$data = self::data();
+		if ( ! $data ) {
+			return array();
 		}
 		foreach ( $data['categories'] as $order => $cat ) {
 			$term = get_term_by( 'slug', $cat['slug'], 'product_cat' );
@@ -125,16 +136,14 @@ class Nexora_Store_Importer {
 				update_term_meta( $made['term_id'], 'thumbnail_id', self::image( 'category-' . $cat['slug'] . '.jpg', $cat['name'] ) );
 			}
 		}
-		$created = 0;
-		foreach ( $data['products'] as $index => $p ) {
+		$results = array();
+		foreach ( array_slice( $data['products'], $offset, $limit, true ) as $index => $p ) {
 			global $wpdb;
-			$exists = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_sku' AND meta_value = %s LIMIT 1", $p['sku'] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-			if ( ! $exists && self::create_product( $p, $index ) ) {
-				++$created;
-			}
+			$exists                = $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_sku' AND meta_value = %s LIMIT 1", $p['sku'] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$results[ $p['name'] ] = ! $exists && self::create_product( $reviews ? $p : array_diff_key( $p, array( 'reviews' => 1 ) ), $index );
 		}
 		Nexora_Store_Catalog::flush();
-		return $created;
+		return $results;
 	}
 
 	/**

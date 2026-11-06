@@ -41,7 +41,7 @@ add_action( 'login_head', 'nexora_brand_icons', 3 );
 function nexora_brand_login_page() {
 	$logo = has_custom_logo() ? wp_get_attachment_image_url( (int) get_theme_mod( 'custom_logo' ), 'medium' ) : nexora_brand_asset( 'logo-192.webp' );
 	printf(
-		'<style>body.login{background:%3$s}#login h1 a{background:url(%1$s) center/contain no-repeat;width:150px;height:144px}.login .button-primary{background:%2$s;border-color:%2$s}.login .button-primary:hover,.login .button-primary:focus{background:%2$s;border-color:%2$s;filter:brightness(1.2)}</style>',
+		'<style>body.login{background:%3$s}#login h1 a{background:url(%1$s) center/contain no-repeat;width:150px;height:144px}body.login .button-primary{background:%2$s;border-color:%2$s}body.login .button-primary:hover,body.login .button-primary:focus{background:%2$s;border-color:%2$s;filter:brightness(1.2)}</style>',
 		esc_url( $logo ),
 		esc_attr( nexora_option( 'color_primary' ) ),
 		esc_attr( nexora_option( 'color_bg' ) )

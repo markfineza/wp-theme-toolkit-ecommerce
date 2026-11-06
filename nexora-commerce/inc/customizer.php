@@ -17,8 +17,12 @@ function nexora_home_sections() {
 	return apply_filters(
 		'nexora_home_sections',
 		array(
-			'hero'         => __( 'Hero and market board', 'nexora-commerce' ),
-			'categories'   => __( 'Market sections (categories)', 'nexora-commerce' ),
+			'hero'         => __( 'Hero promotional banner', 'nexora-commerce' ),
+			'categories'   => __( 'Shop by category', 'nexora-commerce' ),
+			'product_tabs' => __( 'Products with tabs', 'nexora-commerce' ),
+			'collection'   => __( 'Market basket collection', 'nexora-commerce' ),
+			'faq'          => __( 'Questions and answers', 'nexora-commerce' ),
+			'coupons'      => __( 'Coupons', 'nexora-commerce' ),
 			'price_board'  => __( 'Price board', 'nexora-commerce' ),
 			'featured'     => __( 'Featured products', 'nexora-commerce' ),
 			'trending'     => __( 'Trending now', 'nexora-commerce' ),
@@ -77,7 +81,6 @@ function nexora_settings_schema() {
 
 		// Header.
 		'header_sticky'       => array( 'nexora_header', 'checkbox', true, __( 'Sticky header', 'nexora-commerce' ) ),
-		'header_transparent'  => array( 'nexora_header', 'checkbox', false, __( 'Transparent header over the homepage hero', 'nexora-commerce' ) ),
 		'header_search'       => array( 'nexora_header', 'checkbox', true, __( 'Show product search', 'nexora-commerce' ) ),
 		'header_mega_menu'    => array( 'nexora_header', 'checkbox', true, __( 'Show category mega menu', 'nexora-commerce' ) ),
 		'header_rfq'          => array( 'nexora_header', 'checkbox', true, __( 'Show “Request a Quote” button', 'nexora-commerce' ) ),
@@ -87,24 +90,15 @@ function nexora_settings_schema() {
 		'market_close'        => array( 'nexora_header', 'text', '20:00', __( 'Market closes (24h, site time)', 'nexora-commerce' ) ),
 
 		// Homepage: layout.
-		'home_layout'         => array( 'nexora_home_layout', 'sections', 'hero,categories,price_board,featured,campaign,rfq_banner,new_arrivals,best_sellers,benefits,discovery,social_proof,newsletter,editorial,-trending,page_content,final_cta', __( 'Sections and order', 'nexora-commerce' ), __( 'Tick to show a section; use the arrows to reorder.', 'nexora-commerce' ) ),
+		'home_layout'         => array( 'nexora_home_layout', 'sections', 'hero,categories,product_tabs,price_board,collection,social_proof,faq,coupons,rfq_banner,editorial,benefits,-featured,-trending,-campaign,-new_arrivals,-best_sellers,-discovery,-newsletter,-page_content,-final_cta', __( 'Sections and order', 'nexora-commerce' ), __( 'Tick to show a section; use the arrows to reorder.', 'nexora-commerce' ) ),
 
 		// Homepage: hero.
-		'hero_badge'          => array( 'nexora_home_hero', 'text', __( 'Meat, fish, vegetables, frozen goods and more', 'nexora-commerce' ), __( 'Badge', 'nexora-commerce' ) ),
-		'hero_title'          => array( 'nexora_home_hero', 'text', __( 'Fresh market prices, live.', 'nexora-commerce' ), __( 'Headline', 'nexora-commerce' ) ),
-		'hero_text'           => array( 'nexora_home_hero', 'textarea', __( 'Rice by the sack, vegetables by the kilo, meat and seafood packed cold — with transparent prices you can track like a trading board.', 'nexora-commerce' ), __( 'Supporting copy', 'nexora-commerce' ) ),
-		'hero_cta1_label'     => array( 'nexora_home_hero', 'text', __( 'Shop the market', 'nexora-commerce' ), __( 'Primary button label', 'nexora-commerce' ) ),
-		'hero_cta1_url'       => array( 'nexora_home_hero', 'url', '', __( 'Primary button URL', 'nexora-commerce' ), __( 'Defaults to the shop page.', 'nexora-commerce' ) ),
-		'hero_cta2_label'     => array( 'nexora_home_hero', 'text', __( 'Request a quote', 'nexora-commerce' ), __( 'Secondary button label', 'nexora-commerce' ) ),
-		'hero_cta2_url'       => array( 'nexora_home_hero', 'url', '', __( 'Secondary button URL', 'nexora-commerce' ), __( 'Defaults to the Request a Quote page (or the shop sorted by newest).', 'nexora-commerce' ) ),
-		'hero_board_title'    => array( 'nexora_home_hero', 'text', __( "Today's movers", 'nexora-commerce' ), __( 'Market board title', 'nexora-commerce' ) ),
-		'hero_image'          => array( 'nexora_home_hero', 'image', 0, __( 'Hero image', 'nexora-commerce' ) ),
-		'hero_product'        => array( 'nexora_home_hero', 'number', 0, __( 'Feature card product ID', 'nexora-commerce' ), __( 'Optional. Defaults to the first featured product; set -1 to hide the card.', 'nexora-commerce' ) ),
+		'hero_image'          => array( 'nexora_home_hero', 'image', 0, __( 'Fallback banner image', 'nexora-commerce' ), __( 'Used by any banner without its own image.', 'nexora-commerce' ) ),
 
 		// Homepage: product sections.
 		'price_board_title'   => array( 'nexora_home_products', 'text', __( "Today's price board", 'nexora-commerce' ), __( 'Price board: title', 'nexora-commerce' ) ),
 		'price_board_limit'   => array( 'nexora_home_products', 'number', 14, __( 'Price board: number of items', 'nexora-commerce' ) ),
-		'categories_title'    => array( 'nexora_home_products', 'text', __( 'Market sections', 'nexora-commerce' ), __( 'Categories: title', 'nexora-commerce' ) ),
+		'categories_title'    => array( 'nexora_home_products', 'text', __( 'Shop by category', 'nexora-commerce' ), __( 'Categories: title', 'nexora-commerce' ) ),
 		'home_categories'     => array( 'nexora_home_products', 'text', '', __( 'Categories: slugs to show', 'nexora-commerce' ), __( 'Comma-separated product category slugs. Empty shows top-level categories.', 'nexora-commerce' ) ),
 		'featured_title'      => array( 'nexora_home_products', 'text', __( "Today's picks", 'nexora-commerce' ), __( 'Featured: title', 'nexora-commerce' ) ),
 		'featured_limit'      => array( 'nexora_home_products', 'number', 8, __( 'Featured: number of products', 'nexora-commerce' ) ),
@@ -184,8 +178,72 @@ function nexora_settings_schema() {
 	}
 
 	$schema = apply_filters( 'nexora_settings_schema', $schema );
+	// Promotional banners. A banner shows when it has a headline and its dates allow it.
+	foreach ( array( 1, 2, 3 ) as $n ) {
+		$first = 1 === $n;
+		/* translators: %d: banner number */
+		$label = sprintf( __( 'Banner %d', 'nexora-commerce' ), $n ) . ': ';
+		$schema[ "promo{$n}_eyebrow" ]   = array( 'nexora_home_hero', 'text', $first ? __( 'This week at the market', 'nexora-commerce' ) : '', $label . __( 'small text above the headline', 'nexora-commerce' ) );
+		$schema[ "promo{$n}_title" ]     = array( 'nexora_home_hero', 'text', $first ? __( 'Fresh deals on meat, fish and vegetables', 'nexora-commerce' ) : '', $label . __( 'headline', 'nexora-commerce' ), __( 'Leave empty to hide this banner.', 'nexora-commerce' ) );
+		$schema[ "promo{$n}_text" ]      = array( 'nexora_home_hero', 'textarea', $first ? __( 'Order online, then pick up at the market or book your own rider. See everything marked down today.', 'nexora-commerce' ) : '', $label . __( 'text', 'nexora-commerce' ) );
+		$schema[ "promo{$n}_badge" ]     = array( 'nexora_home_hero', 'text', $first ? __( 'On sale now', 'nexora-commerce' ) : '', $label . __( 'badge', 'nexora-commerce' ), __( 'For example “Up to 20% off”. Only promise what your prices or coupons really give.', 'nexora-commerce' ) );
+		$schema[ "promo{$n}_code" ]      = array( 'nexora_home_hero', 'text', '', $label . __( 'coupon code', 'nexora-commerce' ), __( 'Optional. Shown with a copy button. The coupon itself is created under Coupons.', 'nexora-commerce' ) );
+		$schema[ "promo{$n}_cta_label" ] = array( 'nexora_home_hero', 'text', $first ? __( 'Shop today’s deals', 'nexora-commerce' ) : '', $label . __( 'button label', 'nexora-commerce' ) );
+		$schema[ "promo{$n}_cta_url" ]   = array( 'nexora_home_hero', 'url', '', $label . __( 'button link', 'nexora-commerce' ), __( 'Empty = products on sale.', 'nexora-commerce' ) );
+		$schema[ "promo{$n}_image" ]     = array( 'nexora_home_hero', 'image', 0, $label . __( 'image', 'nexora-commerce' ) );
+		$schema[ "promo{$n}_start" ]     = array( 'nexora_home_hero', 'datetime', '', $label . __( 'show from (optional)', 'nexora-commerce' ) );
+		$schema[ "promo{$n}_end" ]       = array( 'nexora_home_hero', 'datetime', '', $label . __( 'hide after (optional)', 'nexora-commerce' ), __( 'Also shows a countdown on the banner.', 'nexora-commerce' ) );
+	}
+
+	$schema['tabs_title']        = array( 'nexora_home_tabs', 'text', __( 'Fresh from the market', 'nexora-commerce' ), __( 'Heading', 'nexora-commerce' ) );
+	$schema['tabs_limit']        = array( 'nexora_home_tabs', 'number', 8, __( 'Products per tab', 'nexora-commerce' ) );
+	$schema['tabs_card_title']   = array( 'nexora_home_tabs', 'text', __( 'Buying in bulk?', 'nexora-commerce' ), __( 'Side card: headline', 'nexora-commerce' ) );
+	$schema['tabs_card_big']     = array( 'nexora_home_tabs', 'text', __( 'Get a quote', 'nexora-commerce' ), __( 'Side card: large text', 'nexora-commerce' ) );
+	$schema['tabs_card_text']    = array( 'nexora_home_tabs', 'textarea', __( 'For carinderias, stores and restaurants, or anything not on the list.', 'nexora-commerce' ), __( 'Side card: text', 'nexora-commerce' ) );
+	$schema['tabs_card_label']   = array( 'nexora_home_tabs', 'text', __( 'Request a quote', 'nexora-commerce' ), __( 'Side card: button label', 'nexora-commerce' ) );
+	$schema['tabs_card_url']     = array( 'nexora_home_tabs', 'url', '', __( 'Side card: button link', 'nexora-commerce' ), __( 'Empty = the Request a Quote page.', 'nexora-commerce' ) );
+
+	$schema['basket_eyebrow']    = array( 'nexora_home_basket', 'text', __( 'Hand-picked for your table', 'nexora-commerce' ), __( 'Small text above the heading', 'nexora-commerce' ) );
+	$schema['basket_title']      = array( 'nexora_home_basket', 'text', __( 'Build your market basket', 'nexora-commerce' ), __( 'Heading', 'nexora-commerce' ) );
+	$schema['basket_card_small'] = array( 'nexora_home_basket', 'text', __( 'Weekly staples', 'nexora-commerce' ), __( 'Large card: small text', 'nexora-commerce' ) );
+	$schema['basket_card_title'] = array( 'nexora_home_basket', 'text', __( 'Shop the full market', 'nexora-commerce' ), __( 'Large card: title', 'nexora-commerce' ) );
+	$schema['basket_card_url']   = array( 'nexora_home_basket', 'url', '', __( 'Large card: link', 'nexora-commerce' ), __( 'Empty = the shop page.', 'nexora-commerce' ) );
+	$schema['basket_image']      = array( 'nexora_home_basket', 'image', 0, __( 'Large card: image', 'nexora-commerce' ), __( 'Empty = the campaign banner image.', 'nexora-commerce' ) );
+
+	$schema['faq_eyebrow'] = array( 'nexora_home_faq', 'text', __( 'Questions', 'nexora-commerce' ), __( 'Small text above the heading', 'nexora-commerce' ) );
+	$schema['faq_title']   = array( 'nexora_home_faq', 'text', __( 'How buying from us works', 'nexora-commerce' ), __( 'Heading', 'nexora-commerce' ) );
+	$schema['faq_text']    = array( 'nexora_home_faq', 'textarea', __( 'Everything you need to know before your first order. Still unsure? Send us a message.', 'nexora-commerce' ), __( 'Text', 'nexora-commerce' ) );
+	$faq = array(
+		1 => array( __( 'How do I get my order?', 'nexora-commerce' ), __( 'Choose store pickup, or book your own courier such as Lalamove or Grab. You pick the time at checkout, and we email you when your order is packed.', 'nexora-commerce' ) ),
+		2 => array( __( 'How can I pay?', 'nexora-commerce' ), __( 'The payment options available for your order are shown at checkout.', 'nexora-commerce' ) ),
+		3 => array( __( 'Can I buy in bulk or ask for something not listed?', 'nexora-commerce' ), __( 'Yes. Send a quotation request with what you need and we will reply with a price.', 'nexora-commerce' ) ),
+		4 => array( __( 'Do I need an account?', 'nexora-commerce' ), __( 'An account lets you track orders, save your address and use member coupons.', 'nexora-commerce' ) ),
+	);
+	foreach ( array( 1, 2, 3, 4, 5, 6 ) as $n ) {
+		/* translators: %d: question number */
+		$schema[ "faq{$n}_q" ] = array( 'nexora_home_faq', 'text', isset( $faq[ $n ] ) ? $faq[ $n ][0] : '', sprintf( __( 'Question %d', 'nexora-commerce' ), $n ) );
+		/* translators: %d: answer number */
+		$schema[ "faq{$n}_a" ] = array( 'nexora_home_faq', 'textarea', isset( $faq[ $n ] ) ? $faq[ $n ][1] : '', sprintf( __( 'Answer %d', 'nexora-commerce' ), $n ) );
+	}
+
+	$schema['coupons_title'] = array( 'nexora_home_coupons', 'text', __( 'Save more with coupons', 'nexora-commerce' ), __( 'Heading', 'nexora-commerce' ), __( 'This section only appears when a coupon has “Show this code on the homepage” ticked.', 'nexora-commerce' ) );
+	$schema['coupons_text']  = array( 'nexora_home_coupons', 'text', __( 'Copy a code and enter it at checkout.', 'nexora-commerce' ), __( 'Text', 'nexora-commerce' ) );
+
 	return $schema;
 }
+
+/**
+ * One-time move to the 2.5 homepage. A layout saved earlier would otherwise keep the old order, so the new
+ * design would not show. Section contents and all other settings are kept.
+ */
+function nexora_migrate_home_layout() {
+	if ( get_option( 'nexora_home_layout_v' ) >= 25 ) {
+		return;
+	}
+	remove_theme_mod( 'nexora_home_layout' );
+	update_option( 'nexora_home_layout_v', 25 );
+}
+add_action( 'after_setup_theme', 'nexora_migrate_home_layout', 20 );
 
 /**
  * Icons selectable for benefits/trust lines.
@@ -348,7 +406,11 @@ function nexora_customize_register( $wp_customize ) {
 		'nexora_footer'        => array( 'nexora_panel', __( 'Footer', 'nexora-commerce' ) ),
 		'nexora_performance'   => array( 'nexora_panel', __( 'Performance', 'nexora-commerce' ) ),
 		'nexora_home_layout'   => array( 'nexora_home_panel', __( 'Sections and order', 'nexora-commerce' ) ),
-		'nexora_home_hero'     => array( 'nexora_home_panel', __( 'Hero', 'nexora-commerce' ) ),
+		'nexora_home_hero'     => array( 'nexora_home_panel', __( 'Hero promotional banner', 'nexora-commerce' ) ),
+		'nexora_home_tabs'     => array( 'nexora_home_panel', __( 'Products with tabs', 'nexora-commerce' ) ),
+		'nexora_home_basket'   => array( 'nexora_home_panel', __( 'Market basket collection', 'nexora-commerce' ) ),
+		'nexora_home_faq'      => array( 'nexora_home_panel', __( 'Questions and answers', 'nexora-commerce' ) ),
+		'nexora_home_coupons'  => array( 'nexora_home_panel', __( 'Coupons', 'nexora-commerce' ) ),
 		'nexora_home_products' => array( 'nexora_home_panel', __( 'Product sections', 'nexora-commerce' ) ),
 		'nexora_home_campaign' => array( 'nexora_home_panel', __( 'Campaign banner', 'nexora-commerce' ) ),
 		'nexora_home_content'  => array( 'nexora_home_panel', __( 'Benefits, newsletter and banners', 'nexora-commerce' ) ),

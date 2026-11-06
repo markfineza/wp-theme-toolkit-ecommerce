@@ -438,6 +438,7 @@ class Nexora_Store_Cart {
 		}
 		$subtotal = Nexora_Store::round( $subtotal );
 		$calc     = Nexora_Store_Coupons::calculate( $lines, self::coupon_codes(), self::user_id(), $email );
+		$lines   += self::gift_lines( $calc['gifts'] );
 		$options  = self::shipping_options( $subtotal );
 		if ( ! isset( $options[ $shipping ] ) ) {
 			$shipping = $options ? (string) key( $options ) : '';
@@ -457,6 +458,36 @@ class Nexora_Store_Cart {
 			'shipping_title' => $shipping ? $options[ $shipping ]['title'] : '',
 			'total'          => Nexora_Store::round( max( 0, $subtotal - $calc['total'] ) + $ship_cost ),
 		);
+	}
+
+	/**
+	 * Free items earned by coupons, as zero-priced lines. They are worked out each time from the applied
+	 * coupons and never stored in the cart, so nothing can be kept once the coupon stops applying.
+	 *
+	 * @param array $gifts Free-item settings keyed by coupon ID.
+	 * @return array[]
+	 */
+	private static function gift_lines( $gifts ) {
+		$lines = array();
+		foreach ( $gifts as $coupon_id => $free ) {
+			$item    = Nexora_Store_Product::get( $free['item'] );
+			$product = $item && $item->get_parent_id() ? Nexora_Store_Product::get( $item->get_parent_id() ) : $item;
+			if ( ! $item || ! $product ) {
+				continue;
+			}
+			$option                        = $item->get_parent_id() ? $item->option_label() : '';
+			$lines[ 'gift_' . $coupon_id ] = array(
+				'key'     => 'gift_' . $coupon_id,
+				'product' => $product,
+				'item'    => $item,
+				'qty'     => (int) $free['qty'],
+				'price'   => 0.0,
+				'total'   => 0.0,
+				'option'  => ( $option ? $option . ' · ' : '' ) . __( 'Free item', 'nexora-commerce-toolkit' ),
+				'gift'    => true,
+			);
+		}
+		return $lines;
 	}
 
 	/* --------------------------------------------------------------- notices */
@@ -698,6 +729,17 @@ class Nexora_Store_Cart {
 		}
 		$out = '<ul class="woocommerce-mini-cart cart_list product_list_widget">';
 		foreach ( $t['lines'] as $line ) {
+			if ( ! empty( $line['gift'] ) ) {
+				$out .= sprintf(
+					'<li class="woocommerce-mini-cart-item mini_cart_item"><a href="%1$s">%2$s%3$s</a><span class="quantity">%4$d &times; %5$s</span></li>',
+					esc_url( $line['product']->get_permalink() ),
+					$line['item']->get_image( 'woocommerce_gallery_thumbnail', array( 'alt' => '', 'loading' => 'lazy' ) ),
+					esc_html( $line['product']->get_name() . ' — ' . $line['option'] ),
+					(int) $line['qty'],
+					esc_html__( 'Free', 'nexora-commerce-toolkit' )
+				);
+				continue;
+			}
 			$out .= sprintf(
 				'<li class="woocommerce-mini-cart-item mini_cart_item"><button type="button" class="remove remove_from_cart_button" data-nx-remove="%1$s" aria-label="%2$s">&times;</button><a href="%3$s">%4$s%5$s</a><span class="quantity">%6$d &times; %7$s</span></li>',
 				esc_attr( $line['key'] ),
@@ -727,6 +769,9 @@ class Nexora_Store_Cart {
 		ob_start();
 		echo '<div class="woocommerce nx-store-cart">';
 		echo $notices; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped when built.
+		if ( $t['lines'] ) {
+			echo Nexora_Toolkit_Rewards::reward_card( true ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped when built.
+		}
 		if ( ! $t['lines'] ) {
 			echo '<div class="nx-empty"><h2>' . esc_html__( 'Your cart is empty', 'nexora-commerce-toolkit' ) . '</h2><p>' . esc_html__( 'Fresh meat, fish, vegetables and more are waiting.', 'nexora-commerce-toolkit' ) . '</p><a class="nx-btn nx-btn--primary" href="' . esc_url( Nexora_Store::shop_url() ) . '">' . esc_html__( 'Browse the market', 'nexora-commerce-toolkit' ) . '</a></div></div>';
 			return (string) ob_get_clean();
@@ -755,6 +800,14 @@ class Nexora_Store_Cart {
 								<a href="<?php echo esc_url( $line['product']->get_permalink() ); ?>"><?php echo esc_html( $line['product']->get_name() ); ?></a>
 								<?php if ( $line['option'] ) : ?><span class="nx-store-option"><?php echo esc_html( $line['option'] ); ?></span><?php endif; ?>
 							</td>
+							<?php if ( ! empty( $line['gift'] ) ) : ?>
+								<td class="product-price" data-title="<?php esc_attr_e( 'Price', 'nexora-commerce-toolkit' ); ?>"><?php esc_html_e( 'Free', 'nexora-commerce-toolkit' ); ?></td>
+								<td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'nexora-commerce-toolkit' ); ?>"><?php echo (int) $line['qty']; ?></td>
+								<td class="product-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'nexora-commerce-toolkit' ); ?>"><?php esc_html_e( 'Free', 'nexora-commerce-toolkit' ); ?></td>
+								<td class="product-remove"></td>
+								</tr>
+								<?php continue; ?>
+							<?php endif; ?>
 							<td class="product-price" data-title="<?php esc_attr_e( 'Price', 'nexora-commerce-toolkit' ); ?>"><?php echo Nexora_Store::price( $line['price'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></td>
 							<td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'nexora-commerce-toolkit' ); ?>">
 								<div class="quantity">
@@ -794,12 +847,15 @@ class Nexora_Store_Cart {
 						<tr class="cart-discount">
 							<th><?php echo esc_html( $d['label'] ); ?></th>
 							<td data-title="<?php echo esc_attr( $d['label'] ); ?>">
-								<?php echo '-' . Nexora_Store::price( $d['amount'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+								<?php echo Nexora_Store_Coupons::discount_value( $d ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 								<?php if ( $d['code'] ) : ?>
 									<a class="nx-store-coupon__remove" href="<?php echo esc_url( self::action_url( 'remove_coupon', array( 'code' => $d['code'] ) ) ); ?>"><?php esc_html_e( 'Remove', 'nexora-commerce-toolkit' ); ?></a>
 								<?php endif; ?>
 							</td>
 						</tr>
+					<?php endforeach; ?>
+					<?php foreach ( $t['invalid'] as $code => $message ) : ?>
+						<tr class="cart-discount is-invalid"><th colspan="2"><?php echo esc_html( $code . ': ' . $message ); ?> <a class="nx-store-coupon__remove" href="<?php echo esc_url( self::action_url( 'remove_coupon', array( 'code' => $code ) ) ); ?>"><?php esc_html_e( 'Remove', 'nexora-commerce-toolkit' ); ?></a></th></tr>
 					<?php endforeach; ?>
 					<tr class="order-total"><th><?php esc_html_e( 'Total before delivery', 'nexora-commerce-toolkit' ); ?></th><td data-title="<?php esc_attr_e( 'Total', 'nexora-commerce-toolkit' ); ?>"><strong><?php echo Nexora_Store::price( max( 0, $t['subtotal'] - $t['discount_total'] ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></strong></td></tr>
 				</table>

@@ -1,0 +1,17 @@
+/* Freshtastic Toolkit: rewards shown to customers. */
+.nx-reward-card { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; margin: 0 0 20px; padding: 18px 22px; border: 1px solid #f8c9a6; border-left: 5px solid var(--nx-secondary, #f47a20); border-radius: 16px; background: #fff6ee; color: #0f1b3d; }
+/* The cart grids pin the totals box to the right column, so the card stays in the left column above the items. */
+.nx-store-cart > .nx-reward-card, .woocommerce-cart .woocommerce > .nx-reward-card { grid-column: 1; min-width: 0; margin-bottom: 0; }
+.nx-store-cart > .nx-reward-card:first-child { grid-column: 1 / -1; }
+.nx-dash > .nx-reward-card { margin: 0; }
+.nx-reward-card__text { flex: 1 1 280px; min-width: 0; }
+.nx-reward-card p { margin: 0; }
+.nx-reward-card .nx-reward-card__eyebrow { color: #8a3d05; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.nx-reward-card .nx-reward-card__title { margin: 2px 0 4px; font-size: 1.2rem; font-weight: 750; overflow-wrap: anywhere; }
+.nx-reward-card .nx-reward-card__terms, .nx-reward-card .nx-reward-card__code { color: #3f4658; font-size: .875rem; }
+.nx-reward-card code { padding: 1px 6px; border-radius: 6px; background: #fff; color: #0f1b3d; font-weight: 700; overflow-wrap: anywhere; }
+.nx-reward-card a.nx-reward-card__btn { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 12px; background: var(--nx-primary, #12306e); color: #fff; font-weight: 700; text-decoration: none; }
+.nx-reward-card a.nx-reward-card__btn:hover { background: var(--nx-primary-ink, #0c2250); color: #fff; }
+.nx-reward-banner { margin: 0 0 16px; padding: 12px 14px; border: 1px solid #f8c9a6; border-radius: 12px; background: #fff6ee; color: #0f1b3d; font-size: .875rem; }
+.nx-reward-banner__left { display: inline-block; font-weight: 700; color: #8a3d05; }
+.nx-gift-tag { display: inline-block; margin-left: 4px; padding: 1px 8px; border-radius: 999px; background: #e3f5ee; color: #0b5a45; font-size: .75rem; font-weight: 700; }

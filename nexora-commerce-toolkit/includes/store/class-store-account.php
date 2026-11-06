@@ -208,6 +208,10 @@ class Nexora_Store_Account {
 			is_ssl()
 		);
 		if ( is_wp_error( $user ) ) {
+			if ( 0 === strpos( $user->get_error_code(), 'nx_otp' ) ) { // Password was right; the login code could not go out.
+				self::$errors[] = $user->get_error_message();
+				return;
+			}
 			set_transient( $key, $tries + 1, 10 * MINUTE_IN_SECONDS );
 			self::$errors[] = __( 'The email, username or password is not correct.', 'nexora-commerce-toolkit' );
 			return;
@@ -253,6 +257,14 @@ class Nexora_Store_Account {
 		}
 		if ( strlen( $pass ) < 8 ) {
 			self::$errors[] = __( 'Please choose a password of at least 8 characters.', 'nexora-commerce-toolkit' );
+		}
+		$consent = Nexora_Toolkit_Consent::error();
+		if ( '' !== $consent ) {
+			self::$errors[] = $consent;
+		}
+		$captcha = Nexora_Toolkit_Captcha::error();
+		if ( '' !== $captcha ) {
+			self::$errors[] = $captcha;
 		}
 		if ( self::$errors ) {
 			return;
@@ -554,6 +566,7 @@ class Nexora_Store_Account {
 					<div class="nx-auth__panel" id="nx-panel-register" role="tabpanel" aria-labelledby="nx-tab-register" data-nexora-panel="register" <?php echo 'login' === $tab ? 'data-inactive' : ''; ?>>
 						<h2 class="nx-auth__title"><?php esc_html_e( 'Create your account', 'nexora-commerce-toolkit' ); ?></h2>
 						<p class="nx-auth__sub"><?php esc_html_e( 'It only takes a minute. We use your details for your orders and pickups.', 'nexora-commerce-toolkit' ); ?></p>
+						<?php echo Nexora_Toolkit_Rewards::signup_banner(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped when built. ?>
 						<form method="post" class="woocommerce-form woocommerce-form-register register">
 							<input type="hidden" name="nx_account_action" value="register">
 							<?php wp_nonce_field( 'nexora_account', '_nx_account' ); ?>
@@ -581,10 +594,13 @@ class Nexora_Store_Account {
 								<label for="reg_password"><?php esc_html_e( 'Password (8 characters or more)', 'nexora-commerce-toolkit' ); ?><?php echo $req; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></label>
 								<input type="password" class="woocommerce-Input input-text" name="password" id="reg_password" autocomplete="new-password" minlength="8" required aria-required="true">
 							</p>
-							<?php if ( get_privacy_policy_url() ) : ?>
+							<?php if ( Nexora_Toolkit_Consent::enabled() ) : ?>
+								<?php Nexora_Toolkit_Consent::fields(); ?>
+							<?php elseif ( get_privacy_policy_url() ) : ?>
 								<?php /* translators: 1: opening link, 2: closing link */ ?>
 								<p class="woocommerce-privacy-policy-text"><?php printf( esc_html__( 'Your personal data will be used to manage your account and for other purposes described in our %1$sprivacy policy%2$s.', 'nexora-commerce-toolkit' ), '<a href="' . esc_url( get_privacy_policy_url() ) . '">', '</a>' ); ?></p>
 							<?php endif; ?>
+							<?php Nexora_Toolkit_Captcha::widget(); ?>
 							<p class="form-row nx-auth__submit"><button type="submit" class="woocommerce-button button"><?php esc_html_e( 'Create account', 'nexora-commerce-toolkit' ); ?></button></p>
 						</form>
 						<p class="nx-auth__switch"><?php esc_html_e( 'Already have an account?', 'nexora-commerce-toolkit' ); ?> <a href="#nx-panel-login" data-nexora-tab-link="login"><?php esc_html_e( 'Sign in', 'nexora-commerce-toolkit' ); ?></a></p>
@@ -667,6 +683,10 @@ class Nexora_Store_Account {
 					<?php endif; ?>
 				</div>
 			</header>
+
+			<?php Nexora_Toolkit_Consent::prompt(); ?>
+
+			<?php echo Nexora_Toolkit_Rewards::reward_card(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped when built. ?>
 
 			<?php if ( $next ) : ?>
 				<?php
@@ -947,5 +967,6 @@ class Nexora_Store_Account {
 			<div class="nx-form__actions"><button type="submit" class="button"><?php esc_html_e( 'Save changes', 'nexora-commerce-toolkit' ); ?></button></div>
 		</form>
 		<?php
+		Nexora_Toolkit_Consent::marketing_form();
 	}
 }

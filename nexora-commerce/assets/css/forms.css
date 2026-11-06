@@ -218,6 +218,23 @@
 	.woocommerce-account .nx-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout { margin: 0; padding: 0; border: 0; }
 }
 
+/* Collapsible sidebar (desktop only: below 1024px the menu is already a horizontal strip). main.js adds the button. */
+.nx-acc-nav__toggle { flex-shrink: 0; display: grid; place-items: center; width: 36px; height: 36px; margin-left: auto; padding: 0; border: 0; border-radius: 10px; background: transparent; color: var(--nx-muted); cursor: pointer; }
+.nx-acc-nav__toggle:hover { background: var(--nx-primary-soft); color: var(--nx-primary-ink); }
+.nx-acc-nav__toggle:focus-visible { outline: 2px solid var(--nx-primary); outline-offset: 2px; }
+@media (min-width: 1024px) {
+	.nx-acc-collapsed .woocommerce-account .woocommerce { grid-template-columns: 76px minmax(0, 1fr); }
+	.nx-acc-collapsed .nx-acc-nav__profile { flex-direction: column; gap: 8px; padding: 6px 0 12px; }
+	.nx-acc-collapsed .nx-acc-nav__toggle { margin-left: 0; }
+	.nx-acc-collapsed .nx-acc-nav__toggle svg { transform: rotate(180deg); }
+	.nx-acc-collapsed .woocommerce-account .nx-acc-nav a { justify-content: center; padding: 12px 0; }
+	/* Hidden visually, still read by screen readers. */
+	.nx-acc-collapsed .nx-acc-nav__who, .nx-acc-collapsed .woocommerce-account .nx-acc-nav a > span { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+	.woocommerce-account .woocommerce { transition: grid-template-columns .2s ease; }
+}
+
 /* 8. Profile and address forms -------------------------------------------- */
 .nx-profile-head { display: flex; gap: 16px; align-items: center; margin: 0 0 28px; padding-bottom: 24px; border-bottom: 1px solid var(--nx-border); }
 .nx-profile-head__name { margin: 0; font-size: var(--nx-fs-xl); }
@@ -406,3 +423,6 @@
 .woocommerce-account .woocommerce-ResetPassword { max-width: 520px; margin-inline: auto; padding: 28px; border-radius: var(--nx-radius-lg); background: var(--nx-surface); border: 1px solid var(--nx-border); }
 .woocommerce-account .woocommerce-ResetPassword .form-row { width: 100%; float: none; }
 .woocommerce-account .woocommerce-ResetPassword .input-text { min-height: 50px; border-radius: 12px; }
+
+/* A link inside a checkbox label must stand out without relying on colour. */
+.nx-check a { text-decoration: underline; }

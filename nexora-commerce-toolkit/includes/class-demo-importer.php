@@ -108,12 +108,16 @@ class Nexora_Toolkit_Demo_Importer {
 	 */
 	public static function steps( $choices ) {
 		$steps = array( 'check' => __( 'Checking requirements', 'nexora-commerce-toolkit' ) );
-		if ( ! empty( $choices['settings'] ) ) {
-			$steps['settings'] = __( 'Applying Philippine store settings', 'nexora-commerce-toolkit' );
+		if ( Nexora_Store::active() ) {
+			$steps['catalog'] = __( 'Creating categories, products and images', 'nexora-commerce-toolkit' );
+		} else {
+			if ( ! empty( $choices['settings'] ) ) {
+				$steps['settings'] = __( 'Applying Philippine store settings', 'nexora-commerce-toolkit' );
+			}
+			$steps['categories'] = __( 'Creating categories and attributes', 'nexora-commerce-toolkit' );
+			$steps['products']   = __( 'Creating products and images', 'nexora-commerce-toolkit' );
+			$steps['relations']  = __( 'Linking related products', 'nexora-commerce-toolkit' );
 		}
-		$steps['categories'] = __( 'Creating categories and attributes', 'nexora-commerce-toolkit' );
-		$steps['products']   = __( 'Creating products and images', 'nexora-commerce-toolkit' );
-		$steps['relations']  = __( 'Linking related products', 'nexora-commerce-toolkit' );
 		if ( ! empty( $choices['reviews'] ) ) {
 			$steps['reviews'] = __( 'Adding labelled sample reviews and testimonials', 'nexora-commerce-toolkit' );
 		}
@@ -278,7 +282,7 @@ class Nexora_Toolkit_Demo_Importer {
 	 */
 	private static function step_check() {
 		$messages = array();
-		if ( ! class_exists( 'WooCommerce' ) ) {
+		if ( ! class_exists( 'WooCommerce' ) && ! Nexora_Store::active() ) {
 			return array( 'done' => true, 'error' => true, 'messages' => array( __( 'WooCommerce must be active before importing demo products.', 'nexora-commerce-toolkit' ) ) );
 		}
 		if ( ! is_writable( wp_upload_dir()['basedir'] ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
@@ -471,6 +475,72 @@ class Nexora_Toolkit_Demo_Importer {
 
 	/**
 	 * Products, in batches.
+	 *
+	 * @param int $offset Offset.
+	 * @return array
+	 */
+	private static function step_catalog( $offset ) {
+		$total    = count( self::data( 'products' )['products'] );
+		$messages = array();
+		// Reviews are their own step, so unticking them is respected.
+		foreach ( Nexora_Store_Importer::seed_batch( $offset, self::BATCH, false ) as $name => $created ) {
+			$messages[] = $created
+				/* translators: %s: product name */
+				? sprintf( __( 'Created “%s”.', 'nexora-commerce-toolkit' ), $name )
+				/* translators: %s: product name */
+				: sprintf( __( 'Skipped “%s” (a product with its SKU already exists).', 'nexora-commerce-toolkit' ), $name );
+		}
+		$next = $offset + self::BATCH;
+		return array(
+			'done'     => $next >= $total,
+			'offset'   => $next,
+			'progress' => array( min( $next, $total ), $total ),
+			'messages' => $messages,
+		);
+	}
+
+	/**
+	 * Product ID by SKU, with either store engine.
+	 *
+	 * @param string $sku SKU.
+	 * @return int
+	 */
+	private static function product_id_by_sku( $sku ) {
+		global $wpdb;
+		if ( function_exists( 'wc_get_product_id_by_sku' ) ) {
+			return (int) wc_get_product_id_by_sku( $sku );
+		}
+		return (int) $wpdb->get_var( $wpdb->prepare( "SELECT pm.post_id FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON p.ID = pm.post_id WHERE pm.meta_key = '_sku' AND pm.meta_value = %s AND p.post_type = 'product' LIMIT 1", $sku ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	}
+
+	/**
+	 * Delete a product and its options, with either store engine.
+	 *
+	 * @param int $id Product.
+	 */
+	private static function delete_product( $id ) {
+		$children = get_children( array( 'post_parent' => $id, 'post_type' => 'product_variation', 'post_status' => 'any', 'fields' => 'ids' ) );
+		if ( class_exists( 'WooCommerce' ) ) {
+			foreach ( $children as $child ) {
+				$variation = wc_get_product( $child );
+				if ( $variation ) {
+					$variation->delete( true );
+				}
+			}
+			$product = wc_get_product( $id );
+			if ( $product ) {
+				$product->delete( true );
+			}
+			return;
+		}
+		foreach ( $children as $child ) {
+			wp_delete_post( $child, true );
+		}
+		wp_delete_post( $id, true );
+	}
+
+	/**
+	 * Create products.
 	 *
 	 * @param int $offset Offset.
 	 * @return array
@@ -708,8 +778,12 @@ class Nexora_Toolkit_Demo_Importer {
 			if ( empty( $p['reviews'] ) ) {
 				continue;
 			}
-			$product_id = wc_get_product_id_by_sku( $p['sku'] );
+			$product_id = self::product_id_by_sku( $p['sku'] );
 			if ( ! $product_id || ! get_post_meta( $product_id, self::META, true ) ) {
+				continue;
+			}
+			// A catalogue added with "wp nexora store seed" already has its reviews.
+			if ( Nexora_Store::active() && get_comments( array( 'post_id' => $product_id, 'type' => 'review', 'meta_key' => self::META, 'count' => true, 'status' => 'all' ) ) ) { // phpcs:ignore WordPress.DB.SlowDBQuery
 				continue;
 			}
 			foreach ( $p['reviews'] as $i => $r ) {
@@ -737,7 +811,11 @@ class Nexora_Toolkit_Demo_Importer {
 					$added++;
 				}
 			}
-			WC_Comments::clear_transients( $product_id );
+			if ( Nexora_Store::active() ) {
+				Nexora_Store_Catalog::update_rating( $product_id );
+			} else {
+				WC_Comments::clear_transients( $product_id );
+			}
 		}
 
 		$testimonials = 0;
@@ -856,7 +934,9 @@ class Nexora_Toolkit_Demo_Importer {
 	 */
 	private static function step_menus() {
 		$state = self::state();
-		$shop  = wc_get_page_permalink( 'shop' );
+		$native  = Nexora_Store::active();
+		$shop    = $native ? Nexora_Store::shop_url() : wc_get_page_permalink( 'shop' );
+		$account = $native ? (int) Nexora_Store::page_id( 'account' ) : (int) wc_get_page_id( 'myaccount' );
 		$menus = array(
 			'primary'  => array(
 				'name'  => __( 'Primary navigation', 'nexora-commerce-toolkit' ),
@@ -876,7 +956,7 @@ class Nexora_Toolkit_Demo_Importer {
 					array( 'page', self::page_id( 'shipping-returns', 'shipping-returns' ) ),
 					array( 'page', self::page_id( 'faq', 'faq' ) ),
 					array( 'page', self::page_id( 'contact', 'contact' ) ),
-					array( 'page', (int) wc_get_page_id( 'myaccount' ) ),
+					array( 'page', $account ),
 					array( 'page', self::page_id( 'wishlist', 'wishlist' ) ),
 				),
 			),
@@ -1025,6 +1105,9 @@ class Nexora_Toolkit_Demo_Importer {
 		if ( class_exists( 'WC_Post_Data' ) && function_exists( 'wc_update_product_lookup_tables_is_running' ) && ! wc_update_product_lookup_tables_is_running() ) {
 			wc_update_product_lookup_tables();
 		}
+		if ( Nexora_Store::active() ) {
+			Nexora_Store_Catalog::flush();
+		}
 		flush_rewrite_rules( false );
 		$messages = array( __( 'Demo store is ready. Visit the homepage to explore it.', 'nexora-commerce-toolkit' ) );
 		if ( 'yes' === get_option( 'woocommerce_coming_soon' ) ) {
@@ -1084,7 +1167,7 @@ class Nexora_Toolkit_Demo_Importer {
 			wp_delete_comment( $cid, true );
 		}
 		foreach ( array_unique( $touched ) as $pid ) {
-			if ( 'product' === get_post_type( $pid ) ) {
+			if ( 'product' === get_post_type( $pid ) && class_exists( 'WC_Comments' ) ) {
 				WC_Comments::clear_transients( $pid );
 			}
 		}
@@ -1101,18 +1184,7 @@ class Nexora_Toolkit_Demo_Importer {
 		);
 		foreach ( $ids as $id ) {
 			if ( 'product' === get_post_type( $id ) ) {
-				$product = wc_get_product( $id );
-				if ( $product ) {
-					if ( $product->is_type( 'variable' ) ) {
-						foreach ( $product->get_children() as $child ) {
-							$variation = wc_get_product( $child );
-							if ( $variation ) {
-								$variation->delete( true );
-							}
-						}
-					}
-					$product->delete( true );
-				}
+				self::delete_product( $id );
 			} else {
 				wp_delete_post( $id, true );
 			}
@@ -1150,7 +1222,7 @@ class Nexora_Toolkit_Demo_Importer {
 				}
 			}
 		}
-		foreach ( $state['attributes'] as $attr_id ) {
+		foreach ( function_exists( 'wc_get_attribute' ) ? $state['attributes'] : array() as $attr_id ) {
 			$attr = wc_get_attribute( $attr_id );
 			if ( $attr && ! get_terms( array( 'taxonomy' => $attr->slug, 'hide_empty' => false, 'fields' => 'ids' ) ) ) {
 				wc_delete_attribute( $attr_id );
@@ -1172,7 +1244,9 @@ class Nexora_Toolkit_Demo_Importer {
 		}
 
 		// 6. Shipping zone created by the importer.
-		if ( $state['zone_id'] ) {
+		if ( $state['zone_id'] && ! class_exists( 'WC_Shipping_Zones' ) ) {
+			$messages[] = __( 'The demo shipping zone is stored in WooCommerce, so it was left in place. You can delete it under WooCommerce → Settings → Shipping if you switch back.', 'nexora-commerce-toolkit' );
+		} elseif ( $state['zone_id'] ) {
 			$zone = WC_Shipping_Zones::get_zone( $state['zone_id'] );
 			if ( $zone ) {
 				$zone->delete();
@@ -1194,6 +1268,9 @@ class Nexora_Toolkit_Demo_Importer {
 		}
 
 		delete_option( self::STATE );
+		if ( Nexora_Store::active() ) {
+			Nexora_Store_Catalog::flush();
+		}
 		update_option( 'nexora_products_cache_v', time(), false );
 		if ( function_exists( 'wc_delete_product_transients' ) ) {
 			wc_delete_product_transients();
@@ -1243,7 +1320,7 @@ class Nexora_Toolkit_Demo_Importer {
 	 * @return bool
 	 */
 	private static function can() {
-		return current_user_can( 'manage_options' ) && current_user_can( 'manage_woocommerce' );
+		return current_user_can( 'manage_options' ) && current_user_can( Nexora_Store::active() ? Nexora_Store_Admin::CAP_STORE : 'manage_woocommerce' );
 	}
 
 	/**
@@ -1300,7 +1377,7 @@ class Nexora_Toolkit_Demo_Importer {
 			<?php if ( $notice ) : ?>
 				<div class="notice <?php echo 'ok' === $notice ? 'notice-success' : 'notice-error'; ?>"><p><?php echo 'ok' === $notice ? esc_html__( 'Finished.', 'nexora-commerce-toolkit' ) : esc_html__( 'Something went wrong. Check requirements and try again.', 'nexora-commerce-toolkit' ); ?></p></div>
 			<?php endif; ?>
-			<?php if ( ! class_exists( 'WooCommerce' ) ) : ?>
+			<?php if ( ! class_exists( 'WooCommerce' ) && ! Nexora_Store::active() ) : ?>
 				<div class="notice notice-error"><p><?php esc_html_e( 'Activate WooCommerce first.', 'nexora-commerce-toolkit' ); ?></p></div>
 			<?php endif; ?>
 
@@ -1317,7 +1394,9 @@ class Nexora_Toolkit_Demo_Importer {
 						<p><label><input type="checkbox" name="choices[content]" value="1" checked> <?php esc_html_e( 'Pages (About, Request a Quote, Contact, Delivery and Returns, FAQ, Terms, Wishlist), journal posts and menus', 'nexora-commerce-toolkit' ); ?></label></p>
 						<p><label><input type="checkbox" name="choices[reviews]" value="1" checked> <?php esc_html_e( 'Sample reviews and testimonials (always labelled “Sample”)', 'nexora-commerce-toolkit' ); ?></label></p>
 						<p><label><input type="checkbox" name="choices[homepage]" value="1" checked> <?php esc_html_e( 'Set a static homepage and apply demo banner images', 'nexora-commerce-toolkit' ); ?></label></p>
-						<p><label><input type="checkbox" name="choices[settings]" value="1"> <?php esc_html_e( 'Apply Philippine store settings: ₱ currency, PH-only selling, demo shipping zone with store pickup and courier delivery booked by the customer, Pay at pickup and Bank transfer', 'nexora-commerce-toolkit' ); ?></label></p>
+						<?php if ( ! Nexora_Store::active() ) : ?>
+							<p><label><input type="checkbox" name="choices[settings]" value="1"> <?php esc_html_e( 'Apply Philippine store settings: ₱ currency, PH-only selling, demo shipping zone with store pickup and courier delivery booked by the customer, Pay at pickup and Bank transfer', 'nexora-commerce-toolkit' ); ?></label></p>
+						<?php endif; ?>
 					</fieldset>
 					<p><label><input type="checkbox" name="confirm" value="1" required> <strong><?php esc_html_e( 'I understand this adds demo content to this site.', 'nexora-commerce-toolkit' ); ?></strong></label></p>
 					<?php submit_button( __( 'Import demo content', 'nexora-commerce-toolkit' ), 'primary', 'submit', false ); ?>
@@ -1370,7 +1449,7 @@ class Nexora_Toolkit_Demo_Importer {
 			<div class="card">
 				<h2><?php esc_html_e( 'Replacing demo products with your inventory', 'nexora-commerce-toolkit' ); ?></h2>
 				<ol>
-					<li><?php esc_html_e( 'Add your real products (Products → Add New, or Products → Import for CSV).', 'nexora-commerce-toolkit' ); ?></li>
+					<li><?php Nexora_Store::active() ? esc_html_e( 'Add your real products (Store → Add product).', 'nexora-commerce-toolkit' ) : esc_html_e( 'Add your real products (Products → Add New, or Products → Import for CSV).', 'nexora-commerce-toolkit' ); ?></li>
 					<li><?php esc_html_e( 'Reuse the demo categories or create your own; update category images under Products → Categories.', 'nexora-commerce-toolkit' ); ?></li>
 					<li><?php esc_html_e( 'Replace homepage images and text in Appearance → Customize → Freshtastic Homepage.', 'nexora-commerce-toolkit' ); ?></li>
 					<li><?php esc_html_e( 'Click “Remove demo content” above. Your own products, pages and orders stay.', 'nexora-commerce-toolkit' ); ?></li>

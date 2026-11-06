@@ -70,9 +70,9 @@ class Nexora_Store {
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'assets' ) );
 		add_action( 'template_redirect', array( __CLASS__, 'no_cache' ), 1 );
 		add_action( 'nexora_store_daily', array( __CLASS__, 'daily' ) );
-		add_shortcode( 'nexora_cart', array( 'Nexora_Store_Cart', 'render' ) );
-		add_shortcode( 'nexora_checkout', array( 'Nexora_Store_Checkout', 'render' ) );
-		add_shortcode( 'nexora_account', array( 'Nexora_Store_Account', 'render' ) );
+		add_shortcode( 'nexora_cart', array( __CLASS__, 'shortcode' ) );
+		add_shortcode( 'nexora_checkout', array( __CLASS__, 'shortcode' ) );
+		add_shortcode( 'nexora_account', array( __CLASS__, 'shortcode' ) );
 		if ( ! wp_next_scheduled( 'nexora_store_daily' ) ) {
 			wp_schedule_event( time() + HOUR_IN_SECONDS, 'daily', 'nexora_store_daily' );
 		}
@@ -277,6 +277,29 @@ class Nexora_Store {
 			return Nexora_Store_Account::render();
 		}
 		return $content;
+	}
+
+	/**
+	 * Store shortcodes. On the store's own pages page_content() replaces the whole content anyway, so the
+	 * shortcode stays empty there: rendering twice would use up one-time notices in the discarded copy.
+	 *
+	 * @param array|string $atts Attributes.
+	 * @param string       $text Enclosed text.
+	 * @param string       $tag  Shortcode.
+	 * @return string
+	 */
+	public static function shortcode( $atts, $text, $tag ) {
+		$page = substr( $tag, strlen( 'nexora_' ) );
+		if ( self::is_page( $page ) && in_the_loop() && is_main_query() ) {
+			return '';
+		}
+		switch ( $page ) {
+			case 'cart':
+				return Nexora_Store_Cart::render();
+			case 'checkout':
+				return Nexora_Store_Checkout::render();
+		}
+		return Nexora_Store_Account::render();
 	}
 
 	/**

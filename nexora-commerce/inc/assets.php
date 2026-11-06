@@ -33,6 +33,8 @@ function nexora_enqueue_assets() {
 	wp_add_inline_style( 'nexora-main', nexora_brand_css() );
 	wp_enqueue_style( 'nexora-market', NEXORA_URI . '/assets/css/market.css', array( 'nexora-main' ), NEXORA_VERSION . '.' . filemtime( NEXORA_DIR . '/assets/css/market.css' ) );
 
+	wp_enqueue_style( 'nexora-storefront', NEXORA_URI . '/assets/css/storefront.css', array( 'nexora-market' ), NEXORA_VERSION . '.' . filemtime( NEXORA_DIR . '/assets/css/storefront.css' ) );
+
 	if ( nexora_is_shop_context() ) {
 		wp_enqueue_style( 'nexora-woocommerce', NEXORA_URI . '/assets/css/woocommerce.css', array( 'nexora-main' ), NEXORA_VERSION . '.' . filemtime( NEXORA_DIR . '/assets/css/woocommerce.css' ) );
 		if ( nexora_is_native_store() ? ( Nexora_Store::is_page( 'checkout' ) || Nexora_Store::is_page( 'account' ) ) : ( is_checkout() || is_account_page() ) ) {
@@ -78,6 +80,14 @@ function nexora_script_data() {
 			'filterError'   => __( 'Filters could not be applied. Reloading the page…', 'nexora-commerce' ),
 			'countdownDays' => __( 'd', 'nexora-commerce' ),
 			'freeShipping'  => __( 'You have unlocked free shipping!', 'nexora-commerce' ),
+			'copied'        => __( 'Copied', 'nexora-commerce' ),
+			'copyFailed'    => __( 'Press and hold the code to copy it', 'nexora-commerce' ),
+			'pauseSlides'   => __( 'Pause banners', 'nexora-commerce' ),
+			'playSlides'    => __( 'Play banners', 'nexora-commerce' ),
+			/* translators: 1: banner number, 2: number of banners */
+			'slideOf'       => __( 'Banner %1$d of %2$d', 'nexora-commerce' ),
+			'collapseNav'   => __( 'Collapse menu', 'nexora-commerce' ),
+			'expandNav'     => __( 'Expand menu', 'nexora-commerce' ),
 			'marketOpen'    => __( 'Market open', 'nexora-commerce' ),
 			'marketClosed'  => __( 'Market closed', 'nexora-commerce' ),
 			'opens'         => __( 'opens', 'nexora-commerce' ),
@@ -110,6 +120,17 @@ function nexora_script_data() {
 }
 
 /**
+ * Apply the customer's collapsed account sidebar before the page paints, so it does not flicker on load.
+ */
+function nexora_account_nav_state() {
+	$is_account = nexora_is_native_store() ? Nexora_Store::is_page( 'account' ) : ( nexora_is_woocommerce_active() && is_account_page() );
+	if ( $is_account && is_user_logged_in() ) {
+		wp_print_inline_script_tag( "try{if(localStorage.getItem('nxAccNavCollapsed')==='1'){document.documentElement.classList.add('nx-acc-collapsed');}}catch(e){}" );
+	}
+}
+add_action( 'wp_head', 'nexora_account_nav_state', 1 );
+
+/**
  * Preload the primary font files.
  */
 function nexora_preload_fonts() {
@@ -132,12 +153,13 @@ function nexora_preload_hero() {
 	if ( ! is_front_page() || ! in_array( 'hero', nexora_enabled_home_sections(), true ) ) {
 		return;
 	}
-	$id = (int) nexora_option( 'hero_image' );
+	$slides = nexora_promo_slides();
+	$id     = $slides ? (int) $slides[0]['image'] : 0;
 	if ( $id ) {
 		$src    = wp_get_attachment_image_url( $id, 'full' );
 		$srcset = wp_get_attachment_image_srcset( $id, 'full' );
 		if ( $src ) {
-			printf( '<link rel="preload" as="image" href="%1$s" imagesrcset="%2$s" imagesizes="(min-width: 1024px) 55vw, 100vw" fetchpriority="high">' . "\n", esc_url( $src ), esc_attr( (string) $srcset ) );
+			printf( '<link rel="preload" as="image" href="%1$s" imagesrcset="%2$s" imagesizes="(min-width: 1024px) 50vw, 100vw" fetchpriority="high">' . "\n", esc_url( $src ), esc_attr( (string) $srcset ) );
 		}
 	}
 }

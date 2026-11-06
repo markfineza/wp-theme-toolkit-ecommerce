@@ -156,9 +156,6 @@ function nexora_body_classes( $classes ) {
 	if ( nexora_option( 'header_sticky' ) ) {
 		$classes[] = 'has-sticky-header';
 	}
-	if ( nexora_option( 'header_transparent' ) && is_front_page() ) {
-		$classes[] = 'has-transparent-header';
-	}
 	if ( nexora_announcement_is_visible() ) {
 		$classes[] = 'has-announcement';
 	}
@@ -193,3 +190,19 @@ function nexora_pingback_header() {
 	}
 }
 add_action( 'wp_head', 'nexora_pingback_header' );
+
+/**
+ * The footer Legal menu always offers the Privacy Policy, even if the menu was built without it.
+ *
+ * @param string   $items Menu items HTML.
+ * @param stdClass $args  Menu arguments.
+ * @return string
+ */
+function nexora_legal_menu_privacy( $items, $args ) {
+	$url = get_privacy_policy_url();
+	if ( 'legal' === $args->theme_location && $url && false === strpos( $items, $url ) ) {
+		$items .= '<li class="menu-item">' . get_the_privacy_policy_link() . '</li>';
+	}
+	return $items;
+}
+add_filter( 'wp_nav_menu_items', 'nexora_legal_menu_privacy', 10, 2 );

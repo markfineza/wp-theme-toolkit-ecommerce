@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Freshtastic Food Hub Toolkit 2.3.0\n"
+"Project-Id-Version: Freshtastic Food Hub Toolkit 2.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/nexora-commerce-toolkit\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-05T15:48:45+00:00\n"
+"POT-Creation-Date: 2026-11-06T23:36:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: nexora-commerce-toolkit\n"
@@ -26,7 +26,7 @@ msgstr ""
 
 #. Description of the plugin
 #: nexora-commerce-toolkit.php
-msgid "Companion plugin for the Freshtastic Food Hub theme: optional built-in store that runs without WooCommerce, market data (units, origin, price history), request for quotation, store pickup and customer-booked courier delivery with time slots, modern order screens and an Order Desk staff role, demo content importer and cleanup, wishlist, newsletter provider integrations (Mailchimp, Brevo, Klaviyo), consent-aware analytics events (GA4, GTM, Meta Pixel, Google Ads) and testimonials. Features keep working if you switch themes."
+msgid "Companion plugin for the Freshtastic Food Hub theme: optional built-in store that runs without WooCommerce, market data (units, origin, price history), request for quotation, store pickup and customer-booked courier delivery with time slots, modern order screens and an Order Desk staff role, registration consent records, reCAPTCHA and email login codes, demo content importer and cleanup, wishlist, newsletter provider integrations (Mailchimp, Brevo, Klaviyo), consent-aware analytics events (GA4, GTM, Meta Pixel, Google Ads) and testimonials. Features keep working if you switch themes."
 msgstr ""
 
 #. Author of the plugin
@@ -35,50 +35,170 @@ msgid "Freshtastic Food Hub Team"
 msgstr ""
 
 #: includes/class-accounts.php:56
-#: includes/store/class-store-account.php:506
+#: includes/store/class-store-account.php:518
 msgid "Required"
 msgstr ""
 
 #: includes/class-accounts.php:60
-#: includes/store/class-store-account.php:564
-#: includes/store/class-store-account.php:897
-#: includes/store/class-store-account.php:933
-#: includes/store/class-store-checkout.php:553
+#: includes/store/class-store-account.php:577
+#: includes/store/class-store-account.php:917
+#: includes/store/class-store-account.php:953
+#: includes/store/class-store-checkout.php:562
 msgid "First name"
 msgstr ""
 
 #: includes/class-accounts.php:64
-#: includes/store/class-store-account.php:568
-#: includes/store/class-store-account.php:898
-#: includes/store/class-store-account.php:934
-#: includes/store/class-store-checkout.php:554
+#: includes/store/class-store-account.php:581
+#: includes/store/class-store-account.php:918
+#: includes/store/class-store-account.php:954
+#: includes/store/class-store-checkout.php:563
 msgid "Last name"
 msgstr ""
 
 #: includes/class-accounts.php:69
 #: includes/class-rfq.php:280
-#: includes/store/class-store-account.php:573
-#: includes/store/class-store-account.php:899
-#: includes/store/class-store-checkout.php:556
+#: includes/store/class-store-account.php:586
+#: includes/store/class-store-account.php:919
+#: includes/store/class-store-checkout.php:565
 msgid "Mobile number"
 msgstr ""
 
 #: includes/class-accounts.php:83
-#: includes/store/class-store-account.php:241
+#: includes/store/class-store-account.php:245
 #: includes/store/class-store-checkout.php:190
 msgid "Please enter your first name."
 msgstr ""
 
 #: includes/class-accounts.php:86
-#: includes/store/class-store-account.php:244
+#: includes/store/class-store-account.php:248
 #: includes/store/class-store-checkout.php:193
 msgid "Please enter your last name."
 msgstr ""
 
 #: includes/class-accounts.php:90
-#: includes/store/class-store-account.php:247
+#: includes/store/class-store-account.php:251
 #: includes/store/class-store-checkout.php:199
 msgid "Please enter a valid mobile number, for example 0917 123 4567."
+msgstr ""
+
+#: includes/class-captcha.php:64
+msgid "Please turn on JavaScript to complete the security check."
+msgstr ""
+
+#: includes/class-captcha.php:84
+msgid "Please tick \"I'm not a robot\"."
+msgstr ""
+
+#: includes/class-captcha.php:89
+msgid "We could not complete the security check. Please try again in a moment."
+msgstr ""
+
+#: includes/class-captcha.php:91
+msgid "The security check failed. Please tick \"I'm not a robot\" again."
+msgstr ""
+
+#: includes/class-consent.php:63
+msgid "I am 18 or older and I agree to the {terms}. I have read the {privacy} and consent to my personal data being processed to run my account and fill my orders."
+msgstr ""
+
+#: includes/class-consent.php:72
+msgid "Send me offers and market news by email. Optional. You can change this any time in your account."
+msgstr ""
+
+#: includes/class-consent.php:106
+#: includes/class-security.php:128
+msgid "Terms and Conditions"
+msgstr ""
+
+#: includes/class-consent.php:107
+#: includes/class-security.php:137
+msgid "Privacy Policy"
+msgstr ""
+
+#: includes/class-consent.php:180
+msgid "Please accept the Terms and Conditions and Privacy Policy to create an account."
+msgstr ""
+
+#: includes/class-consent.php:319
+msgid "Please review our terms"
+msgstr ""
+
+#: includes/class-consent.php:324
+msgid "Accept"
+msgstr ""
+
+#: includes/class-consent.php:342
+#: includes/class-consent.php:386
+#: includes/class-security.php:384
+msgid "Marketing emails"
+msgstr ""
+
+#: includes/class-consent.php:343
+msgid "You are receiving offers and market news by email."
+msgstr ""
+
+#: includes/class-consent.php:343
+msgid "You are not receiving offers and market news by email."
+msgstr ""
+
+#: includes/class-consent.php:344
+msgid "Stop marketing emails"
+msgstr ""
+
+#: includes/class-consent.php:344
+msgid "Send me marketing emails"
+msgstr ""
+
+#: includes/class-consent.php:386
+msgid "Terms and Privacy Policy"
+msgstr ""
+
+#: includes/class-consent.php:387
+msgid "accepted"
+msgstr ""
+
+#: includes/class-consent.php:387
+msgid "withdrawn"
+msgstr ""
+
+#: includes/class-consent.php:402
+msgid "Consent record"
+msgstr ""
+
+#: includes/class-consent.php:404
+msgid "No consent has been recorded for this account."
+msgstr ""
+
+#: includes/class-consent.php:408
+#: includes/class-consent.php:460
+msgid "Decision"
+msgstr ""
+
+#: includes/class-consent.php:409
+#: includes/class-consent.php:461
+msgid "Version"
+msgstr ""
+
+#: includes/class-consent.php:410
+#: includes/class-consent.php:462
+msgid "Date (UTC)"
+msgstr ""
+
+#: includes/class-consent.php:411
+#: includes/class-consent.php:463
+msgid "IP address"
+msgstr ""
+
+#: includes/class-consent.php:412
+msgid "Where"
+msgstr ""
+
+#: includes/class-consent.php:438
+msgid "Freshtastic consent records"
+msgstr ""
+
+#: includes/class-consent.php:457
+msgid "Consent records"
 msgstr ""
 
 #: includes/class-demo-importer.php:110
@@ -86,487 +206,507 @@ msgid "Checking requirements"
 msgstr ""
 
 #: includes/class-demo-importer.php:112
-msgid "Applying Philippine store settings"
-msgstr ""
-
-#: includes/class-demo-importer.php:114
-msgid "Creating categories and attributes"
+msgid "Creating categories, products and images"
 msgstr ""
 
 #: includes/class-demo-importer.php:115
-msgid "Creating products and images"
+msgid "Applying Philippine store settings"
 msgstr ""
 
-#: includes/class-demo-importer.php:116
-msgid "Linking related products"
+#: includes/class-demo-importer.php:117
+msgid "Creating categories and attributes"
 msgstr ""
 
 #: includes/class-demo-importer.php:118
-msgid "Adding labelled sample reviews and testimonials"
+msgid "Creating products and images"
 msgstr ""
 
-#: includes/class-demo-importer.php:121
-msgid "Creating journal posts"
+#: includes/class-demo-importer.php:119
+msgid "Linking related products"
 msgstr ""
 
 #: includes/class-demo-importer.php:122
-msgid "Creating pages"
+msgid "Adding labelled sample reviews and testimonials"
 msgstr ""
 
-#: includes/class-demo-importer.php:123
-msgid "Creating menus"
+#: includes/class-demo-importer.php:125
+msgid "Creating journal posts"
 msgstr ""
 
 #: includes/class-demo-importer.php:126
+msgid "Creating pages"
+msgstr ""
+
+#: includes/class-demo-importer.php:127
+msgid "Creating menus"
+msgstr ""
+
+#: includes/class-demo-importer.php:130
 msgid "Setting up the homepage"
 msgstr ""
 
-#: includes/class-demo-importer.php:128
+#: includes/class-demo-importer.php:132
 msgid "Finishing up"
 msgstr ""
 
-#: includes/class-demo-importer.php:282
+#: includes/class-demo-importer.php:286
 msgid "WooCommerce must be active before importing demo products."
 msgstr ""
 
-#: includes/class-demo-importer.php:285
+#: includes/class-demo-importer.php:289
 msgid "The uploads folder is not writable, so demo images cannot be added."
 msgstr ""
 
-#: includes/class-demo-importer.php:288
+#: includes/class-demo-importer.php:292
 msgid "Note: the Freshtastic Food Hub theme is not active, so homepage images will not be applied to its Customizer settings."
 msgstr ""
 
-#: includes/class-demo-importer.php:292
+#: includes/class-demo-importer.php:296
 msgid "Demo content was imported before — existing demo items will be skipped, missing ones re-created."
 msgstr ""
 
-#: includes/class-demo-importer.php:294
+#: includes/class-demo-importer.php:298
 msgid "Requirements met."
 msgstr ""
 
-#: includes/class-demo-importer.php:322
-#: includes/store/class-store-admin.php:1260
+#: includes/class-demo-importer.php:326
+#: includes/store/class-store-admin.php:1263
 msgid "Pay at pickup (cash)"
 msgstr ""
 
-#: includes/class-demo-importer.php:323
+#: includes/class-demo-importer.php:327
 msgid "Pay in cash when you collect your order at the store. (Demo store — no real orders are fulfilled.)"
 msgstr ""
 
-#: includes/class-demo-importer.php:329
-#: includes/store/class-store-admin.php:1262
+#: includes/class-demo-importer.php:333
+#: includes/store/class-store-admin.php:1265
 msgid "Bank transfer"
 msgstr ""
 
-#: includes/class-demo-importer.php:330
+#: includes/class-demo-importer.php:334
 msgid "Demo bank transfer. Replace with your real bank account details in WooCommerce → Settings → Payments before going live."
 msgstr ""
 
-#: includes/class-demo-importer.php:333
+#: includes/class-demo-importer.php:337
 msgid "Currency set to Philippine Peso (₱) and store country to Metro Manila, Philippines."
 msgstr ""
 
-#: includes/class-demo-importer.php:337
+#: includes/class-demo-importer.php:341
 msgid "Philippines (Freshtastic demo)"
 msgstr ""
 
-#: includes/class-demo-importer.php:344
+#: includes/class-demo-importer.php:348
 msgid "Created shipping zone “Philippines (Freshtastic demo)”."
 msgstr ""
 
-#: includes/class-demo-importer.php:347
+#: includes/class-demo-importer.php:351
 msgid "Enabled Pay at pickup (cash, store pickup only) and Bank transfer (offline methods). GCash, Maya and cards need a payment gateway plugin — see docs."
 msgstr ""
 
-#: includes/class-demo-importer.php:372
-#: includes/class-demo-importer.php:380
+#: includes/class-demo-importer.php:376
+#: includes/class-demo-importer.php:384
 #: includes/class-fulfilment.php:618
 #: includes/class-order-desk.php:390
 #: includes/class-order-desk.php:585
 #: includes/shipping/class-shipping-methods.php:339
-#: includes/store/class-store-admin.php:1233
+#: includes/store/class-store-admin.php:1236
 #: includes/store/class-store-orders-table.php:160
-#: includes/store/class-store-orders.php:477
+#: includes/store/class-store-orders.php:485
 msgid "Store pickup"
 msgstr ""
 
-#: includes/class-demo-importer.php:373
+#: includes/class-demo-importer.php:377
 msgid "Main stall | Stall 12, Freshtastic Public Market, Aurora Blvd, Cubao, Quezon City | Mon–Sat 6:00 am–6:00 pm"
 msgstr ""
 
-#: includes/class-demo-importer.php:373
+#: includes/class-demo-importer.php:377
 msgid "Dry goods warehouse | 45 Kalayaan Ave, Diliman, Quezon City | Mon–Fri 8:00 am–5:00 pm"
 msgstr ""
 
-#: includes/class-demo-importer.php:387
+#: includes/class-demo-importer.php:391
 #: includes/shipping/class-shipping-methods.php:255
 msgid "Courier delivery — you book the rider"
 msgstr ""
 
-#: includes/class-demo-importer.php:388
+#: includes/class-demo-importer.php:392
 msgid "Stall 12, Freshtastic Public Market, Aurora Blvd, Cubao, Quezon City"
 msgstr ""
 
-#: includes/class-demo-importer.php:395
+#: includes/class-demo-importer.php:399
 #: includes/shipping/class-shipping-methods.php:240
-#: includes/store/class-store-admin.php:1237
+#: includes/store/class-store-admin.php:1240
 msgid "Courier delivery (customer books)"
 msgstr ""
 
 #. translators: %s: shipping method names
-#: includes/class-demo-importer.php:402
+#: includes/class-demo-importer.php:406
 #, php-format
 msgid "Added shipping options: %s."
 msgstr ""
 
 #. translators: %d: count
-#: includes/class-demo-importer.php:434
+#: includes/class-demo-importer.php:438
 #, php-format
 msgid "%d product categories ready."
 msgstr ""
 
-#: includes/class-demo-importer.php:437
+#: includes/class-demo-importer.php:441
 msgid "Color"
 msgstr ""
 
-#: includes/class-demo-importer.php:437
+#: includes/class-demo-importer.php:441
 msgid "Size"
 msgstr ""
 
 #. translators: %s: attribute
-#: includes/class-demo-importer.php:451
+#: includes/class-demo-importer.php:455
 #, php-format
 msgid "Created global attribute “%s”."
 msgstr ""
 
 #. translators: %s: product name
-#: includes/class-demo-importer.php:491
-#, php-format
-msgid "Skipped “%s” (already imported)."
-msgstr ""
-
-#. translators: 1: product name, 2: SKU
-#: includes/class-demo-importer.php:493
-#, php-format
-msgid "Skipped “%1$s”: a non-demo product already uses SKU %2$s."
-msgstr ""
-
-#. translators: %s: product name
-#: includes/class-demo-importer.php:498
+#: includes/class-demo-importer.php:489
+#: includes/class-demo-importer.php:568
 #, php-format
 msgid "Created “%s”."
 msgstr ""
 
 #. translators: %s: product name
-#: includes/class-demo-importer.php:498
+#: includes/class-demo-importer.php:491
+#, php-format
+msgid "Skipped “%s” (a product with its SKU already exists)."
+msgstr ""
+
+#. translators: %s: product name
+#: includes/class-demo-importer.php:561
+#, php-format
+msgid "Skipped “%s” (already imported)."
+msgstr ""
+
+#. translators: 1: product name, 2: SKU
+#: includes/class-demo-importer.php:563
+#, php-format
+msgid "Skipped “%1$s”: a non-demo product already uses SKU %2$s."
+msgstr ""
+
+#. translators: %s: product name
+#: includes/class-demo-importer.php:568
 #, php-format
 msgid "Could not create “%s”."
 msgstr ""
 
 #. translators: %s: product name
-#: includes/class-demo-importer.php:598
+#: includes/class-demo-importer.php:668
 #, php-format
 msgid "%s — detail view"
 msgstr ""
 
 #. translators: %d: count
-#: includes/class-demo-importer.php:697
+#: includes/class-demo-importer.php:767
 #, php-format
 msgid "Added “Frequently bought together” links for %d products."
 msgstr ""
 
 #. translators: 1: reviews, 2: testimonials
-#: includes/class-demo-importer.php:762
+#: includes/class-demo-importer.php:840
 #, php-format
 msgid "Added %1$d sample reviews and %2$d sample testimonials, all labelled as demo content."
 msgstr ""
 
 #. translators: %d: count
-#: includes/class-demo-importer.php:801
+#: includes/class-demo-importer.php:879
 #, php-format
 msgid "Created %d journal posts."
 msgstr ""
 
 #. translators: %d: count
-#: includes/class-demo-importer.php:828
+#: includes/class-demo-importer.php:906
 #, php-format
 msgid "Created %d pages."
 msgstr ""
 
 #. translators: %s: page titles
-#: includes/class-demo-importer.php:831
+#: includes/class-demo-importer.php:909
 #, php-format
 msgid "Kept your existing pages: %s."
 msgstr ""
 
-#: includes/class-demo-importer.php:862
+#: includes/class-demo-importer.php:942
 msgid "Primary navigation"
 msgstr ""
 
-#: includes/class-demo-importer.php:866
+#: includes/class-demo-importer.php:946
 msgid "Price Board"
 msgstr ""
 
-#: includes/class-demo-importer.php:867
+#: includes/class-demo-importer.php:947
 msgid "Deals"
 msgstr ""
 
-#: includes/class-demo-importer.php:868
+#: includes/class-demo-importer.php:948
 msgid "Journal"
 msgstr ""
 
 #. translators: %s: search term
-#: includes/class-demo-importer.php:871
-#: includes/store/class-store.php:316
+#: includes/class-demo-importer.php:951
+#: includes/store/class-store.php:339
 #: templates/store/archive.php:14
 msgid "Shop"
 msgstr ""
 
-#: includes/class-demo-importer.php:873
+#: includes/class-demo-importer.php:953
 msgid "Customer service"
 msgstr ""
 
-#: includes/class-demo-importer.php:884
+#: includes/class-demo-importer.php:964
 msgid "Company"
 msgstr ""
 
-#: includes/class-demo-importer.php:892
+#: includes/class-demo-importer.php:972
 msgid "Legal"
 msgstr ""
 
 #. translators: 1: menu, 2: location
-#: includes/class-demo-importer.php:954
+#: includes/class-demo-importer.php:1034
 #, php-format
 msgid "Assigned “%1$s” to %2$s."
 msgstr ""
 
-#: includes/class-demo-importer.php:960
+#: includes/class-demo-importer.php:1040
 msgid "Menus created. Your existing menu assignments were kept."
 msgstr ""
 
-#: includes/class-demo-importer.php:985
+#: includes/class-demo-importer.php:1065
 msgid "Set “Home” as the static front page."
 msgstr ""
 
-#: includes/class-demo-importer.php:993
+#: includes/class-demo-importer.php:1073
 msgid "Rice sack, fresh fish on ice, cabbage, tomatoes and a tray of eggs over a market price chart"
 msgstr ""
 
-#: includes/class-demo-importer.php:994
+#: includes/class-demo-importer.php:1074
 msgid "Sacks of rice and sugar for bulk buyers"
 msgstr ""
 
-#: includes/class-demo-importer.php:995
+#: includes/class-demo-importer.php:1075
 msgid "Mangoes, pechay and calamansi"
 msgstr ""
 
-#: includes/class-demo-importer.php:1006
+#: includes/class-demo-importer.php:1086
 msgid "Applied hero, campaign and banner images in Customizer → Freshtastic Homepage."
 msgstr ""
 
-#: includes/class-demo-importer.php:1029
+#: includes/class-demo-importer.php:1112
 msgid "Demo store is ready. Visit the homepage to explore it."
 msgstr ""
 
-#: includes/class-demo-importer.php:1031
+#: includes/class-demo-importer.php:1114
 msgid "Note: WooCommerce “Coming soon” mode is on, so logged-out visitors see a placeholder instead of shop pages. Change it in WooCommerce → Settings → Site visibility when you are ready."
 msgstr ""
 
 #. translators: %d: count
-#: includes/class-demo-importer.php:1122
+#: includes/class-demo-importer.php:1194
 #, php-format
 msgid "Removed %d demo items…"
 msgstr ""
 
 #. translators: %d: count
-#: includes/class-demo-importer.php:1132
+#: includes/class-demo-importer.php:1204
 #, php-format
 msgid "Removed %d demo images…"
 msgstr ""
 
+#: includes/class-demo-importer.php:1248
+msgid "The demo shipping zone is stored in WooCommerce, so it was left in place. You can delete it under WooCommerce → Settings → Shipping if you switch back."
+msgstr ""
+
 #. translators: %d: count
-#: includes/class-demo-importer.php:1204
+#: includes/class-demo-importer.php:1281
 #, php-format
 msgid "Demo content removed. %d settings restored to their previous values. Orders, customers and your own content were not touched."
 msgstr ""
 
-#: includes/class-demo-importer.php:1253
-#: includes/class-demo-importer.php:1299
+#: includes/class-demo-importer.php:1330
+#: includes/class-demo-importer.php:1376
 msgid "Freshtastic Demo Content"
 msgstr ""
 
-#: includes/class-demo-importer.php:1274
+#: includes/class-demo-importer.php:1351
 msgid "Import the Freshtastic demo store now? Existing content is kept; demo items are tagged so they can be removed later."
 msgstr ""
 
-#: includes/class-demo-importer.php:1275
+#: includes/class-demo-importer.php:1352
 msgid "Remove all Freshtastic demo content? Only items created by the importer are deleted. Orders, customers and your own content are not touched."
 msgstr ""
 
-#: includes/class-demo-importer.php:1276
+#: includes/class-demo-importer.php:1353
 msgid "The step failed. You can safely run the importer again; it will continue where it stopped."
 msgstr ""
 
-#: includes/class-demo-importer.php:1277
+#: includes/class-demo-importer.php:1354
 msgid "Done."
 msgstr ""
 
-#: includes/class-demo-importer.php:1289
+#: includes/class-demo-importer.php:1366
 msgid "You need administrator and shop manager permissions to import demo content."
 msgstr ""
 
-#: includes/class-demo-importer.php:1301
+#: includes/class-demo-importer.php:1378
 msgid "Finished."
 msgstr ""
 
-#: includes/class-demo-importer.php:1301
+#: includes/class-demo-importer.php:1378
 msgid "Something went wrong. Check requirements and try again."
 msgstr ""
 
-#: includes/class-demo-importer.php:1304
+#: includes/class-demo-importer.php:1381
 msgid "Activate WooCommerce first."
 msgstr ""
 
-#: includes/class-demo-importer.php:1308
+#: includes/class-demo-importer.php:1385
 msgid "Import the demo store"
 msgstr ""
 
-#: includes/class-demo-importer.php:1309
+#: includes/class-demo-importer.php:1386
 msgid "Adds 36 fictional wet and dry market products (rice, vegetables, fruits, meat, poultry, eggs, fish, dry goods) in Wet Market and Dry Market categories, with units, origins, price history and original artwork, plus optional pages (including Request a Quote), journal posts, menus and labelled sample reviews. Running it again skips anything that already exists."
 msgstr ""
 
-#: includes/class-demo-importer.php:1315
+#: includes/class-demo-importer.php:1392
 msgid "What to import"
 msgstr ""
 
-#: includes/class-demo-importer.php:1316
+#: includes/class-demo-importer.php:1393
 msgid "Products, categories, attributes and images (required)"
 msgstr ""
 
-#: includes/class-demo-importer.php:1317
+#: includes/class-demo-importer.php:1394
 msgid "Pages (About, Request a Quote, Contact, Delivery and Returns, FAQ, Terms, Wishlist), journal posts and menus"
 msgstr ""
 
-#: includes/class-demo-importer.php:1318
+#: includes/class-demo-importer.php:1395
 msgid "Sample reviews and testimonials (always labelled “Sample”)"
 msgstr ""
 
-#: includes/class-demo-importer.php:1319
+#: includes/class-demo-importer.php:1396
 msgid "Set a static homepage and apply demo banner images"
 msgstr ""
 
-#: includes/class-demo-importer.php:1320
+#: includes/class-demo-importer.php:1398
 msgid "Apply Philippine store settings: ₱ currency, PH-only selling, demo shipping zone with store pickup and courier delivery booked by the customer, Pay at pickup and Bank transfer"
 msgstr ""
 
-#: includes/class-demo-importer.php:1322
+#: includes/class-demo-importer.php:1401
 msgid "I understand this adds demo content to this site."
 msgstr ""
 
-#: includes/class-demo-importer.php:1323
+#: includes/class-demo-importer.php:1402
+#: includes/store/class-store-admin.php:409
 msgid "Import demo content"
 msgstr ""
 
-#: includes/class-demo-importer.php:1328
+#: includes/class-demo-importer.php:1407
 msgid "Progress"
 msgstr ""
 
-#: includes/class-demo-importer.php:1329
+#: includes/class-demo-importer.php:1408
 msgid "Starting…"
 msgstr ""
 
-#: includes/class-demo-importer.php:1330
+#: includes/class-demo-importer.php:1409
 msgid "Import progress"
 msgstr ""
 
-#: includes/class-demo-importer.php:1335
+#: includes/class-demo-importer.php:1414
 msgid "Demo content on this site"
 msgstr ""
 
-#: includes/class-demo-importer.php:1339
+#: includes/class-demo-importer.php:1418
 #: includes/store/class-store-catalog.php:92
 msgid "Products"
 msgstr ""
 
-#: includes/class-demo-importer.php:1340
+#: includes/class-demo-importer.php:1419
 msgid "Images"
 msgstr ""
 
-#: includes/class-demo-importer.php:1341
+#: includes/class-demo-importer.php:1420
 msgid "Posts"
 msgstr ""
 
-#: includes/class-demo-importer.php:1342
+#: includes/class-demo-importer.php:1421
 #: templates/store/archive.php:65
 msgid "Pages"
 msgstr ""
 
-#: includes/class-demo-importer.php:1343
+#: includes/class-demo-importer.php:1422
 #: templates/store/single.php:137
 msgid "Reviews"
 msgstr ""
 
-#: includes/class-demo-importer.php:1344
+#: includes/class-demo-importer.php:1423
 #: includes/class-testimonials.php:32
 msgid "Testimonials"
 msgstr ""
 
 #. translators: %s: date
-#: includes/class-demo-importer.php:1355
+#: includes/class-demo-importer.php:1434
 #, php-format
 msgid "Last import: %s"
 msgstr ""
 
-#: includes/class-demo-importer.php:1359
-#: includes/class-demo-importer.php:1366
+#: includes/class-demo-importer.php:1438
+#: includes/class-demo-importer.php:1445
 msgid "Remove demo content"
 msgstr ""
 
-#: includes/class-demo-importer.php:1360
+#: includes/class-demo-importer.php:1439
 msgid "Deletes only items created by this importer (tagged products, variations, images, posts, pages, menus, sample reviews and testimonials), removes the demo shipping zone and restores settings it changed. Orders and customer accounts are never deleted; past orders keep their own copy of product names and prices."
 msgstr ""
 
-#: includes/class-demo-importer.php:1365
+#: includes/class-demo-importer.php:1444
 msgid "I understand demo products and pages will be permanently deleted."
 msgstr ""
 
-#: includes/class-demo-importer.php:1371
+#: includes/class-demo-importer.php:1450
 msgid "Replacing demo products with your inventory"
 msgstr ""
 
-#: includes/class-demo-importer.php:1373
+#: includes/class-demo-importer.php:1452
+msgid "Add your real products (Store → Add product)."
+msgstr ""
+
+#: includes/class-demo-importer.php:1452
 msgid "Add your real products (Products → Add New, or Products → Import for CSV)."
 msgstr ""
 
-#: includes/class-demo-importer.php:1374
+#: includes/class-demo-importer.php:1453
 msgid "Reuse the demo categories or create your own; update category images under Products → Categories."
 msgstr ""
 
-#: includes/class-demo-importer.php:1375
+#: includes/class-demo-importer.php:1454
 msgid "Replace homepage images and text in Appearance → Customize → Freshtastic Homepage."
 msgstr ""
 
-#: includes/class-demo-importer.php:1376
+#: includes/class-demo-importer.php:1455
 msgid "Click “Remove demo content” above. Your own products, pages and orders stay."
 msgstr ""
 
-#: includes/class-demo-importer.php:1377
+#: includes/class-demo-importer.php:1456
 msgid "Untick “Label sample content” in Settings → Freshtastic Toolkit only after all demo content is gone."
 msgstr ""
 
-#: includes/class-demo-importer.php:1405
+#: includes/class-demo-importer.php:1484
 #: includes/class-maintenance.php:669
 #: includes/class-maintenance.php:684
 #: includes/class-maintenance.php:703
 msgid "Permission denied."
 msgstr ""
 
-#: includes/class-demo-importer.php:1413
+#: includes/class-demo-importer.php:1492
 msgid "Removing demo content"
 msgstr ""
 
-#: includes/class-demo-importer.php:1433
+#: includes/class-demo-importer.php:1512
 msgid "Permission denied or confirmation missing."
 msgstr ""
 
@@ -619,7 +759,7 @@ msgid "needs these plugins to be installed and active:"
 msgstr ""
 
 #: includes/class-fulfilment.php:260
-#: includes/store/class-store-checkout.php:703
+#: includes/store/class-store-checkout.php:718
 msgid "Place your order. We confirm it and start packing."
 msgstr ""
 
@@ -628,80 +768,80 @@ msgid "We email and text you when it is packed and ready for your rider."
 msgstr ""
 
 #: includes/class-fulfilment.php:263
-#: includes/store/class-store-checkout.php:707
+#: includes/store/class-store-checkout.php:722
 msgid "Book your courier to collect from:"
 msgstr ""
 
 #. translators: %s: phone number
 #. translators: %s: phone
 #: includes/class-fulfilment.php:267
-#: includes/store/class-store-checkout.php:711
+#: includes/store/class-store-checkout.php:726
 #, php-format
 msgid "Rider contact: %s"
 msgstr ""
 
 #: includes/class-fulfilment.php:270
-#: includes/store/class-store-checkout.php:715
+#: includes/store/class-store-checkout.php:730
 msgid "Your rider gives your order number at the counter. Courier fees are paid by you directly to the courier."
 msgstr ""
 
 #: includes/class-fulfilment.php:274
-#: includes/store/class-store-checkout.php:718
+#: includes/store/class-store-checkout.php:733
 msgid "Courier you will book"
 msgstr ""
 
 #: includes/class-fulfilment.php:274
 #: includes/class-fulfilment.php:294
 #: includes/class-fulfilment.php:347
-#: includes/store/class-store-checkout.php:445
-#: includes/store/class-store-checkout.php:718
-#: includes/store/class-store-checkout.php:741
+#: includes/store/class-store-checkout.php:453
+#: includes/store/class-store-checkout.php:733
+#: includes/store/class-store-checkout.php:756
 msgid "required"
 msgstr ""
 
 #: includes/class-fulfilment.php:277
-#: includes/store/class-store-checkout.php:720
+#: includes/store/class-store-checkout.php:735
 msgid "Choose a courier…"
 msgstr ""
 
 #: includes/class-fulfilment.php:281
-#: includes/store/class-store-checkout.php:724
+#: includes/store/class-store-checkout.php:739
 msgid "Other / not sure yet"
 msgstr ""
 
 #: includes/class-fulfilment.php:285
 #: includes/class-fulfilment.php:633
-#: includes/store/class-store-orders.php:494
+#: includes/store/class-store-orders.php:502
 #: templates/emails/customer-order-ready.php:37
 #: templates/emails/plain/customer-order-ready.php:36
 msgid "Rider pickup time"
 msgstr ""
 
 #: includes/class-fulfilment.php:288
-#: includes/store/class-store-checkout.php:728
+#: includes/store/class-store-checkout.php:743
 msgid "Courier name (if “Other”)"
 msgstr ""
 
 #: includes/class-fulfilment.php:288
 #: includes/class-rfq.php:212
-#: includes/store/class-store-checkout.php:445
-#: includes/store/class-store-checkout.php:593
-#: includes/store/class-store-checkout.php:728
+#: includes/store/class-store-checkout.php:453
+#: includes/store/class-store-checkout.php:608
+#: includes/store/class-store-checkout.php:743
 msgid "(optional)"
 msgstr ""
 
 #: includes/class-fulfilment.php:294
-#: includes/store/class-store-checkout.php:734
+#: includes/store/class-store-checkout.php:749
 msgid "I will book and pay for the courier myself. The store does not deliver this order."
 msgstr ""
 
 #: includes/class-fulfilment.php:305
 #: includes/class-fulfilment.php:639
 #: includes/class-order-desk.php:592
-#: includes/store/class-store-admin.php:595
-#: includes/store/class-store-checkout.php:677
-#: includes/store/class-store-orders.php:500
-#: includes/store/class-store-orders.php:625
+#: includes/store/class-store-admin.php:598
+#: includes/store/class-store-checkout.php:692
+#: includes/store/class-store-orders.php:508
+#: includes/store/class-store-orders.php:633
 #: templates/emails/customer-order-ready.php:40
 #: templates/emails/plain/customer-order-ready.php:39
 msgid "Pickup point"
@@ -710,19 +850,19 @@ msgstr ""
 #: includes/class-fulfilment.php:325
 #: includes/class-fulfilment.php:633
 #: includes/class-order-desk.php:588
-#: includes/store/class-store-orders.php:494
+#: includes/store/class-store-orders.php:502
 #: templates/emails/customer-order-ready.php:37
 #: templates/emails/plain/customer-order-ready.php:36
 msgid "Pickup time"
 msgstr ""
 
 #: includes/class-fulfilment.php:326
-#: includes/store/class-store-checkout.php:697
+#: includes/store/class-store-checkout.php:712
 msgid "We will email you when your order is packed. Bring your order number; someone else can collect it for you."
 msgstr ""
 
 #: includes/class-fulfilment.php:351
-#: includes/store/class-store-checkout.php:745
+#: includes/store/class-store-checkout.php:760
 msgid "Choose a day and time…"
 msgstr ""
 
@@ -778,27 +918,27 @@ msgid "%1$s, booked by the customer. Rider pickup %2$s"
 msgstr ""
 
 #: includes/class-fulfilment.php:618
-#: includes/store/class-store-orders.php:478
+#: includes/store/class-store-orders.php:486
 msgid "Courier delivery (you book)"
 msgstr ""
 
 #: includes/class-fulfilment.php:624
-#: includes/store/class-store-orders.php:484
+#: includes/store/class-store-orders.php:492
 msgid "Your order is packed and ready. Bring your order number when you collect it."
 msgstr ""
 
 #: includes/class-fulfilment.php:624
-#: includes/store/class-store-orders.php:486
+#: includes/store/class-store-orders.php:494
 msgid "Your order is packed. Book your rider now and give them your order number."
 msgstr ""
 
 #: includes/class-fulfilment.php:626
-#: includes/store/class-store-orders.php:484
+#: includes/store/class-store-orders.php:492
 msgid "We are preparing your order. We will email you when it is ready to collect."
 msgstr ""
 
 #: includes/class-fulfilment.php:626
-#: includes/store/class-store-orders.php:486
+#: includes/store/class-store-orders.php:494
 msgid "We are preparing your order. We will email you when it is ready, so you can book your rider."
 msgstr ""
 
@@ -806,43 +946,43 @@ msgstr ""
 #: includes/class-order-desk.php:366
 #: includes/class-order-desk.php:595
 #: includes/class-order-desk.php:606
-#: includes/store/class-store-admin.php:594
+#: includes/store/class-store-admin.php:597
 #: includes/store/class-store-orders-table.php:233
-#: includes/store/class-store-orders.php:497
-#: includes/store/class-store-orders.php:622
+#: includes/store/class-store-orders.php:505
+#: includes/store/class-store-orders.php:630
 #: templates/emails/customer-order-ready.php:43
 #: templates/emails/plain/customer-order-ready.php:42
 msgid "Courier"
 msgstr ""
 
 #: includes/class-fulfilment.php:642
-#: includes/store/class-store-account.php:867
-#: includes/store/class-store-orders.php:503
-#: includes/store/class-store-orders.php:628
-#: includes/store/class-store-orders.php:754
+#: includes/store/class-store-account.php:887
+#: includes/store/class-store-orders.php:511
+#: includes/store/class-store-orders.php:636
+#: includes/store/class-store-orders.php:762
 #: templates/emails/customer-order-ready.php:46
 #: templates/emails/plain/customer-order-ready.php:45
 msgid "Address"
 msgstr ""
 
 #: includes/class-fulfilment.php:642
-#: includes/store/class-store-orders.php:503
-#: includes/store/class-store-orders.php:628
+#: includes/store/class-store-orders.php:511
+#: includes/store/class-store-orders.php:636
 #: templates/emails/customer-order-ready.php:46
 #: templates/emails/plain/customer-order-ready.php:45
 msgid "Rider collects from"
 msgstr ""
 
 #: includes/class-fulfilment.php:645
-#: includes/store/class-store-orders.php:506
-#: includes/store/class-store-orders.php:631
+#: includes/store/class-store-orders.php:514
+#: includes/store/class-store-orders.php:639
 #: templates/emails/customer-order-ready.php:49
 #: templates/emails/plain/customer-order-ready.php:48
 msgid "Store contact"
 msgstr ""
 
 #: includes/class-fulfilment.php:647
-#: includes/store/class-store-orders.php:508
+#: includes/store/class-store-orders.php:516
 #: templates/emails/customer-order-ready.php:51
 msgid "Order number"
 msgstr ""
@@ -888,10 +1028,9 @@ msgstr ""
 
 #: includes/class-fulfilment.php:821
 #: includes/store/class-store-admin.php:86
-#: includes/store/class-store-admin.php:622
-#: includes/store/class-store-admin.php:665
-#: includes/store/class-store-admin.php:691
-#: includes/store/class-store-importer.php:35
+#: includes/store/class-store-admin.php:625
+#: includes/store/class-store-admin.php:668
+#: includes/store/class-store-admin.php:694
 msgid "Sorry, you are not allowed to do that."
 msgstr ""
 
@@ -901,6 +1040,115 @@ msgstr ""
 
 #: includes/class-fulfilment.php:836
 msgid "The Freshtastic checkout is now active."
+msgstr ""
+
+#: includes/class-login-otp.php:99
+msgid "Enter this code to finish signing in:"
+msgstr ""
+
+#. translators: %d: minutes
+#: includes/class-login-otp.php:102
+#, php-format
+msgid "It works once and expires in %d minute."
+msgid_plural "It works once and expires in %d minutes."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-login-otp.php:103
+msgid "Never share this code. We will not ask you for it. If you did not try to sign in, someone may know your password, so please change it."
+msgstr ""
+
+#. translators: %s: site name
+#: includes/class-login-otp.php:105
+#, php-format
+msgid "Your %s sign-in code"
+msgstr ""
+
+#. translators: %s: site name
+#: includes/class-login-otp.php:105
+msgid "Your sign-in code"
+msgstr ""
+
+#: includes/class-login-otp.php:128
+msgid "Please sign in on the website to receive your login code."
+msgstr ""
+
+#: includes/class-login-otp.php:164
+msgid "We could not send your login code by email. Please try again in a few minutes."
+msgstr ""
+
+#: includes/class-login-otp.php:260
+msgid "Your sign-in has expired. Please sign in again."
+msgstr ""
+
+#: includes/class-login-otp.php:267
+#: includes/store/class-store-account.php:170
+#: includes/store/class-store-cart.php:555
+msgid "Your session expired. Please try again."
+msgstr ""
+
+#: includes/class-login-otp.php:274
+msgid "That code has expired. Please send a new one."
+msgstr ""
+
+#: includes/class-login-otp.php:282
+msgid "Too many wrong codes. Please sign in again."
+msgstr ""
+
+#: includes/class-login-otp.php:285
+msgid "That code is not correct. Please check it and try again."
+msgstr ""
+
+#: includes/class-login-otp.php:297
+#: includes/class-login-otp.php:385
+msgid "Enter your code"
+msgstr ""
+
+#: includes/class-login-otp.php:301
+msgid "Check your email"
+msgstr ""
+
+#. translators: %s: partly hidden email address
+#: includes/class-login-otp.php:303
+#, php-format
+msgid "We sent a 6-digit code to %s."
+msgstr ""
+
+#: includes/class-login-otp.php:307
+msgid "Login code"
+msgstr ""
+
+#: includes/class-login-otp.php:310
+msgid "Verify and sign in"
+msgstr ""
+
+#: includes/class-login-otp.php:314
+msgid "Send a new code"
+msgstr ""
+
+#: includes/class-login-otp.php:317
+#: includes/class-login-otp.php:386
+msgid "Back to sign in"
+msgstr ""
+
+#. translators: %d: seconds
+#: includes/class-login-otp.php:335
+#, php-format
+msgid "Please wait %d second before asking for a new code."
+msgid_plural "Please wait %d seconds before asking for a new code."
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-login-otp.php:338
+msgid "We could not send another code right now. Please try again later."
+msgstr ""
+
+#: includes/class-login-otp.php:340
+msgid "A new code is on its way. Earlier codes no longer work."
+msgstr ""
+
+#: includes/class-login-otp.php:360
+msgid "You have logged in successfully."
 msgstr ""
 
 #: includes/class-maintenance.php:67
@@ -1189,22 +1437,25 @@ msgid "Created"
 msgstr ""
 
 #: includes/class-maintenance.php:846
-#: includes/store/class-store-coupons.php:549
+#: includes/store/class-store-coupons.php:636
 msgid "Expires"
 msgstr ""
 
 #: includes/class-maintenance.php:846
-#: includes/store/class-store-coupons.php:548
+#: includes/class-rewards.php:1051
+#: includes/store/class-store-coupons.php:635
 msgid "Used"
 msgstr ""
 
 #: includes/class-maintenance.php:846
+#: includes/class-rewards.php:996
+#: includes/class-rewards.php:1043
 #: includes/class-rfq.php:573
 #: includes/class-rfq.php:661
 #: includes/class-rfq.php:775
 #: includes/class-rfq.php:791
-#: includes/store/class-store-admin.php:566
-#: includes/store/class-store-coupons.php:584
+#: includes/store/class-store-admin.php:569
+#: includes/store/class-store-coupons.php:673
 #: includes/store/class-store-orders-table.php:38
 msgid "Status"
 msgstr ""
@@ -1219,6 +1470,7 @@ msgid "Active"
 msgstr ""
 
 #: includes/class-maintenance.php:850
+#: includes/class-rewards.php:1053
 msgid "Expired"
 msgstr ""
 
@@ -1342,7 +1594,7 @@ msgid "box"
 msgstr ""
 
 #: includes/class-market.php:102
-#: includes/store/class-store-admin.php:777
+#: includes/store/class-store-admin.php:780
 msgid "Selling unit"
 msgstr ""
 
@@ -1351,22 +1603,22 @@ msgid "Shown after the price, e.g. ₱280 / kg. Quantity in the cart counts this
 msgstr ""
 
 #: includes/class-market.php:111
-#: includes/store/class-store-admin.php:778
+#: includes/store/class-store-admin.php:781
 msgid "Origin"
 msgstr ""
 
 #: includes/class-market.php:112
-#: includes/store/class-store-admin.php:778
+#: includes/store/class-store-admin.php:781
 msgid "e.g. Benguet"
 msgstr ""
 
 #: includes/class-market.php:118
-#: includes/store/class-store-admin.php:779
+#: includes/store/class-store-admin.php:782
 msgid "Compare price per"
 msgstr ""
 
 #: includes/class-market.php:119
-#: includes/store/class-store-admin.php:779
+#: includes/store/class-store-admin.php:782
 msgid "— Off —"
 msgstr ""
 
@@ -1376,7 +1628,7 @@ msgstr ""
 
 #: includes/class-market.php:127
 #: includes/class-market.php:165
-#: includes/store/class-store-admin.php:780
+#: includes/store/class-store-admin.php:783
 msgid "Pack contents (kg or L)"
 msgstr ""
 
@@ -1408,8 +1660,8 @@ msgid "Newsletter signups are currently closed."
 msgstr ""
 
 #: includes/class-newsletter.php:160
-#: includes/store/class-store-account.php:250
-#: includes/store/class-store-account.php:310
+#: includes/store/class-store-account.php:254
+#: includes/store/class-store-account.php:322
 #: includes/store/class-store-checkout.php:196
 msgid "Please enter a valid email address."
 msgstr ""
@@ -1419,7 +1671,7 @@ msgid "Please confirm that you agree to receive marketing emails."
 msgstr ""
 
 #: includes/class-newsletter.php:166
-#: includes/store/class-store-checkout.php:308
+#: includes/store/class-store-checkout.php:316
 msgid "Too many attempts. Please wait a few minutes and try again."
 msgstr ""
 
@@ -1431,7 +1683,7 @@ msgstr ""
 #: includes/class-newsletter.php:471
 #: includes/class-rfq.php:279
 #: includes/class-rfq.php:494
-#: includes/store/class-store-orders.php:752
+#: includes/store/class-store-orders.php:760
 msgid "Email"
 msgstr ""
 
@@ -1453,7 +1705,7 @@ msgid "Subscribers who signed up through Freshtastic forms, with consent timesta
 msgstr ""
 
 #: includes/class-newsletter.php:417
-#: includes/store/class-store-admin.php:462
+#: includes/store/class-store-admin.php:465
 msgid "Export CSV"
 msgstr ""
 
@@ -1490,19 +1742,19 @@ msgid "Order Desk"
 msgstr ""
 
 #: includes/class-order-desk.php:282
-#: includes/store/class-store-account.php:615
+#: includes/store/class-store-account.php:631
 #: includes/store/class-store-admin.php:343
 msgid "Good morning"
 msgstr ""
 
 #: includes/class-order-desk.php:282
-#: includes/store/class-store-account.php:615
+#: includes/store/class-store-account.php:631
 #: includes/store/class-store-admin.php:343
 msgid "Good afternoon"
 msgstr ""
 
 #: includes/class-order-desk.php:282
-#: includes/store/class-store-account.php:615
+#: includes/store/class-store-account.php:631
 #: includes/store/class-store-admin.php:343
 msgid "Good evening"
 msgstr ""
@@ -1522,7 +1774,7 @@ msgstr ""
 #: includes/class-order-desk.php:522
 #: includes/class-order-desk.php:672
 #: includes/store/class-store-admin.php:346
-#: includes/store/class-store-admin.php:499
+#: includes/store/class-store-admin.php:502
 #: includes/store/class-store-orders.php:33
 msgid "Ready for pickup"
 msgstr ""
@@ -1579,8 +1831,8 @@ msgstr[1] ""
 
 #: includes/class-order-desk.php:295
 #: includes/store/class-store-admin.php:357
-#: includes/store/class-store-checkout.php:604
-#: includes/store/class-store-checkout.php:608
+#: includes/store/class-store-checkout.php:619
+#: includes/store/class-store-checkout.php:623
 msgid "Order summary"
 msgstr ""
 
@@ -1595,7 +1847,7 @@ msgstr ""
 #: includes/class-order-desk.php:331
 #: includes/class-order-desk.php:334
 #: includes/class-order-desk.php:563
-#: includes/store/class-store-admin.php:589
+#: includes/store/class-store-admin.php:592
 #: includes/store/class-store-orders-table.php:39
 msgid "Fulfilment"
 msgstr ""
@@ -1675,19 +1927,19 @@ msgid "Customer mobile"
 msgstr ""
 
 #: includes/class-order-desk.php:602
-#: includes/store/class-store-admin.php:598
+#: includes/store/class-store-admin.php:601
 msgid "Reschedule"
 msgstr ""
 
 #: includes/class-order-desk.php:603
-#: includes/store/class-store-admin.php:602
+#: includes/store/class-store-admin.php:605
 #: includes/store/class-store-orders-table.php:37
-#: includes/store/class-store-orders.php:750
+#: includes/store/class-store-orders.php:758
 msgid "Date"
 msgstr ""
 
 #: includes/class-order-desk.php:604
-#: includes/store/class-store-admin.php:603
+#: includes/store/class-store-admin.php:606
 msgid "Time slot (HH:MM-HH:MM)"
 msgstr ""
 
@@ -1707,30 +1959,487 @@ msgid "no set time"
 msgstr ""
 
 #: includes/class-order-desk.php:667
-#: includes/store/class-store-admin.php:497
+#: includes/store/class-store-admin.php:500
 msgid "Placed"
 msgstr ""
 
 #: includes/class-order-desk.php:669
-#: includes/store/class-store-admin.php:498
+#: includes/store/class-store-admin.php:501
 msgid "Paid"
 msgstr ""
 
 #: includes/class-order-desk.php:674
-#: includes/store/class-store-admin.php:500
+#: includes/store/class-store-admin.php:503
 #: includes/store/class-store-orders.php:34
 msgid "Completed"
 msgstr ""
 
 #: includes/class-order-desk.php:677
-#: includes/store/class-store-account.php:699
-#: includes/store/class-store-admin.php:512
+#: includes/store/class-store-account.php:719
+#: includes/store/class-store-admin.php:515
 msgid "Order progress"
 msgstr ""
 
 #: includes/class-order-desk.php:681
-#: includes/store/class-store-admin.php:516
+#: includes/store/class-store-admin.php:519
 msgid "(not yet)"
+msgstr ""
+
+#: includes/class-rewards.php:176
+msgid "Please sign in to use this coupon."
+msgstr ""
+
+#: includes/class-rewards.php:179
+msgid "This coupon belongs to another customer."
+msgstr ""
+
+#: includes/class-rewards.php:186
+msgid "Please sign in to use this coupon. Each customer can use it once."
+msgstr ""
+
+#: includes/class-rewards.php:189
+msgid "Add something to your cart first, then apply this coupon."
+msgstr ""
+
+#. translators: %s: products and categories
+#: includes/class-rewards.php:209
+#, php-format
+msgid "This coupon needs one of these in your cart: %s."
+msgstr ""
+
+#. translators: 1: quantity, 2: products and categories
+#: includes/class-rewards.php:215
+#, php-format
+msgid "This coupon needs at least %1$d items from: %2$s."
+msgstr ""
+
+#. translators: %d: quantity
+#: includes/class-rewards.php:217
+#, php-format
+msgid "This coupon needs at least %d items in your cart."
+msgstr ""
+
+#: includes/class-rewards.php:221
+msgid "This coupon is for your first order only."
+msgstr ""
+
+#: includes/class-rewards.php:226
+#: includes/class-rewards.php:230
+msgid "The free item for this coupon is not available right now."
+msgstr ""
+
+#: includes/class-rewards.php:281
+#: includes/class-rewards.php:339
+#: includes/class-rewards.php:1006
+#: includes/class-rewards.php:1009
+#: includes/class-rewards.php:1186
+#: includes/class-rewards.php:1221
+#: includes/class-rewards.php:1244
+#: includes/store/class-store-cart.php:486
+#: includes/store/class-store-coupons.php:271
+#: includes/store/class-store-coupons.php:651
+msgid "Free item"
+msgstr ""
+
+#: includes/class-rewards.php:282
+msgid "Homepage"
+msgstr ""
+
+#: includes/class-rewards.php:336
+msgid "This coupon gives a free item"
+msgstr ""
+
+#: includes/class-rewards.php:337
+msgid "The customer must be signed in and can use this coupon once. The free item is added to the cart when the coupon is applied, and removed if the conditions stop being met. No other discount is given, so any amount set on this coupon is cleared. A cancelled order gives the use back."
+msgstr ""
+
+#: includes/class-rewards.php:340
+#: includes/class-rewards.php:1009
+msgid "Choose a product…"
+msgstr ""
+
+#: includes/class-rewards.php:342
+#: includes/class-rewards.php:1010
+msgid "How many free"
+msgstr ""
+
+#: includes/class-rewards.php:343
+msgid "Conditions the customer must meet"
+msgstr ""
+
+#: includes/class-rewards.php:343
+msgid "Leave a condition empty to skip it. Minimum order, expiry, total uses and allowed customers are set in the coupon’s other fields."
+msgstr ""
+
+#: includes/class-rewards.php:344
+msgid "Minimum items bought"
+msgstr ""
+
+#: includes/class-rewards.php:344
+msgid "Counts only the products or categories below, when any are chosen. The free item itself never counts."
+msgstr ""
+
+#: includes/class-rewards.php:345
+msgid "Must buy one of these products"
+msgstr ""
+
+#: includes/class-rewards.php:352
+msgid "Or from these categories"
+msgstr ""
+
+#: includes/class-rewards.php:353
+msgid "First order"
+msgstr ""
+
+#: includes/class-rewards.php:353
+msgid "Only for customers who have not ordered before"
+msgstr ""
+
+#: includes/class-rewards.php:365
+msgid "Show this code on the homepage"
+msgstr ""
+
+#: includes/class-rewards.php:366
+msgid "Anyone visiting the site can then see it. It disappears by itself once it expires or reaches its usage limit."
+msgstr ""
+
+#. translators: %s: amount
+#: includes/class-rewards.php:389
+#: includes/class-rewards.php:711
+#, php-format
+msgid "Minimum order %s."
+msgstr ""
+
+#: includes/class-rewards.php:392
+msgid "On selected categories."
+msgstr ""
+
+#: includes/class-rewards.php:395
+msgid "Sign in to use. Conditions apply."
+msgstr ""
+
+#. translators: %s: date
+#: includes/class-rewards.php:399
+#: includes/class-rewards.php:716
+#, php-format
+msgid "Use by %s."
+msgstr ""
+
+#: includes/class-rewards.php:427
+msgid "The free item was not turned on because no product was chosen."
+msgstr ""
+
+#: includes/class-rewards.php:465
+#: includes/class-rewards.php:1001
+#: includes/class-rewards.php:1043
+msgid "Reward"
+msgstr ""
+
+#. translators: 1: item, 2: quantity
+#: includes/class-rewards.php:483
+#: includes/class-rewards.php:661
+#: includes/class-rewards.php:689
+#, php-format
+msgid "Free: %1$s × %2$d"
+msgstr ""
+
+#. translators: %s: customer
+#: includes/class-rewards.php:488
+#, php-format
+msgid "For %s only"
+msgstr ""
+
+#: includes/class-rewards.php:505
+msgid "First customers reward"
+msgstr ""
+
+#. translators: %d: spot number
+#: includes/class-rewards.php:603
+#, php-format
+msgid "First customers promotion, spot %d"
+msgstr ""
+
+#: includes/class-rewards.php:664
+#: includes/class-rewards.php:691
+#: includes/class-rewards.php:1005
+#: includes/store/class-store-coupons.php:593
+msgid "No delivery or pickup fee"
+msgstr ""
+
+#. translators: %s: percent
+#: includes/class-rewards.php:669
+#: includes/class-rewards.php:697
+#, php-format
+msgid "%s%% off your order"
+msgstr ""
+
+#. translators: %s: amount
+#: includes/class-rewards.php:673
+#, php-format
+msgid "%s off each item"
+msgstr ""
+
+#. translators: %s: amount
+#: includes/class-rewards.php:676
+#: includes/class-rewards.php:694
+#, php-format
+msgid "%s off your order"
+msgstr ""
+
+#: includes/class-rewards.php:718
+msgid "One use, on your account only."
+msgstr ""
+
+#. translators: %d: spot number
+#: includes/class-rewards.php:733
+#, php-format
+msgid "Thank you for joining early! You are customer #%d, so this reward is yours:"
+msgstr ""
+
+#: includes/class-rewards.php:735
+#: includes/class-rewards.php:788
+msgid "Your code"
+msgstr ""
+
+#. translators: %s: site name
+#: includes/class-rewards.php:737
+#: includes/store/class-store-account.php:123
+msgid "Go to your account"
+msgstr ""
+
+#: includes/class-rewards.php:779
+msgid "Use on this order"
+msgstr ""
+
+#: includes/class-rewards.php:782
+#: includes/store/class-store-account.php:680
+msgid "Shop the market"
+msgstr ""
+
+#. translators: 1: number of customers, 2: reward
+#: includes/class-rewards.php:805
+#, php-format
+msgid "the first %1$d customers to register get: %2$s."
+msgstr ""
+
+#. translators: %d: spots
+#: includes/class-rewards.php:807
+#, php-format
+msgid "%d spot left"
+msgid_plural "%d spots left"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/class-rewards.php:826
+#: includes/store/class-store-cart.php:576
+#: includes/store/class-store-cart.php:711
+msgid "Coupon applied."
+msgstr ""
+
+#: includes/class-rewards.php:858
+#: includes/class-rewards.php:982
+msgid "First customers promotion"
+msgstr ""
+
+#: includes/class-rewards.php:858
+msgid "First customers"
+msgstr ""
+
+#: includes/class-rewards.php:895
+#: includes/class-rewards.php:942
+msgid "You are not allowed to do this."
+msgstr ""
+
+#: includes/class-rewards.php:965
+msgid "Choose the free item. The promotion was saved but turned off."
+msgstr ""
+
+#: includes/class-rewards.php:966
+msgid "Enter a discount amount above zero. The promotion was saved but turned off."
+msgstr ""
+
+#: includes/class-rewards.php:967
+msgid "The end date is before the start date. The promotion was saved but turned off."
+msgstr ""
+
+#: includes/class-rewards.php:970
+msgid "Off"
+msgstr ""
+
+#: includes/class-rewards.php:972
+msgid "All spots taken"
+msgstr ""
+
+#: includes/class-rewards.php:974
+#: includes/store/class-store-coupons.php:698
+msgid "Scheduled"
+msgstr ""
+
+#: includes/class-rewards.php:976
+#: includes/store/class-store-coupons.php:700
+msgid "Ended"
+msgstr ""
+
+#: includes/class-rewards.php:978
+#: includes/store/class-store-coupons.php:702
+msgid "Running"
+msgstr ""
+
+#: includes/class-rewards.php:984
+msgid "Promotion saved."
+msgstr ""
+
+#: includes/class-rewards.php:985
+msgid "The count was reset. Rewards already given stay valid."
+msgstr ""
+
+#. translators: 1: spots taken, 2: limit
+#: includes/class-rewards.php:989
+#, php-format
+msgid "%1$d of %2$d spots taken"
+msgstr ""
+
+#: includes/class-rewards.php:991
+msgid "Each customer who registers while spots are left gets a personal coupon by email and on their account page. It works only on their account and only once. Spots are counted when the customer registers, whether or not they use the reward. Accounts created by staff or import tools do not count."
+msgstr ""
+
+#: includes/class-rewards.php:996
+msgid "Run this promotion"
+msgstr ""
+
+#: includes/class-rewards.php:997
+msgid "Name customers see"
+msgstr ""
+
+#: includes/class-rewards.php:998
+msgid "Number of customers"
+msgstr ""
+
+#: includes/class-rewards.php:999
+#: includes/store/class-store-coupons.php:597
+msgid "Starts on"
+msgstr ""
+
+#: includes/class-rewards.php:999
+msgid "Empty = as soon as it is turned on."
+msgstr ""
+
+#: includes/class-rewards.php:1000
+#: includes/store/class-store-coupons.php:598
+msgid "Ends on"
+msgstr ""
+
+#: includes/class-rewards.php:1000
+msgid "Empty = until all spots are taken."
+msgstr ""
+
+#: includes/class-rewards.php:1003
+#: includes/store/class-store-coupons.php:520
+#: includes/store/class-store-coupons.php:591
+msgid "Percent off"
+msgstr ""
+
+#: includes/class-rewards.php:1004
+#: includes/store/class-store-coupons.php:592
+msgid "Fixed amount off"
+msgstr ""
+
+#: includes/class-rewards.php:1008
+#: includes/store/class-store-coupons.php:524
+#: includes/store/class-store-coupons.php:595
+msgid "Amount"
+msgstr ""
+
+#: includes/class-rewards.php:1011
+#: includes/store/class-store-coupons.php:526
+#: includes/store/class-store-coupons.php:596
+msgid "Minimum order"
+msgstr ""
+
+#: includes/class-rewards.php:1012
+msgid "Only for these categories"
+msgstr ""
+
+#: includes/class-rewards.php:1012
+msgid "Empty = all products."
+msgstr ""
+
+#: includes/class-rewards.php:1013
+msgid "Days to use it"
+msgstr ""
+
+#: includes/class-rewards.php:1013
+msgid "Counted from the day the customer registers. 0 = no expiry."
+msgstr ""
+
+#: includes/class-rewards.php:1014
+msgid "Registration page"
+msgstr ""
+
+#: includes/class-rewards.php:1014
+msgid "Show the offer and the spots left on the registration form"
+msgstr ""
+
+#: includes/class-rewards.php:1016
+msgid "Changes apply to customers who register from now on. Coupons already given keep their original terms."
+msgstr ""
+
+#: includes/class-rewards.php:1017
+msgid "Save promotion"
+msgstr ""
+
+#: includes/class-rewards.php:1020
+msgid "Customers with a spot"
+msgstr ""
+
+#: includes/class-rewards.php:1027
+msgid "Start counting from zero? Rewards already given stay valid."
+msgstr ""
+
+#: includes/class-rewards.php:1027
+msgid "Start a new round (reset the count)"
+msgstr ""
+
+#: includes/class-rewards.php:1040
+msgid "Nobody yet."
+msgstr ""
+
+#: includes/class-rewards.php:1043
+msgid "Spot"
+msgstr ""
+
+#: includes/class-rewards.php:1043
+#: includes/class-rfq.php:659
+#: includes/store/class-store-admin.php:585
+#: includes/store/class-store-orders.php:311
+#: includes/store/class-store.php:490
+msgid "Customer"
+msgstr ""
+
+#: includes/class-rewards.php:1043
+#: includes/store/class-store-coupons.php:633
+msgid "Code"
+msgstr ""
+
+#: includes/class-rewards.php:1049
+msgid "Coupon removed"
+msgstr ""
+
+#: includes/class-rewards.php:1055
+msgid "Not used yet"
+msgstr ""
+
+#: includes/class-rewards.php:1232
+#: includes/store/class-store-cart.php:739
+#: includes/store/class-store-cart.php:804
+#: includes/store/class-store-cart.php:806
+#: includes/store/class-store-checkout.php:490
+#: includes/store/class-store-checkout.php:500
+#: includes/store/class-store-checkout.php:672
+#: includes/store/class-store-orders.php:540
+#: includes/store/class-store-orders.php:547
+#: includes/store/class-store-orders.php:616
+msgid "Free"
 msgstr ""
 
 #: includes/class-rfq.php:60
@@ -1813,8 +2522,8 @@ msgstr ""
 
 #: includes/class-rfq.php:123
 #: includes/class-rfq.php:716
-#: includes/store/class-store-account.php:436
-#: includes/store/class-store-account.php:717
+#: includes/store/class-store-account.php:448
+#: includes/store/class-store-account.php:737
 msgid "Quotations"
 msgstr ""
 
@@ -1865,7 +2574,7 @@ msgstr ""
 #: includes/class-rfq.php:622
 #: includes/class-rfq.php:775
 #: includes/class-rfq.php:789
-#: includes/store/class-store-admin.php:529
+#: includes/store/class-store-admin.php:532
 msgid "Item"
 msgstr ""
 
@@ -1885,8 +2594,9 @@ msgstr ""
 #: includes/class-rfq.php:658
 #: includes/class-rfq.php:775
 #: includes/class-rfq.php:790
-#: includes/store/class-store-cart.php:744
-#: includes/store/class-store-cart.php:759
+#: includes/store/class-store-cart.php:789
+#: includes/store/class-store-cart.php:805
+#: includes/store/class-store-cart.php:812
 #: templates/store/single.php:102
 msgid "Quantity"
 msgstr ""
@@ -2105,15 +2815,15 @@ msgstr ""
 
 #: includes/class-rfq.php:625
 #: includes/class-rfq.php:638
-#: includes/store/class-store-admin.php:529
-#: includes/store/class-store-admin.php:541
-#: includes/store/class-store-cart.php:804
-#: includes/store/class-store-checkout.php:493
+#: includes/store/class-store-admin.php:532
+#: includes/store/class-store-admin.php:544
+#: includes/store/class-store-cart.php:860
+#: includes/store/class-store-checkout.php:501
 #: includes/store/class-store-orders-table.php:40
-#: includes/store/class-store-orders.php:528
-#: includes/store/class-store-orders.php:540
-#: includes/store/class-store-orders.php:615
-#: includes/store/class-store-orders.php:751
+#: includes/store/class-store-orders.php:536
+#: includes/store/class-store-orders.php:548
+#: includes/store/class-store-orders.php:623
+#: includes/store/class-store-orders.php:759
 msgid "Total"
 msgstr ""
 
@@ -2133,13 +2843,6 @@ msgstr ""
 
 #: includes/class-rfq.php:657
 msgid "Request"
-msgstr ""
-
-#: includes/class-rfq.php:659
-#: includes/store/class-store-admin.php:582
-#: includes/store/class-store-orders.php:311
-#: includes/store/class-store.php:467
-msgid "Customer"
 msgstr ""
 
 #: includes/class-rfq.php:772
@@ -2179,6 +2882,243 @@ msgstr ""
 msgid "Tomorrow · %s"
 msgstr ""
 
+#: includes/class-security.php:122
+#: includes/class-security.php:497
+msgid "Sorry, you are not allowed to do this."
+msgstr ""
+
+#: includes/class-security.php:176
+msgid "Not set"
+msgstr ""
+
+#: includes/class-security.php:180
+msgid "Draft: not public yet"
+msgstr ""
+
+#: includes/class-security.php:184
+msgid "Published, but still has [Your ...] blanks to fill in"
+msgstr ""
+
+#: includes/class-security.php:185
+msgid "Published"
+msgstr ""
+
+#: includes/class-security.php:222
+#: includes/class-security.php:339
+msgid "Freshtastic Security"
+msgstr ""
+
+#: includes/class-security.php:279
+msgid "Login codes stay off until a test code has reached your inbox. Use \"Test email delivery\" below."
+msgstr ""
+
+#: includes/class-security.php:285
+msgid "Google rejected the reCAPTCHA secret key. Please check it, or customers will not be able to register."
+msgstr ""
+
+#: includes/class-security.php:301
+msgid "Customers are asked to accept your Terms and Privacy Policy, but they are not both published yet."
+msgstr ""
+
+#: includes/class-security.php:303
+msgid "Set them up"
+msgstr ""
+
+#: includes/class-security.php:330
+msgid "Draft pages are ready. Fill in the [Your ...] blanks, have them reviewed, then publish them."
+msgstr ""
+
+#: includes/class-security.php:331
+msgid "Test code sent. Check your inbox and spam folder, then enter the code below."
+msgstr ""
+
+#: includes/class-security.php:332
+msgid "WordPress could not send the email. Fix your site email (an SMTP plugin usually helps) before turning on login codes."
+msgstr ""
+
+#: includes/class-security.php:333
+msgid "That code is not correct or has expired. Please send a new one."
+msgstr ""
+
+#: includes/class-security.php:334
+msgid "Email delivery confirmed. You can now turn on login codes above."
+msgstr ""
+
+#: includes/class-security.php:348
+msgid "Terms and consent at registration"
+msgstr ""
+
+#: includes/class-security.php:350
+msgid "Require consent"
+msgstr ""
+
+#: includes/class-security.php:350
+msgid "Customers must accept the Terms and Privacy Policy to create an account. The date, version and address of each acceptance are saved."
+msgstr ""
+
+#: includes/class-security.php:352
+msgid "Terms and Conditions page"
+msgstr ""
+
+#: includes/class-security.php:355
+msgid "Choose a page"
+msgstr ""
+
+#: includes/class-security.php:357
+msgid "draft"
+msgstr ""
+
+#: includes/class-security.php:364
+msgid "Privacy Policy page"
+msgstr ""
+
+#: includes/class-security.php:367
+msgid "Change it under Settings → Privacy"
+msgstr ""
+
+#: includes/class-security.php:371
+msgid "Version of these documents"
+msgstr ""
+
+#: includes/class-security.php:374
+msgid "Change this only when the terms really change. Customers then see a prompt on their account page to accept the new version."
+msgstr ""
+
+#: includes/class-security.php:378
+msgid "Consent wording"
+msgstr ""
+
+#: includes/class-security.php:381
+msgid "Leave blank for the wording shown. {terms} and {privacy} become links."
+msgstr ""
+
+#: includes/class-security.php:384
+msgid "Offer a separate, optional, unticked box for marketing emails. Ticking it adds the customer to your newsletter list."
+msgstr ""
+
+#: includes/class-security.php:386
+msgid "Marketing wording"
+msgstr ""
+
+#: includes/class-security.php:391
+msgid "Google reCAPTCHA at registration"
+msgstr ""
+
+#. translators: 1: opening link, 2: closing link
+#: includes/class-security.php:396
+#, php-format
+msgid "Create a v2 \"I'm not a robot\" Checkbox key for your domain in the %1$sreCAPTCHA admin console%2$s. The box appears once both keys are saved."
+msgstr ""
+
+#: includes/class-security.php:404
+msgid "Site key"
+msgstr ""
+
+#: includes/class-security.php:408
+msgid "Secret key"
+msgstr ""
+
+#: includes/class-security.php:411
+msgid "Set in wp-config.php (NEXORA_RECAPTCHA_SECRET)."
+msgstr ""
+
+#: includes/class-security.php:413
+#: includes/class-settings.php:205
+msgid "•••••••• saved — leave blank to keep"
+msgstr ""
+
+#: includes/class-security.php:415
+#: includes/class-settings.php:208
+msgid "Remove saved key"
+msgstr ""
+
+#: includes/class-security.php:417
+msgid "Recommended: define NEXORA_RECAPTCHA_SECRET in wp-config.php instead of saving the key here."
+msgstr ""
+
+#: includes/class-security.php:419
+msgid "reCAPTCHA is on."
+msgstr ""
+
+#: includes/class-security.php:419
+msgid "reCAPTCHA is off until both keys are saved."
+msgstr ""
+
+#: includes/class-security.php:424
+msgid "Login codes by email (OTP)"
+msgstr ""
+
+#: includes/class-security.php:426
+msgid "Login codes are switched off by NEXORA_DISABLE_LOGIN_OTP in wp-config.php. Remove that line to use them again."
+msgstr ""
+
+#: includes/class-security.php:430
+msgid "Ask for a code after the password"
+msgstr ""
+
+#: includes/class-security.php:433
+msgid "Administrators and staff"
+msgstr ""
+
+#: includes/class-security.php:434
+#: includes/store/class-store-admin.php:1225
+msgid "Customers"
+msgstr ""
+
+#: includes/class-security.php:437
+msgid "Locked until you pass the email test below, so a mail problem cannot lock you out."
+msgstr ""
+
+#: includes/class-security.php:442
+msgid "Code valid for (minutes)"
+msgstr ""
+
+#: includes/class-security.php:450
+msgid "Draft legal pages"
+msgstr ""
+
+#: includes/class-security.php:451
+msgid "Creates draft Terms and Privacy pages written for a Philippine food store, with [Your ...] blanks to complete. They are starting points, not legal advice: have a lawyer or your Data Protection Officer review them before publishing. Published pages are left alone."
+msgstr ""
+
+#: includes/class-security.php:455
+msgid "Create draft pages"
+msgstr ""
+
+#: includes/class-security.php:460
+msgid "Test email delivery"
+msgstr ""
+
+#: includes/class-security.php:464
+msgid "Passed."
+msgstr ""
+
+#. translators: %s: email address
+#: includes/class-security.php:468
+#, php-format
+msgid "Sends a code to %s. Enter it here to prove that this site can deliver login codes."
+msgstr ""
+
+#: includes/class-security.php:474
+msgid "Send test code"
+msgstr ""
+
+#: includes/class-security.php:480
+msgid "Code from the email"
+msgstr ""
+
+#: includes/class-security.php:482
+msgid "Confirm"
+msgstr ""
+
+#: includes/class-security.php:485
+msgid "If you are ever locked out"
+msgstr ""
+
+#: includes/class-security.php:486
+msgid "Add this line to wp-config.php using your hosting file manager. It turns login codes off until you remove it:"
+msgstr ""
+
 #: includes/class-settings.php:86
 msgid "Thanks! Please check your inbox to confirm your subscription."
 msgstr ""
@@ -2201,14 +3141,6 @@ msgstr ""
 #: includes/class-settings.php:198
 #, php-format
 msgid "Set in wp-config.php (%s)."
-msgstr ""
-
-#: includes/class-settings.php:205
-msgid "•••••••• saved — leave blank to keep"
-msgstr ""
-
-#: includes/class-settings.php:208
-msgid "Remove saved key"
 msgstr ""
 
 #. translators: %s: constant name
@@ -2376,7 +3308,7 @@ msgid "Send quotation requests to"
 msgstr ""
 
 #: includes/class-settings.php:343
-#: includes/store/class-store-admin.php:1214
+#: includes/store/class-store-admin.php:1217
 msgid "Leave empty to use the site admin email."
 msgstr ""
 
@@ -2453,8 +3385,8 @@ msgid "The customer name is the title; the quote is the content."
 msgstr ""
 
 #: includes/class-wishlist.php:81
-#: includes/store/class-store-account.php:433
-#: includes/store/class-store.php:528
+#: includes/store/class-store-account.php:445
+#: includes/store/class-store.php:551
 msgid "Wishlist"
 msgstr ""
 
@@ -2467,8 +3399,8 @@ msgid "Tap the heart on any product to save it for later."
 msgstr ""
 
 #: includes/class-wishlist.php:115
-#: includes/store/class-store-account.php:741
-#: includes/store/class-store-account.php:830
+#: includes/store/class-store-account.php:761
+#: includes/store/class-store-account.php:850
 msgid "Browse products"
 msgstr ""
 
@@ -2489,7 +3421,7 @@ msgid "Your {site_title} order #{order_number} is ready"
 msgstr ""
 
 #: includes/emails/class-email-order-ready.php:51
-#: includes/store/class-store-orders.php:685
+#: includes/store/class-store-orders.php:693
 msgid "Your order is packed and ready"
 msgstr ""
 
@@ -2531,7 +3463,7 @@ msgid "Hide this option when the cart subtotal is below this amount."
 msgstr ""
 
 #: includes/shipping/class-shipping-methods.php:93
-#: includes/store/class-store-admin.php:1246
+#: includes/store/class-store-admin.php:1249
 msgid "Preparation time (hours)"
 msgstr ""
 
@@ -2540,22 +3472,22 @@ msgid "The earliest time slot offered starts at least this many hours after the 
 msgstr ""
 
 #: includes/shipping/class-shipping-methods.php:101
-#: includes/store/class-store-admin.php:1247
+#: includes/store/class-store-admin.php:1250
 msgid "Days customers can book ahead"
 msgstr ""
 
 #: includes/shipping/class-shipping-methods.php:107
-#: includes/store/class-store-admin.php:1250
+#: includes/store/class-store-admin.php:1253
 msgid "Closed on"
 msgstr ""
 
 #: includes/shipping/class-shipping-methods.php:114
-#: includes/store/class-store-admin.php:1248
+#: includes/store/class-store-admin.php:1251
 msgid "Time slots"
 msgstr ""
 
 #: includes/shipping/class-shipping-methods.php:117
-#: includes/store/class-store-admin.php:1248
+#: includes/store/class-store-admin.php:1251
 msgid "One per line, 24-hour time, for example 08:00-10:00."
 msgstr ""
 
@@ -2573,14 +3505,14 @@ msgstr ""
 
 #: includes/shipping/class-shipping-methods.php:253
 #: includes/shipping/class-shipping-methods.php:337
-#: includes/store/class-store-admin.php:1261
-#: includes/store/class-store-admin.php:1263
+#: includes/store/class-store-admin.php:1264
 #: includes/store/class-store-admin.php:1266
+#: includes/store/class-store-admin.php:1269
 msgid "Name at checkout"
 msgstr ""
 
 #: includes/shipping/class-shipping-methods.php:258
-#: includes/store/class-store-admin.php:1240
+#: includes/store/class-store-admin.php:1243
 msgid "Couriers customers can choose"
 msgstr ""
 
@@ -2614,7 +3546,7 @@ msgid "Customers collect the order themselves at a pickup point and time they ch
 msgstr ""
 
 #: includes/shipping/class-shipping-methods.php:342
-#: includes/store/class-store-admin.php:1236
+#: includes/store/class-store-admin.php:1239
 msgid "Pickup points"
 msgstr ""
 
@@ -2657,446 +3589,432 @@ msgstr ""
 msgid "You can now track orders, save your address and check out faster."
 msgstr ""
 
-#. translators: %s: site name
-#: includes/store/class-store-account.php:123
-msgid "Go to your account"
-msgstr ""
-
-#: includes/store/class-store-account.php:170
-#: includes/store/class-store-cart.php:524
-msgid "Your session expired. Please try again."
-msgstr ""
-
 #: includes/store/class-store-account.php:198
 msgid "Too many failed attempts. Please wait 10 minutes or reset your password."
 msgstr ""
 
-#: includes/store/class-store-account.php:212
+#: includes/store/class-store-account.php:216
 msgid "The email, username or password is not correct."
 msgstr ""
 
-#: includes/store/class-store-account.php:252
+#: includes/store/class-store-account.php:256
 msgid "An account with this email already exists. Please sign in instead."
 msgstr ""
 
-#: includes/store/class-store-account.php:255
+#: includes/store/class-store-account.php:259
 #: includes/store/class-store-checkout.php:299
 msgid "Please choose a password of at least 8 characters."
 msgstr ""
 
-#: includes/store/class-store-account.php:284
+#: includes/store/class-store-account.php:296
 msgid "Address saved."
 msgstr ""
 
-#: includes/store/class-store-account.php:307
+#: includes/store/class-store-account.php:319
 msgid "Please enter your first and last name."
 msgstr ""
 
-#: includes/store/class-store-account.php:312
+#: includes/store/class-store-account.php:324
 msgid "That email address is already used by another account."
 msgstr ""
 
-#: includes/store/class-store-account.php:317
+#: includes/store/class-store-account.php:329
 msgid "Please enter your current password to change your email or password."
 msgstr ""
 
-#: includes/store/class-store-account.php:320
+#: includes/store/class-store-account.php:332
 msgid "Your new password must have at least 8 characters."
 msgstr ""
 
-#: includes/store/class-store-account.php:323
+#: includes/store/class-store-account.php:335
 msgid "The new passwords do not match."
 msgstr ""
 
-#: includes/store/class-store-account.php:346
+#: includes/store/class-store-account.php:358
 msgid "Account details saved."
 msgstr ""
 
-#: includes/store/class-store-account.php:427
+#: includes/store/class-store-account.php:439
 #: includes/store/class-store-admin.php:170
 msgid "Dashboard"
 msgstr ""
 
-#: includes/store/class-store-account.php:428
+#: includes/store/class-store-account.php:440
 #: includes/store/class-store-admin.php:171
-#: includes/store/class-store-admin.php:460
+#: includes/store/class-store-admin.php:463
 msgid "Orders"
 msgstr ""
 
-#: includes/store/class-store-account.php:429
+#: includes/store/class-store-account.php:441
 msgid "Addresses"
 msgstr ""
 
-#: includes/store/class-store-account.php:430
+#: includes/store/class-store-account.php:442
 msgid "Account details"
 msgstr ""
 
-#: includes/store/class-store-account.php:438
+#: includes/store/class-store-account.php:450
 msgid "Log out"
 msgstr ""
 
-#: includes/store/class-store-account.php:441
+#: includes/store/class-store-account.php:453
 msgid "Account pages"
 msgstr ""
 
-#: includes/store/class-store-account.php:513
+#: includes/store/class-store-account.php:525
 msgid "Freshness you can always trust"
 msgstr ""
 
-#: includes/store/class-store-account.php:514
+#: includes/store/class-store-account.php:526
 msgid "Meat, fish, vegetables, frozen goods and more, packed when you need them."
 msgstr ""
 
-#: includes/store/class-store-account.php:516
+#: includes/store/class-store-account.php:528
 msgid "Track orders and pickup times"
 msgstr ""
 
-#: includes/store/class-store-account.php:517
+#: includes/store/class-store-account.php:529
 msgid "Check out faster with saved details"
 msgstr ""
 
-#: includes/store/class-store-account.php:518
+#: includes/store/class-store-account.php:530
 msgid "Request quotes for bulk orders"
 msgstr ""
 
-#: includes/store/class-store-account.php:523
+#: includes/store/class-store-account.php:535
 msgid "Your account"
 msgstr ""
 
-#: includes/store/class-store-account.php:524
-#: includes/store/class-store-account.php:547
-#: includes/store/class-store-account.php:590
+#: includes/store/class-store-account.php:536
+#: includes/store/class-store-account.php:559
+#: includes/store/class-store-account.php:606
 msgid "Sign in"
 msgstr ""
 
-#: includes/store/class-store-account.php:525
-#: includes/store/class-store-account.php:588
+#: includes/store/class-store-account.php:537
+#: includes/store/class-store-account.php:604
 msgid "Create account"
 msgstr ""
 
-#: includes/store/class-store-account.php:529
+#: includes/store/class-store-account.php:541
 msgid "Welcome back"
 msgstr ""
 
-#: includes/store/class-store-account.php:530
+#: includes/store/class-store-account.php:542
 msgid "Sign in to see your orders and pickup times."
 msgstr ""
 
-#: includes/store/class-store-account.php:536
+#: includes/store/class-store-account.php:548
 msgid "Email or username"
 msgstr ""
 
-#: includes/store/class-store-account.php:540
-#: includes/store/class-store-account.php:940
+#: includes/store/class-store-account.php:552
+#: includes/store/class-store-account.php:960
 msgid "Password"
 msgstr ""
 
-#: includes/store/class-store-account.php:544
+#: includes/store/class-store-account.php:556
 msgid "Remember me"
 msgstr ""
 
-#: includes/store/class-store-account.php:545
+#: includes/store/class-store-account.php:557
 msgid "Forgot your password?"
 msgstr ""
 
-#: includes/store/class-store-account.php:550
+#: includes/store/class-store-account.php:562
 msgid "New here?"
 msgstr ""
 
-#: includes/store/class-store-account.php:550
+#: includes/store/class-store-account.php:562
 msgid "Create an account"
 msgstr ""
 
-#: includes/store/class-store-account.php:555
+#: includes/store/class-store-account.php:567
 msgid "Create your account"
 msgstr ""
 
-#: includes/store/class-store-account.php:556
+#: includes/store/class-store-account.php:568
 msgid "It only takes a minute. We use your details for your orders and pickups."
 msgstr ""
 
-#: includes/store/class-store-account.php:561
+#: includes/store/class-store-account.php:574
 msgid "Leave this empty"
 msgstr ""
 
-#: includes/store/class-store-account.php:577
-#: includes/store/class-store-account.php:936
-#: includes/store/class-store-checkout.php:555
+#: includes/store/class-store-account.php:590
+#: includes/store/class-store-account.php:956
+#: includes/store/class-store-checkout.php:564
 msgid "Email address"
 msgstr ""
 
-#: includes/store/class-store-account.php:581
+#: includes/store/class-store-account.php:594
 msgid "Password (8 characters or more)"
 msgstr ""
 
 #. translators: 1: opening link, 2: closing link
-#: includes/store/class-store-account.php:586
+#: includes/store/class-store-account.php:601
 #, php-format
 msgid "Your personal data will be used to manage your account and for other purposes described in our %1$sprivacy policy%2$s."
 msgstr ""
 
-#: includes/store/class-store-account.php:590
-#: includes/store/class-store-checkout.php:534
+#: includes/store/class-store-account.php:606
+#: includes/store/class-store-checkout.php:543
 msgid "Already have an account?"
 msgstr ""
 
 #. translators: %d: orders
-#: includes/store/class-store-account.php:656
+#: includes/store/class-store-account.php:672
 #, php-format
 msgid "You have %d order in progress."
 msgid_plural "You have %d orders in progress."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/store/class-store-account.php:658
+#: includes/store/class-store-account.php:674
 msgid "Fresh meat, fish, vegetables and frozen goods are ready for your next order."
 msgstr ""
 
-#: includes/store/class-store-account.php:664
-msgid "Shop the market"
-msgstr ""
-
-#: includes/store/class-store-account.php:666
-#: includes/store/class-store.php:527
+#: includes/store/class-store-account.php:682
+#: includes/store/class-store.php:550
 #: templates/store/single.php:112
 msgid "Request a quote"
 msgstr ""
 
-#: includes/store/class-store-account.php:676
+#: includes/store/class-store-account.php:696
 msgid "Ready to collect"
 msgstr ""
 
-#: includes/store/class-store-account.php:676
+#: includes/store/class-store-account.php:696
 msgid "Your next pickup"
 msgstr ""
 
-#: includes/store/class-store-account.php:677
+#: includes/store/class-store-account.php:697
 msgid "Packed: book your rider now"
 msgstr ""
 
-#: includes/store/class-store-account.php:677
+#: includes/store/class-store-account.php:697
 msgid "Your next rider collection"
 msgstr ""
 
-#: includes/store/class-store-account.php:677
+#: includes/store/class-store-account.php:697
 msgid "Your next delivery"
 msgstr ""
 
-#: includes/store/class-store-account.php:680
+#: includes/store/class-store-account.php:700
 msgid "Order placed"
 msgstr ""
 
-#: includes/store/class-store-account.php:681
+#: includes/store/class-store-account.php:701
 msgid "Packing"
 msgstr ""
 
-#: includes/store/class-store-account.php:682
+#: includes/store/class-store-account.php:702
 #: includes/store/class-store-orders-table.php:274
 msgid "Ready"
 msgstr ""
 
-#: includes/store/class-store-account.php:683
+#: includes/store/class-store-account.php:703
 msgid "Collected"
 msgstr ""
 
 #. translators: %d: order
-#: includes/store/class-store-account.php:693
-#: includes/store/class-store-account.php:813
-#: includes/store/class-store-admin.php:508
+#: includes/store/class-store-account.php:713
+#: includes/store/class-store-account.php:833
+#: includes/store/class-store-admin.php:511
 #, php-format
 msgid "Order #%d"
 msgstr ""
 
-#: includes/store/class-store-account.php:710
+#: includes/store/class-store-account.php:730
 msgid "Account summary"
 msgstr ""
 
-#: includes/store/class-store-account.php:713
+#: includes/store/class-store-account.php:733
 msgid "In progress"
 msgstr ""
 
-#: includes/store/class-store-account.php:714
+#: includes/store/class-store-account.php:734
 msgid "Total orders"
 msgstr ""
 
-#: includes/store/class-store-account.php:720
+#: includes/store/class-store-account.php:740
 msgid "Saved items"
 msgstr ""
 
-#: includes/store/class-store-account.php:731
+#: includes/store/class-store-account.php:751
 msgid "Recent orders"
 msgstr ""
 
-#: includes/store/class-store-account.php:732
+#: includes/store/class-store-account.php:752
 msgid "View all"
 msgstr ""
 
-#: includes/store/class-store-account.php:739
-#: includes/store/class-store-account.php:830
+#: includes/store/class-store-account.php:759
+#: includes/store/class-store-account.php:850
 msgid "No orders yet"
 msgstr ""
 
-#: includes/store/class-store-account.php:740
+#: includes/store/class-store-account.php:760
 msgid "Your orders and pickup times will appear here after you check out."
 msgstr ""
 
-#: includes/store/class-store-account.php:748
-#: includes/store/class-store-checkout.php:519
-#: includes/store/class-store-checkout.php:550
+#: includes/store/class-store-account.php:768
+#: includes/store/class-store-checkout.php:527
+#: includes/store/class-store-checkout.php:559
 msgid "Your details"
 msgstr ""
 
-#: includes/store/class-store-account.php:749
+#: includes/store/class-store-account.php:769
 msgid "Edit"
 msgstr ""
 
-#: includes/store/class-store-account.php:760
+#: includes/store/class-store-account.php:780
 msgid "Add your address for a faster checkout"
 msgstr ""
 
 #. translators: 1: name, 2: opening link, 3: closing link
-#: includes/store/class-store-account.php:765
+#: includes/store/class-store-account.php:785
 #, php-format
 msgid "Not %1$s? %2$sLog out%3$s"
 msgstr ""
 
-#: includes/store/class-store-account.php:769
+#: includes/store/class-store-account.php:789
 msgid "Spent with us"
 msgstr ""
 
-#: includes/store/class-store-account.php:779
+#: includes/store/class-store-account.php:799
 msgid "Buy again"
 msgstr ""
 
-#: includes/store/class-store-account.php:780
+#: includes/store/class-store-account.php:800
 msgid "Shop all"
 msgstr ""
 
 #. translators: %s: product
-#: includes/store/class-store-account.php:791
+#: includes/store/class-store-account.php:811
 #, php-format
 msgid "Buy %s again"
 msgstr ""
 
 #. translators: %s: product
-#: includes/store/class-store-account.php:791
+#: includes/store/class-store-account.php:811
 #: templates/store/card.php:56
 #: templates/store/single.php:105
 msgid "Add to cart"
 msgstr ""
 
 #. translators: %s: product
-#: includes/store/class-store-account.php:791
+#: includes/store/class-store-account.php:811
 msgid "Choose options"
 msgstr ""
 
 #. translators: 1: date, 2: items
-#: includes/store/class-store-account.php:815
+#: includes/store/class-store-account.php:835
 #, php-format
 msgid "%1$s · %2$d item"
 msgid_plural "%1$s · %2$d items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/store/class-store-account.php:828
+#: includes/store/class-store-account.php:848
 msgid "Your orders"
 msgstr ""
 
-#: includes/store/class-store-account.php:841
+#: includes/store/class-store-account.php:861
 msgid "Newer"
 msgstr ""
 
-#: includes/store/class-store-account.php:844
+#: includes/store/class-store-account.php:864
 msgid "Older"
 msgstr ""
 
-#: includes/store/class-store-account.php:858
+#: includes/store/class-store-account.php:878
 msgid "We could not find that order."
 msgstr ""
 
 #. translators: 1: order, 2: date
-#: includes/store/class-store-account.php:862
+#: includes/store/class-store-account.php:882
 #, php-format
 msgid "Order #%1$d, %2$s"
 msgstr ""
 
-#: includes/store/class-store-account.php:864
-#: includes/store/class-store-checkout.php:852
+#: includes/store/class-store-account.php:884
+#: includes/store/class-store-checkout.php:867
 msgid "Order details"
 msgstr ""
 
-#: includes/store/class-store-account.php:893
+#: includes/store/class-store-account.php:913
 msgid "Your address"
 msgstr ""
 
-#: includes/store/class-store-account.php:893
+#: includes/store/class-store-account.php:913
 msgid "Used to fill in checkout. Store pickup orders do not need it."
 msgstr ""
 
-#: includes/store/class-store-account.php:900
-#: includes/store/class-store-checkout.php:560
+#: includes/store/class-store-account.php:920
+#: includes/store/class-store-checkout.php:569
 msgid "Street address"
 msgstr ""
 
-#: includes/store/class-store-account.php:901
-#: includes/store/class-store-checkout.php:561
+#: includes/store/class-store-account.php:921
+#: includes/store/class-store-checkout.php:570
 msgid "Barangay, unit or building"
 msgstr ""
 
-#: includes/store/class-store-account.php:902
-#: includes/store/class-store-checkout.php:562
+#: includes/store/class-store-account.php:922
+#: includes/store/class-store-checkout.php:571
 msgid "City or town"
 msgstr ""
 
-#: includes/store/class-store-account.php:903
-#: includes/store/class-store-checkout.php:563
+#: includes/store/class-store-account.php:923
+#: includes/store/class-store-checkout.php:572
 msgid "Province"
 msgstr ""
 
-#: includes/store/class-store-account.php:904
-#: includes/store/class-store-checkout.php:564
+#: includes/store/class-store-account.php:924
+#: includes/store/class-store-checkout.php:573
 msgid "Postcode"
 msgstr ""
 
-#: includes/store/class-store-account.php:908
+#: includes/store/class-store-account.php:928
 msgid "Save address"
 msgstr ""
 
 #. translators: %s: date
-#: includes/store/class-store-account.php:924
+#: includes/store/class-store-account.php:944
 #, php-format
 msgid "Member since %s"
 msgstr ""
 
-#: includes/store/class-store-account.php:931
+#: includes/store/class-store-account.php:951
 msgid "Personal details"
 msgstr ""
 
-#: includes/store/class-store-account.php:931
+#: includes/store/class-store-account.php:951
 msgid "Used on your orders and receipts."
 msgstr ""
 
-#: includes/store/class-store-account.php:935
+#: includes/store/class-store-account.php:955
 msgid "Display name"
 msgstr ""
 
-#: includes/store/class-store-account.php:940
+#: includes/store/class-store-account.php:960
 msgid "Your current password is needed to change your email or password."
 msgstr ""
 
-#: includes/store/class-store-account.php:942
+#: includes/store/class-store-account.php:962
 msgid "Current password"
 msgstr ""
 
-#: includes/store/class-store-account.php:943
+#: includes/store/class-store-account.php:963
 msgid "New password"
 msgstr ""
 
-#: includes/store/class-store-account.php:944
+#: includes/store/class-store-account.php:964
 msgid "Confirm new password"
 msgstr ""
 
-#: includes/store/class-store-account.php:947
+#: includes/store/class-store-account.php:967
 msgid "Save changes"
 msgstr ""
 
@@ -3146,7 +4064,7 @@ msgstr ""
 
 #: includes/store/class-store-admin.php:169
 #: includes/store/class-store-admin.php:384
-#: includes/store/class-store-admin.php:1209
+#: includes/store/class-store-admin.php:1212
 msgid "Store"
 msgstr ""
 
@@ -3160,7 +4078,7 @@ msgid "Categories"
 msgstr ""
 
 #: includes/store/class-store-admin.php:173
-#: includes/store/class-store-admin.php:1205
+#: includes/store/class-store-admin.php:1208
 msgid "Store settings"
 msgstr ""
 
@@ -3211,436 +4129,431 @@ msgstr ""
 msgid "Add a product"
 msgstr ""
 
-#: includes/store/class-store-admin.php:408
-msgid "Load demo products"
-msgstr ""
-
-#: includes/store/class-store-admin.php:416
+#: includes/store/class-store-admin.php:419
 msgid "Top products, last 30 days"
 msgstr ""
 
-#: includes/store/class-store-admin.php:424
+#: includes/store/class-store-admin.php:427
 msgid "No sales yet."
 msgstr ""
 
-#: includes/store/class-store-admin.php:426
+#: includes/store/class-store-admin.php:429
 msgid "Low stock"
 msgstr ""
 
-#: includes/store/class-store-admin.php:435
+#: includes/store/class-store-admin.php:438
 msgid "Nothing is running low."
 msgstr ""
 
-#: includes/store/class-store-admin.php:439
+#: includes/store/class-store-admin.php:442
 msgid "Open orders"
 msgstr ""
 
-#: includes/store/class-store-admin.php:475
+#: includes/store/class-store-admin.php:478
 msgid "Search orders"
 msgstr ""
 
-#: includes/store/class-store-admin.php:488
+#: includes/store/class-store-admin.php:491
 msgid "Order not found"
 msgstr ""
 
-#: includes/store/class-store-admin.php:509
+#: includes/store/class-store-admin.php:512
 msgid "All orders"
 msgstr ""
 
-#: includes/store/class-store-admin.php:527
+#: includes/store/class-store-admin.php:530
 msgid "Items"
 msgstr ""
 
-#: includes/store/class-store-admin.php:529
-#: includes/store/class-store-admin.php:756
-#: includes/store/class-store-admin.php:765
-#: includes/store/class-store-admin.php:804
-#: includes/store/class-store-admin.php:1048
+#: includes/store/class-store-admin.php:532
+#: includes/store/class-store-admin.php:759
+#: includes/store/class-store-admin.php:768
+#: includes/store/class-store-admin.php:807
+#: includes/store/class-store-admin.php:1051
 msgid "SKU"
 msgstr ""
 
-#: includes/store/class-store-admin.php:529
-#: includes/store/class-store-admin.php:1046
-#: includes/store/class-store-cart.php:743
-#: includes/store/class-store-cart.php:758
+#: includes/store/class-store-admin.php:532
+#: includes/store/class-store-admin.php:1049
+#: includes/store/class-store-cart.php:788
+#: includes/store/class-store-cart.php:804
+#: includes/store/class-store-cart.php:811
 #: templates/store/single.php:75
 msgid "Price"
 msgstr ""
 
-#: includes/store/class-store-admin.php:529
+#: includes/store/class-store-admin.php:532
 msgid "Qty"
 msgstr ""
 
-#: includes/store/class-store-admin.php:536
-#: includes/store/class-store-cart.php:714
-#: includes/store/class-store-cart.php:745
-#: includes/store/class-store-cart.php:766
-#: includes/store/class-store-cart.php:792
-#: includes/store/class-store-checkout.php:480
-#: includes/store/class-store-checkout.php:484
-#: includes/store/class-store-orders.php:534
+#: includes/store/class-store-admin.php:539
+#: includes/store/class-store-cart.php:756
+#: includes/store/class-store-cart.php:790
+#: includes/store/class-store-cart.php:806
+#: includes/store/class-store-cart.php:819
+#: includes/store/class-store-cart.php:845
+#: includes/store/class-store-checkout.php:488
+#: includes/store/class-store-checkout.php:492
+#: includes/store/class-store-orders.php:542
 msgid "Subtotal"
 msgstr ""
 
-#: includes/store/class-store-admin.php:540
-#: includes/store/class-store-checkout.php:492
+#: includes/store/class-store-admin.php:543
+#: includes/store/class-store-checkout.php:500
 #: includes/store/class-store-orders-table.php:234
-#: includes/store/class-store-orders.php:539
+#: includes/store/class-store-orders.php:547
 msgid "Delivery"
 msgstr ""
 
-#: includes/store/class-store-admin.php:545
+#: includes/store/class-store-admin.php:548
 msgid "Customer note:"
 msgstr ""
 
-#: includes/store/class-store-admin.php:549
+#: includes/store/class-store-admin.php:552
 msgid "History"
 msgstr ""
 
-#: includes/store/class-store-admin.php:553
+#: includes/store/class-store-admin.php:556
 msgid "Add a note"
 msgstr ""
 
-#: includes/store/class-store-admin.php:554
+#: includes/store/class-store-admin.php:557
 msgid "Add a staff note (customers do not see it)"
 msgstr ""
 
-#: includes/store/class-store-admin.php:555
+#: includes/store/class-store-admin.php:558
 msgid "Add note"
 msgstr ""
 
-#: includes/store/class-store-admin.php:571
+#: includes/store/class-store-admin.php:574
 msgid "Change to"
 msgstr ""
 
-#: includes/store/class-store-admin.php:577
+#: includes/store/class-store-admin.php:580
 msgid "Update"
 msgstr ""
 
-#: includes/store/class-store-admin.php:579
+#: includes/store/class-store-admin.php:582
 msgid "The customer gets an email for Processing, Ready for pickup, Completed, Cancelled and Refunded. Cancelling or refunding puts the stock back. Refunded only records the status; send the money back yourself."
 msgstr ""
 
 #. translators: 1: payment, 2: reference
-#: includes/store/class-store-admin.php:586
+#: includes/store/class-store-admin.php:589
 msgid "Payment:"
 msgstr ""
 
-#: includes/store/class-store-admin.php:593
-#: includes/store/class-store-orders.php:619
+#: includes/store/class-store-admin.php:596
+#: includes/store/class-store-orders.php:627
 msgid "Time"
 msgstr ""
 
-#: includes/store/class-store-admin.php:604
+#: includes/store/class-store-admin.php:607
 msgid "Save"
 msgstr ""
 
-#: includes/store/class-store-admin.php:631
+#: includes/store/class-store-admin.php:634
 msgid "Order updated."
 msgstr ""
 
 #. translators: %s: new time
-#: includes/store/class-store-admin.php:651
+#: includes/store/class-store-admin.php:654
 #, php-format
 msgid "Rescheduled to %s."
 msgstr ""
 
 #. translators: 1: updated, 2: failed
-#: includes/store/class-store-admin.php:681
+#: includes/store/class-store-admin.php:684
 #, php-format
 msgid "%1$d orders updated, %2$d could not be changed."
 msgstr ""
 
-#: includes/store/class-store-admin.php:720
+#: includes/store/class-store-admin.php:723
 msgid "Product data"
 msgstr ""
 
-#: includes/store/class-store-admin.php:721
+#: includes/store/class-store-admin.php:724
 msgid "Product gallery"
 msgstr ""
 
-#: includes/store/class-store-admin.php:745
+#: includes/store/class-store-admin.php:748
 msgid "How is it sold?"
 msgstr ""
 
-#: includes/store/class-store-admin.php:746
+#: includes/store/class-store-admin.php:749
 msgid "One price"
 msgstr ""
 
-#: includes/store/class-store-admin.php:747
+#: includes/store/class-store-admin.php:750
 msgid "Several options (pack sizes, cuts)"
 msgstr ""
 
-#: includes/store/class-store-admin.php:752
+#: includes/store/class-store-admin.php:755
 msgid "Regular price (₱)"
 msgstr ""
 
-#: includes/store/class-store-admin.php:753
+#: includes/store/class-store-admin.php:756
 msgid "Sale price (₱)"
 msgstr ""
 
-#: includes/store/class-store-admin.php:754
+#: includes/store/class-store-admin.php:757
 msgid "Sale starts"
 msgstr ""
 
-#: includes/store/class-store-admin.php:755
+#: includes/store/class-store-admin.php:758
 msgid "Sale ends"
 msgstr ""
 
-#: includes/store/class-store-admin.php:757
+#: includes/store/class-store-admin.php:760
 msgid "Stock quantity"
 msgstr ""
 
-#: includes/store/class-store-admin.php:759
+#: includes/store/class-store-admin.php:762
 msgid "Track stock (untick for items that never run out)"
 msgstr ""
 
-#: includes/store/class-store-admin.php:760
+#: includes/store/class-store-admin.php:763
 msgid "Out of stock (when stock is not tracked)"
 msgstr ""
 
-#: includes/store/class-store-admin.php:765
-#: includes/store/class-store-admin.php:1023
+#: includes/store/class-store-admin.php:768
+#: includes/store/class-store-admin.php:1026
 #: templates/store/single.php:75
 msgid "Option"
 msgstr ""
 
-#: includes/store/class-store-admin.php:765
+#: includes/store/class-store-admin.php:768
 msgid "Regular ₱"
 msgstr ""
 
-#: includes/store/class-store-admin.php:765
+#: includes/store/class-store-admin.php:768
 msgid "Sale ₱"
 msgstr ""
 
-#: includes/store/class-store-admin.php:765
-#: includes/store/class-store-admin.php:803
-#: includes/store/class-store-admin.php:1047
+#: includes/store/class-store-admin.php:768
+#: includes/store/class-store-admin.php:806
+#: includes/store/class-store-admin.php:1050
 msgid "Stock"
 msgstr ""
 
-#: includes/store/class-store-admin.php:765
-#: includes/store/class-store-admin.php:805
+#: includes/store/class-store-admin.php:768
+#: includes/store/class-store-admin.php:808
 msgid "Pack contents"
 msgstr ""
 
-#: includes/store/class-store-admin.php:765
-#: includes/store/class-store-cart.php:746
-#: includes/store/class-store-cart.php:799
-#: includes/store/class-store-checkout.php:486
-#: includes/store/class-store-checkout.php:490
+#: includes/store/class-store-admin.php:768
+#: includes/store/class-store-cart.php:791
+#: includes/store/class-store-cart.php:852
+#: includes/store/class-store-cart.php:858
+#: includes/store/class-store-checkout.php:494
+#: includes/store/class-store-checkout.php:498
 msgid "Remove"
 msgstr ""
 
-#: includes/store/class-store-admin.php:773
+#: includes/store/class-store-admin.php:776
 msgid "Add option"
 msgstr ""
 
-#: includes/store/class-store-admin.php:782
+#: includes/store/class-store-admin.php:785
 msgid "Featured on the homepage"
 msgstr ""
 
-#: includes/store/class-store-admin.php:783
+#: includes/store/class-store-admin.php:786
 msgid "Hide from the shop and search"
 msgstr ""
 
-#: includes/store/class-store-admin.php:800
+#: includes/store/class-store-admin.php:803
 msgid "Option name"
 msgstr ""
 
-#: includes/store/class-store-admin.php:800
+#: includes/store/class-store-admin.php:803
 msgid "e.g. 5 kg"
 msgstr ""
 
-#: includes/store/class-store-admin.php:801
+#: includes/store/class-store-admin.php:804
 msgid "Regular price"
 msgstr ""
 
-#: includes/store/class-store-admin.php:802
+#: includes/store/class-store-admin.php:805
 msgid "Sale price"
 msgstr ""
 
-#: includes/store/class-store-admin.php:803
+#: includes/store/class-store-admin.php:806
 msgid "Not tracked"
 msgstr ""
 
-#: includes/store/class-store-admin.php:806
+#: includes/store/class-store-admin.php:809
 msgid "Remove this option"
 msgstr ""
 
-#: includes/store/class-store-admin.php:823
+#: includes/store/class-store-admin.php:826
 msgid "Choose images"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1072
+#: includes/store/class-store-admin.php:1075
 #: templates/store/single.php:110
 msgid "Out of stock"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1076
+#: includes/store/class-store-admin.php:1079
 #: templates/store/archive.php:51
 msgid "In stock"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1085
-#: includes/store/class-store-admin.php:1096
-#: includes/store/class-store-cart.php:741
+#: includes/store/class-store-admin.php:1088
+#: includes/store/class-store-admin.php:1099
+#: includes/store/class-store-cart.php:786
 msgid "Image"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1085
-#: includes/store/class-store-admin.php:1096
+#: includes/store/class-store-admin.php:1088
+#: includes/store/class-store-admin.php:1099
 msgid "Choose image"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1212
+#: includes/store/class-store-admin.php:1215
 msgid "Store address"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1212
+#: includes/store/class-store-admin.php:1215
 msgid "Riders collect here, and it is the pickup point when none are listed below."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1213
+#: includes/store/class-store-admin.php:1216
 msgid "Store phone"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1214
+#: includes/store/class-store-admin.php:1217
 msgid "Send new orders to"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1215
+#: includes/store/class-store-admin.php:1218
 msgid "Currency symbol"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1216
+#: includes/store/class-store-admin.php:1219
 msgid "Currency code"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1217
+#: includes/store/class-store-admin.php:1220
 msgid "Decimals"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1218
+#: includes/store/class-store-admin.php:1221
 msgid "Low stock alert at"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1219
+#: includes/store/class-store-admin.php:1222
 msgid "Auto-cancel unpaid orders after (days)"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1219
+#: includes/store/class-store-admin.php:1222
 msgid "Releases the stock. 0 = never."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1222
-msgid "Customers"
-msgstr ""
-
-#: includes/store/class-store-admin.php:1225
+#: includes/store/class-store-admin.php:1228
 msgid "Guest checkout"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1225
+#: includes/store/class-store-admin.php:1228
 msgid "Allow orders without an account."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1226
+#: includes/store/class-store-admin.php:1229
 msgid "Customer registration"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1227
+#: includes/store/class-store-admin.php:1230
 msgid "Product reviews"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1230
+#: includes/store/class-store-admin.php:1233
 msgid "Delivery and pickup"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1234
+#: includes/store/class-store-admin.php:1237
 msgid "Pickup name at checkout"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1235
+#: includes/store/class-store-admin.php:1238
 msgid "Pickup fee"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1236
+#: includes/store/class-store-admin.php:1239
 msgid "One per line: Name | Address | Opening hours"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1238
+#: includes/store/class-store-admin.php:1241
 msgid "Courier name at checkout"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1239
+#: includes/store/class-store-admin.php:1242
 msgid "Courier handling fee"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1240
+#: includes/store/class-store-admin.php:1243
 msgid "One per line."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1241
+#: includes/store/class-store-admin.php:1244
 msgid "Contact number for riders"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1242
+#: includes/store/class-store-admin.php:1245
 #: includes/store/class-store-orders-table.php:162
-#: includes/store/class-store-orders.php:479
+#: includes/store/class-store-orders.php:487
 msgid "Store delivery"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1242
+#: includes/store/class-store-admin.php:1245
 msgid "Your own delivery, at a flat fee."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1243
+#: includes/store/class-store-admin.php:1246
 msgid "Delivery name at checkout"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1244
+#: includes/store/class-store-admin.php:1247
 msgid "Delivery fee"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1245
+#: includes/store/class-store-admin.php:1248
 msgid "Free delivery over"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1245
+#: includes/store/class-store-admin.php:1248
 msgid "0 = never free."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1256
+#: includes/store/class-store-admin.php:1259
 msgid "Payments"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1257
+#: includes/store/class-store-admin.php:1260
 msgid "These are manual methods: you confirm the payment yourself, then set the order to Processing. Automatic online card or wallet payments need a payment provider integration added through the nexora_store_gateways filter."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1260
+#: includes/store/class-store-admin.php:1263
 msgid "Offered for store pickup only."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1264
-#: includes/store/class-store-orders.php:654
+#: includes/store/class-store-admin.php:1267
+#: includes/store/class-store-orders.php:662
 msgid "Bank details"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1264
+#: includes/store/class-store-admin.php:1267
 msgid "Shown at checkout, on the order page and in the order email."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1265
+#: includes/store/class-store-admin.php:1268
 msgid "GCash / Maya (send manually)"
 msgstr ""
 
-#: includes/store/class-store-admin.php:1265
+#: includes/store/class-store-admin.php:1268
 msgid "The customer sends the money, then enters the reference number at checkout."
 msgstr ""
 
-#: includes/store/class-store-admin.php:1267
+#: includes/store/class-store-admin.php:1270
 msgid "Account name and number"
 msgstr ""
 
@@ -3702,117 +4615,112 @@ msgstr ""
 msgid "Delivered to your address."
 msgstr ""
 
-#: includes/store/class-store-cart.php:513
+#: includes/store/class-store-cart.php:544
 msgid "Added to your cart."
 msgstr ""
 
-#: includes/store/class-store-cart.php:537
+#: includes/store/class-store-cart.php:568
 msgid "Cart updated."
 msgstr ""
 
-#: includes/store/class-store-cart.php:541
+#: includes/store/class-store-cart.php:572
 msgid "Item removed."
 msgstr ""
 
-#: includes/store/class-store-cart.php:545
-#: includes/store/class-store-cart.php:680
-msgid "Coupon applied."
-msgstr ""
-
-#: includes/store/class-store-cart.php:549
-#: includes/store/class-store-cart.php:680
+#: includes/store/class-store-cart.php:580
+#: includes/store/class-store-cart.php:711
 msgid "Coupon removed."
 msgstr ""
 
-#: includes/store/class-store-cart.php:599
+#: includes/store/class-store-cart.php:630
 msgid "Request not allowed."
 msgstr ""
 
-#: includes/store/class-store-cart.php:697
+#: includes/store/class-store-cart.php:728
 #: includes/store/class-store-checkout.php:204
 msgid "Your cart is empty."
 msgstr ""
 
 #. translators: %s: product
-#: includes/store/class-store-cart.php:705
+#: includes/store/class-store-cart.php:747
 #, php-format
 msgid "Remove %s"
 msgstr ""
 
-#: includes/store/class-store-cart.php:715
-#: includes/store/class-store.php:348
+#: includes/store/class-store-cart.php:757
+#: includes/store/class-store.php:371
 msgid "View cart"
 msgstr ""
 
-#: includes/store/class-store-cart.php:715
-#: includes/store/class-store-checkout.php:537
-#: includes/store/class-store.php:498
+#: includes/store/class-store-cart.php:757
+#: includes/store/class-store-checkout.php:546
+#: includes/store/class-store.php:521
 msgid "Checkout"
 msgstr ""
 
-#: includes/store/class-store-cart.php:731
-#: includes/store/class-store-checkout.php:513
+#: includes/store/class-store-cart.php:776
+#: includes/store/class-store-checkout.php:521
 msgid "Your cart is empty"
 msgstr ""
 
-#: includes/store/class-store-cart.php:731
+#: includes/store/class-store-cart.php:776
 msgid "Fresh meat, fish, vegetables and more are waiting."
 msgstr ""
 
-#: includes/store/class-store-cart.php:731
-#: includes/store/class-store-checkout.php:513
+#: includes/store/class-store-cart.php:776
+#: includes/store/class-store-checkout.php:521
 msgid "Browse the market"
 msgstr ""
 
-#: includes/store/class-store-cart.php:742
-#: includes/store/class-store-cart.php:754
+#: includes/store/class-store-cart.php:787
+#: includes/store/class-store-cart.php:799
 #: includes/store/class-store-catalog.php:93
-#: includes/store/class-store-checkout.php:480
-#: includes/store/class-store-orders.php:528
+#: includes/store/class-store-checkout.php:488
+#: includes/store/class-store-orders.php:536
 msgid "Product"
 msgstr ""
 
 #. translators: %s: product
-#: includes/store/class-store-cart.php:762
+#: includes/store/class-store-cart.php:815
 #, php-format
 msgid "%s quantity"
 msgstr ""
 
 #. translators: %s: product
-#: includes/store/class-store-cart.php:768
+#: includes/store/class-store-cart.php:821
 #, php-format
 msgid "Remove %s from cart"
 msgstr ""
 
-#: includes/store/class-store-cart.php:773
+#: includes/store/class-store-cart.php:826
 msgid "Update cart"
 msgstr ""
 
-#: includes/store/class-store-cart.php:783
-#: includes/store/class-store-checkout.php:616
+#: includes/store/class-store-cart.php:836
+#: includes/store/class-store-checkout.php:631
 msgid "Have a coupon?"
 msgstr ""
 
-#: includes/store/class-store-cart.php:785
-#: includes/store/class-store-checkout.php:618
+#: includes/store/class-store-cart.php:838
+#: includes/store/class-store-checkout.php:633
 msgid "Coupon code"
 msgstr ""
 
-#: includes/store/class-store-cart.php:786
-#: includes/store/class-store-checkout.php:619
+#: includes/store/class-store-cart.php:839
+#: includes/store/class-store-checkout.php:634
 #: templates/store/archive.php:61
 msgid "Apply"
 msgstr ""
 
-#: includes/store/class-store-cart.php:790
+#: includes/store/class-store-cart.php:843
 msgid "Cart totals"
 msgstr ""
 
-#: includes/store/class-store-cart.php:804
+#: includes/store/class-store-cart.php:860
 msgid "Total before delivery"
 msgstr ""
 
-#: includes/store/class-store-cart.php:806
+#: includes/store/class-store-cart.php:862
 msgid "Proceed to checkout"
 msgstr ""
 
@@ -3910,165 +4818,159 @@ msgstr ""
 msgid "An account with this email already exists. Please log in first."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:492
-#: includes/store/class-store-checkout.php:657
-#: includes/store/class-store-orders.php:539
-msgid "Free"
-msgstr ""
-
-#: includes/store/class-store-checkout.php:520
-#: includes/store/class-store-checkout.php:585
-#: includes/store/class-store-checkout.php:646
+#: includes/store/class-store-checkout.php:528
+#: includes/store/class-store-checkout.php:600
+#: includes/store/class-store-checkout.php:661
 msgid "Delivery or pickup"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:521
-#: includes/store/class-store-checkout.php:590
+#: includes/store/class-store-checkout.php:529
+#: includes/store/class-store-checkout.php:605
 msgid "Review and pay"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:534
+#: includes/store/class-store-checkout.php:543
 msgid "Log in"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:541
+#: includes/store/class-store-checkout.php:550
 msgid "Checkout steps"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:550
+#: includes/store/class-store-checkout.php:559
 msgid "We send order updates to this email and mobile number."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:560
+#: includes/store/class-store-checkout.php:569
 msgid "House number and street"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:573
+#: includes/store/class-store-checkout.php:582
 msgid "Create an account for faster checkout and order tracking"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:577
+#: includes/store/class-store-checkout.php:586
 msgid "Choose a password (8 characters or more)"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:585
+#: includes/store/class-store-checkout.php:600
 msgid "Choose how you will get your order, then pick a time."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:590
+#: includes/store/class-store-checkout.php:605
 msgid "Add a note for the store if you need to, then choose how to pay."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:593
+#: includes/store/class-store-checkout.php:608
 msgid "Notes for the store"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:594
+#: includes/store/class-store-checkout.php:609
 msgid "For example: choose ripe mangoes, cut the bangus into steaks, call when the order is packed."
 msgstr ""
 
 #. translators: %d: items
-#: includes/store/class-store-checkout.php:610
+#: includes/store/class-store-checkout.php:625
 #, php-format
 msgid "%d item"
 msgid_plural "%d items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/store/class-store-checkout.php:624
+#: includes/store/class-store-checkout.php:639
 msgid "Secure checkout"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:625
+#: includes/store/class-store-checkout.php:640
 msgid "Packed fresh on your schedule"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:643
+#: includes/store/class-store-checkout.php:658
 msgid "No delivery options are available right now. Please contact us."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:704
+#: includes/store/class-store-checkout.php:719
 msgid "We email you when it is packed and ready for your rider."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:741
+#: includes/store/class-store-checkout.php:756
 msgid "Day and time"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:756
+#: includes/store/class-store-checkout.php:771
 msgid "No time slots are open right now. Please contact us."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:783
+#: includes/store/class-store-checkout.php:798
 msgid "No payment methods are available right now. Please contact us."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:794
+#: includes/store/class-store-checkout.php:809
 msgid "Payment reference number"
 msgstr ""
 
 #. translators: 1: opening link, 2: closing link
-#: includes/store/class-store-checkout.php:805
+#: includes/store/class-store-checkout.php:820
 #, php-format
 msgid "Your personal data will be used to process your order and for other purposes described in our %1$sprivacy policy%2$s."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:807
+#: includes/store/class-store-checkout.php:822
 msgid "Place order"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:808
+#: includes/store/class-store-checkout.php:823
 msgid "We never store card details on this site."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:826
+#: includes/store/class-store-checkout.php:841
 msgid "We could not find that order"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:826
+#: includes/store/class-store-checkout.php:841
 msgid "Please use the link in your order email."
 msgstr ""
 
 #. translators: %s: first name
-#: includes/store/class-store-checkout.php:837
+#: includes/store/class-store-checkout.php:852
 #, php-format
 msgid "Thank you, %s!"
 msgstr ""
 
 #. translators: %s: first name
-#: includes/store/class-store-checkout.php:837
+#: includes/store/class-store-checkout.php:852
 msgid "Thank you!"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:838
+#: includes/store/class-store-checkout.php:853
 msgid "Your order has been received. We sent the details to your email."
 msgstr ""
 
-#: includes/store/class-store-checkout.php:842
+#: includes/store/class-store-checkout.php:857
 msgid "Order number:"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:843
+#: includes/store/class-store-checkout.php:858
 msgid "Date:"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:844
+#: includes/store/class-store-checkout.php:859
 msgid "Total:"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:845
+#: includes/store/class-store-checkout.php:860
 msgid "Payment method:"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:848
+#: includes/store/class-store-checkout.php:863
 msgid "How to pay"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:856
+#: includes/store/class-store-checkout.php:871
 msgid "Continue shopping"
 msgstr ""
 
-#: includes/store/class-store-checkout.php:858
+#: includes/store/class-store-checkout.php:873
 msgid "Track this order"
 msgstr ""
 
@@ -4098,7 +5000,7 @@ msgid "Promotions"
 msgstr ""
 
 #: includes/store/class-store-coupons.php:62
-#: includes/store/class-store-coupons.php:581
+#: includes/store/class-store-coupons.php:670
 msgid "Promotion"
 msgstr ""
 
@@ -4115,186 +5017,155 @@ msgstr ""
 msgid "No promotions yet"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:168
+#: includes/store/class-store-coupons.php:171
 msgid "This coupon has expired."
 msgstr ""
 
-#: includes/store/class-store-coupons.php:171
+#: includes/store/class-store-coupons.php:191
+msgid "This coupon is not available for your account."
+msgstr ""
+
+#: includes/store/class-store-coupons.php:194
 msgid "This coupon has reached its usage limit."
 msgstr ""
 
-#: includes/store/class-store-coupons.php:181
+#: includes/store/class-store-coupons.php:204
 msgid "You have already used this coupon the maximum number of times."
 msgstr ""
 
 #. translators: %s: amount
-#: includes/store/class-store-coupons.php:194
+#: includes/store/class-store-coupons.php:217
 #, php-format
 msgid "This coupon needs a minimum order of %s."
 msgstr ""
 
 #. translators: %s: amount
-#: includes/store/class-store-coupons.php:198
+#: includes/store/class-store-coupons.php:221
 #, php-format
 msgid "This coupon is for orders up to %s."
 msgstr ""
 
-#: includes/store/class-store-coupons.php:201
+#: includes/store/class-store-coupons.php:224
 msgid "This coupon does not apply to the items in your cart."
 msgstr ""
 
-#: includes/store/class-store-coupons.php:279
+#: includes/store/class-store-coupons.php:271
+msgid "Applied"
+msgstr ""
+
+#: includes/store/class-store-coupons.php:349
 msgid "This coupon is no longer valid."
 msgstr ""
 
 #. translators: %s: coupon code
-#: includes/store/class-store-coupons.php:308
+#: includes/store/class-store-coupons.php:381
 #, php-format
 msgid "Coupon: %s"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:374
+#: includes/store/class-store-coupons.php:458
 msgid "Coupon details"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:375
+#: includes/store/class-store-coupons.php:459
 msgid "Promotion details"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:432
+#: includes/store/class-store-coupons.php:516
 msgid "The title above is the code customers type at checkout, for example FRESH10."
 msgstr ""
 
-#: includes/store/class-store-coupons.php:434
-#: includes/store/class-store-coupons.php:502
+#: includes/store/class-store-coupons.php:518
+#: includes/store/class-store-coupons.php:589
 msgid "Discount type"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:436
-#: includes/store/class-store-coupons.php:504
-msgid "Percent off"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:437
+#: includes/store/class-store-coupons.php:521
 msgid "Fixed amount off the cart"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:438
+#: includes/store/class-store-coupons.php:522
 msgid "Fixed amount off each item"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:440
-#: includes/store/class-store-coupons.php:508
-msgid "Amount"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:441
+#: includes/store/class-store-coupons.php:525
 msgid "Expires on"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:441
+#: includes/store/class-store-coupons.php:525
 msgid "Valid through the end of this day. Empty = no expiry."
 msgstr ""
 
-#: includes/store/class-store-coupons.php:442
-#: includes/store/class-store-coupons.php:509
-msgid "Minimum order"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:443
+#: includes/store/class-store-coupons.php:527
 msgid "Maximum order"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:444
+#: includes/store/class-store-coupons.php:528
 msgid "Total uses allowed"
 msgstr ""
 
 #. translators: %d: uses
-#: includes/store/class-store-coupons.php:446
+#: includes/store/class-store-coupons.php:530
 #, php-format
 msgid "Used %d times so far. Empty = unlimited."
 msgstr ""
 
-#: includes/store/class-store-coupons.php:447
+#: includes/store/class-store-coupons.php:531
 msgid "Uses per customer"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:448
-#: includes/store/class-store-coupons.php:512
+#: includes/store/class-store-coupons.php:532
+msgid "Only these customers"
+msgstr ""
+
+#: includes/store/class-store-coupons.php:532
+msgid "Email addresses separated by commas. Empty = any customer."
+msgstr ""
+
+#: includes/store/class-store-coupons.php:533
+#: includes/store/class-store-coupons.php:599
 msgid "Only these categories"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:449
+#: includes/store/class-store-coupons.php:534
 msgid "Options"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:450
+#: includes/store/class-store-coupons.php:535
 msgid "Also removes the delivery or pickup fee"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:451
+#: includes/store/class-store-coupons.php:536
 msgid "Cannot be combined with other coupons"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:452
+#: includes/store/class-store-coupons.php:537
 msgid "Does not apply to items already on sale"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:500
+#: includes/store/class-store-coupons.php:587
 msgid "Promotions apply automatically, with no code. The title above is what customers see, for example “Market Day: 5% off”. If several promotions qualify, the customer gets the biggest one."
 msgstr ""
 
-#: includes/store/class-store-coupons.php:505
-msgid "Fixed amount off"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:506
-msgid "No delivery or pickup fee"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:510
-msgid "Starts on"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:511
-msgid "Ends on"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:546
-msgid "Code"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:547
-#: includes/store/class-store-coupons.php:582
+#: includes/store/class-store-coupons.php:634
+#: includes/store/class-store-coupons.php:671
 msgid "Discount"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:583
+#: includes/store/class-store-coupons.php:672
 msgid "Runs"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:601
+#: includes/store/class-store-coupons.php:690
 msgid "No fee"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:607
+#: includes/store/class-store-coupons.php:696
 msgid "Draft"
 msgstr ""
 
-#: includes/store/class-store-coupons.php:609
-msgid "Scheduled"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:611
-msgid "Ended"
-msgstr ""
-
-#: includes/store/class-store-coupons.php:613
-msgid "Running"
-msgstr ""
-
 #: includes/store/class-store-orders-table.php:36
-#: includes/store/class-store-orders.php:749
+#: includes/store/class-store-orders.php:757
 msgid "Order"
 msgstr ""
 
@@ -4403,150 +5274,156 @@ msgstr ""
 msgid "Cannot reopen this order: not enough stock of %s."
 msgstr ""
 
-#: includes/store/class-store-orders.php:445
+#. translators: %s: coupon code
+#: includes/store/class-store-orders.php:435
+#, php-format
+msgid "Reopened, but coupon %s had already been used again. Please check the discount on this order."
+msgstr ""
+
+#: includes/store/class-store-orders.php:453
 msgid "Unpaid past the time limit."
 msgstr ""
 
-#: includes/store/class-store-orders.php:488
+#: includes/store/class-store-orders.php:496
 msgid "Your order is packed and will be delivered at the time below."
 msgstr ""
 
-#: includes/store/class-store-orders.php:488
+#: includes/store/class-store-orders.php:496
 msgid "We are preparing your order for delivery."
 msgstr ""
 
-#: includes/store/class-store-orders.php:494
+#: includes/store/class-store-orders.php:502
 msgid "Delivery time"
 msgstr ""
 
-#: includes/store/class-store-orders.php:541
-#: includes/store/class-store-orders.php:633
+#: includes/store/class-store-orders.php:549
+#: includes/store/class-store-orders.php:641
 msgid "Payment"
 msgstr ""
 
 #. translators: 1: site name, 2: order number
-#: includes/store/class-store-orders.php:657
+#: includes/store/class-store-orders.php:665
 #, php-format
 msgid "Your %1$s order #%2$d"
 msgstr ""
 
 #. translators: %s: first name
-#: includes/store/class-store-orders.php:659
+#: includes/store/class-store-orders.php:667
 #, php-format
 msgid "Hi %s, we received your order. Thank you!"
 msgstr ""
 
 #. translators: %s: first name
-#: includes/store/class-store-orders.php:659
-#: includes/store/class-store-orders.php:697
+#: includes/store/class-store-orders.php:667
+#: includes/store/class-store-orders.php:705
 msgid "View your order"
 msgstr ""
 
-#: includes/store/class-store-orders.php:660
+#: includes/store/class-store-orders.php:668
 msgid "Order received"
 msgstr ""
 
 #. translators: 1: order number, 2: customer name
-#: includes/store/class-store-orders.php:664
+#: includes/store/class-store-orders.php:672
 #, php-format
 msgid "New order #%1$d from %2$s"
 msgstr ""
 
-#: includes/store/class-store-orders.php:665
+#: includes/store/class-store-orders.php:673
 msgid "Open the order"
 msgstr ""
 
-#: includes/store/class-store-orders.php:666
+#: includes/store/class-store-orders.php:674
 msgid "New order"
 msgstr ""
 
-#: includes/store/class-store-orders.php:683
+#: includes/store/class-store-orders.php:691
 msgid "We are preparing your order"
 msgstr ""
 
-#: includes/store/class-store-orders.php:683
+#: includes/store/class-store-orders.php:691
 msgid "Your order is confirmed and we are preparing it now."
 msgstr ""
 
-#: includes/store/class-store-orders.php:686
+#: includes/store/class-store-orders.php:694
 msgid "Your order is packed and waiting for your rider. You can book your courier now."
 msgstr ""
 
-#: includes/store/class-store-orders.php:686
+#: includes/store/class-store-orders.php:694
 msgid "Your order is packed and ready to collect. Please bring your order number; someone else can collect it for you."
 msgstr ""
 
-#: includes/store/class-store-orders.php:686
+#: includes/store/class-store-orders.php:694
 msgid "Your order is packed and will be delivered soon."
 msgstr ""
 
-#: includes/store/class-store-orders.php:688
+#: includes/store/class-store-orders.php:696
 msgid "Your order is complete"
 msgstr ""
 
-#: includes/store/class-store-orders.php:688
+#: includes/store/class-store-orders.php:696
 msgid "Your order is complete. Thank you for buying from our market!"
 msgstr ""
 
-#: includes/store/class-store-orders.php:689
+#: includes/store/class-store-orders.php:697
 msgid "Your order was cancelled"
 msgstr ""
 
-#: includes/store/class-store-orders.php:689
+#: includes/store/class-store-orders.php:697
 msgid "Your order was cancelled. Please contact us if this is unexpected."
 msgstr ""
 
-#: includes/store/class-store-orders.php:690
+#: includes/store/class-store-orders.php:698
 msgid "Your order was refunded"
 msgstr ""
 
-#: includes/store/class-store-orders.php:690
+#: includes/store/class-store-orders.php:698
 msgid "Your order was marked as refunded."
 msgstr ""
 
 #. translators: 1: site name, 2: order number, 3: heading
-#: includes/store/class-store-orders.php:696
+#: includes/store/class-store-orders.php:704
 #, php-format
 msgid "%1$s order #%2$d: %3$s"
 msgstr ""
 
-#: includes/store/class-store-orders.php:711
-#: includes/store/class-store-orders.php:725
-#: includes/store/class-store-orders.php:746
+#: includes/store/class-store-orders.php:719
+#: includes/store/class-store-orders.php:733
+#: includes/store/class-store-orders.php:754
 msgid "Store orders"
 msgstr ""
 
-#: includes/store/class-store-orders.php:753
+#: includes/store/class-store-orders.php:761
 msgid "Phone"
 msgstr ""
 
 #. translators: %d: order number
-#: includes/store/class-store-orders.php:782
+#: includes/store/class-store-orders.php:790
 #, php-format
 msgid "Order #%d is still in progress and was kept."
 msgstr ""
 
-#: includes/store/class-store.php:347
+#: includes/store/class-store.php:370
 msgid "Added to cart"
 msgstr ""
 
-#: includes/store/class-store.php:349
+#: includes/store/class-store.php:372
 msgid "Sorry, that item could not be added. Please try again."
 msgstr ""
 
-#: includes/store/class-store.php:350
+#: includes/store/class-store.php:373
 msgid "Please choose an option."
 msgstr ""
 
-#: includes/store/class-store.php:470
+#: includes/store/class-store.php:493
 msgid "Shop manager"
 msgstr ""
 
-#: includes/store/class-store.php:497
+#: includes/store/class-store.php:520
 msgid "Cart"
 msgstr ""
 
-#: includes/store/class-store.php:499
+#: includes/store/class-store.php:522
 msgid "My account"
 msgstr ""
 

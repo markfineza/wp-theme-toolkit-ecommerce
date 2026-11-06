@@ -62,8 +62,18 @@ defined( 'ABSPATH' ) || exit;
 						'depth'          => 1,
 					)
 				);
-			} elseif ( get_privacy_policy_url() ) {
-				echo '<nav aria-label="' . esc_attr__( 'Legal', 'nexora-commerce' ) . '"><ul class="nx-legal"><li>' . get_the_privacy_policy_link() . '</li></ul></nav>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			} else {
+				$nexora_terms = (string) apply_filters( 'nexora_terms_url', '' );
+				if ( $nexora_terms || get_privacy_policy_url() ) {
+					echo '<nav aria-label="' . esc_attr__( 'Legal', 'nexora-commerce' ) . '"><ul class="nx-legal">';
+					if ( $nexora_terms ) {
+						echo '<li><a href="' . esc_url( $nexora_terms ) . '">' . esc_html__( 'Terms and conditions', 'nexora-commerce' ) . '</a></li>';
+					}
+					if ( get_privacy_policy_url() ) {
+						echo '<li>' . get_the_privacy_policy_link() . '</li>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					}
+					echo '</ul></nav>';
+				}
 			}
 			?>
 			<?php $nexora_payments = nexora_payment_labels(); ?>

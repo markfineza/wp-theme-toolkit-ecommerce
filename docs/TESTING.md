@@ -88,6 +88,62 @@
 | axe-core | ✅ | 0 violations on home, shop, product, cart, checkout, success page, sign in, registration and account pages. |
 | Not tested | — | The built-in store with a theme other than this one; a real SMTP mail server (emails were captured, not delivered); a large catalogue under load. |
 
+## Rewards (2.4) checks
+
+Run end to end over real HTTP on both engines, through the real admin forms, registration forms and checkout.
+
+| Check | Result | Notes |
+|---|---|---|
+| Free-item conditions | ✅ | Wrong category, too few items and low order value refused with a reason. Guests are told to sign in. |
+| Free item in the cart | ✅ | Added at zero price with a fixed quantity and no remove link. It goes when the conditions stop being met. Tampered quantity ignored. |
+| Free item on the order | ✅ | Zero-priced order line, marked as free. Stock taken for both the paid and the free item. |
+| One use per customer | ✅ | Same customer refused; a different customer accepted. Built-in store: 6 simultaneous orders by one customer gave 1 order, 5 refused. |
+| Cancelling | ✅ | Gives the use back. Built-in store: reopening takes it again. |
+| Allowed customers | ✅ | Built-in store: other customers refused. WooCommerce uses its own "Allowed emails" field. |
+| First customers limit | ✅ | Limit 3 with 6 simultaneous registrations: exactly 3 spots, numbered 1 to 3. |
+| Personal coupon | ✅ | Refused for other customers and guests. Second use refused. Removed if the customer's account is deleted. |
+| Who gets a spot | ✅ | Accounts made by staff do not count. Built-in store: an account created at checkout does count. |
+| Rewards | ✅ | Percent and free item on both engines. Free delivery clears a real ₱50 fee on the rewarded order only, on both engines. |
+| Cart types | ✅ | Classic WooCommerce cart, WooCommerce cart block (card shown, free item at zero with a locked quantity) and built-in cart. |
+| Switching | ✅ | A free-item coupon made under WooCommerce works after switching to the built-in store. |
+| axe-core and phones | ✅ | Built-in store: 0 violations on registration, dashboard, cart and checkout with the new parts showing. No sideways scrolling at 390px. |
+| Not tested | — | Placing an order through the WooCommerce checkout block; an account created at WooCommerce checkout; real email delivery (emails were captured, not sent); axe-core on WooCommerce pages. |
+
+## Demo importer on both engines (2.4) checks
+
+| Check | Result | Notes |
+|---|---|---|
+| Screen | ✅ | Opens on the built-in store and from the plugin list's "Demo content" link, which used to give "Sorry, you are not allowed to access this page". |
+| Import | ✅ | Built-in store: 36 products, reviews, testimonials, posts, pages, menus and homepage. Run through the screen in a browser and through its AJAX steps. Running it twice adds nothing. |
+| Remove | ✅ | Removes demo items on both engines, including items imported under the other engine. A non-demo product stays. |
+| Storefront after import | ✅ | Home, shop, category, deals, content pages, cart, checkout and account all return 200 with no PHP errors. |
+| WooCommerce | ✅ | Importer steps and the Philippine settings option are unchanged. |
+
+## Storefront redesign (2.5) checks
+
+| Check | Result | Notes |
+|---|---|---|
+| Promotional banners | ✅ | Rotate every 7 seconds; pause, previous, next and dots work; start paused when the visitor's device asks for reduced motion (set in code, not exercised). |
+| Product tabs | ✅ | Click and arrow keys switch tabs on both engines' markup. |
+| Search with category | ✅ | Live suggestions and results page filter by category on both engines. WooCommerce goes straight to the product when one result matches. |
+| Coupons band | ✅ | Shows only ticked coupons. Unticked and expired coupons stay hidden. Copying checked with a simulated clipboard. |
+| Browse Categories menu | ✅ | Opens above the ticker; parent counts include subcategories on both engines. |
+| Cart and checkout | ✅ | Header cart opens the drawer. Reward and coupon checks re-run on both engines. |
+| axe-core | ✅ | 0 violations on home (desktop and phone) and shop on both engines, and with the menu open on the built-in store. |
+| Phones | ✅ | No sideways scrolling at 390, 768 and 1024px on the home page and at 390px on the shop page. |
+| Not tested | — | A real phone or Safari; a real clipboard. |
+
+## Security and consent (2.6) checks
+
+- [ ] Registration refuses without the Terms box, and without reCAPTCHA once keys are saved. Test My Account, checkout with "create an account", and wp-login.php.
+- [ ] The consent record appears on the customer's Users screen. Marketing stays off unless ticked.
+- [ ] Raising the document version shows the Accept card on the account dashboard.
+- [ ] Login code switches stay locked until a test code is confirmed.
+- [ ] Correct password leads to the code screen with no session. Wrong, expired and old codes fail. Five wrong codes end the attempt.
+- [ ] Admin, Order Desk and customer logins continue to the right page. A login at checkout returns to checkout with the cart intact.
+- [ ] `NEXORA_DISABLE_LOGIN_OTP` lets an administrator back in.
+- [ ] On a real device: the code arrives in the inbox, not spam, and Google's box works with your real keys.
+
 ## Accessibility
 
 - **axe-core (WCAG 2.0/2.1/2.2 A and AA rules): 0 violations** on home (desktop and mobile), shop, product, cart, journal and a post. Issues found and fixed during testing: WooCommerce's breadcrumb grey contrast, and the add-to-cart button contrast before a variation is chosen.
