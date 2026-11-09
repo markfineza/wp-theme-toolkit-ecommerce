@@ -1,0 +1,9 @@
+/* Freshtastic Toolkit: package contents on product pages. */
+.nx-package-box { margin: 16px 0; padding: 16px 18px; border: 1px solid var(--nx-border, #dfe3ee); border-radius: 14px; background: var(--nx-surface, #fff); }
+.nx-package-box .nx-package-box__title { margin: 0 0 8px; font-weight: 700; color: var(--nx-primary, #12306e); }
+.nx-package-box ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.nx-package-box li { margin: 0; overflow-wrap: anywhere; }
+.nx-package-box a { display: inline-block; min-height: 24px; text-decoration: underline; }
+.nx-package-box__qty { font-weight: 700; font-variant-numeric: tabular-nums; }
+.nx-package-box__out { margin-left: 6px; padding: 1px 8px; border-radius: 999px; background: #fdecea; color: #8c1d18; font-size: .75rem; font-weight: 700; }
+.nx-package-box .nx-package-box__save { margin: 10px 0 0; font-size: .875rem; }

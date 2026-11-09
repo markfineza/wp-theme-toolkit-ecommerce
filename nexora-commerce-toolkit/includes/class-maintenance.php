@@ -42,6 +42,8 @@ class Nexora_Toolkit_Maintenance {
 		add_action( 'admin_post_nexora_maint_toggle', array( __CLASS__, 'handle_toggle' ) );
 		add_action( 'admin_post_nexora_maint_grant', array( __CLASS__, 'handle_grant' ) );
 		add_action( 'admin_post_nexora_maint_revoke', array( __CLASS__, 'handle_revoke' ) );
+		add_action( 'admin_post_nexora_maint_preview', array( __CLASS__, 'preview_page' ) );
+		add_action( 'admin_enqueue_scripts', array( __CLASS__, 'admin_assets' ) );
 		add_action( 'update_option_' . self::OPTION, array( __CLASS__, 'purge_caches' ) );
 		add_action( 'admin_bar_menu', array( __CLASS__, 'admin_bar' ), 100 );
 
@@ -71,6 +73,9 @@ class Nexora_Toolkit_Maintenance {
 			'contact'      => '',
 			'bypass_roles' => array( 'administrator', 'shop_manager' ),
 			'code_form'    => true,
+			'bg'           => 'market',
+			'bg_image'     => 0,
+			'bg_overlay'   => 60,
 		);
 	}
 
@@ -137,7 +142,13 @@ class Nexora_Toolkit_Maintenance {
 			'contact'      => isset( $in['contact'] ) ? sanitize_text_field( wp_unslash( $in['contact'] ) ) : '',
 			'bypass_roles' => array_values( array_intersect( array_map( 'sanitize_key', (array) ( isset( $in['bypass_roles'] ) ? $in['bypass_roles'] : array() ) ), $roles ) ),
 			'code_form'    => ! empty( $in['code_form'] ),
+			'bg'           => isset( $in['bg'] ) && in_array( $in['bg'], array( 'market', 'banner', 'custom', 'plain' ), true ) ? $in['bg'] : 'market',
+			'bg_image'     => isset( $in['bg_image'] ) ? absint( $in['bg_image'] ) : 0,
+			'bg_overlay'   => isset( $in['bg_overlay'] ) ? min( 90, max( 30, absint( $in['bg_overlay'] ) ) ) : 60,
 		);
+		if ( 'custom' === $out['bg'] && ! wp_attachment_is_image( $out['bg_image'] ) ) {
+			$out['bg'] = 'market'; // No image chosen: keep the market artwork.
+		}
 		if ( ! in_array( 'administrator', $out['bypass_roles'], true ) ) {
 			$out['bypass_roles'][] = 'administrator'; // Never lock administrators out.
 		}
@@ -420,7 +431,7 @@ class Nexora_Toolkit_Maintenance {
 			return;
 		}
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- payment gateway callbacks must keep working.
-		if ( isset( $_GET['wc-api'] ) || is_robots() || is_favicon() ) {
+		if ( isset( $_GET['wc-api'] ) || is_robots() || is_favicon() || Nexora_Toolkit_Login_OTP::in_progress() ) {
 			return;
 		}
 		self::render_page();
@@ -464,6 +475,55 @@ class Nexora_Toolkit_Maintenance {
 	}
 
 	/**
+	 * Background image for the maintenance page, or '' for the plain background.
+	 *
+	 * @param array $s Settings.
+	 * @return string
+	 */
+	public static function background_url( $s ) {
+		$market = NEXORA_TOOLKIT_URL . 'assets/images/maintenance-bg.jpg';
+		switch ( isset( $s['bg'] ) ? $s['bg'] : 'market' ) {
+			case 'plain':
+				return '';
+			case 'custom':
+				$url = wp_get_attachment_image_url( (int) $s['bg_image'], 'full' );
+				return $url ? $url : $market;
+			case 'banner':
+				// The theme's homepage banner (Appearance → Customize → Freshtastic Homepage).
+				$url = wp_get_attachment_image_url( (int) get_theme_mod( 'nexora_hero_image', 0 ), 'full' );
+				return $url ? $url : $market;
+		}
+		return $market;
+	}
+
+	/**
+	 * Media picker for the background image (maintenance screen only).
+	 *
+	 * @param string $hook Hook.
+	 */
+	public static function admin_assets( $hook ) {
+		if ( 'settings_page_nexora-maintenance' !== $hook ) {
+			return;
+		}
+		wp_enqueue_media();
+		wp_add_inline_script(
+			'media-editor',
+			'jQuery(function($){var box=$("#nm-bg-custom");$(".nm-bg-pick").on("click",function(e){e.preventDefault();var f=wp.media({title:' . wp_json_encode( __( 'Maintenance background', 'nexora-commerce-toolkit' ) ) . ',library:{type:"image"},multiple:false});f.on("select",function(){var a=f.state().get("selection").first().toJSON();$("#nm-bg-image").val(a.id);$(".nm-bg-thumb").attr("src",(a.sizes&&a.sizes.medium?a.sizes.medium.url:a.url)).prop("hidden",false);$("input[name$=\\[bg\\]][value=custom]").prop("checked",true);});f.open();});$("#nm-overlay").on("input",function(){$("#nm-overlay-out").text(this.value+"%");});});'
+		);
+	}
+
+	/**
+	 * Show the maintenance page to an administrator without turning maintenance on.
+	 */
+	public static function preview_page() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'nexora-commerce-toolkit' ), 403 );
+		}
+		check_admin_referer( 'nexora_maintenance_preview' );
+		self::render_page();
+	}
+
+	/**
 	 * Output the maintenance page (HTTP 503) and stop.
 	 */
 	public static function render_page() {
@@ -475,6 +535,8 @@ class Nexora_Toolkit_Maintenance {
 		$accent  = sanitize_hex_color( (string) get_theme_mod( 'nexora_color_secondary', '#F0762B' ) );
 		$accent  = $accent ? $accent : '#F0762B';
 		$retry   = $ts && $ts > time() ? $ts - time() : HOUR_IN_SECONDS;
+		$bg      = self::background_url( $s );
+		$shade   = ( isset( $s['bg_overlay'] ) ? (int) $s['bg_overlay'] : 60 ) / 100;
 		$error   = ! empty( $GLOBALS['nexora_access_error'] );
 
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
@@ -501,8 +563,18 @@ class Nexora_Toolkit_Maintenance {
 	* { box-sizing: border-box; }
 	body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; background: radial-gradient(60% 60% at 85% 10%, color-mix(in srgb, var(--p) 35%, transparent), transparent 70%), #0B1220; color: #E2E8F0; font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
 	main { width: 100%; max-width: 620px; padding: clamp(24px, 5vw, 44px); border-radius: 22px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); box-shadow: 0 30px 60px -30px rgba(0,0,0,.6); }
+<?php if ( $bg ) : ?>
+	/* Theme background: the image, tinted with the theme's primary colour so the text stays readable. */
+	body { background:
+		linear-gradient(160deg, rgba(11,18,32,<?php echo esc_attr( (string) $shade ); ?>) 0%, color-mix(in srgb, var(--p) <?php echo (int) round( $shade * 100 ); ?>%, transparent) 55%, rgba(11,18,32,<?php echo esc_attr( (string) min( 1, $shade + .1 ) ); ?>) 100%),
+		url("<?php echo esc_url( $bg ); ?>") center / cover no-repeat,
+		#0B1220; }
+	main { background: rgba(11,18,32,.62); border-color: rgba(255,255,255,.16); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+	.brand img { background: #fff; border-radius: 50%; padding: 4px; }
+	@media (min-width: 900px) { body { background-attachment: fixed; } }
+<?php endif; ?>
 	.brand { display: flex; align-items: center; gap: 12px; margin: 0 0 28px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #fff; }
-	.brand img { max-height: 40px; width: auto; }
+	.brand img { max-height: 64px; width: auto; }
 	.status { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px; padding: 5px 12px; border-radius: 999px; background: rgba(245,158,11,.14); color: #FCD34D; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 	.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--a); }
 	h1 { margin: 0 0 12px; font-size: clamp(28px, 5vw, 40px); line-height: 1.1; letter-spacing: -.02em; color: #fff; }
@@ -526,8 +598,15 @@ class Nexora_Toolkit_Maintenance {
 <main>
 	<p class="brand">
 		<?php
-		$logo = (int) get_theme_mod( 'custom_logo' );
-		echo $logo ? wp_get_attachment_image( $logo, 'medium', false, array( 'alt' => $name ) ) : esc_html( $name ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core image markup.
+		$logo  = (int) get_theme_mod( 'custom_logo' );
+		$brand = $logo ? '' : (string) apply_filters( 'nexora_store_email_logo', '' ); // The theme's own logo when none is set in the Customizer.
+		if ( $logo ) {
+			echo wp_get_attachment_image( $logo, 'medium', false, array( 'alt' => $name ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core image markup.
+		} elseif ( $brand ) {
+			echo '<img src="' . esc_url( $brand ) . '" alt="' . esc_attr( $name ) . '" width="64" height="64">';
+		} else {
+			echo esc_html( $name );
+		}
 		?>
 	</p>
 	<p class="status"><?php echo 'shop' === $s['scope'] ? esc_html__( 'Shop under maintenance', 'nexora-commerce-toolkit' ) : esc_html__( 'Under maintenance', 'nexora-commerce-toolkit' ); ?></p>
@@ -803,9 +882,53 @@ class Nexora_Toolkit_Maintenance {
 						<?php endforeach; ?>
 						<input type="hidden" name="<?php echo esc_attr( self::OPTION ); ?>[bypass_roles][]" value="administrator">
 					</fieldset></td></tr>
+					<tr><th scope="row"><?php esc_html_e( 'Background', 'nexora-commerce-toolkit' ); ?></th><td>
+						<?php
+						$banner = (int) get_theme_mod( 'nexora_hero_image', 0 );
+						$thumbs = array(
+							'market' => NEXORA_TOOLKIT_URL . 'assets/images/maintenance-bg.jpg',
+							'banner' => $banner ? wp_get_attachment_image_url( $banner, 'medium' ) : '',
+							'custom' => $s['bg_image'] ? wp_get_attachment_image_url( (int) $s['bg_image'], 'medium' ) : '',
+						);
+						$opts   = array(
+							'market' => __( 'Market artwork (rice, vegetables, fish and eggs over a price chart)', 'nexora-commerce-toolkit' ),
+							'banner' => $banner ? __( 'Homepage banner image from the theme', 'nexora-commerce-toolkit' ) : __( 'Homepage banner image from the theme (none set yet, so the market artwork is used)', 'nexora-commerce-toolkit' ),
+							'custom' => __( 'My own image', 'nexora-commerce-toolkit' ),
+							'plain'  => __( 'Plain dark background', 'nexora-commerce-toolkit' ),
+						);
+						?>
+						<fieldset>
+							<legend class="screen-reader-text"><?php esc_html_e( 'Background', 'nexora-commerce-toolkit' ); ?></legend>
+							<?php foreach ( $opts as $key => $label ) : ?>
+								<p style="display:flex;gap:10px;align-items:center;margin:0 0 8px">
+									<label style="display:flex;gap:8px;align-items:center"><input type="radio" name="<?php echo esc_attr( self::OPTION ); ?>[bg]" value="<?php echo esc_attr( $key ); ?>" <?php checked( $s['bg'], $key ); ?>>
+									<?php if ( ! empty( $thumbs[ $key ] ) ) : ?>
+										<img src="<?php echo esc_url( $thumbs[ $key ] ); ?>" alt="" width="64" height="40" style="object-fit:cover;border-radius:4px;border:1px solid #dcdcde" <?php echo 'custom' === $key ? 'class="nm-bg-thumb"' : ''; ?>>
+									<?php elseif ( 'custom' === $key ) : ?>
+										<img src="" alt="" width="64" height="40" style="object-fit:cover;border-radius:4px;border:1px solid #dcdcde" class="nm-bg-thumb" hidden>
+									<?php endif; ?>
+									<?php echo esc_html( $label ); ?></label>
+									<?php if ( 'custom' === $key ) : ?>
+										<button type="button" class="button nm-bg-pick"><?php esc_html_e( 'Choose image', 'nexora-commerce-toolkit' ); ?></button>
+									<?php endif; ?>
+								</p>
+							<?php endforeach; ?>
+							<input type="hidden" id="nm-bg-image" name="<?php echo esc_attr( self::OPTION ); ?>[bg_image]" value="<?php echo (int) $s['bg_image']; ?>">
+						</fieldset>
+						<p>
+							<label for="nm-overlay"><?php esc_html_e( 'Overlay strength', 'nexora-commerce-toolkit' ); ?></label>
+							<input type="range" id="nm-overlay" min="30" max="90" step="5" name="<?php echo esc_attr( self::OPTION ); ?>[bg_overlay]" value="<?php echo (int) $s['bg_overlay']; ?>" style="vertical-align:middle">
+							<output id="nm-overlay-out" for="nm-overlay"><?php echo (int) $s['bg_overlay']; ?>%</output>
+						</p>
+						<p class="description"><?php esc_html_e( 'The image is tinted with your theme\'s primary colour so the text stays easy to read. Raise the overlay for busy photos. A landscape image at least 1600 pixels wide works best.', 'nexora-commerce-toolkit' ); ?></p>
+					</td></tr>
 					<tr><th scope="row"><?php esc_html_e( 'Access code box', 'nexora-commerce-toolkit' ); ?></th><td><label><input type="checkbox" name="<?php echo esc_attr( self::OPTION ); ?>[code_form]" value="1" <?php checked( $s['code_form'] ); ?>> <?php esc_html_e( 'Show “Have a preview access code?” on the maintenance page', 'nexora-commerce-toolkit' ); ?></label></td></tr>
 				</table>
-				<?php submit_button( __( 'Save maintenance page', 'nexora-commerce-toolkit' ) ); ?>
+				<p class="submit">
+					<?php submit_button( __( 'Save maintenance page', 'nexora-commerce-toolkit' ), 'primary', 'submit', false ); ?>
+					<a class="button" target="_blank" rel="noopener" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=nexora_maint_preview' ), 'nexora_maintenance_preview' ) ); ?>"><?php esc_html_e( 'Preview the maintenance page', 'nexora-commerce-toolkit' ); ?></a>
+					<span class="description"><?php esc_html_e( 'Save first to preview changes. Maintenance stays as it is.', 'nexora-commerce-toolkit' ); ?></span>
+				</p>
 			</form>
 
 			<h2 id="nexora-access"><?php esc_html_e( 'Temporary access', 'nexora-commerce-toolkit' ); ?></h2>

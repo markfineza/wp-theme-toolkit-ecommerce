@@ -17,12 +17,23 @@ label.nx-consent__box.nx-consent__box, .form-row.nx-consent label.nx-consent__bo
 @media (max-width: 400px) { .nx-captcha .g-recaptcha { transform: scale(.85); transform-origin: 0 0; } }
 @media (max-width: 375px) { .nx-captcha .g-recaptcha { transform: scale(.8); } }
 @media (max-width: 345px) { .nx-captcha .g-recaptcha { transform: scale(.7); } }
-.login .nx-otp { margin-top: 20px; padding: 24px; border: 1px solid #c3c4c7; border-radius: 8px; background: #fff; box-shadow: 0 1px 3px rgba(0, 0, 0, .04); }
-.login .nx-otp form { margin: 0; padding: 0; border: 0; background: none; box-shadow: none; overflow: visible; }
-.nx-otp__title { margin: 0 0 6px; font-size: 1.3rem; line-height: 1.25; }
-.nx-otp__sub { margin: 0 0 18px; color: #50575e; overflow-wrap: anywhere; }
-.login .nx-otp__code { margin: 4px 0 14px; font-size: 1.6rem; letter-spacing: .25em; text-align: center; }
-.login .nx-otp .submit { margin: 0; }
-.login .nx-otp .submit .button { float: none; width: 100%; min-height: 44px; }
-.login .nx-otp__resend { margin-top: 14px; text-align: center; }
-.login .nx-otp__resend .button-link { min-height: 24px; }
+.nx-otp__notice { margin: 0 0 16px; padding: 12px 14px; border: 1px solid; border-radius: 12px; font-size: .9rem; line-height: 1.45; }
+h1 + .nx-otp__notice { margin-top: 14px; }
+.nx-otp__notice.is-error { border-color: #f1b8ad; background: #fdeeeb; color: #8a1f0c; }
+.nx-otp__notice.is-note { border-color: #b4dcb0; background: #edf8ec; color: #1d5a1a; }
+.nx-otp__sub { overflow-wrap: anywhere; }
+.nx-otp__form { margin: 0; }
+input.nx-otp__code.nx-otp__code { width: 100%; box-sizing: border-box; font-size: 1.6rem; letter-spacing: .25em; text-align: center; }
+.nx-otp__resend { margin: 12px 0 0; text-align: center; }
+.nx-otp__resend button { min-height: 44px; padding: 0 12px; border: 0; background: none; color: inherit; font: inherit; font-weight: 600; text-decoration: underline; cursor: pointer; }
+.nx-otp__back { margin: 4px 0 0; text-align: center; }
+
+/* Plain page: the wp-admin login box and themes other than Freshtastic. */
+.nx-otp-page { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 16px; box-sizing: border-box; background: #f4f6fb; color: #0f1b3d; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.nx-otp-card { width: 100%; max-width: 400px; box-sizing: border-box; padding: 28px 24px; border-radius: 16px; background: #fff; box-shadow: 0 2px 10px rgba(15, 27, 61, .08); }
+.nx-otp-card h1 { margin: 0 0 6px; font-size: 1.4rem; line-height: 1.25; }
+.nx-otp-card .nx-otp__sub { margin: 0 0 18px; color: #50575e; }
+.nx-otp-card label { display: block; margin-bottom: 6px; font-weight: 600; }
+.nx-otp-card .form-row { margin: 0 0 14px; }
+.nx-otp-card input.nx-otp__code { padding: 8px 10px; border: 1px solid #767d8c; border-radius: 10px; }
+.nx-otp-card .button { width: 100%; min-height: 48px; border: 0; border-radius: 10px; background: #0f1b3d; color: #fff; font: inherit; font-weight: 700; cursor: pointer; }

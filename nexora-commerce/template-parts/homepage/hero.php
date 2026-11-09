@@ -1,8 +1,9 @@
 <?php
 /**
  * Homepage hero: promotional banners from Customizer → Freshtastic Homepage → Hero promotional banner.
- * With several banners it rotates, with pause, previous and next controls. The first image is the LCP
- * element, so it is preloaded and never lazy-loaded.
+ * With several banners they slide sideways, with swipe, pause, previous and next controls. A banner with
+ * no image shows only the section background. The first image is the LCP element, so it is preloaded and
+ * never lazy-loaded.
  *
  * @package NexoraCommerce
  */
@@ -17,12 +18,13 @@ $nexora_count = count( $nexora_slides );
 ?>
 <section class="nx-promo nx-dark" aria-label="<?php esc_attr_e( 'Promotions', 'nexora-commerce' ); ?>" data-nexora-promo>
 	<div class="nx-promo__shape" aria-hidden="true"></div>
+	<div class="nx-promo__slides" data-nexora-slides>
 	<?php foreach ( $nexora_slides as $nexora_i => $nexora_slide ) : ?>
 		<?php
 		$nexora_heading = 0 === $nexora_i ? 'h1' : 'h2';
 		$nexora_url     = $nexora_slide['url'] ? $nexora_slide['url'] : ( nexora_has_store() ? nexora_shop_url( array( 'on_sale' => 1 ) ) : home_url( '/' ) );
 		?>
-		<div class="nx-promo__slide" data-nexora-slide<?php echo 0 === $nexora_i ? '' : ' hidden'; ?>>
+		<div class="nx-promo__slide<?php echo 0 === $nexora_i ? ' is-active' : ''; ?>" data-nexora-slide<?php echo 0 === $nexora_i ? '' : ' inert'; ?>>
 			<div class="nx-container nx-promo__inner">
 				<div class="nx-promo__copy">
 					<?php if ( $nexora_slide['badge'] ) : ?>
@@ -54,9 +56,9 @@ $nexora_count = count( $nexora_slides );
 						<?php endif; ?>
 					</div>
 				</div>
-				<div class="nx-promo__media">
-					<?php
-					if ( $nexora_slide['image'] ) {
+				<?php if ( $nexora_slide['image'] ) : ?>
+					<div class="nx-promo__media">
+						<?php
 						echo wp_get_attachment_image(
 							$nexora_slide['image'],
 							'full',
@@ -70,14 +72,13 @@ $nexora_count = count( $nexora_slides );
 								'sizes'         => '(min-width: 1024px) 50vw, 100vw',
 							)
 						);
-					} else {
-						printf( '<img class="nx-promo__img" src="%1$s" width="1600" height="1200" alt="" %2$s decoding="async">', esc_url( NEXORA_URI . '/assets/images/hero-fallback.jpg' ), 0 === $nexora_i ? 'fetchpriority="high"' : 'loading="lazy"' );
-					}
-					?>
-				</div>
+						?>
+					</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	<?php endforeach; ?>
+	</div>
 	<?php if ( $nexora_count > 1 ) : ?>
 		<div class="nx-container nx-promo__controls">
 			<button type="button" class="nx-promo__btn" data-nexora-prev aria-label="<?php esc_attr_e( 'Previous banner', 'nexora-commerce' ); ?>"><?php echo nexora_icon( 'chevron-left', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button>

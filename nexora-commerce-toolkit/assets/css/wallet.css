@@ -1,0 +1,51 @@
+/* Freshtastic Toolkit: Coupons and Points account pages, and the dashboard rewards panel. */
+.nx-wallet { display: grid; gap: 24px; min-width: 0; color: var(--nx-text, #0f172a); }
+.nx-wallet > section { min-width: 0; }
+.nx-wallet h3 { margin: 0 0 12px; color: var(--nx-primary, #12306e); font-size: 1.1rem; }
+.nx-wallet__head h2 { margin: 0; color: var(--nx-primary, #12306e); font-size: 1.5rem; }
+.nx-wallet__head p { margin: 4px 0 0; color: var(--nx-muted, #5b6475); }
+.nx-wallet-card { padding: 18px 20px; border: 1px solid var(--nx-border, #e3e7ee); border-radius: 16px; background: var(--nx-bg, #f6f7fb); }
+.nx-wallet-card h3 { margin-bottom: 10px; }
+.nx-claim-form { margin: 0; }
+.nx-claim-form label { display: block; margin-bottom: 6px; font-size: .875rem; font-weight: 600; }
+.nx-claim-form__row { display: flex; flex-wrap: wrap; gap: 10px; }
+.nx-claim-form input.input-text { flex: 1 1 200px; min-width: 0; min-height: 48px; box-sizing: border-box; padding: 0 14px; border: 1.5px solid var(--nx-border-strong, #aab2c2); border-radius: 12px; background: #fff; font: inherit; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+.nx-claim-form input.input-text:focus { outline: 2px solid var(--nx-primary, #12306e); outline-offset: 1px; }
+.button.nx-wallet-btn, a.button.nx-wallet-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border: 0; border-radius: 12px; background: var(--nx-secondary, #f47a20); color: var(--nx-dark, #0a1a40); font-weight: 750; text-decoration: none; cursor: pointer; white-space: nowrap; }
+.button.nx-wallet-btn:hover, a.button.nx-wallet-btn:hover { background: color-mix(in srgb, var(--nx-secondary, #f47a20) 88%, #000); color: var(--nx-dark, #0a1a40); }
+.nx-tickets { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.nx-ticket { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 16px; margin: 0; padding: 16px 18px; border: 1px solid var(--nx-border, #e3e7ee); border-left: 5px solid var(--nx-primary, #12306e); border-radius: 14px; background: #fff; }
+.nx-ticket.is-ready { border-left-color: var(--nx-secondary, #f47a20); }
+.nx-ticket__body { flex: 1 1 200px; min-width: 0; }
+.nx-ticket__title { margin: 0; font-weight: 750; }
+.nx-ticket__terms { margin: 3px 0 0; color: var(--nx-muted, #5b6475); font-size: .8125rem; }
+.nx-ticket__code { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; min-height: 36px; margin-top: 8px; padding: 2px 10px; border: 1px dashed var(--nx-border-strong, #aab2c2); border-radius: 8px; background: none; color: inherit; font: inherit; font-size: .8125rem; font-weight: 600; cursor: pointer; }
+.nx-ticket__code code { padding: 0; background: none; color: var(--nx-primary, #12306e); font-size: .875rem; font-weight: 750; overflow-wrap: anywhere; }
+.nx-ticket__actions { margin: 0; }
+.nx-ticket__actions form { margin: 0; }
+.nx-ticket__note { font-size: .875rem; font-weight: 650; color: var(--nx-muted, #5b6475); }
+.nx-wallet-empty { margin: 0; padding: 18px; border: 1px dashed var(--nx-border-strong, #aab2c2); border-radius: 14px; color: var(--nx-muted, #5b6475); }
+.nx-wallet-scroll { overflow-x: auto; border: 1px solid var(--nx-border, #e3e7ee); border-radius: 14px; }
+.nx-wallet-scroll:focus-visible { outline: 2px solid var(--nx-primary, #12306e); outline-offset: 2px; }
+.nx-wallet-table { width: 100%; min-width: 620px; margin: 0; border: 0; border-collapse: collapse; font-size: .875rem; }
+.nx-wallet-table th { padding: 10px 14px; border: 0; background: var(--nx-bg, #f6f7fb); color: var(--nx-muted, #5b6475); font-size: .75rem; font-weight: 700; text-align: left; white-space: nowrap; }
+.nx-wallet-table td { padding: 12px 14px; border: 0; border-top: 1px solid var(--nx-border, #e3e7ee); vertical-align: top; }
+.nx-wallet-table .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.nx-wallet-table code { padding: 0; background: none; font-weight: 700; }
+.nx-wallet-table small { display: block; margin-top: 3px; color: var(--nx-muted, #5b6475); }
+.nx-wallet-status { display: inline-block; padding: 3px 10px; border-radius: 999px; background: #eef1f6; color: #3f4a63; font-size: .75rem; font-weight: 700; white-space: nowrap; }
+.nx-wallet-status.is-ready { background: #e3f5ec; color: #0b5a45; }
+.nx-wallet-status.is-expired, .nx-wallet-status.is-gone, .nx-wallet-status.is-full { background: #fdeeeb; color: #8a1f0c; }
+.nx-points-hero { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; padding: clamp(20px, 3vw, 30px); border-radius: 20px; background: linear-gradient(120deg, var(--nx-primary, #12306e), var(--nx-dark, #0a1a40)); color: #fff; }
+.nx-points-hero::before { content: ""; position: absolute; z-index: -1; width: 220px; height: 220px; right: -90px; top: -130px; border: 18px solid var(--nx-secondary, #f47a20); border-radius: 50%; }
+.nx-points-hero p { margin: 0; }
+.nx-points-hero__icon { display: grid; place-items: center; width: 60px; height: 60px; border-radius: 18px; background: var(--nx-secondary, #f47a20); color: var(--nx-dark, #0a1a40); }
+.nx-points-hero__label { color: #d5ddee; font-size: .875rem; font-weight: 600; }
+.nx-points-hero__value { color: #fff; font-size: clamp(2.2rem, 5vw, 3rem); font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.nx-points-hero__note { flex: 1 1 100%; color: #d5ddee; font-size: .875rem; }
+.nx-wallet-panel__nums { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 10px; margin: 0 0 14px; padding: 0; list-style: none; }
+.nx-wallet-panel__nums li { margin: 0; }
+.nx-wallet-panel__nums a { display: grid; gap: 2px; height: 100%; box-sizing: border-box; padding: 12px; border-radius: 12px; background: var(--nx-bg, #f6f7fb); color: inherit; text-decoration: none; }
+.nx-wallet-panel__nums a:hover { background: var(--nx-primary-soft, #e6ecf8); }
+.nx-wallet-panel__nums strong { color: var(--nx-primary, #12306e); font-size: 1.45rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.nx-wallet-panel__nums span { color: var(--nx-muted, #5b6475); font-size: .75rem; }

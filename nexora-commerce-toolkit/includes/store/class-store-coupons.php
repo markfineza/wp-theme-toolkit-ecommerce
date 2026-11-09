@@ -235,7 +235,7 @@ class Nexora_Store_Coupons {
 	 * @param string   $email   Email entered at checkout.
 	 * @return bool
 	 */
-	private static function email_allowed( $allowed, $user, $email ) {
+	public static function email_allowed( $allowed, $user, $email ) {
 		$mine = array( $email );
 		if ( $user ) {
 			$account = get_userdata( $user );

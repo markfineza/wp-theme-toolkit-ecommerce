@@ -189,6 +189,40 @@ class Nexora_Store_Orders {
 	}
 
 	/**
+	 * What really holds the stock for a sold quantity: the item, or each product inside a package.
+	 *
+	 * @param Nexora_Store_Product|null $item     Item.
+	 * @param int                       $qty      Quantity.
+	 * @param array                     $contents Package contents.
+	 * @return array<int,array{0:Nexora_Store_Product,1:int}>
+	 */
+	private static function stock_parts( $item, $qty, $contents ) {
+		if ( ! $contents ) {
+			return $item ? array( array( $item, $qty ) ) : array();
+		}
+		$parts = array();
+		foreach ( $contents as $row ) {
+			$part = Nexora_Store_Product::get( (int) $row['id'] );
+			if ( $part ) {
+				$parts[] = array( $part, (int) $row['qty'] * $qty );
+			}
+		}
+		return $parts;
+	}
+
+	/**
+	 * Stock parts of a saved order line.
+	 *
+	 * @param object $line Order item row.
+	 * @return array
+	 */
+	private static function line_parts( $line ) {
+		$item     = Nexora_Store_Product::get( $line->variation_id ? $line->variation_id : $line->product_id );
+		$contents = ! empty( $line->contents ) ? json_decode( $line->contents, true ) : array();
+		return self::stock_parts( $item, (int) $line->qty, is_array( $contents ) ? $contents : array() );
+	}
+
+	/**
 	 * Update the stock status flags after a change.
 	 *
 	 * @param int $id Product or variation holding the stock.
@@ -209,6 +243,12 @@ class Nexora_Store_Orders {
 			}
 		}
 		Nexora_Store_Catalog::flush();
+		/**
+		 * Stock of a product or variation changed through an order.
+		 *
+		 * @param int $id Product or variation ID.
+		 */
+		do_action( 'nexora_store_stock_changed', $id );
 	}
 
 	/**
@@ -239,9 +279,11 @@ class Nexora_Store_Orders {
 		};
 
 		foreach ( $t['lines'] as $line ) {
-			if ( ! self::take_stock( $line['item'], (int) $line['qty'] ) ) {
-				/* translators: %s: product */
-				return $rollback( sprintf( __( 'Sorry, %s just sold out or there is not enough left. Please update your cart.', 'nexora-commerce-toolkit' ), $line['product']->get_name() ) );
+			foreach ( self::stock_parts( $line['item'], (int) $line['qty'], Nexora_Toolkit_Packages::contents( $line['item']->get_id() ) ) as $part ) {
+				if ( ! self::take_stock( $part[0], $part[1] ) ) {
+					/* translators: %s: product */
+					return $rollback( sprintf( __( 'Sorry, %s just sold out or there is not enough left. Please update your cart.', 'nexora-commerce-toolkit' ), $part[0]->get_name() ) );
+				}
 			}
 		}
 		$who = $data['user_id'] ? (string) $data['user_id'] : strtolower( $data['email'] );
@@ -292,7 +334,8 @@ class Nexora_Store_Orders {
 					'product_id'   => $line['product']->get_id(),
 					'variation_id' => $line['item']->get_parent_id() ? $line['item']->get_id() : 0,
 					'name'         => $line['product']->get_name(),
-					'option_label' => $line['option'],
+					'option_label' => mb_substr( (string) $line['option'], 0, 1000 ),
+					'contents'     => wp_json_encode( Nexora_Toolkit_Packages::contents( $line['item']->get_id() ) ),
 					'sku'          => $line['item']->get_sku(),
 					'qty'          => (int) $line['qty'],
 					'price'        => $line['price'],
@@ -304,7 +347,9 @@ class Nexora_Store_Orders {
 		// phpcs:enable
 
 		foreach ( $t['lines'] as $line ) {
-			self::sync_stock_status( $line['item']->stock_owner()->get_id() );
+			foreach ( self::stock_parts( $line['item'], (int) $line['qty'], Nexora_Toolkit_Packages::contents( $line['item']->get_id() ) ) as $part ) {
+				self::sync_stock_status( $part[0]->stock_owner()->get_id() );
+			}
 			self::bump_sales( $line['product']->get_id(), (int) $line['qty'] );
 		}
 		self::flush_kpis();
@@ -380,12 +425,13 @@ class Nexora_Store_Orders {
 	private static function restore_stock( $order ) {
 		global $wpdb;
 		foreach ( self::items( $order->id ) as $line ) {
-			$item = Nexora_Store_Product::get( $line->variation_id ? $line->variation_id : $line->product_id );
-			if ( $item && $item->managing_stock() ) {
-				$owner = $item->stock_owner()->get_id();
-				$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->postmeta} SET meta_value = CAST(meta_value AS DECIMAL(14,3)) + %d WHERE post_id = %d AND meta_key = '_stock'", (int) $line->qty, $owner ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-				wp_cache_delete( $owner, 'post_meta' );
-				self::sync_stock_status( $owner );
+			foreach ( self::line_parts( $line ) as $part ) {
+				if ( $part[0]->managing_stock() ) {
+					$owner = $part[0]->stock_owner()->get_id();
+					$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->postmeta} SET meta_value = CAST(meta_value AS DECIMAL(14,3)) + %d WHERE post_id = %d AND meta_key = '_stock'", $part[1], $owner ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+					wp_cache_delete( $owner, 'post_meta' );
+					self::sync_stock_status( $owner );
+				}
 			}
 			self::bump_sales( (int) $line->product_id, - (int) $line->qty );
 		}
@@ -406,24 +452,24 @@ class Nexora_Store_Orders {
 	private static function retake_stock( $order ) {
 		$taken = array();
 		foreach ( self::items( $order->id ) as $line ) {
-			$item = Nexora_Store_Product::get( $line->variation_id ? $line->variation_id : $line->product_id );
-			if ( $item && ! self::take_stock( $item, (int) $line->qty ) ) {
-				foreach ( $taken as $back ) {
-					global $wpdb;
-					$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->postmeta} SET meta_value = CAST(meta_value AS DECIMAL(14,3)) + %d WHERE post_id = %d AND meta_key = '_stock'", $back[1], $back[0] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-					wp_cache_delete( $back[0], 'post_meta' );
+			foreach ( self::line_parts( $line ) as $part ) {
+				if ( ! self::take_stock( $part[0], $part[1] ) ) {
+					foreach ( $taken as $back ) {
+						global $wpdb;
+						$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->postmeta} SET meta_value = CAST(meta_value AS DECIMAL(14,3)) + %d WHERE post_id = %d AND meta_key = '_stock'", $back[1], $back[0] ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+						wp_cache_delete( $back[0], 'post_meta' );
+					}
+					/* translators: %s: product */
+					return new WP_Error( 'nexora_order', sprintf( __( 'Cannot reopen this order: not enough stock of %s.', 'nexora-commerce-toolkit' ), $part[0]->get_name() ) );
 				}
-				/* translators: %s: product */
-				return new WP_Error( 'nexora_order', sprintf( __( 'Cannot reopen this order: not enough stock of %s.', 'nexora-commerce-toolkit' ), $line->name ) );
-			}
-			if ( $item && $item->managing_stock() ) {
-				$taken[] = array( $item->stock_owner()->get_id(), (int) $line->qty );
+				if ( $part[0]->managing_stock() ) {
+					$taken[] = array( $part[0]->stock_owner()->get_id(), $part[1] );
+				}
 			}
 		}
 		foreach ( self::items( $order->id ) as $line ) {
-			$item = Nexora_Store_Product::get( $line->variation_id ? $line->variation_id : $line->product_id );
-			if ( $item ) {
-				self::sync_stock_status( $item->stock_owner()->get_id() );
+			foreach ( self::line_parts( $line ) as $part ) {
+				self::sync_stock_status( $part[0]->stock_owner()->get_id() );
 			}
 			self::bump_sales( (int) $line->product_id, (int) $line->qty );
 		}
@@ -577,17 +623,7 @@ class Nexora_Store_Orders {
 	 * @return string
 	 */
 	private static function wrap_mail( $heading, $body ) {
-		$logo    = (string) apply_filters( 'nexora_store_email_logo', '' );
-		$primary = sanitize_hex_color( (string) get_theme_mod( 'nexora_color_primary', '#12306E' ) );
-		$primary = $primary ? $primary : '#12306E';
-		$name    = get_bloginfo( 'name' );
-		return '<!doctype html><html><body style="margin:0;background:#f5f7fb;padding:24px;font-family:Arial,Helvetica,sans-serif;color:#0f1b3d;">'
-			. '<div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #e6e8f0;">'
-			. ( $logo ? '<div style="padding:18px;text-align:center;"><img src="' . esc_url( $logo ) . '" alt="' . esc_attr( $name ) . '" width="110" style="height:auto;"></div>' : '' )
-			. '<div style="background:' . esc_attr( $primary ) . ';color:#fff;padding:20px 24px;"><h1 style="margin:0;font-size:20px;color:#fff;">' . esc_html( $heading ) . '</h1></div>'
-			. '<div style="padding:24px;font-size:14px;line-height:1.6;">' . $body . '</div>'
-			. '<div style="padding:14px 24px;background:#f5f7fb;font-size:12px;color:#5f6676;">' . esc_html( $name ) . '</div>'
-			. '</div></body></html>';
+		return Nexora_Toolkit_Emails::wrap( $heading, $body ); // Settings → Freshtastic Emails.
 	}
 
 	/**
@@ -600,7 +636,7 @@ class Nexora_Store_Orders {
 	 * @return bool
 	 */
 	public static function send_mail( $to, $subject, $heading, $body ) {
-		return wp_mail( $to, $subject, self::wrap_mail( $heading, $body ), array( 'Content-Type: text/html; charset=UTF-8' ) );
+		return Nexora_Toolkit_Emails::send( $to, $subject, $heading, $body );
 	}
 
 	/**
@@ -655,23 +691,30 @@ class Nexora_Store_Orders {
 		if ( ! $order ) {
 			return;
 		}
-		$name = get_bloginfo( 'name' );
 		$a    = $order->address;
 		$first = isset( $a['first_name'] ) ? $a['first_name'] : '';
 		$extra = 'bank' === $order->payment_method && Nexora_Store::get( 'bank_details' )
 			? '<p><strong>' . esc_html__( 'Bank details', 'nexora-commerce-toolkit' ) . ':</strong><br>' . nl2br( esc_html( (string) Nexora_Store::get( 'bank_details' ) ) ) . '</p>'
 			: '';
-		/* translators: 1: site name, 2: order number */
-		$subject = sprintf( __( 'Your %1$s order #%2$d', 'nexora-commerce-toolkit' ), $name, $id );
-		/* translators: %s: first name */
-		$body = '<p>' . esc_html( sprintf( __( 'Hi %s, we received your order. Thank you!', 'nexora-commerce-toolkit' ), $first ) ) . '</p>' . $extra . self::mail_summary( $order ) . '<p><a href="' . esc_url( Nexora_Store_Checkout::received_url( $order ) ) . '">' . esc_html__( 'View your order', 'nexora-commerce-toolkit' ) . '</a></p>';
-		self::send_mail( $order->email, $subject, __( 'Order received', 'nexora-commerce-toolkit' ), $body );
+		$vars = array(
+			'first_name'     => $first,
+			'order_number'   => $id,
+			'customer_name'  => trim( $first . ' ' . ( isset( $a['last_name'] ) ? $a['last_name'] : '' ) ),
+			'customer_email' => $order->email,
+			'customer_phone' => $order->phone,
+		);
+		$m = Nexora_Toolkit_Emails::compose( 'order_received', $vars );
+		if ( $m ) {
+			$body = $m['message'] . $extra . self::mail_summary( $order ) . '<p><a href="' . esc_url( Nexora_Store_Checkout::received_url( $order ) ) . '">' . esc_html__( 'View your order', 'nexora-commerce-toolkit' ) . '</a></p>';
+			self::send_mail( $order->email, $m['subject'], $m['heading'], $body );
+		}
 
 		$admin = Nexora_Store::get( 'order_email' ) ? (string) Nexora_Store::get( 'order_email' ) : (string) get_option( 'admin_email' );
-		/* translators: 1: order number, 2: customer name */
-		$subject = sprintf( __( 'New order #%1$d from %2$s', 'nexora-commerce-toolkit' ), $id, trim( $first . ' ' . ( isset( $a['last_name'] ) ? $a['last_name'] : '' ) ) );
-		$body    = '<p>' . esc_html( $order->email . ' · ' . $order->phone ) . '</p>' . self::mail_summary( $order ) . '<p><a href="' . esc_url( admin_url( 'admin.php?page=nexora-store-orders&order=' . $id ) ) . '">' . esc_html__( 'Open the order', 'nexora-commerce-toolkit' ) . '</a></p>';
-		self::send_mail( $admin, $subject, __( 'New order', 'nexora-commerce-toolkit' ), $body );
+		$m     = Nexora_Toolkit_Emails::compose( 'admin_new_order', $vars );
+		if ( $m ) {
+			$body = $m['message'] . self::mail_summary( $order ) . '<p><a href="' . esc_url( admin_url( 'admin.php?page=nexora-store-orders&order=' . $id ) ) . '">' . esc_html__( 'Open the order', 'nexora-commerce-toolkit' ) . '</a></p>';
+			self::send_mail( $admin, $m['subject'], $m['heading'], $body );
+		}
 	}
 
 	/**
@@ -687,23 +730,29 @@ class Nexora_Store_Orders {
 			return;
 		}
 		$type = isset( $order->fulfilment['type'] ) ? $order->fulfilment['type'] : '';
-		$map  = array(
-			'processing' => array( __( 'We are preparing your order', 'nexora-commerce-toolkit' ), __( 'Your order is confirmed and we are preparing it now.', 'nexora-commerce-toolkit' ) ),
-			'nx-ready'   => array(
-				__( 'Your order is packed and ready', 'nexora-commerce-toolkit' ),
-				'courier' === $type ? __( 'Your order is packed and waiting for your rider. You can book your courier now.', 'nexora-commerce-toolkit' ) : ( 'pickup' === $type ? __( 'Your order is packed and ready to collect. Please bring your order number; someone else can collect it for you.', 'nexora-commerce-toolkit' ) : __( 'Your order is packed and will be delivered soon.', 'nexora-commerce-toolkit' ) ),
-			),
-			'completed'  => array( __( 'Your order is complete', 'nexora-commerce-toolkit' ), __( 'Your order is complete. Thank you for buying from our market!', 'nexora-commerce-toolkit' ) ),
-			'cancelled'  => array( __( 'Your order was cancelled', 'nexora-commerce-toolkit' ), __( 'Your order was cancelled. Please contact us if this is unexpected.', 'nexora-commerce-toolkit' ) ),
-			'refunded'   => array( __( 'Your order was refunded', 'nexora-commerce-toolkit' ), __( 'Your order was marked as refunded.', 'nexora-commerce-toolkit' ) ),
+		$ids  = array(
+			'processing' => 'order_processing',
+			'nx-ready'   => 'courier' === $type ? 'order_ready_courier' : ( 'pickup' === $type ? 'order_ready_pickup' : 'order_ready_other' ),
+			'completed'  => 'order_completed',
+			'cancelled'  => 'order_cancelled',
+			'refunded'   => 'order_refunded',
 		);
-		if ( ! isset( $map[ $status ] ) ) {
+		if ( ! isset( $ids[ $status ] ) ) {
 			return;
 		}
-		/* translators: 1: site name, 2: order number, 3: heading */
-		$subject = sprintf( __( '%1$s order #%2$d: %3$s', 'nexora-commerce-toolkit' ), get_bloginfo( 'name' ), $id, $map[ $status ][0] );
-		$body    = '<p>' . esc_html( $map[ $status ][1] ) . '</p>' . self::mail_summary( $order ) . '<p><a href="' . esc_url( Nexora_Store_Checkout::received_url( $order ) ) . '">' . esc_html__( 'View your order', 'nexora-commerce-toolkit' ) . '</a></p>';
-		self::send_mail( $order->email, $subject, $map[ $status ][0], $body );
+		$a = $order->address;
+		$m = Nexora_Toolkit_Emails::compose(
+			$ids[ $status ],
+			array(
+				'first_name'   => isset( $a['first_name'] ) ? $a['first_name'] : '',
+				'order_number' => $id,
+			)
+		);
+		if ( ! $m ) {
+			return;
+		}
+		$body = $m['message'] . self::mail_summary( $order ) . '<p><a href="' . esc_url( Nexora_Store_Checkout::received_url( $order ) ) . '">' . esc_html__( 'View your order', 'nexora-commerce-toolkit' ) . '</a></p>';
+		self::send_mail( $order->email, $m['subject'], $m['heading'], $body );
 	}
 
 	/* ---------------------------------------------------------------- privacy */

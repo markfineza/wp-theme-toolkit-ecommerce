@@ -445,7 +445,7 @@ class Nexora_Toolkit_RFQ {
 	 * @param string $subject Subject.
 	 * @param string $heading Heading.
 	 * @param array  $rows    Label => value rows.
-	 * @param string $intro   Intro paragraph.
+	 * @param string $intro   Intro HTML.
 	 * @param string $reply   Reply-to address.
 	 * @return bool
 	 */
@@ -457,7 +457,7 @@ class Nexora_Toolkit_RFQ {
 			}
 		}
 		$table  .= '</table>';
-		$body    = ( $intro ? '<p>' . nl2br( esc_html( $intro ) ) . '</p>' : '' ) . $table;
+		$body    = $intro . $table;
 		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 		if ( $reply && is_email( $reply ) ) {
 			$headers[] = 'Reply-To: ' . $reply;
@@ -465,7 +465,7 @@ class Nexora_Toolkit_RFQ {
 		if ( function_exists( 'WC' ) && WC()->mailer() ) {
 			return (bool) WC()->mailer()->send( $to, $subject, WC()->mailer()->wrap_message( $heading, $body ), $headers );
 		}
-		return wp_mail( $to, $subject, '<h2>' . esc_html( $heading ) . '</h2>' . $body, $headers );
+		return Nexora_Toolkit_Emails::send( $to, $subject, $heading, $body, array_slice( $headers, 1 ) );
 	}
 
 	/**
@@ -507,18 +507,19 @@ class Nexora_Toolkit_RFQ {
 		$store = Nexora_Toolkit_Settings::get( 'rfq_email' );
 		$store = is_email( $store ) ? $store : get_option( 'admin_email' );
 		$rows  = self::rows( $id );
-		/* translators: 1: reference, 2: item */
-		self::mail( $store, sprintf( __( 'New quotation request %1$s: %2$s', 'nexora-commerce-toolkit' ), self::ref( $id ), $data['item'] ), __( 'New quotation request', 'nexora-commerce-toolkit' ), $rows, __( 'Reply from WooCommerce → Quotations, or reply to this email to contact the customer.', 'nexora-commerce-toolkit' ), $data['email'] );
-		self::mail(
-			$data['email'],
-			/* translators: 1: site name, 2: reference */
-			sprintf( __( '[%1$s] We received your quotation request %2$s', 'nexora-commerce-toolkit' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ), self::ref( $id ) ),
-			__( 'Quotation request received', 'nexora-commerce-toolkit' ),
-			$rows,
-			/* translators: %s: customer name */
-			sprintf( __( 'Hi %s, thank you! Our team will check supply and pricing and get back to you with a quotation, usually within one business day.', 'nexora-commerce-toolkit' ), $data['name'] ),
-			$store
+		$vars  = array(
+			'reference' => self::ref( $id ),
+			'item'      => $data['item'],
+			'name'      => $data['name'],
 		);
+		$m = Nexora_Toolkit_Emails::compose( 'rfq_admin', $vars );
+		if ( $m ) {
+			self::mail( $store, $m['subject'], $m['heading'], $rows, $m['message'], $data['email'] );
+		}
+		$m = Nexora_Toolkit_Emails::compose( 'rfq_received', $vars );
+		if ( $m ) {
+			self::mail( $data['email'], $m['subject'], $m['heading'], $rows, $m['message'], $store );
+		}
 	}
 
 	/* ------------------------------------------------------------------ admin */
@@ -625,13 +626,13 @@ class Nexora_Toolkit_RFQ {
 					__( 'Total', 'nexora-commerce-toolkit' )          => '' !== $fields['quote_total'] ? wp_strip_all_tags( self::format_price( (float) $fields['quote_total'] ) ) : '',
 					__( 'Valid until', 'nexora-commerce-toolkit' )    => $fields['quote_valid'],
 				);
+				$m = Nexora_Toolkit_Emails::compose( 'rfq_quote', array( 'reference' => self::ref( $post_id ) ) );
 				self::mail(
 					$email,
-					/* translators: 1: site name, 2: reference */
-					sprintf( __( '[%1$s] Your quotation %2$s', 'nexora-commerce-toolkit' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ), self::ref( $post_id ) ),
-					__( 'Your quotation', 'nexora-commerce-toolkit' ),
+					$m['subject'],
+					$m['heading'],
 					$rows,
-					$fields['quote_message'] ? $fields['quote_message'] : __( 'Here is our quotation for your request. Reply to this email or call us to confirm.', 'nexora-commerce-toolkit' ),
+					$fields['quote_message'] ? wpautop( esc_html( $fields['quote_message'] ) ) : $m['message'],
 					Nexora_Toolkit_Settings::get( 'rfq_email' ) ? Nexora_Toolkit_Settings::get( 'rfq_email' ) : get_option( 'admin_email' )
 				);
 				$log   = array_filter( (array) get_post_meta( $post_id, '_rfq_quote_log', true ) );

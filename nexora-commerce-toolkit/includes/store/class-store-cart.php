@@ -371,7 +371,7 @@ class Nexora_Store_Cart {
 				'qty'       => $qty,
 				'price'     => $price,
 				'total'     => Nexora_Store::round( $price * $qty ),
-				'option'    => ! empty( $row['v'] ) ? $item->option_label() : '',
+				'option'    => ! empty( $row['v'] ) ? $item->option_label() : Nexora_Toolkit_Packages::summary( Nexora_Toolkit_Packages::contents( $item->get_id() ) ),
 			);
 		}
 		if ( $changed ) {

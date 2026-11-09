@@ -18,9 +18,9 @@ A WooCommerce theme for **wet and dry market** stores — rice, vegetables, frui
 ## Quick start
 
 1. **Install the theme:** Appearance → Themes → Add New → Upload → `nexora-commerce.zip` → Activate.
-2. **Install the plugin:** Plugins → Add New → Upload → `nexora-commerce-toolkit.zip` → Activate. **WooCommerce is installed and activated automatically** (a notice confirms it).
-3. If your host blocks automatic installs, click **Install and activate now** in the notice that appears.
-4. **Import the demo:** Tools → Freshtastic Demo Content → tick the confirmation → *Import demo content* (about one minute).
+2. **Install the plugin:** Plugins → Add New → Upload → `nexora-commerce-toolkit.zip` → Activate. On a site without WooCommerce the **built-in store** starts, so WooCommerce is not needed. A site already running WooCommerce keeps it.
+3. **Set up the store:** Store → Settings (address, pickup points, payment details).
+4. **Import the demo (no WooCommerce needed):** Tools → Freshtastic Demo Content → tick the confirmation → *Import demo content* (about one minute).
 5. **Customize:** Appearance → Customize → *Freshtastic Theme* and *Freshtastic Homepage*.
 
 Full instructions: [docs/SETUP.md](docs/SETUP.md).
@@ -33,6 +33,7 @@ Full instructions: [docs/SETUP.md](docs/SETUP.md).
 - [**Checkout, pickup / courier delivery and the Order Desk**](docs/CHECKOUT-AND-ORDER-DESK.md)
 - [**Branding and customer accounts**](docs/BRANDING-AND-CUSTOMER-ACCOUNT.md)
 - [**Built-in store (no WooCommerce)**](docs/BUILT-IN-STORE.md)
+- [**Facebook and Instagram: catalog sync and auto-posting**](docs/META.md)
 - [WooCommerce configuration checklist](docs/WOOCOMMERCE-CHECKLIST.md)
 - [Philippine store configuration (₱, shipping, GCash/Maya/cards)](docs/PHILIPPINES-STORE-SETUP.md)
 - [Marketing integrations (SEO, email, analytics, feeds)](docs/MARKETING.md)

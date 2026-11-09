@@ -485,6 +485,9 @@ class Nexora_Store_Product {
 	 * @return bool
 	 */
 	public function is_in_stock() {
+		if ( Nexora_Toolkit_Packages::is_package( $this->get_id() ) ) {
+			return Nexora_Toolkit_Packages::available( $this->get_id() );
+		}
 		if ( $this->is_type( 'variable' ) ) {
 			foreach ( $this->get_variations() as $v ) {
 				if ( $v->is_in_stock() ) {
@@ -515,6 +518,9 @@ class Nexora_Store_Product {
 	 * @return int|null
 	 */
 	public function max_qty() {
+		if ( Nexora_Toolkit_Packages::is_package( $this->get_id() ) ) {
+			return Nexora_Toolkit_Packages::max_qty( $this->get_id() );
+		}
 		return $this->managing_stock() && ! $this->backorders_allowed() ? max( 0, (int) $this->get_stock_quantity() ) : null;
 	}
 

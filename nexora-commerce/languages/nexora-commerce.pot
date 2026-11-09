@@ -2,14 +2,14 @@
 # This file is distributed under the GNU General Public License v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Freshtastic Food Hub 2.6.0\n"
+"Project-Id-Version: Freshtastic Food Hub 2.8.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/theme/nexora-commerce\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-11-06T23:36:51+00:00\n"
+"POT-Creation-Date: 2026-11-08T11:55:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: nexora-commerce\n"
@@ -163,99 +163,91 @@ msgstr ""
 msgid "Collected"
 msgstr ""
 
-#: inc/assets.php:73
+#: inc/assets.php:85
 msgid "Searching…"
 msgstr ""
 
-#: inc/assets.php:74
+#: inc/assets.php:86
 msgid "No products found. Try a different search."
 msgstr ""
 
-#: inc/assets.php:75
+#: inc/assets.php:87
 msgid "View all results"
 msgstr ""
 
 #. translators: %d: number of results
-#: inc/assets.php:76
+#: inc/assets.php:88
 #, php-format
 msgid "%d products found"
 msgstr ""
 
 #. translators: %d: number of results
-#: inc/assets.php:77
+#: inc/assets.php:89
 msgid "Added to cart"
 msgstr ""
 
-#: inc/assets.php:78
+#: inc/assets.php:90
 msgid "Sorry, that item could not be added. Please try again."
 msgstr ""
 
-#: inc/assets.php:79
+#: inc/assets.php:91
 msgid "Loading…"
 msgstr ""
 
-#: inc/assets.php:80
+#: inc/assets.php:92
 msgid "Filters could not be applied. Reloading the page…"
 msgstr ""
 
-#: inc/assets.php:81
+#: inc/assets.php:93
 msgid "d"
 msgstr ""
 
-#: inc/assets.php:82
+#: inc/assets.php:94
 #: inc/woocommerce.php:302
 msgid "You have unlocked free shipping!"
 msgstr ""
 
-#: inc/assets.php:83
+#: inc/assets.php:95
 msgid "Copied"
 msgstr ""
 
-#: inc/assets.php:84
+#: inc/assets.php:96
 msgid "Press and hold the code to copy it"
 msgstr ""
 
-#: inc/assets.php:85
+#: inc/assets.php:97
 msgid "Pause banners"
 msgstr ""
 
-#: inc/assets.php:86
+#: inc/assets.php:98
 msgid "Play banners"
 msgstr ""
 
 #. translators: 1: banner number, 2: number of banners
-#: inc/assets.php:88
+#: inc/assets.php:100
 #, php-format
 msgid "Banner %1$d of %2$d"
 msgstr ""
 
-#: inc/assets.php:89
-msgid "Collapse menu"
-msgstr ""
-
-#: inc/assets.php:90
-msgid "Expand menu"
-msgstr ""
-
-#: inc/assets.php:91
+#: inc/assets.php:101
 msgid "Market open"
 msgstr ""
 
-#: inc/assets.php:92
+#: inc/assets.php:102
 msgid "Market closed"
 msgstr ""
 
-#: inc/assets.php:93
+#: inc/assets.php:103
 msgid "opens"
 msgstr ""
 
-#: inc/assets.php:94
+#: inc/assets.php:104
 msgid "closes"
 msgstr ""
 
 #. translators: %s: amount remaining
 #. translators: %s: formatted amount remaining
-#: inc/assets.php:96
+#: inc/assets.php:106
 #: inc/woocommerce.php:305
 #, php-format
 msgid "Add %s more for free shipping"
@@ -275,7 +267,7 @@ msgstr ""
 
 #: inc/checkout.php:64
 #: woocommerce/checkout/form-checkout.php:43
-#: woocommerce/myaccount/dashboard.php:174
+#: woocommerce/myaccount/dashboard.php:197
 msgid "Your details"
 msgstr ""
 
@@ -338,1038 +330,1091 @@ msgid "Move %s down"
 msgstr ""
 
 #: inc/customizer.php:20
-#: inc/customizer.php:409
+#: inc/customizer.php:431
 msgid "Hero promotional banner"
 msgstr ""
 
 #: inc/customizer.php:21
-#: inc/customizer.php:101
+#: inc/customizer.php:102
 #: template-parts/header/mobile-drawer.php:43
 msgid "Shop by category"
 msgstr ""
 
 #: inc/customizer.php:22
-#: inc/customizer.php:410
+#: inc/customizer.php:432
 msgid "Products with tabs"
 msgstr ""
 
 #: inc/customizer.php:23
-#: inc/customizer.php:411
-msgid "Market basket collection"
+#: inc/customizer.php:433
+msgid "Packages"
 msgstr ""
 
 #: inc/customizer.php:24
-#: inc/customizer.php:412
-msgid "Questions and answers"
+#: inc/customizer.php:434
+msgid "Market basket collection"
 msgstr ""
 
 #: inc/customizer.php:25
-#: inc/customizer.php:413
-msgid "Coupons"
+#: inc/customizer.php:435
+msgid "Questions and answers"
 msgstr ""
 
 #: inc/customizer.php:26
-msgid "Price board"
+#: inc/customizer.php:436
+msgid "Coupons"
 msgstr ""
 
 #: inc/customizer.php:27
-msgid "Featured products"
+msgid "Price board"
 msgstr ""
 
 #: inc/customizer.php:28
-#: inc/customizer.php:105
-msgid "Trending now"
+msgid "Featured products"
 msgstr ""
 
 #: inc/customizer.php:29
-#: inc/customizer.php:415
-msgid "Campaign banner"
+#: inc/customizer.php:106
+msgid "Trending now"
 msgstr ""
 
 #: inc/customizer.php:30
-msgid "Request a quotation banner"
+#: inc/customizer.php:438
+msgid "Campaign banner"
 msgstr ""
 
 #: inc/customizer.php:31
+msgid "Request a quotation banner"
+msgstr ""
+
+#: inc/customizer.php:32
 #: template-parts/header/mega-menu.php:66
 #: template-parts/homepage/product-tabs.php:19
 msgid "New arrivals"
 msgstr ""
 
-#: inc/customizer.php:32
+#: inc/customizer.php:33
 #: template-parts/header/mega-menu.php:67
 msgid "Best sellers"
 msgstr ""
 
-#: inc/customizer.php:33
+#: inc/customizer.php:34
 msgid "Brand benefits"
 msgstr ""
 
-#: inc/customizer.php:34
+#: inc/customizer.php:35
 msgid "Personalized discovery"
 msgstr ""
 
-#: inc/customizer.php:35
+#: inc/customizer.php:36
 msgid "Reviews and testimonials"
 msgstr ""
 
-#: inc/customizer.php:36
+#: inc/customizer.php:37
 #: template-parts/homepage/newsletter.php:18
 msgid "Newsletter"
 msgstr ""
 
-#: inc/customizer.php:37
+#: inc/customizer.php:38
 msgid "Editorial / journal"
 msgstr ""
 
-#: inc/customizer.php:38
+#: inc/customizer.php:39
 msgid "Front page editor content"
 msgstr ""
 
-#: inc/customizer.php:39
+#: inc/customizer.php:40
 msgid "Final conversion banner"
 msgstr ""
 
-#: inc/customizer.php:56
+#: inc/customizer.php:57
 msgid "Sourced from farms and ports"
 msgstr ""
 
-#: inc/customizer.php:56
+#: inc/customizer.php:57
 msgid "Produce from Benguet to Davao and fish from Navotas to Dagupan (demo sourcing)."
 msgstr ""
 
-#: inc/customizer.php:57
+#: inc/customizer.php:58
 msgid "Cold-chain packing"
 msgstr ""
 
-#: inc/customizer.php:57
+#: inc/customizer.php:58
 msgid "Meat, poultry and seafood are packed cold for pickup or your rider."
 msgstr ""
 
-#: inc/customizer.php:58
+#: inc/customizer.php:59
 msgid "Honest weights"
 msgstr ""
 
-#: inc/customizer.php:58
+#: inc/customizer.php:59
 msgid "Per-kilo items are weighed at packing; short weights are refunded."
 msgstr ""
 
-#: inc/customizer.php:59
+#: inc/customizer.php:60
 msgid "Bulk quotations"
 msgstr ""
 
-#: inc/customizer.php:59
+#: inc/customizer.php:60
 msgid "Carinderias, stores and restaurants get quotes for volume and regular orders."
 msgstr ""
 
-#: inc/customizer.php:64
+#: inc/customizer.php:65
 msgid "Primary accent"
 msgstr ""
 
-#: inc/customizer.php:65
+#: inc/customizer.php:66
 msgid "Secondary accent"
 msgstr ""
 
-#: inc/customizer.php:66
+#: inc/customizer.php:67
 msgid "Main text"
 msgstr ""
 
-#: inc/customizer.php:67
+#: inc/customizer.php:68
 msgid "Page background"
 msgstr ""
 
-#: inc/customizer.php:68
+#: inc/customizer.php:69
 msgid "Dark sections"
 msgstr ""
 
-#: inc/customizer.php:69
+#: inc/customizer.php:70
 msgid "Sale accent"
 msgstr ""
 
-#: inc/customizer.php:70
+#: inc/customizer.php:71
 msgid "Heading font"
 msgstr ""
 
-#: inc/customizer.php:70
 #: inc/customizer.php:71
+#: inc/customizer.php:72
 msgid "System UI"
 msgstr ""
 
-#: inc/customizer.php:71
+#: inc/customizer.php:72
 msgid "Body font"
 msgstr ""
 
-#: inc/customizer.php:72
+#: inc/customizer.php:73
 msgid "Corner radius (px)"
 msgstr ""
 
-#: inc/customizer.php:75
+#: inc/customizer.php:76
 msgid "Show announcement bar"
 msgstr ""
 
-#: inc/customizer.php:76
+#: inc/customizer.php:77
 msgid "Order online, then pick up at the market or book your own rider · Choose your time at checkout"
 msgstr ""
 
-#: inc/customizer.php:76
+#: inc/customizer.php:77
 msgid "Message"
 msgstr ""
 
-#: inc/customizer.php:77
+#: inc/customizer.php:78
 msgid "Today's deals"
 msgstr ""
 
-#: inc/customizer.php:77
+#: inc/customizer.php:78
 msgid "Link label"
 msgstr ""
 
-#: inc/customizer.php:78
+#: inc/customizer.php:79
 msgid "Link URL"
 msgstr ""
 
-#: inc/customizer.php:78
+#: inc/customizer.php:79
 msgid "Leave empty to link to the shop’s on-sale filter."
 msgstr ""
 
-#: inc/customizer.php:79
+#: inc/customizer.php:80
 msgid "Countdown ends (site time)"
 msgstr ""
 
-#: inc/customizer.php:79
+#: inc/customizer.php:80
 msgid "Optional. Use only for a real promotion deadline. The countdown and bar hide automatically once it passes."
 msgstr ""
 
-#: inc/customizer.php:80
+#: inc/customizer.php:81
 msgid "Visitors can dismiss the bar"
 msgstr ""
 
-#: inc/customizer.php:83
+#: inc/customizer.php:84
 msgid "Sticky header"
 msgstr ""
 
-#: inc/customizer.php:84
+#: inc/customizer.php:85
 msgid "Show product search"
 msgstr ""
 
-#: inc/customizer.php:85
+#: inc/customizer.php:86
 msgid "Show category mega menu"
 msgstr ""
 
-#: inc/customizer.php:86
+#: inc/customizer.php:87
 msgid "Show “Request a Quote” button"
 msgstr ""
 
-#: inc/customizer.php:87
+#: inc/customizer.php:88
 msgid "Show price ticker under the header"
 msgstr ""
 
-#: inc/customizer.php:87
+#: inc/customizer.php:88
 msgid "Lists products whose price changed most recently (real price history recorded by the Freshtastic Food Hub Toolkit)."
 msgstr ""
 
-#: inc/customizer.php:88
+#: inc/customizer.php:89
 msgid "Ticker: number of items"
 msgstr ""
 
-#: inc/customizer.php:89
+#: inc/customizer.php:90
 msgid "Market opens (24h, site time)"
 msgstr ""
 
-#: inc/customizer.php:89
+#: inc/customizer.php:90
 msgid "Shown as a live “Market open / closed” status. Leave empty to hide."
 msgstr ""
 
-#: inc/customizer.php:90
+#: inc/customizer.php:91
 msgid "Market closes (24h, site time)"
 msgstr ""
 
-#: inc/customizer.php:93
-#: inc/customizer.php:408
+#: inc/customizer.php:94
+#: inc/customizer.php:430
 msgid "Sections and order"
 msgstr ""
 
-#: inc/customizer.php:93
+#: inc/customizer.php:94
 msgid "Tick to show a section; use the arrows to reorder."
 msgstr ""
 
-#: inc/customizer.php:96
+#: inc/customizer.php:97
 msgid "Fallback banner image"
 msgstr ""
 
-#: inc/customizer.php:96
-msgid "Used by any banner without its own image."
-msgstr ""
-
-#: inc/customizer.php:99
-msgid "Today's price board"
-msgstr ""
-
-#: inc/customizer.php:99
-msgid "Price board: title"
+#: inc/customizer.php:97
+msgid "Used by any banner without its own image. With no image at all, the banner shows only its background."
 msgstr ""
 
 #: inc/customizer.php:100
-msgid "Price board: number of items"
+msgid "Today's price board"
+msgstr ""
+
+#: inc/customizer.php:100
+msgid "Price board: title"
 msgstr ""
 
 #: inc/customizer.php:101
+msgid "Price board: number of items"
+msgstr ""
+
+#: inc/customizer.php:102
 msgid "Categories: title"
 msgstr ""
 
-#: inc/customizer.php:102
+#: inc/customizer.php:103
 msgid "Categories: slugs to show"
 msgstr ""
 
-#: inc/customizer.php:102
+#: inc/customizer.php:103
 msgid "Comma-separated product category slugs. Empty shows top-level categories."
 msgstr ""
 
-#: inc/customizer.php:103
+#: inc/customizer.php:104
 msgid "Today's picks"
 msgstr ""
 
-#: inc/customizer.php:103
+#: inc/customizer.php:104
 msgid "Featured: title"
 msgstr ""
 
-#: inc/customizer.php:104
+#: inc/customizer.php:105
 msgid "Featured: number of products"
 msgstr ""
 
-#: inc/customizer.php:105
+#: inc/customizer.php:106
 msgid "Trending: title"
 msgstr ""
 
-#: inc/customizer.php:106
+#: inc/customizer.php:107
 msgid "Trending: source"
 msgstr ""
 
-#: inc/customizer.php:106
+#: inc/customizer.php:107
 msgid "Top rated"
 msgstr ""
 
-#: inc/customizer.php:106
+#: inc/customizer.php:107
 msgid "Best selling"
 msgstr ""
 
-#: inc/customizer.php:106
+#: inc/customizer.php:107
 #: inc/shop-filters.php:188
 #: inc/shop-filters.php:253
 #: template-parts/homepage/product-tabs.php:22
 msgid "On sale"
 msgstr ""
 
-#: inc/customizer.php:106
+#: inc/customizer.php:107
 msgid "Manual product IDs"
 msgstr ""
 
-#: inc/customizer.php:107
+#: inc/customizer.php:108
 msgid "Trending: manual product IDs"
 msgstr ""
 
-#: inc/customizer.php:107
+#: inc/customizer.php:108
 msgid "Comma-separated IDs, used when the source is Manual."
 msgstr ""
 
-#: inc/customizer.php:108
+#: inc/customizer.php:109
 msgid "Trending: number of products"
 msgstr ""
 
-#: inc/customizer.php:109
+#: inc/customizer.php:110
 msgid "Fresh arrivals"
 msgstr ""
 
-#: inc/customizer.php:109
+#: inc/customizer.php:110
 msgid "New arrivals: title"
 msgstr ""
 
-#: inc/customizer.php:110
+#: inc/customizer.php:111
 msgid "New arrivals: number of products"
 msgstr ""
 
-#: inc/customizer.php:111
+#: inc/customizer.php:112
 msgid "Most traded"
 msgstr ""
 
-#: inc/customizer.php:111
+#: inc/customizer.php:112
 msgid "Best sellers: title"
 msgstr ""
 
-#: inc/customizer.php:112
+#: inc/customizer.php:113
 msgid "Best sellers: number of products"
 msgstr ""
 
-#: inc/customizer.php:113
+#: inc/customizer.php:114
 msgid "Picked for your basket"
 msgstr ""
 
-#: inc/customizer.php:113
+#: inc/customizer.php:114
 msgid "Discovery: title"
 msgstr ""
 
-#: inc/customizer.php:116
+#: inc/customizer.php:117
 msgid "Dry market"
 msgstr ""
 
-#: inc/customizer.php:116
+#: inc/customizer.php:117
 msgid "Eyebrow"
 msgstr ""
 
-#: inc/customizer.php:117
+#: inc/customizer.php:118
 msgid "Stock up by the sack."
 msgstr ""
 
-#: inc/customizer.php:117
+#: inc/customizer.php:118
 msgid "Headline"
 msgstr ""
 
-#: inc/customizer.php:118
+#: inc/customizer.php:119
 msgid "Rice, sugar and cooking oil in bulk sizes with the lowest price per kilo — for households, carinderias and sari-sari stores."
 msgstr ""
 
-#: inc/customizer.php:118
+#: inc/customizer.php:119
 msgid "Copy"
 msgstr ""
 
-#: inc/customizer.php:119
+#: inc/customizer.php:120
 msgid "Shop the dry market"
 msgstr ""
 
-#: inc/customizer.php:119
+#: inc/customizer.php:120
 msgid "Button label"
 msgstr ""
 
-#: inc/customizer.php:120
+#: inc/customizer.php:121
 msgid "Button URL"
 msgstr ""
 
-#: inc/customizer.php:120
+#: inc/customizer.php:121
 msgid "Defaults to the Dry Market category when it exists."
 msgstr ""
 
-#: inc/customizer.php:121
+#: inc/customizer.php:122
 msgid "Background image"
 msgstr ""
 
-#: inc/customizer.php:122
+#: inc/customizer.php:123
 msgid "Show from (optional)"
 msgstr ""
 
-#: inc/customizer.php:123
+#: inc/customizer.php:124
 msgid "Hide after (optional)"
 msgstr ""
 
-#: inc/customizer.php:126
+#: inc/customizer.php:127
 msgid "Can’t find it on the board? Request a quotation."
 msgstr ""
 
-#: inc/customizer.php:126
+#: inc/customizer.php:127
 msgid "Quotation banner: title"
 msgstr ""
 
-#: inc/customizer.php:127
+#: inc/customizer.php:128
 msgid "Out-of-season items, bulk volumes or regular deliveries for your business — tell us what you need and we will source it and send a quote."
 msgstr ""
 
-#: inc/customizer.php:127
+#: inc/customizer.php:128
 msgid "Quotation banner: copy"
 msgstr ""
 
-#: inc/customizer.php:128
+#: inc/customizer.php:129
 msgid "Trusted by kitchens and stores"
 msgstr ""
 
-#: inc/customizer.php:128
+#: inc/customizer.php:129
 msgid "Reviews: title"
 msgstr ""
 
-#: inc/customizer.php:129
+#: inc/customizer.php:130
 msgid "Get weekly price alerts"
 msgstr ""
 
-#: inc/customizer.php:129
+#: inc/customizer.php:130
 msgid "Newsletter: title"
 msgstr ""
 
-#: inc/customizer.php:130
+#: inc/customizer.php:131
 msgid "Price drops, restocks and seasonal produce in one short email a week — unsubscribe anytime."
 msgstr ""
 
-#: inc/customizer.php:130
+#: inc/customizer.php:131
 msgid "Newsletter: copy"
 msgstr ""
 
-#: inc/customizer.php:131
+#: inc/customizer.php:132
 msgid "Market journal"
 msgstr ""
 
-#: inc/customizer.php:131
+#: inc/customizer.php:132
 msgid "Editorial: title"
 msgstr ""
 
-#: inc/customizer.php:132
+#: inc/customizer.php:133
 msgid "Editorial: number of posts"
 msgstr ""
 
-#: inc/customizer.php:133
+#: inc/customizer.php:134
 msgid "Your weekly market run, sorted."
 msgstr ""
 
-#: inc/customizer.php:133
+#: inc/customizer.php:134
 msgid "Final banner: headline"
 msgstr ""
 
-#: inc/customizer.php:134
+#: inc/customizer.php:135
 msgid "Browse the full market or catch this week’s price drops before they are gone."
 msgstr ""
 
-#: inc/customizer.php:134
+#: inc/customizer.php:135
 msgid "Final banner: copy"
 msgstr ""
 
-#: inc/customizer.php:135
+#: inc/customizer.php:136
 #: woocommerce/loop/no-products-found.php:49
 msgid "Browse the market"
 msgstr ""
 
-#: inc/customizer.php:135
+#: inc/customizer.php:136
 msgid "Final banner: button label"
 msgstr ""
 
-#: inc/customizer.php:136
+#: inc/customizer.php:137
 msgid "Final banner: button URL"
 msgstr ""
 
-#: inc/customizer.php:137
+#: inc/customizer.php:138
 msgid "Final banner: image"
 msgstr ""
 
-#: inc/customizer.php:140
+#: inc/customizer.php:141
 msgid "Free-shipping threshold (store currency)"
 msgstr ""
 
-#: inc/customizer.php:140
+#: inc/customizer.php:141
 msgid "Display only — set the same minimum on your WooCommerce “Free shipping” method. Use 0 to hide the progress bar."
 msgstr ""
 
-#: inc/customizer.php:141
+#: inc/customizer.php:142
 msgid "Product card style"
 msgstr ""
 
-#: inc/customizer.php:141
+#: inc/customizer.php:142
 msgid "Elevated"
 msgstr ""
 
-#: inc/customizer.php:141
+#: inc/customizer.php:142
 msgid "Minimal"
 msgstr ""
 
-#: inc/customizer.php:142
+#: inc/customizer.php:143
 msgid "Show first gallery image on hover"
 msgstr ""
 
-#: inc/customizer.php:143
+#: inc/customizer.php:144
 msgid "Show ratings on cards"
 msgstr ""
 
-#: inc/customizer.php:144
+#: inc/customizer.php:145
 msgid "Quick add-to-cart on cards"
 msgstr ""
 
-#: inc/customizer.php:145
+#: inc/customizer.php:146
 msgid "“New” badge: product age in days"
 msgstr ""
 
-#: inc/customizer.php:145
+#: inc/customizer.php:146
 msgid "Use 0 to disable the New badge."
 msgstr ""
 
-#: inc/customizer.php:146
+#: inc/customizer.php:147
 msgid "Show discount percentage on sale badges"
 msgstr ""
 
-#: inc/customizer.php:147
+#: inc/customizer.php:148
 msgid "Low-stock message threshold"
 msgstr ""
 
-#: inc/customizer.php:147
+#: inc/customizer.php:148
 msgid "Shows “Only N left” when managed stock is at or below this number. Use 0 to disable."
 msgstr ""
 
-#: inc/customizer.php:148
+#: inc/customizer.php:149
 msgid "Sticky add-to-cart bar on product pages"
 msgstr ""
 
-#: inc/customizer.php:149
+#: inc/customizer.php:150
 msgid "Show “Buy now” button"
 msgstr ""
 
-#: inc/customizer.php:150
+#: inc/customizer.php:151
 msgid ""
 "Weighed at packing — short weights are refunded|scale\n"
 "Meat and seafood packed cold|snow\n"
 "Pick up at the store or book your own rider|store"
 msgstr ""
 
-#: inc/customizer.php:150
+#: inc/customizer.php:151
 msgid "Product page trust lines"
 msgstr ""
 
-#: inc/customizer.php:150
+#: inc/customizer.php:151
 msgid "One per line as “Text|icon”. Icons: truck, return, shield, chat, sparkle, tag, scale, snow, leaf, chart, clipboard, store."
 msgstr ""
 
-#: inc/customizer.php:153
+#: inc/customizer.php:154
 msgid "Phone"
 msgstr ""
 
-#: inc/customizer.php:154
+#: inc/customizer.php:155
 msgid "Email"
 msgstr ""
 
-#: inc/customizer.php:155
+#: inc/customizer.php:156
 msgid "Demo address — Stall 12, Sample Public Market, Quezon City"
 msgstr ""
 
-#: inc/customizer.php:155
+#: inc/customizer.php:156
 msgid "Address"
 msgstr ""
 
-#: inc/customizer.php:156
+#: inc/customizer.php:157
 msgid "Daily, 4 AM–8 PM (PHT)"
 msgstr ""
 
-#: inc/customizer.php:156
+#: inc/customizer.php:157
 msgid "Support hours"
 msgstr ""
 
-#: inc/customizer.php:164
+#: inc/customizer.php:165
 msgid "Freshtastic Food Hub by JEJOBO brings fresh meat, fish, vegetables, frozen goods and more to your table. Freshness you can always trust. This is a demo storefront; replace this text with your story."
 msgstr ""
 
-#: inc/customizer.php:164
+#: inc/customizer.php:165
 msgid "Brand introduction"
 msgstr ""
 
-#: inc/customizer.php:165
+#: inc/customizer.php:166
 msgid "Payment methods display"
 msgstr ""
 
-#: inc/customizer.php:165
+#: inc/customizer.php:166
 msgid "Automatic lists only the WooCommerce gateways that are enabled, so customers never see a method you do not accept."
 msgstr ""
 
-#: inc/customizer.php:165
+#: inc/customizer.php:166
 msgid "Automatic (enabled gateways)"
 msgstr ""
 
-#: inc/customizer.php:165
+#: inc/customizer.php:166
 msgid "Manual list"
 msgstr ""
 
-#: inc/customizer.php:165
+#: inc/customizer.php:166
 msgid "Hidden"
 msgstr ""
 
-#: inc/customizer.php:166
+#: inc/customizer.php:167
 msgid "Manual payment list"
 msgstr ""
 
-#: inc/customizer.php:166
+#: inc/customizer.php:167
 msgid "Comma-separated, e.g. “GCash, Maya, Visa, Mastercard”. Only list methods you actually accept."
 msgstr ""
 
-#: inc/customizer.php:167
+#: inc/customizer.php:168
 msgid "Copyright text"
 msgstr ""
 
-#: inc/customizer.php:167
+#: inc/customizer.php:168
 msgid "Defaults to “© {year} Site name. All rights reserved.”"
 msgstr ""
 
-#: inc/customizer.php:170
+#: inc/customizer.php:171
 msgid "Generate WebP image sizes for new JPEG uploads (when the server supports WebP)"
 msgstr ""
 
-#: inc/customizer.php:171
+#: inc/customizer.php:172
 msgid "Load bundled Inter/Manrope font files (disable to use system fonts only)"
-msgstr ""
-
-#. translators: %d: benefit number
-#: inc/customizer.php:175
-#, php-format
-msgid "Benefit %d: icon"
 msgstr ""
 
 #. translators: %d: benefit number
 #: inc/customizer.php:176
 #, php-format
-msgid "Benefit %d: title"
+msgid "Benefit %d: icon"
 msgstr ""
 
 #. translators: %d: benefit number
 #: inc/customizer.php:177
 #, php-format
+msgid "Benefit %d: title"
+msgstr ""
+
+#. translators: %d: benefit number
+#: inc/customizer.php:178
+#, php-format
 msgid "Benefit %d: text"
 msgstr ""
 
-#. translators: %d: banner number
+#: inc/customizer.php:184
+msgid "This week at the market"
+msgstr ""
+
+#: inc/customizer.php:184
+msgid "Fresh deals on meat, fish and vegetables"
+msgstr ""
+
+#: inc/customizer.php:184
+msgid "Order online, then pick up at the market or book your own rider. See everything marked down today."
+msgstr ""
+
+#: inc/customizer.php:184
+msgid "On sale now"
+msgstr ""
+
+#: inc/customizer.php:184
+msgid "Shop today’s deals"
+msgstr ""
+
 #: inc/customizer.php:185
+msgid "Dry goods and staples"
+msgstr ""
+
+#: inc/customizer.php:185
+msgid "Stock up on rice and pantry staples"
+msgstr ""
+
+#: inc/customizer.php:185
+msgid "Everything for the week in one order, ready for pickup or your own rider."
+msgstr ""
+
+#: inc/customizer.php:185
+#: woocommerce/myaccount/dashboard.php:41
+msgid "Shop the market"
+msgstr ""
+
+#: inc/customizer.php:186
+msgid "For carinderias, stores and restaurants"
+msgstr ""
+
+#: inc/customizer.php:186
+msgid "Buying in bulk? Request a quote"
+msgstr ""
+
+#: inc/customizer.php:186
+msgid "Tell us what you need and we will get back to you with a price."
+msgstr ""
+
+#: inc/customizer.php:186
+#: inc/customizer.php:209
+#: woocommerce/myaccount/dashboard.php:43
+msgid "Request a quote"
+msgstr ""
+
+#. translators: %d: banner number
+#: inc/customizer.php:190
 #, php-format
 msgid "Banner %d"
 msgstr ""
 
-#: inc/customizer.php:186
-msgid "This week at the market"
-msgstr ""
-
-#: inc/customizer.php:186
+#: inc/customizer.php:192
 msgid "small text above the headline"
 msgstr ""
 
-#: inc/customizer.php:187
-msgid "Fresh deals on meat, fish and vegetables"
-msgstr ""
-
-#: inc/customizer.php:187
+#: inc/customizer.php:193
 msgid "headline"
 msgstr ""
 
-#: inc/customizer.php:187
+#: inc/customizer.php:193
 msgid "Leave empty to hide this banner."
 msgstr ""
 
-#: inc/customizer.php:188
-msgid "Order online, then pick up at the market or book your own rider. See everything marked down today."
-msgstr ""
-
-#: inc/customizer.php:188
+#: inc/customizer.php:194
 msgid "text"
 msgstr ""
 
-#: inc/customizer.php:189
-msgid "On sale now"
-msgstr ""
-
-#: inc/customizer.php:189
+#: inc/customizer.php:195
 msgid "badge"
 msgstr ""
 
-#: inc/customizer.php:189
+#: inc/customizer.php:195
 msgid "For example “Up to 20% off”. Only promise what your prices or coupons really give."
 msgstr ""
 
-#: inc/customizer.php:190
+#: inc/customizer.php:196
 msgid "coupon code"
 msgstr ""
 
-#: inc/customizer.php:190
+#: inc/customizer.php:196
 msgid "Optional. Shown with a copy button. The coupon itself is created under Coupons."
 msgstr ""
 
-#: inc/customizer.php:191
-msgid "Shop today’s deals"
-msgstr ""
-
-#: inc/customizer.php:191
+#: inc/customizer.php:197
 msgid "button label"
 msgstr ""
 
-#: inc/customizer.php:192
+#: inc/customizer.php:198
 msgid "button link"
 msgstr ""
 
-#: inc/customizer.php:192
+#: inc/customizer.php:198
 msgid "Empty = products on sale."
 msgstr ""
 
-#: inc/customizer.php:193
+#: inc/customizer.php:199
 msgid "image"
 msgstr ""
 
-#: inc/customizer.php:194
+#: inc/customizer.php:200
 msgid "show from (optional)"
 msgstr ""
 
-#: inc/customizer.php:195
+#: inc/customizer.php:201
 msgid "hide after (optional)"
 msgstr ""
 
-#: inc/customizer.php:195
+#: inc/customizer.php:201
 msgid "Also shows a countdown on the banner."
 msgstr ""
 
-#: inc/customizer.php:198
+#: inc/customizer.php:204
 msgid "Fresh from the market"
 msgstr ""
 
-#: inc/customizer.php:198
-#: inc/customizer.php:207
-#: inc/customizer.php:214
-#: inc/customizer.php:229
+#: inc/customizer.php:204
+#: inc/customizer.php:213
+#: inc/customizer.php:218
+#: inc/customizer.php:225
+#: inc/customizer.php:240
 msgid "Heading"
 msgstr ""
 
-#: inc/customizer.php:199
+#: inc/customizer.php:205
 msgid "Products per tab"
 msgstr ""
 
-#: inc/customizer.php:200
+#: inc/customizer.php:206
 msgid "Buying in bulk?"
 msgstr ""
 
-#: inc/customizer.php:200
+#: inc/customizer.php:206
 msgid "Side card: headline"
 msgstr ""
 
-#: inc/customizer.php:201
+#: inc/customizer.php:207
 msgid "Get a quote"
 msgstr ""
 
-#: inc/customizer.php:201
+#: inc/customizer.php:207
 msgid "Side card: large text"
 msgstr ""
 
-#: inc/customizer.php:202
+#: inc/customizer.php:208
 msgid "For carinderias, stores and restaurants, or anything not on the list."
 msgstr ""
 
-#: inc/customizer.php:202
+#: inc/customizer.php:208
 msgid "Side card: text"
 msgstr ""
 
-#: inc/customizer.php:203
-#: woocommerce/myaccount/dashboard.php:42
-msgid "Request a quote"
-msgstr ""
-
-#: inc/customizer.php:203
+#: inc/customizer.php:209
 msgid "Side card: button label"
 msgstr ""
 
-#: inc/customizer.php:204
+#: inc/customizer.php:210
 msgid "Side card: button link"
 msgstr ""
 
-#: inc/customizer.php:204
+#: inc/customizer.php:210
 msgid "Empty = the Request a Quote page."
 msgstr ""
 
-#: inc/customizer.php:206
-msgid "Hand-picked for your table"
+#: inc/customizer.php:212
+msgid "Bundled and ready"
 msgstr ""
 
-#: inc/customizer.php:206
-#: inc/customizer.php:213
+#: inc/customizer.php:212
+#: inc/customizer.php:217
+#: inc/customizer.php:224
 msgid "Small text above the heading"
 msgstr ""
 
-#: inc/customizer.php:207
-msgid "Build your market basket"
-msgstr ""
-
-#: inc/customizer.php:208
-msgid "Weekly staples"
-msgstr ""
-
-#: inc/customizer.php:208
-msgid "Large card: small text"
-msgstr ""
-
-#: inc/customizer.php:209
-msgid "Shop the full market"
-msgstr ""
-
-#: inc/customizer.php:209
-msgid "Large card: title"
-msgstr ""
-
-#: inc/customizer.php:210
-msgid "Large card: link"
-msgstr ""
-
-#: inc/customizer.php:210
-msgid "Empty = the shop page."
-msgstr ""
-
-#: inc/customizer.php:211
-msgid "Large card: image"
-msgstr ""
-
-#: inc/customizer.php:211
-msgid "Empty = the campaign banner image."
-msgstr ""
-
 #: inc/customizer.php:213
-msgid "Questions"
+msgid "Choose your package"
 msgstr ""
 
 #: inc/customizer.php:214
+msgid "Text under the heading"
+msgstr ""
+
+#: inc/customizer.php:215
+msgid "Packages to show"
+msgstr ""
+
+#: inc/customizer.php:217
+msgid "Hand-picked for your table"
+msgstr ""
+
+#: inc/customizer.php:218
+msgid "Build your market basket"
+msgstr ""
+
+#: inc/customizer.php:219
+msgid "Weekly staples"
+msgstr ""
+
+#: inc/customizer.php:219
+msgid "Large card: small text"
+msgstr ""
+
+#: inc/customizer.php:220
+msgid "Shop the full market"
+msgstr ""
+
+#: inc/customizer.php:220
+msgid "Large card: title"
+msgstr ""
+
+#: inc/customizer.php:221
+msgid "Large card: link"
+msgstr ""
+
+#: inc/customizer.php:221
+msgid "Empty = the shop page."
+msgstr ""
+
+#: inc/customizer.php:222
+msgid "Large card: image"
+msgstr ""
+
+#: inc/customizer.php:222
+msgid "Empty = the campaign banner image."
+msgstr ""
+
+#: inc/customizer.php:224
+msgid "Questions"
+msgstr ""
+
+#: inc/customizer.php:225
 msgid "How buying from us works"
 msgstr ""
 
-#: inc/customizer.php:215
+#: inc/customizer.php:226
 msgid "Everything you need to know before your first order. Still unsure? Send us a message."
 msgstr ""
 
-#: inc/customizer.php:215
-#: inc/customizer.php:230
+#: inc/customizer.php:226
+#: inc/customizer.php:241
 msgid "Text"
 msgstr ""
 
-#: inc/customizer.php:217
+#: inc/customizer.php:228
 msgid "How do I get my order?"
 msgstr ""
 
-#: inc/customizer.php:217
+#: inc/customizer.php:228
 msgid "Choose store pickup, or book your own courier such as Lalamove or Grab. You pick the time at checkout, and we email you when your order is packed."
 msgstr ""
 
-#: inc/customizer.php:218
+#: inc/customizer.php:229
 msgid "How can I pay?"
 msgstr ""
 
-#: inc/customizer.php:218
+#: inc/customizer.php:229
 msgid "The payment options available for your order are shown at checkout."
 msgstr ""
 
-#: inc/customizer.php:219
+#: inc/customizer.php:230
 msgid "Can I buy in bulk or ask for something not listed?"
 msgstr ""
 
-#: inc/customizer.php:219
+#: inc/customizer.php:230
 msgid "Yes. Send a quotation request with what you need and we will reply with a price."
 msgstr ""
 
-#: inc/customizer.php:220
+#: inc/customizer.php:231
 msgid "Do I need an account?"
 msgstr ""
 
-#: inc/customizer.php:220
+#: inc/customizer.php:231
 msgid "An account lets you track orders, save your address and use member coupons."
 msgstr ""
 
 #. translators: %d: question number
-#: inc/customizer.php:224
+#: inc/customizer.php:235
 #, php-format
 msgid "Question %d"
 msgstr ""
 
 #. translators: %d: answer number
-#: inc/customizer.php:226
+#: inc/customizer.php:237
 #, php-format
 msgid "Answer %d"
 msgstr ""
 
-#: inc/customizer.php:229
+#: inc/customizer.php:240
 msgid "Save more with coupons"
 msgstr ""
 
-#: inc/customizer.php:229
+#: inc/customizer.php:240
 msgid "This section only appears when a coupon has “Show this code on the homepage” ticked."
 msgstr ""
 
-#: inc/customizer.php:230
+#: inc/customizer.php:241
 msgid "Copy a code and enter it at checkout."
 msgstr ""
 
-#: inc/customizer.php:255
+#: inc/customizer.php:277
 msgid "Shield"
 msgstr ""
 
-#: inc/customizer.php:256
+#: inc/customizer.php:278
 msgid "Sparkle"
 msgstr ""
 
-#: inc/customizer.php:257
+#: inc/customizer.php:279
 msgid "Chat"
 msgstr ""
 
-#: inc/customizer.php:258
+#: inc/customizer.php:280
 msgid "Truck"
 msgstr ""
 
-#: inc/customizer.php:259
+#: inc/customizer.php:281
 msgid "Return arrow"
 msgstr ""
 
-#: inc/customizer.php:260
+#: inc/customizer.php:282
 msgid "Tag"
 msgstr ""
 
-#: inc/customizer.php:261
+#: inc/customizer.php:283
 msgid "Heart"
 msgstr ""
 
-#: inc/customizer.php:262
+#: inc/customizer.php:284
 msgid "Star"
 msgstr ""
 
-#: inc/customizer.php:263
+#: inc/customizer.php:285
 msgid "Scale"
 msgstr ""
 
-#: inc/customizer.php:264
+#: inc/customizer.php:286
 msgid "Snowflake"
 msgstr ""
 
-#: inc/customizer.php:265
+#: inc/customizer.php:287
 msgid "Leaf"
 msgstr ""
 
-#: inc/customizer.php:266
+#: inc/customizer.php:288
 msgid "Chart"
 msgstr ""
 
-#: inc/customizer.php:267
+#: inc/customizer.php:289
 msgid "Clipboard"
 msgstr ""
 
-#: inc/customizer.php:268
+#: inc/customizer.php:290
 msgid "Market stall"
 msgstr ""
 
-#: inc/customizer.php:397
+#: inc/customizer.php:419
 msgid "Freshtastic Theme"
 msgstr ""
 
-#: inc/customizer.php:398
+#: inc/customizer.php:420
 msgid "Freshtastic Homepage"
 msgstr ""
 
-#: inc/customizer.php:401
+#: inc/customizer.php:423
 msgid "Brand colors and typography"
 msgstr ""
 
-#: inc/customizer.php:402
+#: inc/customizer.php:424
 msgid "Announcement bar"
 msgstr ""
 
-#: inc/customizer.php:403
+#: inc/customizer.php:425
 msgid "Header"
 msgstr ""
 
-#: inc/customizer.php:404
+#: inc/customizer.php:426
 msgid "Shop and product pages"
 msgstr ""
 
-#: inc/customizer.php:405
+#: inc/customizer.php:427
 msgid "Store info and social links"
 msgstr ""
 
-#: inc/customizer.php:406
+#: inc/customizer.php:428
 msgid "Footer"
 msgstr ""
 
-#: inc/customizer.php:407
+#: inc/customizer.php:429
 msgid "Performance"
 msgstr ""
 
-#: inc/customizer.php:414
+#: inc/customizer.php:437
 msgid "Product sections"
 msgstr ""
 
-#: inc/customizer.php:416
+#: inc/customizer.php:439
 msgid "Benefits, newsletter and banners"
 msgstr ""
 
@@ -1419,6 +1464,7 @@ msgstr ""
 #: inc/market.php:170
 #: inc/market.php:252
 #: inc/market.php:341
+#: template-parts/homepage/packages.php:49
 msgid "Out of stock"
 msgstr ""
 
@@ -1577,16 +1623,20 @@ msgstr ""
 msgid "Optional widgets shown in a row above the footer bottom bar."
 msgstr ""
 
-#: inc/setup.php:141
+#: inc/setup.php:142
 msgid "Freshtastic Food Hub:"
 msgstr ""
 
-#: inc/setup.php:142
-msgid "WooCommerce is not active. The blog, pages and navigation still work, but shop sections, cart and product templates are hidden until WooCommerce is activated."
+#: inc/setup.php:143
+msgid "No store is running. The blog, pages and navigation still work, but shop sections, cart and product templates are hidden. The Freshtastic Food Hub Toolkit plugin has a built-in store, so WooCommerce is optional."
 msgstr ""
 
-#: inc/setup.php:144
-msgid "Install WooCommerce"
+#: inc/setup.php:145
+msgid "Turn on the built-in store"
+msgstr ""
+
+#: inc/setup.php:145
+msgid "Activate the Freshtastic Food Hub Toolkit"
 msgstr ""
 
 #. translators: %d: discount percentage
@@ -1710,24 +1760,24 @@ msgid "Search"
 msgstr ""
 
 #: inc/template-tags.php:176
-#: woocommerce/myaccount/dashboard.php:135
+#: woocommerce/myaccount/dashboard.php:153
 msgid "View all"
 msgstr ""
 
 #. translators: %s: social network
-#: inc/template-tags.php:254
+#: inc/template-tags.php:264
 #, php-format
 msgid "%s (opens in a new tab)"
 msgstr ""
 
 #. translators: 1: year, 2: site name
-#: inc/template-tags.php:300
+#: inc/template-tags.php:310
 #, php-format
 msgid "© %1$s %2$s. All rights reserved."
 msgstr ""
 
 #. translators: %d: minutes
-#: inc/template-tags.php:314
+#: inc/template-tags.php:324
 #, php-format
 msgid "%d min read"
 msgid_plural "%d min read"
@@ -1735,7 +1785,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %s: rating
-#: inc/template-tags.php:379
+#: inc/template-tags.php:389
 #, php-format
 msgid "Rated %s out of 5"
 msgstr ""
@@ -1785,6 +1835,14 @@ msgstr ""
 msgid "Payments are handled by the payment provider you select. We never store your card details on this site."
 msgstr ""
 
+#: login-code.php:21
+msgid "One more step to keep your account safe"
+msgstr ""
+
+#: login-code.php:22
+msgid "Your password was correct. Enter the code from your email to finish signing in."
+msgstr ""
+
 #. translators: %s: search query
 #: search.php:20
 #, php-format
@@ -1828,7 +1886,7 @@ msgid "There is nothing here yet. Check back soon."
 msgstr ""
 
 #: template-parts/content/none.php:14
-#: woocommerce/myaccount/dashboard.php:166
+#: woocommerce/myaccount/dashboard.php:184
 msgid "Browse products"
 msgstr ""
 
@@ -1985,7 +2043,7 @@ msgid "Not on the list?"
 msgstr ""
 
 #: template-parts/homepage/coupons.php:36
-#: template-parts/homepage/hero.php:52
+#: template-parts/homepage/hero.php:54
 msgid "Copy code"
 msgstr ""
 
@@ -2009,25 +2067,25 @@ msgstr ""
 msgid "View current deals"
 msgstr ""
 
-#: template-parts/homepage/hero.php:18
+#: template-parts/homepage/hero.php:19
 msgid "Promotions"
 msgstr ""
 
-#: template-parts/homepage/hero.php:41
+#: template-parts/homepage/hero.php:43
 msgid "Ends in"
 msgstr ""
 
-#: template-parts/homepage/hero.php:83
+#: template-parts/homepage/hero.php:84
 msgid "Previous banner"
 msgstr ""
 
 #. translators: %d: banner number
-#: template-parts/homepage/hero.php:86
+#: template-parts/homepage/hero.php:87
 #, php-format
 msgid "Show banner %d"
 msgstr ""
 
-#: template-parts/homepage/hero.php:88
+#: template-parts/homepage/hero.php:89
 msgid "Next banner"
 msgstr ""
 
@@ -2037,6 +2095,25 @@ msgstr ""
 
 #: template-parts/homepage/new-arrivals.php:20
 msgid "Shop new arrivals"
+msgstr ""
+
+#. translators: %s: amount saved
+#: template-parts/homepage/packages.php:37
+#, php-format
+msgid "Save %s"
+msgstr ""
+
+#. translators: %s: package name
+#: template-parts/homepage/packages.php:47
+#, php-format
+msgid "Add %s to cart"
+msgstr ""
+
+#. translators: %s: package name
+#. translators: %s: product name
+#: template-parts/homepage/packages.php:47
+#: woocommerce/myaccount/dashboard.php:242
+msgid "Add to cart"
 msgstr ""
 
 #: template-parts/homepage/price-board.php:43
@@ -2275,127 +2352,126 @@ msgid "Clear all filters"
 msgstr ""
 
 #. translators: %d: number of orders
-#: woocommerce/myaccount/dashboard.php:32
+#: woocommerce/myaccount/dashboard.php:33
 #, php-format
 msgid "You have %d order in progress."
 msgid_plural "You have %d orders in progress."
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/myaccount/dashboard.php:34
+#: woocommerce/myaccount/dashboard.php:35
 msgid "Fresh meat, fish, vegetables and frozen goods are ready for your next order."
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:40
-msgid "Shop the market"
+#: woocommerce/myaccount/dashboard.php:46
+msgid "Account summary"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:62
+#: woocommerce/myaccount/dashboard.php:51
+msgid "In progress"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:58
+msgid "Total orders"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:66
+msgid "Quotations"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:75
+msgid "Coupons ready"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:83
+msgid "Points"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:93
+msgid "Saved items"
+msgstr ""
+
+#: woocommerce/myaccount/dashboard.php:115
 msgid "Ready to collect"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:62
+#: woocommerce/myaccount/dashboard.php:115
 msgid "Packed: book your rider now"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:64
+#: woocommerce/myaccount/dashboard.php:117
 msgid "Your next pickup"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:64
+#: woocommerce/myaccount/dashboard.php:117
 msgid "Your next rider collection"
 msgstr ""
 
 #. translators: %s: order number
-#: woocommerce/myaccount/dashboard.php:70
-#: woocommerce/myaccount/dashboard.php:146
+#: woocommerce/myaccount/dashboard.php:123
+#: woocommerce/myaccount/dashboard.php:164
 #, php-format
 msgid "Order #%s"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:83
+#: woocommerce/myaccount/dashboard.php:136
 msgid "Order progress"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:94
-msgid "Account summary"
-msgstr ""
-
-#: woocommerce/myaccount/dashboard.php:99
-msgid "In progress"
-msgstr ""
-
-#: woocommerce/myaccount/dashboard.php:106
-msgid "Total orders"
-msgstr ""
-
-#: woocommerce/myaccount/dashboard.php:114
-msgid "Quotations"
-msgstr ""
-
-#: woocommerce/myaccount/dashboard.php:123
-msgid "Saved items"
-msgstr ""
-
-#: woocommerce/myaccount/dashboard.php:133
+#: woocommerce/myaccount/dashboard.php:151
 msgid "Recent orders"
 msgstr ""
 
 #. translators: 1: order date, 2: number of items
-#: woocommerce/myaccount/dashboard.php:151
+#: woocommerce/myaccount/dashboard.php:169
 #, php-format
 msgid "%1$s · %2$d item"
 msgid_plural "%1$s · %2$d items"
 msgstr[0] ""
 msgstr[1] ""
 
-#: woocommerce/myaccount/dashboard.php:164
+#: woocommerce/myaccount/dashboard.php:182
 msgid "No orders yet"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:165
+#: woocommerce/myaccount/dashboard.php:183
 msgid "Your orders and pickup times will appear here after you check out."
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:175
+#: woocommerce/myaccount/dashboard.php:198
 msgid "Edit"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:187
+#: woocommerce/myaccount/dashboard.php:210
 msgid "Add your address for a faster checkout"
 msgstr ""
 
 #. translators: 1: display name, 2: opening link tag, 3: closing link tag
-#: woocommerce/myaccount/dashboard.php:192
+#: woocommerce/myaccount/dashboard.php:215
 #, php-format
 msgid "Not %1$s? %2$sLog out%3$s"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:197
+#: woocommerce/myaccount/dashboard.php:220
 msgid "Spent with us"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:207
+#: woocommerce/myaccount/dashboard.php:230
 msgid "Buy again"
 msgstr ""
 
-#: woocommerce/myaccount/dashboard.php:208
+#: woocommerce/myaccount/dashboard.php:231
 msgid "Shop all"
 msgstr ""
 
 #. translators: %s: product name
-#: woocommerce/myaccount/dashboard.php:219
+#: woocommerce/myaccount/dashboard.php:242
 #, php-format
 msgid "Buy %s again"
 msgstr ""
 
 #. translators: %s: product name
-#: woocommerce/myaccount/dashboard.php:219
-msgid "Add to cart"
-msgstr ""
-
-#. translators: %s: product name
-#: woocommerce/myaccount/dashboard.php:219
+#: woocommerce/myaccount/dashboard.php:242
 #: woocommerce/single-product/nexora-sticky-atc.php:34
 msgid "Choose options"
 msgstr ""

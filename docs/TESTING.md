@@ -139,10 +139,91 @@ Run end to end over real HTTP on both engines, through the real admin forms, reg
 - [ ] The consent record appears on the customer's Users screen. Marketing stays off unless ticked.
 - [ ] Raising the document version shows the Accept card on the account dashboard.
 - [ ] Login code switches stay locked until a test code is confirmed.
-- [ ] Correct password leads to the code screen with no session. Wrong, expired and old codes fail. Five wrong codes end the attempt.
+- [ ] Correct password leads to the code page at `/verify-login/`, with the site header and footer and no session. Wrong, expired and old codes fail. Five wrong codes end the attempt.
 - [ ] Admin, Order Desk and customer logins continue to the right page. A login at checkout returns to checkout with the cart intact.
 - [ ] `NEXORA_DISABLE_LOGIN_OTP` lets an administrator back in.
 - [ ] On a real device: the code arrives in the inbox, not spam, and Google's box works with your real keys.
+
+## Packages and pop-up (2.7) checks
+
+- [ ] Create Package A from two products. Its page lists the contents and the saving.
+- [ ] Buying 2 takes stock from both products. Cancelling gives it back, even after the package is edited.
+- [ ] Set a product inside to 0 stock. The package shows as out of stock and cannot be added.
+- [ ] Packing staff can see the contents on the order screen and in the emails.
+- [ ] The pop-up opens after the delay, closes with the X, Escape and a click outside, and stays closed on reload.
+- [ ] The pop-up never appears on cart, checkout or account pages.
+- [ ] On a real phone: the banner is readable and the close button is easy to tap.
+
+## Analytics (2.8) checks
+
+- [ ] Totals match a day you have added up by hand, with the site timezone set to Manila. An order just before and just after midnight lands on the right days.
+- [ ] Pending, cancelled, failed and refunded orders stay out of sales. Refunds show in their own tile.
+- [ ] Order Desk staff and customers cannot open the screen or download a CSV.
+- [ ] Approve works from the Reviews tab.
+- [ ] The daily email arrives at the set time, with no customer details. Numbers match the Daily report tab.
+
+## Customer account (2.9) checks
+
+- [ ] The account menu is one horizontal row on every account page, and scrolls sideways on a real phone.
+- [ ] A typed code and a listed offer can both be claimed. Each appears under Ready to use and Claim history.
+- [ ] After an order uses a claimed coupon, its status becomes Used. Cancelling that order makes it Ready to use again.
+- [ ] Another customer's personal coupon reads as "not valid".
+- [ ] The Points page shows 0 and "coming soon", or is hidden if you turned it off.
+
+## Store choice and demo import (2.9.1) checks
+
+Tested automatically on a local site (26 of 26 pass): two store options with the running one marked; switching built-in → WooCommerce and WooCommerce → built-in from the demo page; the import resumes by itself after the switch with the same ticks; the right import steps for each store; shop page loads after each; a forged link cannot switch the store. Still to check by hand:
+
+- [ ] Fresh WordPress without WooCommerce: activating the toolkit starts the built-in store and installs nothing.
+- [ ] "With WooCommerce" on a host where WooCommerce is not installed yet: it downloads, then the import continues.
+- [ ] A host that blocks plugin downloads: the page shows the error and the shop stays on the built-in store.
+
+## Account activation (2.10) checks
+
+Tested automatically: 33 of 33 on the built-in store and 14 of 14 on WooCommerce (classic checkout). Covers no sign-in after registering or checkout, the activation email, refusal before activation, a new link after 5 minutes with the old one stopping, wrong password not revealing anything, wrong, used and expired links, wp-login.php refusing too, the receipt showing without sign-in, admin Activate now, password reset activating, the setting switched off, and existing customers unaffected. Still to check by hand:
+
+- [ ] The activation email arrives in a real inbox (not spam) and the button works in Gmail and on a phone.
+- [ ] WooCommerce checkout block creating an account (only the classic checkout was tested).
+- [ ] A payment gateway that leaves the site and returns to the receipt.
+
+## reCAPTCHA v3 (2.10.1) checks
+
+Tested automatically on the built-in store with Google's replies simulated (18 of 18): key type and score settings, score clamped to 0.1 to 0.9, v3 page has a hidden field and no checkbox, good score registers, low score, wrong action and v2 tokens refused, missing token explained, checkout account with good and low score, switching back to v2. In headless Chrome, a key Google rejects does not stop the form: it is sent and the customer sees "The security check did not load". Still to check by hand:
+
+- [ ] With your real v3 key on the live domain, a registration goes through (Google keys do not work on localhost unless it is added to the key's domains).
+- [ ] WooCommerce registration and classic checkout with v3 (only the built-in store was tested).
+- [ ] After a week, look at the score spread in the reCAPTCHA admin console and adjust the minimum score.
+
+## Emails (2.11) checks
+
+Tested automatically on the built-in store (47 of 47): From name is never "WordPress", custom From address and Reply-To, an SMTP plugin's explicit sender kept, plain-text emails wrapped with clickable links and HTML from other senders left alone, settings saved with scripts removed, custom subject, heading and message with placeholders and escaped values, generated parts kept (Activate button, order table, reset link added when {link} is missing), turning off the customer order email and WordPress's new-user email, the store's new-order and order-ready emails, preview (and its nonce), test send, wrapping switched off, WooCommerce options following and not following. Still to check by hand:
+
+- [ ] Real inbox: sender name, logo and colours in Gmail, Outlook and the iPhone Mail app, and that emails do not land in spam with your From address (set up SPF/DKIM for your domain, or use an SMTP service).
+- [ ] WooCommerce order emails with WooCommerce active, after "WooCommerce emails" is ticked.
+
+## Maintenance background (2.11.1) checks
+
+Tested on the built-in store: the four background choices, the overlay limits (30 to 90%), an own image without a chosen file falling back to the market artwork, the theme's banner image used when set, the preview button for administrators only (maintenance stays off), and a real 503 page with the background and the theme logo. Screenshots at 1280px and 390px, no sideways scrolling. Still to check by hand:
+
+- [ ] Your own photo with the overlay you like, on a real phone.
+
+## Facebook and Instagram (2.12) checks
+
+Tested on the built-in store against a stand-in for Meta's servers (51 of 51 automatic checks), so nothing was posted to a real Page:
+- **Catalog:** the batch request format, the `80.00 PHP` price format, sale price, availability, plain-text description, brand, link and image, and one item per option grouped under the product.
+- **Left out of the catalog:** products without an image, demo products and drafts.
+- **Updates:** removals for deleted options, SKU changes, hidden and trashed products, a stock change from an order, and shop maintenance keeping the catalog.
+- **Errors:** retry when Meta cannot be reached, the error log never containing the token, Meta's per-item errors and the batch status check shown on the product, and the app secret proof.
+- **Posting:** the Facebook photo post with the Page token, the link post without an image, and Instagram create, publish and permalink. No second post on later updates, no post for imported products, an Instagram refusal recorded, and the template placeholders.
+- **Browser:** settings saved with the token never shown again, Test connection, a new product published from the editor with the box ticked by default and posted in the background, **View** links in the product box, the feed with the right key (pretty links) and 404 with a wrong key, and the settings page at 390px with no sideways scrolling.
+
+Still to check by hand with your real Meta account (needs the site online):
+
+- [ ] **Test connection** shows green ticks for the token, catalog, Page and Instagram.
+- [ ] **Send all products now**, then Commerce Manager → Catalog → Items shows the products. Commerce Manager → Data sources shows any rejected items.
+- [ ] Publish a test product with a JPEG image and the box ticked. It appears on the Page and on Instagram within a minute or two (WordPress's scheduled tasks need visits, or a real cron job).
+- [ ] Sell the last unit of a product. It shows *Out of stock* in Commerce Manager after the next sync.
+- [ ] The data feed address, if you use it: Commerce Manager's first scheduled fetch succeeds.
 
 ## Accessibility
 

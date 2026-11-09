@@ -18,6 +18,7 @@ $nexora_rfq     = nexora_rfq_enabled() ? nexora_rfq_url() : '';
 // Registration saves the name first, so only a street address counts as having an address.
 $nexora_address = get_user_meta( $current_user->ID, 'billing_address_1', true ) ? wc_get_account_formatted_address( 'billing' ) : '';
 $nexora_phone   = get_user_meta( $current_user->ID, 'billing_phone', true );
+$nexora_wallet  = class_exists( 'Nexora_Toolkit_Coupon_Claims' ) && method_exists( 'Nexora_Toolkit_Coupon_Claims', 'dashboard_panel' );
 ?>
 <div class="nx-dash">
 
@@ -42,6 +43,58 @@ $nexora_phone   = get_user_meta( $current_user->ID, 'billing_phone', true );
 				<a class="nx-dash-btn nx-dash-btn--line" href="<?php echo esc_url( $nexora_rfq ); ?>"><?php echo nexora_icon( 'clipboard', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Request a quote', 'nexora-commerce' ); ?></a>
 			<?php endif; ?>
 		</div>
+		<ul class="nx-dash-stats" aria-label="<?php esc_attr_e( 'Account summary', 'nexora-commerce' ); ?>">
+			<li class="nx-dash-stat">
+				<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'orders' ) ); ?>">
+					<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'clock', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+					<strong><?php echo esc_html( number_format_i18n( count( $nexora_summary['active'] ) ) ); ?></strong>
+					<span><?php esc_html_e( 'In progress', 'nexora-commerce' ); ?></span>
+				</a>
+			</li>
+			<li class="nx-dash-stat">
+				<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'orders' ) ); ?>">
+					<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'bag', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+					<strong><?php echo esc_html( number_format_i18n( $nexora_summary['total'] ) ); ?></strong>
+					<span><?php esc_html_e( 'Total orders', 'nexora-commerce' ); ?></span>
+				</a>
+			</li>
+			<?php if ( null !== $nexora_summary['quotations'] && nexora_rfq_enabled() ) : ?>
+				<li class="nx-dash-stat">
+					<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'quotations' ) ); ?>">
+						<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'clipboard', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						<strong><?php echo esc_html( number_format_i18n( $nexora_summary['quotations'] ) ); ?></strong>
+						<span><?php esc_html_e( 'Quotations', 'nexora-commerce' ); ?></span>
+					</a>
+				</li>
+			<?php endif; ?>
+			<?php if ( $nexora_wallet ) : ?>
+				<li class="nx-dash-stat">
+					<a href="<?php echo esc_url( Nexora_Toolkit_Coupon_Claims::url() ); ?>">
+						<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'tag', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						<strong><?php echo esc_html( number_format_i18n( Nexora_Toolkit_Coupon_Claims::ready_count( $current_user->ID ) ) ); ?></strong>
+						<span><?php esc_html_e( 'Coupons ready', 'nexora-commerce' ); ?></span>
+					</a>
+				</li>
+				<?php if ( Nexora_Toolkit_Points::enabled() ) : ?>
+					<li class="nx-dash-stat">
+						<a href="<?php echo esc_url( Nexora_Toolkit_Points::url() ); ?>">
+							<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'star', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+							<strong><?php echo esc_html( number_format_i18n( Nexora_Toolkit_Points::balance( $current_user->ID ) ) ); ?></strong>
+							<span><?php esc_html_e( 'Points', 'nexora-commerce' ); ?></span>
+						</a>
+					</li>
+				<?php endif; ?>
+			<?php endif; ?>
+			<?php if ( null !== $nexora_summary['wishlist'] ) : ?>
+				<li class="nx-dash-stat">
+					<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'wishlist' ) ); ?>">
+						<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'heart', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						<strong><?php echo esc_html( number_format_i18n( $nexora_summary['wishlist'] ) ); ?></strong>
+						<span><?php esc_html_e( 'Saved items', 'nexora-commerce' ); ?></span>
+					</a>
+				</li>
+			<?php endif; ?>
+		</ul>
 	</header>
 
 	<?php
@@ -91,41 +144,6 @@ $nexora_phone   = get_user_meta( $current_user->ID, 'billing_phone', true );
 		</section>
 	<?php endif; ?>
 
-	<ul class="nx-dash-stats" aria-label="<?php esc_attr_e( 'Account summary', 'nexora-commerce' ); ?>">
-		<li class="nx-dash-stat">
-			<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'orders' ) ); ?>">
-				<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'clock', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-				<strong><?php echo esc_html( number_format_i18n( count( $nexora_summary['active'] ) ) ); ?></strong>
-				<span><?php esc_html_e( 'In progress', 'nexora-commerce' ); ?></span>
-			</a>
-		</li>
-		<li class="nx-dash-stat">
-			<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'orders' ) ); ?>">
-				<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'bag', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-				<strong><?php echo esc_html( number_format_i18n( $nexora_summary['total'] ) ); ?></strong>
-				<span><?php esc_html_e( 'Total orders', 'nexora-commerce' ); ?></span>
-			</a>
-		</li>
-		<?php if ( null !== $nexora_summary['quotations'] && nexora_rfq_enabled() ) : ?>
-			<li class="nx-dash-stat">
-				<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'quotations' ) ); ?>">
-					<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'clipboard', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-					<strong><?php echo esc_html( number_format_i18n( $nexora_summary['quotations'] ) ); ?></strong>
-					<span><?php esc_html_e( 'Quotations', 'nexora-commerce' ); ?></span>
-				</a>
-			</li>
-		<?php endif; ?>
-		<?php if ( null !== $nexora_summary['wishlist'] ) : ?>
-			<li class="nx-dash-stat">
-				<a href="<?php echo esc_url( wc_get_account_endpoint_url( 'wishlist' ) ); ?>">
-					<span class="nx-dash-stat__icon" aria-hidden="true"><?php echo nexora_icon( 'heart', 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-					<strong><?php echo esc_html( number_format_i18n( $nexora_summary['wishlist'] ) ); ?></strong>
-					<span><?php esc_html_e( 'Saved items', 'nexora-commerce' ); ?></span>
-				</a>
-			</li>
-		<?php endif; ?>
-	</ul>
-
 	<div class="nx-dash-grid">
 
 		<section class="nx-dash-panel nx-dash-orders" aria-labelledby="nx-dash-orders-title">
@@ -169,6 +187,11 @@ $nexora_phone   = get_user_meta( $current_user->ID, 'billing_phone', true );
 		</section>
 
 		<div class="nx-dash-side">
+			<?php
+			if ( $nexora_wallet ) {
+				Nexora_Toolkit_Coupon_Claims::dashboard_panel();
+			}
+			?>
 			<section class="nx-dash-panel" aria-labelledby="nx-dash-profile-title">
 				<header class="nx-dash-panel__head">
 					<h2 id="nx-dash-profile-title"><?php esc_html_e( 'Your details', 'nexora-commerce' ); ?></h2>

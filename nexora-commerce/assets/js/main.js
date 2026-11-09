@@ -798,9 +798,27 @@
 		var held = false; // Hover or keyboard focus inside the banner.
 		var timer = null;
 
-		function show( next, announce ) {
-			index = ( next + slides.length ) % slides.length;
-			slides.forEach( function ( s, i ) { s.hidden = i !== index; } );
+		var rtl = 'rtl' === getComputedStyle( root ).direction;
+
+		// direction: 1 moves on to the next banner (it comes in from the right), -1 goes back.
+		function show( next, announce, direction ) {
+			var target = ( next + slides.length ) % slides.length;
+			if ( target !== index ) {
+				var way = ( direction || 1 ) * ( rtl ? -1 : 1 );
+				var incoming = slides[ target ];
+				var outgoing = slides[ index ];
+				incoming.style.transition = 'none';
+				incoming.style.transform = 'translateX(' + ( way * 100 ) + '%)';
+				void incoming.offsetWidth; // Start from the edge, whichever side it last left by.
+				incoming.style.transition = '';
+				incoming.style.transform = '';
+				incoming.classList.add( 'is-active' );
+				incoming.inert = false;
+				outgoing.classList.remove( 'is-active' );
+				outgoing.style.transform = 'translateX(' + ( -way * 100 ) + '%)';
+				outgoing.inert = true;
+				index = target;
+			}
 			dots.forEach( function ( d, i ) {
 				if ( i === index ) { d.setAttribute( 'aria-current', 'true' ); } else { d.removeAttribute( 'aria-current' ); }
 			} );
@@ -815,14 +833,33 @@
 			pause.title = pause.getAttribute( 'aria-label' );
 			pause.classList.toggle( 'is-paused', paused );
 		}
-		on( $( '[data-nexora-prev]', root ), 'click', function () { show( index - 1, true ); run(); } );
+		on( $( '[data-nexora-prev]', root ), 'click', function () { show( index - 1, true, -1 ); run(); } );
 		on( $( '[data-nexora-next]', root ), 'click', function () { show( index + 1, true ); run(); } );
-		dots.forEach( function ( d, i ) { on( d, 'click', function () { show( i, true ); run(); } ); } );
+		dots.forEach( function ( d, i ) { on( d, 'click', function () { show( i, true, i < index ? -1 : 1 ); run(); } ); } );
 		on( pause, 'click', function () { paused = ! paused; syncPause(); run(); } );
 		on( root, 'mouseenter', function () { held = true; run(); } );
 		on( root, 'mouseleave', function () { held = false; run(); } );
 		on( root, 'focusin', function () { held = true; run(); } );
 		on( root, 'focusout', function ( e ) { if ( ! root.contains( e.relatedTarget ) ) { held = false; run(); } } );
+
+		// Swipe on touch screens. Vertical movement stays with the page (touch-action: pan-y).
+		var startX = null;
+		on( $( '[data-nexora-slides]', root ), 'pointerdown', function ( e ) { startX = 'touch' === e.pointerType ? e.clientX : null; } );
+		on( $( '[data-nexora-slides]', root ), 'pointerup', function ( e ) {
+			if ( null === startX ) { return; }
+			var moved = ( e.clientX - startX ) * ( rtl ? -1 : 1 );
+			startX = null;
+			if ( Math.abs( moved ) > 50 ) {
+				show( index + ( moved < 0 ? 1 : -1 ), true, moved < 0 ? 1 : -1 );
+				run();
+			}
+		} );
+		on( $( '[data-nexora-slides]', root ), 'pointercancel', function () { startX = null; } );
+
+		// Load the other banners' images once the page is ready, so none slides in empty.
+		var loadRest = function () { $$( 'img[loading="lazy"]', root ).forEach( function ( img ) { img.loading = 'eager'; } ); };
+		if ( 'complete' === document.readyState ) { loadRest(); } else { on( window, 'load', loadRest ); }
+
 		show( 0, false );
 		syncPause();
 		run();
@@ -884,34 +921,14 @@
 		} );
 	}
 
-	/* -------------------------------------------- collapsible account sidebar */
+	/* ------------------------------------------------ horizontal account menu */
 	function initAccountNav() {
-		var profile = doc.querySelector( '.nx-acc-nav__profile' );
-		if ( ! profile ) { return; }
-		var root  = doc.documentElement;
-		var links = profile.parentNode.querySelectorAll( 'ul a' );
-		var btn   = doc.createElement( 'button' );
-		btn.type = 'button';
-		btn.className = 'nx-acc-nav__toggle';
-		btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m11 17-5-5 5-5M18 17l-5-5 5-5"/></svg>';
-
-		var sync = function () {
-			var collapsed = root.classList.contains( 'nx-acc-collapsed' );
-			var label     = collapsed ? i18n.expandNav : i18n.collapseNav;
-			btn.setAttribute( 'aria-label', label );
-			btn.title = label;
-			// With the labels hidden, tooltips say where each icon goes.
-			links.forEach( function ( a ) {
-				if ( collapsed ) { a.title = a.textContent.trim(); } else { a.removeAttribute( 'title' ); }
-			} );
-		};
-		btn.addEventListener( 'click', function () {
-			var collapsed = root.classList.toggle( 'nx-acc-collapsed' );
-			try { window.localStorage.setItem( 'nxAccNavCollapsed', collapsed ? '1' : '0' ); } catch ( e ) { /* Private window: it still works for this page. */ }
-			sync();
-		} );
-		profile.appendChild( btn );
-		sync();
+		var list = doc.querySelector( '.nx-acc-nav ul' );
+		var item = list && list.querySelector( '.is-active' );
+		// On small screens the row scrolls sideways: start with the current page in view.
+		if ( item && list.scrollWidth > list.clientWidth ) {
+			list.scrollLeft = item.offsetLeft - ( list.clientWidth - item.offsetWidth ) / 2;
+		}
 	}
 
 	/* ------------------------------------------------------------------ boot */

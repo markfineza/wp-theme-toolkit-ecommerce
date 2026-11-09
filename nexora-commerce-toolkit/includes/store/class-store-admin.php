@@ -86,8 +86,30 @@ class Nexora_Store_Admin {
 			wp_die( esc_html__( 'Sorry, you are not allowed to do that.', 'nexora-commerce-toolkit' ), 403 );
 		}
 		check_admin_referer( 'nexora_store_engine' );
-		$mode = isset( $_GET['mode'] ) ? sanitize_key( wp_unslash( $_GET['mode'] ) ) : '';
-		$key  = 'nexora_engine_msg_' . get_current_user_id();
+		$mode  = isset( $_GET['mode'] ) ? sanitize_key( wp_unslash( $_GET['mode'] ) ) : '';
+		$key   = 'nexora_engine_msg_' . get_current_user_id();
+		$error = self::switch_engine( 'native' === $mode ? 'native' : 'woocommerce' );
+
+		if ( 'native' === $mode ) {
+			set_transient( $key, __( 'The built-in store is now running. WooCommerce was deactivated, not deleted.', 'nexora-commerce-toolkit' ), 120 );
+			wp_safe_redirect( admin_url( 'admin.php?page=nexora-store' ) );
+			exit;
+		}
+		if ( $error ) {
+			set_transient( $key, $error, 120 );
+		}
+		wp_safe_redirect( admin_url( 'options-general.php?page=nexora-toolkit#nexora-engine' ) );
+		exit;
+	}
+
+	/**
+	 * Switch the running engine. The new engine starts on the next request.
+	 * Callers check capabilities and nonces first.
+	 *
+	 * @param string $mode native|woocommerce.
+	 * @return string Error message, or '' on success.
+	 */
+	public static function switch_engine( $mode ) {
 		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		$file = 'woocommerce/woocommerce.php';
 
@@ -97,24 +119,34 @@ class Nexora_Store_Admin {
 			if ( is_plugin_active( $file ) ) {
 				deactivate_plugins( $file );
 			}
-			set_transient( $key, __( 'The built-in store is now running. WooCommerce was deactivated, not deleted.', 'nexora-commerce-toolkit' ), 120 );
-			wp_safe_redirect( admin_url( 'admin.php?page=nexora-store' ) );
-			exit;
+			flush_rewrite_rules( false );
+			return '';
 		}
 
+		$previous = get_option( Nexora_Store::ENGINE );
 		update_option( Nexora_Store::ENGINE, 'woocommerce' );
 		update_option( 'nexora_wc_regen', 1 );
+		$error = '';
 		if ( ! file_exists( WP_PLUGIN_DIR . '/' . $file ) ) {
-			Nexora_Toolkit_Dependencies::install_all();
+			$result = Nexora_Toolkit_Dependencies::install_all();
+			if ( ! empty( $result['failed'] ) ) {
+				/* translators: %s: error */
+				$error = sprintf( __( 'WooCommerce could not be installed: %s', 'nexora-commerce-toolkit' ), implode( ' ', $result['failed'] ) );
+			}
 		} elseif ( ! is_plugin_active( $file ) ) {
 			$result = activate_plugin( $file );
 			if ( is_wp_error( $result ) ) {
-				set_transient( $key, $result->get_error_message(), 120 );
+				$error = $result->get_error_message();
 			}
 		}
+		if ( $error ) {
+			// Keep the shop running on what it had rather than leaving it with no store.
+			update_option( Nexora_Store::ENGINE, $previous ? $previous : 'native' );
+			delete_option( 'nexora_wc_regen' );
+			return $error;
+		}
 		flush_rewrite_rules( false );
-		wp_safe_redirect( admin_url( 'options-general.php?page=nexora-toolkit#nexora-engine' ) );
-		exit;
+		return '';
 	}
 
 	/**
@@ -181,7 +213,7 @@ class Nexora_Store_Admin {
 		if ( empty( $submenu['nexora-store'] ) ) {
 			return;
 		}
-		$order = array( 'nexora-store', 'nexora-store-orders', 'edit.php?post_type=product', 'post-new.php?post_type=product', 'edit-tags.php?taxonomy=product_cat&post_type=product', 'edit.php?post_type=shop_coupon', 'edit.php?post_type=' . Nexora_Store_Coupons::PROMO, Nexora_Toolkit_Rewards::PAGE, 'edit.php?post_type=nexora_rfq', 'nexora-store-settings' );
+		$order = array( 'nexora-store', 'nexora-store-orders', 'nexora-analytics', 'edit.php?post_type=product', 'post-new.php?post_type=product', 'edit-tags.php?taxonomy=product_cat&post_type=product', 'edit.php?post_type=shop_coupon', 'edit.php?post_type=' . Nexora_Store_Coupons::PROMO, Nexora_Toolkit_Rewards::PAGE, 'edit.php?post_type=nexora_rfq', 'nexora-store-settings' );
 		usort(
 			$submenu['nexora-store'],
 			static function ( $a, $b ) use ( $order ) {

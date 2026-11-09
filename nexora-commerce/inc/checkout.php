@@ -288,6 +288,8 @@ function nexora_account_icon( $endpoint ) {
 	$map = array(
 		'dashboard'       => 'grid',
 		'orders'          => 'bag',
+		'coupons'         => 'tag',
+		'points'          => 'star',
 		'downloads'       => 'download',
 		'edit-address'    => 'pin',
 		'payment-methods' => 'card',

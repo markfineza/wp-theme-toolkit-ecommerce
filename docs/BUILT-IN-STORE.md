@@ -1,12 +1,14 @@
 # Built-in Store (no WooCommerce)
 
-The toolkit can run the whole shop itself, without the WooCommerce plugin. It is **off by default**. Until you choose it, WooCommerce runs your shop exactly as before.
+The toolkit can run the whole shop itself, without the WooCommerce plugin.
 
 ## Turning it on
 
-**Existing site:** go to **Settings → Freshtastic Toolkit → Store engine → Use the built-in store**. WooCommerce is deactivated, not deleted. Then open **Store → Settings** and fill in your address, pickup points and payment details.
+**New site:** nothing to do. When the toolkit is activated on a site where WooCommerce is not running, it starts the built-in store and remembers that choice. WooCommerce is never installed, and the demo importer works without it. A site that already runs WooCommerce stays on WooCommerce until you switch.
 
-**New site that should never install WooCommerce:** add this to `wp-config.php` before activating the toolkit:
+**Existing WooCommerce site:** go to **Settings → Freshtastic Toolkit → Store engine → Use the built-in store**. WooCommerce is deactivated, not deleted. Then open **Store → Settings** and fill in your address, pickup points and payment details.
+
+**Lock the engine:** to keep a site on the built-in store whatever happens to WooCommerce, add this to `wp-config.php`:
 
 ```php
 define( 'NEXORA_STORE_ENGINE', 'native' );

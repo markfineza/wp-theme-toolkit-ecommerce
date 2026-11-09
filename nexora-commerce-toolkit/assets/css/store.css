@@ -137,3 +137,6 @@ form.nx-co:has(input[name="shipping"][value="courier"]:checked) .nx-store-panel[
 .nexora-store .woocommerce-mini-cart__buttons { display: grid; gap: 8px; margin: 0; }
 .nexora-store .woocommerce-mini-cart__buttons .button { text-align: center; }
 .nexora-store .nx-toast.is-error { border-left: 4px solid var(--nx-sale, #dc2626); }
+
+/* A product with no photo yet. */
+.nx-store-single__gallery .nx-cat-placeholder { display: grid; place-items: center; width: 100%; aspect-ratio: 1; border-radius: var(--nx-radius-lg, 16px); background: var(--nx-surface, #fff); color: var(--nx-primary, #12306e); font-size: clamp(4rem, 12vw, 8rem); font-weight: 800; }

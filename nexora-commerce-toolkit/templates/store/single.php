@@ -70,6 +70,7 @@ while ( have_posts() ) :
 						</div>
 					<?php endif; ?>
 					<div class="woocommerce-product-details__short-description"><?php echo wp_kses_post( wpautop( $product->get_short_description() ) ); ?></div>
+					<?php Nexora_Toolkit_Packages::render_single(); ?>
 					<?php if ( $nx_rows ) : ?>
 						<table class="nx-unit-table">
 							<thead><tr><th><?php esc_html_e( 'Option', 'nexora-commerce-toolkit' ); ?></th><th><?php esc_html_e( 'Price', 'nexora-commerce-toolkit' ); ?></th><th><?php esc_html_e( 'Per unit', 'nexora-commerce-toolkit' ); ?></th></tr></thead>

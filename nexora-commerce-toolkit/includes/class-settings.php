@@ -54,6 +54,7 @@ class Nexora_Toolkit_Settings {
 			'klaviyo_list_id'       => '',
 			'newsletter_success'    => '', // Translated on read (see get()); defaults() runs before translations load.
 			'wishlist_enabled'      => true,
+			'points_enabled'        => true,
 			'ga4_id'                => '',
 			'gtm_id'                => '',
 			'meta_pixel_id'         => '',
@@ -135,7 +136,7 @@ class Nexora_Toolkit_Settings {
 		$input    = is_array( $input ) ? $input : array();
 		$current  = wp_parse_args( (array) get_option( self::OPTION, array() ), self::defaults() );
 		$out      = self::defaults();
-		$booleans = array( 'mailchimp_double_optin', 'wishlist_enabled', 'tracking_force', 'demo_labels', 'rfq_enabled', 'orders_modern', 'order_desk' );
+		$booleans = array( 'mailchimp_double_optin', 'wishlist_enabled', 'points_enabled', 'tracking_force', 'demo_labels', 'rfq_enabled', 'orders_modern', 'order_desk' );
 
 		foreach ( $out as $key => $default ) {
 			if ( in_array( $key, $booleans, true ) ) {
@@ -342,6 +343,7 @@ class Nexora_Toolkit_Settings {
 					self::field( 'rfq_enabled', __( 'Request for quotation', 'nexora-commerce-toolkit' ), 'checkbox', array( 'help' => __( 'Lets shoppers request items that are not listed, out of stock or needed in bulk. Requests appear under WooCommerce → Quotations.', 'nexora-commerce-toolkit' ) ) );
 					self::field( 'rfq_email', __( 'Send quotation requests to', 'nexora-commerce-toolkit' ), 'text', array( 'placeholder' => get_option( 'admin_email' ), 'help' => __( 'Leave empty to use the site admin email.', 'nexora-commerce-toolkit' ) ) );
 					self::field( 'wishlist_enabled', __( 'Built-in wishlist', 'nexora-commerce-toolkit' ), 'checkbox', array( 'help' => __( 'Untick if you use another wishlist plugin (for example YITH WooCommerce Wishlist).', 'nexora-commerce-toolkit' ) ) );
+					self::field( 'points_enabled', __( 'Points page in customer accounts', 'nexora-commerce-toolkit' ), 'checkbox', array( 'help' => __( 'Nothing awards points yet, so customers see a balance of 0 and "coming soon". Untick to hide the page until points go live.', 'nexora-commerce-toolkit' ) ) );
 					self::field( 'demo_labels', __( 'Label sample content', 'nexora-commerce-toolkit' ), 'checkbox', array( 'help' => __( 'Shows “Sample review” / “Demo product” labels on content created by the demo importer. Keep this on until demo content is removed.', 'nexora-commerce-toolkit' ) ) );
 					?>
 				</table>

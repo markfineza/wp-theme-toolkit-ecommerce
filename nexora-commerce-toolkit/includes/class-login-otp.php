@@ -6,6 +6,9 @@
  * so a single check on the authenticate filter covers them all. A correct password creates no session:
  * it starts a challenge tied to this browser by a cookie, and the session begins only after the code.
  *
+ * The code is entered on its own storefront page, /verify-login/. The theme's login-code.php lays the
+ * page out; templates/login-code.php is the plain fallback for other themes and the wp-admin login box.
+ *
  * Application passwords are separate credentials and keep working. Password logins over XML-RPC or
  * other non-browser routes are refused, since they cannot enter a code.
  *
@@ -23,6 +26,9 @@ class Nexora_Toolkit_Login_OTP {
 
 	const ACTION     = 'nx_otp';
 	const COOKIE     = 'nx_otp';
+	const SLUG       = 'verify-login';
+	const QUERY_VAR  = 'nx_login_code';
+	const RULE       = '^verify-login/?$';
 	const LIFETIME   = 1800; // Seconds a challenge lasts, including resends.
 	const MAX_TRIES  = 5;    // Wrong codes before the password is needed again.
 	const MAX_SENDS  = 5;    // Emails per challenge.
@@ -30,11 +36,124 @@ class Nexora_Toolkit_Login_OTP {
 	const HOURLY_CAP = 10;   // Emails per account per hour.
 
 	/**
+	 * What the page shows for this request.
+	 *
+	 * @var array
+	 */
+	private static $view = array();
+
+	/**
 	 * Hook up.
 	 */
 	public static function init() {
 		add_filter( 'authenticate', array( __CLASS__, 'gate' ), 1000, 3 );
-		add_action( 'login_form_' . self::ACTION, array( __CLASS__, 'screen' ) );
+		add_action( 'login_form_' . self::ACTION, array( __CLASS__, 'old_address' ) );
+		add_action( 'init', array( __CLASS__, 'rewrite' ), 5 );
+		add_action( 'init', array( __CLASS__, 'maybe_flush' ), 99 );
+		add_filter( 'query_vars', array( __CLASS__, 'query_vars' ) );
+		add_filter( 'posts_pre_query', array( __CLASS__, 'skip_posts' ), 10, 2 );
+		add_action( 'template_redirect', array( __CLASS__, 'handle' ), 1 ); // After the maintenance gate at 0.
+		add_filter( 'template_include', array( __CLASS__, 'template' ), 99 );
+		add_filter( 'document_title_parts', array( __CLASS__, 'document_title' ) );
+	}
+
+	/* ------------------------------------------------------------------ route */
+
+	/**
+	 * Register the page address.
+	 */
+	public static function rewrite() {
+		add_rewrite_rule( self::RULE, 'index.php?' . self::QUERY_VAR . '=1', 'top' );
+	}
+
+	/**
+	 * Save the address once, including after an update that adds it.
+	 */
+	public static function maybe_flush() {
+		if ( self::SLUG !== get_option( 'nexora_otp_route' ) ) {
+			update_option( 'nexora_otp_route', self::SLUG );
+			flush_rewrite_rules( false );
+		}
+	}
+
+	/**
+	 * Allow the query variable.
+	 *
+	 * @param string[] $vars Variables.
+	 * @return string[]
+	 */
+	public static function query_vars( $vars ) {
+		$vars[] = self::QUERY_VAR;
+		return $vars;
+	}
+
+	/**
+	 * The page has no posts to load.
+	 *
+	 * @param array|null $posts Posts.
+	 * @param WP_Query   $query Query.
+	 * @return array|null
+	 */
+	public static function skip_posts( $posts, $query ) {
+		return $query->is_main_query() && $query->get( self::QUERY_VAR ) ? array() : $posts;
+	}
+
+	/**
+	 * Address of the page. Without a saved rewrite rule, as on plain permalinks, it uses a query string,
+	 * so a missing rule can never leave people stuck on a 404 between the password and the code.
+	 *
+	 * @return string
+	 */
+	public static function url() {
+		global $wp_rewrite;
+		$rules = $wp_rewrite->wp_rewrite_rules();
+		if ( is_array( $rules ) && isset( $rules[ self::RULE ] ) ) {
+			return home_url( '/' . $wp_rewrite->root . self::SLUG . '/' );
+		}
+		return add_query_arg( self::QUERY_VAR, '1', home_url( '/' ) );
+	}
+
+	/**
+	 * Is this the code page?
+	 *
+	 * @return bool
+	 */
+	public static function is_request() {
+		return (bool) get_query_var( self::QUERY_VAR );
+	}
+
+	/**
+	 * Is this browser part-way through a sign-in on the code page? Maintenance mode lets these through,
+	 * because staff need the page to get in. Anyone else on that address still gets the maintenance page.
+	 *
+	 * @return bool
+	 */
+	public static function in_progress() {
+		return self::is_request() && (bool) self::load()['user'];
+	}
+
+	/**
+	 * Old address of the screen: bookmarks and sign-ins started before an update.
+	 */
+	public static function old_address() {
+		nocache_headers();
+		wp_safe_redirect( self::url() );
+		exit;
+	}
+
+	/**
+	 * This browser's challenge.
+	 *
+	 * @return array{token:string,challenge:array|false,user:WP_User|false}
+	 */
+	private static function load() {
+		$token     = isset( $_COOKIE[ self::COOKIE ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ self::COOKIE ] ) ) : '';
+		$challenge = '' !== $token ? get_transient( self::key( $token ) ) : false;
+		return array(
+			'token'     => $token,
+			'challenge' => $challenge,
+			'user'      => is_array( $challenge ) ? get_userdata( $challenge['user'] ) : false,
+		);
 	}
 
 	/**
@@ -96,13 +215,12 @@ class Nexora_Toolkit_Login_OTP {
 	 * @return bool
 	 */
 	public static function mail_code( $user, $code, $minutes ) {
-		$body = '<p>' . esc_html__( 'Enter this code to finish signing in:', 'nexora-commerce-toolkit' ) . '</p>'
+		$m    = Nexora_Toolkit_Emails::compose( 'login_code', array( 'first_name' => $user->first_name ) );
+		$body = $m['message']
 			. '<p style="margin:18px 0;font-size:32px;font-weight:bold;letter-spacing:8px;text-align:center;">' . esc_html( $code ) . '</p>'
 			/* translators: %d: minutes */
-			. '<p>' . esc_html( sprintf( _n( 'It works once and expires in %d minute.', 'It works once and expires in %d minutes.', $minutes, 'nexora-commerce-toolkit' ), $minutes ) ) . '</p>'
-			. '<p>' . esc_html__( 'Never share this code. We will not ask you for it. If you did not try to sign in, someone may know your password, so please change it.', 'nexora-commerce-toolkit' ) . '</p>';
-		/* translators: %s: site name */
-		return Nexora_Store_Orders::send_mail( $user->user_email, sprintf( __( 'Your %s sign-in code', 'nexora-commerce-toolkit' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ) ), __( 'Your sign-in code', 'nexora-commerce-toolkit' ), $body );
+			. '<p>' . esc_html( sprintf( _n( 'It works once and expires in %d minute.', 'It works once and expires in %d minutes.', $minutes, 'nexora-commerce-toolkit' ), $minutes ) ) . '</p>';
+		return Nexora_Store_Orders::send_mail( $user->user_email, $m['subject'], $m['heading'], $body );
 	}
 
 	/**
@@ -151,7 +269,7 @@ class Nexora_Toolkit_Login_OTP {
 			'remember'  => ! empty( $_POST['rememberme'] ),
 			'front'     => $front,
 			'requested' => $requested,
-			'back'      => $front && $referer ? $referer : wp_login_url(),
+			'back'      => $front && $referer ? $referer : ( empty( $_REQUEST['interim-login'] ) ? wp_login_url() : add_query_arg( 'interim-login', '1', wp_login_url() ) ),
 			'interim'   => ! empty( $_REQUEST['interim-login'] ),
 			'tries'     => 0,
 			'sends'     => 0,
@@ -165,7 +283,7 @@ class Nexora_Toolkit_Login_OTP {
 		}
 		self::cookie( $token, time() + self::LIFETIME );
 		nocache_headers();
-		wp_safe_redirect( add_query_arg( 'action', self::ACTION, wp_login_url() ) );
+		wp_safe_redirect( self::url() );
 		exit;
 	}
 
@@ -229,7 +347,7 @@ class Nexora_Toolkit_Login_OTP {
 			$value,
 			array(
 				'expires'  => $expires,
-				'path'     => SITECOOKIEPATH ? SITECOOKIEPATH : '/',
+				'path'     => COOKIEPATH ? COOKIEPATH : '/', // The page is under the home address, which can differ from the WordPress folder.
 				'domain'   => COOKIE_DOMAIN ? COOKIE_DOMAIN : '',
 				'secure'   => is_ssl(),
 				'httponly' => true,
@@ -250,14 +368,31 @@ class Nexora_Toolkit_Login_OTP {
 	}
 
 	/**
-	 * The code screen on wp-login.php, branded by the theme like the rest of that page.
+	 * Run the page before anything prints: check a posted code and work out what to show.
 	 */
-	public static function screen() {
-		$token     = isset( $_COOKIE[ self::COOKIE ] ) ? sanitize_text_field( wp_unslash( $_COOKIE[ self::COOKIE ] ) ) : '';
-		$challenge = '' !== $token ? get_transient( self::key( $token ) ) : false;
-		$user      = is_array( $challenge ) ? get_userdata( $challenge['user'] ) : false;
+	public static function handle() {
+		if ( ! self::is_request() ) {
+			return;
+		}
+		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+			define( 'DONOTCACHEPAGE', true );
+		}
+		nocache_headers();
+		send_frame_options_header();
+		add_filter( 'wp_robots', 'wp_robots_no_robots' );
+		add_filter( 'body_class', array( __CLASS__, 'body_class' ) );
+
+		$current   = self::load();
+		$token     = $current['token'];
+		$challenge = $current['challenge'];
+		$user      = $current['user'];
 		if ( ! $user ) {
-			self::dead_end( wp_login_url(), __( 'Your sign-in has expired. Please sign in again.', 'nexora-commerce-toolkit' ) );
+			if ( is_user_logged_in() ) { // Back button after signing in.
+				wp_safe_redirect( home_url( '/' ) );
+				exit;
+			}
+			self::dead_end( self::sign_in_url(), __( 'Your sign-in has expired. Please sign in again.', 'nexora-commerce-toolkit' ) );
+			return;
 		}
 
 		$error = '';
@@ -279,7 +414,8 @@ class Nexora_Toolkit_Login_OTP {
 					if ( $challenge['tries'] >= self::MAX_TRIES ) {
 						delete_transient( self::key( $token ) );
 						self::cookie( '', time() - YEAR_IN_SECONDS );
-						self::dead_end( $challenge['back'], __( 'Too many wrong codes. Please sign in again.', 'nexora-commerce-toolkit' ) );
+						self::dead_end( $challenge['back'], __( 'Too many wrong codes. Please sign in again.', 'nexora-commerce-toolkit' ), $challenge['interim'] );
+						return;
 					}
 					self::save( $token, $challenge );
 					$error = __( 'That code is not correct. Please check it and try again.', 'nexora-commerce-toolkit' );
@@ -287,37 +423,100 @@ class Nexora_Toolkit_Login_OTP {
 			}
 		}
 
-		$errors = new WP_Error();
-		if ( '' !== $error ) {
-			$errors->add( 'nx_otp', $error );
+		self::$view = array(
+			'dead'    => false,
+			'error'   => $error,
+			'note'    => $note,
+			'email'   => self::mask( $user->user_email ),
+			'back'    => $challenge['back'],
+			'interim' => ! empty( $challenge['interim'] ),
+		);
+	}
+
+	/**
+	 * Show the theme's page, or the plain one. The wp-admin login box is too small for a full page.
+	 *
+	 * @param string $template Template.
+	 * @return string
+	 */
+	public static function template( $template ) {
+		if ( ! self::is_request() ) {
+			return $template;
 		}
-		if ( '' !== $note ) {
-			$errors->add( 'nx_otp_note', $note, 'message' );
+		$theme = empty( self::$view['interim'] ) ? locate_template( 'login-code.php' ) : '';
+		return $theme ? $theme : NEXORA_TOOLKIT_DIR . 'templates/login-code.php';
+	}
+
+	/**
+	 * Browser tab title.
+	 *
+	 * @param array $parts Title parts.
+	 * @return array
+	 */
+	public static function document_title( $parts ) {
+		if ( self::is_request() ) {
+			$parts['title'] = __( 'Enter your code', 'nexora-commerce-toolkit' );
 		}
-		login_header( __( 'Enter your code', 'nexora-commerce-toolkit' ), '', $errors );
-		$action = add_query_arg( 'action', self::ACTION, wp_login_url() );
-		?>
-		<div class="nx-otp">
-			<h2 class="nx-otp__title"><?php esc_html_e( 'Check your email', 'nexora-commerce-toolkit' ); ?></h2>
+		return $parts;
+	}
+
+	/**
+	 * Body class of the page.
+	 *
+	 * @param string[] $classes Classes.
+	 * @return string[]
+	 */
+	public static function body_class( $classes ) {
+		$classes[] = 'nx-login-code';
+		return $classes;
+	}
+
+	/**
+	 * Heading for the page's template.
+	 *
+	 * @return string
+	 */
+	public static function title() {
+		return empty( self::$view['dead'] ) ? __( 'Check your email', 'nexora-commerce-toolkit' ) : __( 'Please sign in again', 'nexora-commerce-toolkit' );
+	}
+
+	/**
+	 * Print the messages, code form and links, for the page's template.
+	 */
+	public static function render() {
+		$view = self::$view;
+		$notices = '';
+		if ( ! empty( $view['error'] ) ) {
+			$notices .= '<p class="nx-otp__notice is-error" id="nx-otp-error" role="alert">' . esc_html( $view['error'] ) . '</p>';
+		}
+		if ( ! empty( $view['note'] ) ) {
+			$notices .= '<p class="nx-otp__notice is-note" role="status">' . esc_html( $view['note'] ) . '</p>';
+		}
+		if ( empty( $view['dead'] ) ) :
+			$action = self::url();
+			?>
 			<?php /* translators: %s: partly hidden email address */ ?>
-			<p class="nx-otp__sub"><?php echo esc_html( sprintf( __( 'We sent a 6-digit code to %s.', 'nexora-commerce-toolkit' ), self::mask( $user->user_email ) ) ); ?></p>
-			<form method="post" action="<?php echo esc_url( $action ); ?>" id="nx-otp-form">
+			<p class="nx-auth__sub nx-otp__sub"><?php echo esc_html( sprintf( __( 'We sent a 6-digit code to %s.', 'nexora-commerce-toolkit' ), $view['email'] ) ); ?></p>
+			<?php echo $notices; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?>
+			<form method="post" action="<?php echo esc_url( $action ); ?>" id="nx-otp-form" class="nx-otp__form">
 				<?php wp_nonce_field( 'nx_otp', '_nx_otp', false ); ?>
-				<p>
+				<p class="form-row">
 					<label for="nx-otp-code"><?php esc_html_e( 'Login code', 'nexora-commerce-toolkit' ); ?></label>
-					<input type="text" class="input nx-otp__code" id="nx-otp-code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9 ]*" maxlength="7" required autofocus>
+					<input type="text" class="input-text nx-otp__code" id="nx-otp-code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9 ]*" maxlength="7" required autofocus<?php echo ! empty( $view['error'] ) ? ' aria-invalid="true" aria-describedby="nx-otp-error"' : ''; ?>>
 				</p>
-				<p class="submit"><button type="submit" class="button button-primary button-large"><?php esc_html_e( 'Verify and sign in', 'nexora-commerce-toolkit' ); ?></button></p>
+				<p class="form-row nx-auth__submit"><button type="submit" class="button"><?php esc_html_e( 'Verify and sign in', 'nexora-commerce-toolkit' ); ?></button></p>
 			</form>
 			<form method="post" action="<?php echo esc_url( $action ); ?>" class="nx-otp__resend">
 				<?php wp_nonce_field( 'nx_otp', '_nx_otp', false ); ?>
-				<button type="submit" name="resend" value="1" class="button-link"><?php esc_html_e( 'Send a new code', 'nexora-commerce-toolkit' ); ?></button>
+				<button type="submit" name="resend" value="1"><?php esc_html_e( 'Send a new code', 'nexora-commerce-toolkit' ); ?></button>
 			</form>
-		</div>
-		<p id="nav"><a href="<?php echo esc_url( $challenge['back'] ); ?>"><?php esc_html_e( 'Back to sign in', 'nexora-commerce-toolkit' ); ?></a></p>
+			<?php
+		else :
+			echo $notices; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above.
+		endif;
+		?>
+		<p class="nx-otp__back"><a href="<?php echo esc_url( $view['back'] ); ?>"><?php esc_html_e( 'Back to sign in', 'nexora-commerce-toolkit' ); ?></a></p>
 		<?php
-		login_footer();
-		exit;
 	}
 
 	/**
@@ -355,12 +554,7 @@ class Nexora_Toolkit_Login_OTP {
 		do_action( 'wp_login', $user->user_login, $user );
 
 		if ( $challenge['interim'] ) { // The "session expired" box inside wp-admin closes itself on this class.
-			global $interim_login;
-			$interim_login = 'success'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited -- read by login_header().
-			login_header( '', '<p class="message">' . esc_html__( 'You have logged in successfully.', 'nexora-commerce-toolkit' ) . '</p>' );
-			echo '</div>';
-			do_action( 'login_footer' );
-			echo '</body></html>';
+			echo '<!doctype html><html ' . get_language_attributes() . '><head><meta charset="utf-8"><title>' . esc_html__( 'You have logged in successfully.', 'nexora-commerce-toolkit' ) . '</title></head><body class="interim-login-success"><p>' . esc_html__( 'You have logged in successfully.', 'nexora-commerce-toolkit' ) . '</p></body></html>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- core-built attributes.
 			exit;
 		}
 
@@ -375,16 +569,30 @@ class Nexora_Toolkit_Login_OTP {
 	}
 
 	/**
-	 * Nothing more can be done here.
+	 * Where someone with no sign-in in progress should go.
+	 *
+	 * @return string
+	 */
+	private static function sign_in_url() {
+		if ( Nexora_Store::active() ) {
+			return Nexora_Store::url( 'account' );
+		}
+		return function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'myaccount' ) : wp_login_url();
+	}
+
+	/**
+	 * Nothing more can be done here: the page shows the message and a link back.
 	 *
 	 * @param string $back    Link back.
 	 * @param string $message Message.
+	 * @param bool   $interim Inside the wp-admin login box.
 	 */
-	private static function dead_end( $back, $message ) {
-		$errors = new WP_Error( 'nx_otp', $message );
-		login_header( __( 'Enter your code', 'nexora-commerce-toolkit' ), '', $errors );
-		echo '<p id="nav"><a href="' . esc_url( $back ) . '">' . esc_html__( 'Back to sign in', 'nexora-commerce-toolkit' ) . '</a></p>';
-		login_footer();
-		exit;
+	private static function dead_end( $back, $message, $interim = false ) {
+		self::$view = array(
+			'dead'    => true,
+			'error'   => $message,
+			'back'    => $back,
+			'interim' => $interim,
+		);
 	}
 }

@@ -3,7 +3,7 @@ Contributors: nexoracommerce
 Requires at least: 6.5
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 2.6.0
+Stable tag: 2.8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,19 +34,34 @@ Full documentation (setup, Philippine store configuration, marketing, customizat
 
 == Installation ==
 
-1. Install and activate WooCommerce.
-2. Appearance → Themes → Add New → Upload Theme → nexora-commerce.zip → Activate.
-3. Optional: install the Freshtastic Food Hub Toolkit plugin and run Tools → Freshtastic Demo Content.
+1. Appearance → Themes → Add New → Upload Theme → nexora-commerce.zip → Activate.
+2. Install and activate the Freshtastic Food Hub Toolkit plugin. On a site without WooCommerce it starts the built-in store; WooCommerce is optional.
+3. Run Tools → Freshtastic Demo Content to import the demo store. WooCommerce is not needed.
 
 == Frequently Asked Questions ==
 
 = Does it work without WooCommerce? =
-Yes. Blog, pages and menus work; shop sections are hidden and administrators see a notice.
+Yes. The toolkit's built-in store runs the shop, cart, checkout and accounts. Without the toolkit or WooCommerce, blog, pages and menus still work; shop sections are hidden and administrators see a notice.
 
 = Which WooCommerce templates are overridden? =
 archive-product.php, content-product.php, loop/no-products-found.php, checkout/form-checkout.php, checkout/review-order.php, checkout/form-shipping.php, checkout/thankyou.php and myaccount/navigation.php, dashboard.php, form-login.php, form-edit-account.php, form-edit-address.php, my-address.php. All WooCommerce hooks are kept.
 
 == Changelog ==
+
+= 2.8.1 =
+* WooCommerce is optional. Without a store the admin notice now points to the toolkit's built-in store instead of asking for WooCommerce. Toolkit 2.9.1 lets the demo import choose the built-in store or WooCommerce.
+
+= 2.8.0 =
+* Customer account menu is now a horizontal row. Refreshed dashboard with account figures in the banner and a rewards panel. Needs Toolkit 2.9.0 for Coupons and Points.
+
+= 2.7.2 =
+* New sign-in code page at /verify-login/ with the site header and footer, in place of wp-login.php. Needs Toolkit 2.7.1.
+
+= 2.7.1 =
+* Hero banners slide sideways, with swipe on touch screens. A banner with no image shows the section background. Two more default banners.
+
+= 2.7.0 =
+* New homepage section for packages. Needs Toolkit 2.7.0, which also adds the promo pop-up.
 
 = 2.6.0 =
 * Footer links to the Terms and Conditions page when one is published. Needs Toolkit 2.6.0 for required consent, reCAPTCHA and email login codes.

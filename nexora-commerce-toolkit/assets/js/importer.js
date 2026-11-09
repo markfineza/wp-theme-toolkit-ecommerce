@@ -72,10 +72,41 @@
 
 	var importForm = document.querySelector( '[data-nexora-import]' );
 	var cleanupForm = document.querySelector( '[data-nexora-cleanup]' );
+	function engine() {
+		var picked = importForm.querySelector( 'input[name="engine"]:checked' );
+		return picked ? picked.value : importForm.getAttribute( 'data-running' );
+	}
+	function syncEngine() {
+		var woo = 'woocommerce' === engine();
+		importForm.querySelectorAll( '[data-nexora-woo-only]' ).forEach( function ( el ) {
+			el.hidden = ! woo;
+			el.querySelectorAll( 'input' ).forEach( function ( i ) { i.disabled = ! woo; } );
+		} );
+		importForm.querySelectorAll( '[data-nexora-native-only]' ).forEach( function ( el ) { el.hidden = woo; } );
+	}
+	importForm.querySelectorAll( 'input[name="engine"]' ).forEach( function ( i ) { i.addEventListener( 'change', syncEngine ); } );
+	syncEngine();
+
 	importForm.addEventListener( 'submit', function ( e ) {
+		var switching = engine() !== importForm.getAttribute( 'data-running' );
+		if ( ! window.confirm( switching ? cfg.i18n.confirmSwitch[ engine() ] : cfg.i18n.confirmImport ) ) {
+			e.preventDefault();
+			return;
+		}
+		if ( switching ) {
+			// Switching the store needs a page load; the form posts normally and the import resumes afterwards.
+			importForm.querySelectorAll( 'button, input[type="submit"]' ).forEach( function ( b ) { b.disabled = true; } );
+			panel.hidden = false;
+			current.textContent = cfg.i18n.switching;
+			setProgress( 2 );
+			return;
+		}
 		e.preventDefault();
-		if ( window.confirm( cfg.i18n.confirmImport ) ) { run( importForm, 'import' ); }
+		run( importForm, 'import' );
 	} );
+	if ( importForm.hasAttribute( 'data-autostart' ) ) {
+		run( importForm, 'import' ); // Confirmed before the switch.
+	}
 	cleanupForm.addEventListener( 'submit', function ( e ) {
 		e.preventDefault();
 		if ( window.confirm( cfg.i18n.confirmCleanup ) ) { run( cleanupForm, 'cleanup' ); }

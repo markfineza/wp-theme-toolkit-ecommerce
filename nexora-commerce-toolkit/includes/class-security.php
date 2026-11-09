@@ -50,6 +50,9 @@ class Nexora_Toolkit_Security {
 			'marketing_text'    => '',
 			'captcha_site_key'  => '',
 			'captcha_secret'    => '',
+			'captcha_version'   => 'v2',
+			'captcha_min_score' => 0.5,
+			'activation_required' => true,
 			'otp_staff'         => false,
 			'otp_customers'     => false,
 			'otp_minutes'       => 10,
@@ -192,7 +195,7 @@ class Nexora_Toolkit_Security {
 	 */
 	public static function front_assets() {
 		$account = function_exists( 'is_account_page' ) && ( is_account_page() || is_checkout() );
-		if ( $account || Nexora_Store::is_page( 'account' ) || Nexora_Store::is_page( 'checkout' ) ) {
+		if ( $account || Nexora_Store::is_page( 'account' ) || Nexora_Store::is_page( 'checkout' ) || Nexora_Toolkit_Login_OTP::is_request() ) {
 			wp_enqueue_style( 'nexora-security', NEXORA_TOOLKIT_URL . 'assets/css/security.css', array(), NEXORA_TOOLKIT_VERSION );
 		}
 	}
@@ -259,6 +262,9 @@ class Nexora_Toolkit_Security {
 			'marketing_text'    => $text( 'marketing_text' ),
 			'captcha_site_key'  => preg_replace( '/[^A-Za-z0-9_-]/', '', $text( 'captcha_site_key' ) ),
 			'captcha_secret'    => $current['captcha_secret'],
+			'captcha_version'   => isset( $input['captcha_version'] ) && 'v3' === $input['captcha_version'] ? 'v3' : 'v2',
+			'captcha_min_score' => isset( $input['captcha_min_score'] ) ? min( 0.9, max( 0.1, round( (float) $input['captcha_min_score'], 1 ) ) ) : 0.5,
+			'activation_required' => ! empty( $input['activation_required'] ),
 			'otp_staff'         => ! empty( $input['otp_staff'] ),
 			'otp_customers'     => ! empty( $input['otp_customers'] ),
 			'otp_minutes'       => isset( $input['otp_minutes'] ) ? min( 30, max( 3, absint( $input['otp_minutes'] ) ) ) : 10,
@@ -393,13 +399,30 @@ class Nexora_Toolkit_Security {
 					<?php
 					printf(
 						/* translators: 1: opening link, 2: closing link */
-						esc_html__( 'Create a v2 "I\'m not a robot" Checkbox key for your domain in the %1$sreCAPTCHA admin console%2$s. The box appears once both keys are saved.', 'nexora-commerce-toolkit' ),
+						esc_html__( 'Create a key for your domain in the %1$sreCAPTCHA admin console%2$s and choose the same version below. Google shows "Invalid key type" when they do not match. It turns on once both keys are saved.', 'nexora-commerce-toolkit' ),
 						'<a href="https://www.google.com/recaptcha/admin" target="_blank" rel="noopener noreferrer">',
 						'</a>'
 					);
 					?>
 				</p>
 				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Key type', 'nexora-commerce-toolkit' ); ?></th>
+						<td>
+							<fieldset>
+								<legend class="screen-reader-text"><?php esc_html_e( 'Key type', 'nexora-commerce-toolkit' ); ?></legend>
+								<p><label><input type="radio" name="<?php echo esc_attr( self::name( 'captcha_version' ) ); ?>" value="v2" <?php checked( 'v3' !== self::get( 'captcha_version' ) ); ?>> <?php esc_html_e( 'v2 "I\'m not a robot" Checkbox: customers tick a box', 'nexora-commerce-toolkit' ); ?></label></p>
+								<p><label><input type="radio" name="<?php echo esc_attr( self::name( 'captcha_version' ) ); ?>" value="v3" <?php checked( 'v3', self::get( 'captcha_version' ) ); ?>> <?php esc_html_e( 'v3 (score based): nothing to tick, Google scores each sign-up in the background', 'nexora-commerce-toolkit' ); ?></label></p>
+							</fieldset>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="nx-captcha-score"><?php esc_html_e( 'v3 minimum score', 'nexora-commerce-toolkit' ); ?></label></th>
+						<td>
+							<input type="number" class="small-text" id="nx-captcha-score" min="0.1" max="0.9" step="0.1" name="<?php echo esc_attr( self::name( 'captcha_min_score' ) ); ?>" value="<?php echo esc_attr( (string) Nexora_Toolkit_Captcha::min_score() ); ?>">
+							<p class="description"><?php esc_html_e( 'v3 only. Scores run from 0.0 (likely a bot) to 1.0 (likely a person). Sign-ups below this are refused. 0.5 is Google\'s suggested start; lower it if real customers are refused.', 'nexora-commerce-toolkit' ); ?></p>
+						</td>
+					</tr>
 					<tr>
 						<th scope="row"><label for="nx-captcha-site"><?php esc_html_e( 'Site key', 'nexora-commerce-toolkit' ); ?></label></th>
 						<td><input type="text" class="regular-text" id="nx-captcha-site" name="<?php echo esc_attr( self::name( 'captcha_site_key' ) ); ?>" value="<?php echo esc_attr( (string) self::get( 'captcha_site_key' ) ); ?>" autocomplete="off"></td>
@@ -417,6 +440,17 @@ class Nexora_Toolkit_Security {
 								<p class="description"><?php esc_html_e( 'Recommended: define NEXORA_RECAPTCHA_SECRET in wp-config.php instead of saving the key here.', 'nexora-commerce-toolkit' ); ?></p>
 							<?php endif; ?>
 							<p class="description"><?php echo Nexora_Toolkit_Captcha::enabled() ? '<span class="nx-sec-ok">' . esc_html__( 'reCAPTCHA is on.', 'nexora-commerce-toolkit' ) . '</span>' : '<span class="nx-sec-bad">' . esc_html__( 'reCAPTCHA is off until both keys are saved.', 'nexora-commerce-toolkit' ) . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+						</td>
+					</tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Account activation by email', 'nexora-commerce-toolkit' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'New customer accounts', 'nexora-commerce-toolkit' ); ?></th>
+						<td>
+							<label><input type="checkbox" name="<?php echo esc_attr( self::name( 'activation_required' ) ); ?>" value="1" <?php checked( (bool) self::get( 'activation_required' ) ); ?>> <?php esc_html_e( 'Require email activation before the first sign-in', 'nexora-commerce-toolkit' ); ?></label>
+							<p class="description"><?php esc_html_e( 'New accounts from registration or checkout are not signed in. The customer gets a link that works once and lasts 3 days; signing in before then sends a new one. Orders placed at checkout still go through. Existing accounts are not affected. Make sure your site can send email (Test email delivery below). You can activate an account by hand under Users → Edit.', 'nexora-commerce-toolkit' ); ?></p>
 						</td>
 					</tr>
 				</table>

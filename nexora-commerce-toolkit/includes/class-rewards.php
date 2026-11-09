@@ -729,13 +729,23 @@ class Nexora_Toolkit_Rewards {
 	private static function mail_reward( $user, $coupon, $seat ) {
 		$s    = self::settings();
 		$url  = self::is_wc() ? wc_get_page_permalink( 'myaccount' ) : Nexora_Store::url( 'account' );
-		/* translators: %d: spot number */
-		$body = '<p>' . esc_html( sprintf( __( 'Thank you for joining early! You are customer #%d, so this reward is yours:', 'nexora-commerce-toolkit' ), $seat ) ) . '</p>'
+		$m    = Nexora_Toolkit_Emails::compose(
+			'reward',
+			array(
+				'first_name'   => $user->first_name,
+				'reward_title' => (string) $s['title'],
+				'spot'         => $seat,
+			)
+		);
+		if ( ! $m ) {
+			return;
+		}
+		$body = $m['message']
 			. '<p style="font-size:18px;font-weight:bold;">' . esc_html( self::reward_text( $coupon ) ) . '</p>'
 			. '<p>' . esc_html__( 'Your code', 'nexora-commerce-toolkit' ) . ': <strong>' . esc_html( get_the_title( $coupon ) ) . '</strong></p>'
 			. '<p>' . esc_html( self::terms_text( $coupon ) ) . '</p>'
 			. '<p><a href="' . esc_url( $url ) . '">' . esc_html__( 'Go to your account', 'nexora-commerce-toolkit' ) . '</a></p>';
-		Nexora_Store_Orders::send_mail( $user->user_email, (string) $s['title'], (string) $s['title'], $body );
+		Nexora_Store_Orders::send_mail( $user->user_email, $m['subject'], $m['heading'], $body );
 	}
 
 	/* -------------------------------------------------------- customer output */

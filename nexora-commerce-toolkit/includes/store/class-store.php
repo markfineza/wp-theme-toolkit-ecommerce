@@ -2,8 +2,8 @@
 /**
  * Built-in store: a complete shop that runs without the WooCommerce plugin.
  *
- * Only one engine runs at a time. The built-in store starts when it has been chosen under
- * Settings → Freshtastic Toolkit and WooCommerce is not active; with WooCommerce active it stays
+ * Only one engine runs at a time. A site that is not running WooCommerce when the toolkit first loads
+ * starts on the built-in store; switch under Settings → Freshtastic Toolkit. With WooCommerce active it stays
  * completely dormant and the WooCommerce integration works as before.
  *
  * The catalogue uses WooCommerce's data format (product, product_variation, product_cat, shop_coupon
@@ -23,7 +23,7 @@ class Nexora_Store {
 	const ENGINE   = 'nexora_commerce_engine';
 	const SETTINGS = 'nexora_store_settings';
 	const PAGES    = 'nexora_store_pages';
-	const DB_V     = 3;
+	const DB_V     = 4;
 
 	/**
 	 * Whether the built-in store is running on this request.
@@ -41,7 +41,18 @@ class Nexora_Store {
 	 * @return string native|woocommerce
 	 */
 	public static function engine() {
-		return defined( 'NEXORA_STORE_ENGINE' ) ? (string) NEXORA_STORE_ENGINE : (string) get_option( self::ENGINE, 'woocommerce' );
+		if ( defined( 'NEXORA_STORE_ENGINE' ) ) {
+			return (string) NEXORA_STORE_ENGINE;
+		}
+		$engine = get_option( self::ENGINE, '' );
+		if ( 'native' !== $engine && 'woocommerce' !== $engine ) {
+			// No choice yet: keep a site that already runs WooCommerce on it, otherwise start on the
+			// built-in store so neither WooCommerce nor the demo importer asks for it. Saved so the
+			// choice does not flip later when WooCommerce is deactivated.
+			$engine = class_exists( 'WooCommerce' ) ? 'woocommerce' : 'native';
+			update_option( self::ENGINE, $engine );
+		}
+		return $engine;
 	}
 
 	/**
@@ -458,7 +469,8 @@ class Nexora_Store {
 				product_id bigint(20) unsigned NOT NULL DEFAULT 0,
 				variation_id bigint(20) unsigned NOT NULL DEFAULT 0,
 				name varchar(255) NOT NULL DEFAULT '',
-				option_label varchar(190) NOT NULL DEFAULT '',
+				option_label varchar(1000) NOT NULL DEFAULT '',
+				contents text NULL,
 				sku varchar(100) NOT NULL DEFAULT '',
 				qty int(11) NOT NULL DEFAULT 1,
 				price decimal(14,2) NOT NULL DEFAULT 0,

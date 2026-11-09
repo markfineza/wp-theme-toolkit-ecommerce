@@ -14,11 +14,22 @@ Close the store for updates — restocking, price changes, a redesign — while 
 
 Tick **Open the store automatically at this time** to end maintenance at the *Expected back* time without logging in.
 
+### Background
+
+Choose the **Background** of the maintenance page:
+
+- **Market artwork** *(default)*: rice, vegetables, fish and eggs over a price chart, in the theme's style. It ships with the toolkit.
+- **Homepage banner image from the theme**: the *Fallback banner image* under **Appearance → Customize → Freshtastic Homepage**. If none is set, the market artwork is used.
+- **My own image**: click **Choose image**. A landscape image at least 1600 pixels wide works best.
+- **Plain dark background**: the earlier look.
+
+The image is tinted with the theme's primary colour, and the text sits on a frosted card so it stays easy to read. **Overlay strength** (30 to 90%, default 60%) sets how dark the tint is. Raise it for busy photos. Click **Preview the maintenance page** after saving to see it without turning maintenance on.
+
 WP-CLI: `wp nexora maintenance on [--scope=shop]`, `wp nexora maintenance off`, `wp nexora maintenance status`.
 
 ## What visitors get
 
-- A branded maintenance page (your logo, colours from the Freshtastic theme, headline, message, expected return time, contact line and a staff login link).
+- A branded maintenance page (your logo, a market background in the theme's colours, headline, message, expected return time, contact line and a staff login link).
 - HTTP **503 Service Unavailable** with **Retry-After** (seconds until your expected return) and **noindex** — the correct signals for search engines, so rankings are not affected by a short closure.
 - **No purchases**: products are not purchasable and the WooCommerce Store API (used by the Cart and Checkout blocks) answers 503, so nothing can be ordered through any route.
 

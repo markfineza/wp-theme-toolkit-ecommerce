@@ -330,9 +330,14 @@ class Nexora_Store_Checkout {
 				return '';
 			}
 			$user = (int) $new;
-			wp_set_current_user( $user );
-			wp_set_auth_cookie( $user, true );
-			do_action( 'wp_login', get_userdata( $user )->user_login, get_userdata( $user ) );
+			wp_set_current_user( $user ); // This request only, so totals use the new account.
+			if ( Nexora_Toolkit_Activation::is_pending( $user ) ) {
+				// The order goes through; the customer signs in after clicking the emailed link.
+				Nexora_Store_Cart::notice( 'success', Nexora_Toolkit_Activation::created_message( $email ) );
+			} else {
+				wp_set_auth_cookie( $user, true );
+				do_action( 'wp_login', get_userdata( $user )->user_login, get_userdata( $user ) );
+			}
 			$t = Nexora_Store_Cart::totals( $type, $email );
 		}
 
@@ -589,7 +594,7 @@ class Nexora_Store_Checkout {
 							<div class="nx-store-account-pass">
 								<?php
 								Nexora_Toolkit_Consent::checkout_fields();
-								Nexora_Toolkit_Captcha::widget();
+								Nexora_Toolkit_Captcha::widget( 'checkout' );
 								?>
 							</div>
 						</div>

@@ -119,8 +119,14 @@ class Nexora_Store_Account {
 		update_user_meta( $id, 'billing_last_name', $last );
 		update_user_meta( $id, 'billing_phone', $phone );
 		update_user_meta( $id, 'billing_email', $email );
-		/* translators: %s: site name */
-		Nexora_Store_Orders::send_mail( $email, sprintf( __( 'Welcome to %s', 'nexora-commerce-toolkit' ), get_bloginfo( 'name' ) ), __( 'Your account is ready', 'nexora-commerce-toolkit' ), '<p>' . esc_html__( 'You can now track orders, save your address and check out faster.', 'nexora-commerce-toolkit' ) . '</p><p><a href="' . esc_url( Nexora_Store::url( 'account' ) ) . '">' . esc_html__( 'Go to your account', 'nexora-commerce-toolkit' ) . '</a></p>' );
+		if ( Nexora_Toolkit_Activation::required() ) {
+			Nexora_Toolkit_Activation::start( $id ); // The activation email replaces the welcome email.
+			return (int) $id;
+		}
+		$m = Nexora_Toolkit_Emails::compose( 'account_welcome', array( 'first_name' => $first ) );
+		if ( $m ) {
+			Nexora_Store_Orders::send_mail( $email, $m['subject'], $m['heading'], $m['message'] . Nexora_Toolkit_Emails::button( Nexora_Store::url( 'account' ), __( 'Go to your account', 'nexora-commerce-toolkit' ) ) );
+		}
 		return (int) $id;
 	}
 
@@ -208,7 +214,7 @@ class Nexora_Store_Account {
 			is_ssl()
 		);
 		if ( is_wp_error( $user ) ) {
-			if ( 0 === strpos( $user->get_error_code(), 'nx_otp' ) ) { // Password was right; the login code could not go out.
+			if ( 0 === strpos( $user->get_error_code(), 'nx_otp' ) || 'nx_inactive' === $user->get_error_code() ) { // Password was right; a login code could not go out, or the account is not activated yet.
 				self::$errors[] = $user->get_error_message();
 				return;
 			}
@@ -273,6 +279,12 @@ class Nexora_Store_Account {
 		if ( is_wp_error( $id ) ) {
 			self::$errors[] = $id->get_error_message();
 			return;
+		}
+		if ( Nexora_Toolkit_Activation::is_pending( $id ) ) {
+			// Not signed in until the emailed link is clicked.
+			Nexora_Store_Cart::notice( 'success', Nexora_Toolkit_Activation::created_message( $email ) );
+			wp_safe_redirect( Nexora_Store::url( 'account' ) );
+			exit;
 		}
 		$user = get_userdata( $id );
 		wp_set_current_user( $id );
@@ -405,7 +417,7 @@ class Nexora_Store_Account {
 	 * @return string
 	 */
 	private static function current_tab() {
-		foreach ( array( 'orders', 'view-order', 'edit-address', 'edit-account', 'wishlist', 'quotations' ) as $tab ) {
+		foreach ( array( 'orders', 'view-order', 'coupons', 'points', 'edit-address', 'edit-account', 'wishlist', 'quotations' ) as $tab ) {
 			if ( false !== get_query_var( $tab, false ) ) {
 				return $tab;
 			}
@@ -433,7 +445,6 @@ class Nexora_Store_Account {
 	 * Menu.
 	 */
 	private static function render_nav() {
-		$user    = wp_get_current_user();
 		$current = self::current_tab();
 		$items   = array(
 			'dashboard'    => array( 'grid', __( 'Dashboard', 'nexora-commerce-toolkit' ), Nexora_Store::url( 'account' ) ),
@@ -451,10 +462,6 @@ class Nexora_Store_Account {
 		$items                    = (array) apply_filters( 'nexora_store_account_menu', $items );
 		?>
 		<nav class="woocommerce-MyAccount-navigation nx-acc-nav" aria-label="<?php esc_attr_e( 'Account pages', 'nexora-commerce-toolkit' ); ?>">
-			<div class="nx-acc-nav__profile">
-				<span class="nx-avatar" aria-hidden="true"><?php echo esc_html( self::initials( $user ) ); ?></span>
-				<span class="nx-acc-nav__who"><strong><?php echo esc_html( $user->display_name ); ?></strong><span><?php echo esc_html( $user->user_email ); ?></span></span>
-			</div>
 			<ul>
 				<?php foreach ( $items as $key => $item ) : ?>
 					<?php $active = $key === $current || ( 'orders' === $key && 'view-order' === $current ); ?>
@@ -486,6 +493,12 @@ class Nexora_Store_Account {
 				break;
 			case 'view-order':
 				self::render_order( absint( get_query_var( 'view-order' ) ) );
+				break;
+			case 'coupons':
+				Nexora_Toolkit_Coupon_Claims::account_tab();
+				break;
+			case 'points':
+				Nexora_Toolkit_Points::account_tab();
 				break;
 			case 'edit-address':
 				self::render_address();
@@ -682,6 +695,27 @@ class Nexora_Store_Account {
 						<a class="nx-dash-btn nx-dash-btn--line" href="<?php echo esc_url( Nexora_Toolkit_RFQ::url() ); ?>"><?php echo Nexora_Store::icon( 'clipboard', 18 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> <?php esc_html_e( 'Request a quote', 'nexora-commerce-toolkit' ); ?></a>
 					<?php endif; ?>
 				</div>
+				<ul class="nx-dash-stats" aria-label="<?php esc_attr_e( 'Account summary', 'nexora-commerce-toolkit' ); ?>">
+					<?php
+					$stats = array(
+						array( 'clock', count( $active ), __( 'In progress', 'nexora-commerce-toolkit' ), Nexora_Store::url( 'account', 'orders' ) ),
+						array( 'bag', $total, __( 'Total orders', 'nexora-commerce-toolkit' ), Nexora_Store::url( 'account', 'orders' ) ),
+					);
+					if ( $rfq ) {
+						$stats[] = array( 'clipboard', Nexora_Toolkit_RFQ::count_for_current_user(), __( 'Quotations', 'nexora-commerce-toolkit' ), Nexora_Store::url( 'account', 'quotations' ) );
+					}
+					$stats[] = array( 'tag', Nexora_Toolkit_Coupon_Claims::ready_count( $user->ID ), __( 'Coupons ready', 'nexora-commerce-toolkit' ), Nexora_Toolkit_Coupon_Claims::url() );
+					if ( Nexora_Toolkit_Points::enabled() ) {
+						$stats[] = array( 'star', Nexora_Toolkit_Points::balance( $user->ID ), __( 'Points', 'nexora-commerce-toolkit' ), Nexora_Toolkit_Points::url() );
+					}
+					if ( $wish ) {
+						$stats[] = array( 'heart', count( Nexora_Toolkit_Wishlist::get_ids( $user->ID ) ), __( 'Saved items', 'nexora-commerce-toolkit' ), Nexora_Store::url( 'account', 'wishlist' ) );
+					}
+					foreach ( $stats as $s ) :
+						?>
+						<li class="nx-dash-stat"><a href="<?php echo esc_url( $s[3] ); ?>"><span class="nx-dash-stat__icon" aria-hidden="true"><?php echo Nexora_Store::icon( $s[0], 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><strong><?php echo esc_html( number_format_i18n( $s[1] ) ); ?></strong><span><?php echo esc_html( $s[2] ); ?></span></a></li>
+					<?php endforeach; ?>
+				</ul>
 			</header>
 
 			<?php Nexora_Toolkit_Consent::prompt(); ?>
@@ -727,24 +761,6 @@ class Nexora_Store_Account {
 				</section>
 			<?php endif; ?>
 
-			<ul class="nx-dash-stats" aria-label="<?php esc_attr_e( 'Account summary', 'nexora-commerce-toolkit' ); ?>">
-				<?php
-				$stats = array(
-					array( 'clock', count( $active ), __( 'In progress', 'nexora-commerce-toolkit' ), Nexora_Store::url( 'account', 'orders' ) ),
-					array( 'bag', $total, __( 'Total orders', 'nexora-commerce-toolkit' ), Nexora_Store::url( 'account', 'orders' ) ),
-				);
-				if ( $rfq ) {
-					$stats[] = array( 'clipboard', Nexora_Toolkit_RFQ::count_for_current_user(), __( 'Quotations', 'nexora-commerce-toolkit' ), Nexora_Store::url( 'account', 'quotations' ) );
-				}
-				if ( $wish ) {
-					$stats[] = array( 'heart', count( Nexora_Toolkit_Wishlist::get_ids( $user->ID ) ), __( 'Saved items', 'nexora-commerce-toolkit' ), Nexora_Store::url( 'account', 'wishlist' ) );
-				}
-				foreach ( $stats as $s ) :
-					?>
-					<li class="nx-dash-stat"><a href="<?php echo esc_url( $s[3] ); ?>"><span class="nx-dash-stat__icon" aria-hidden="true"><?php echo Nexora_Store::icon( $s[0], 20 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span><strong><?php echo esc_html( number_format_i18n( $s[1] ) ); ?></strong><span><?php echo esc_html( $s[2] ); ?></span></a></li>
-				<?php endforeach; ?>
-			</ul>
-
 			<div class="nx-dash-grid">
 				<section class="nx-dash-panel nx-dash-orders" aria-labelledby="nx-dash-orders-title">
 					<header class="nx-dash-panel__head">
@@ -763,6 +779,7 @@ class Nexora_Store_Account {
 					<?php endif; ?>
 				</section>
 				<div class="nx-dash-side">
+					<?php Nexora_Toolkit_Coupon_Claims::dashboard_panel(); ?>
 					<section class="nx-dash-panel" aria-labelledby="nx-dash-profile-title">
 						<header class="nx-dash-panel__head">
 							<h2 id="nx-dash-profile-title"><?php esc_html_e( 'Your details', 'nexora-commerce-toolkit' ); ?></h2>

@@ -240,7 +240,7 @@ ul.products li.product .nx-card__actions .button.nx-card__rfq:hover { background
 @media (prefers-reduced-motion: reduce) {
 	.nx-ticker__track { animation: none; }
 	[data-nexora-ticker-clone] { display: none; }
-	.nx-ticker__viewport { overflow-x: auto; }
+	.nx-ticker__viewport { position: relative; overflow-x: auto; } /* Keeps its absolutely placed screen-reader labels inside. */
 }
 
 /* Small phones: the logo gives way so the menu, quote, search and cart buttons all fit. */

@@ -215,6 +215,16 @@ function nexora_promo_slides() {
 		if ( '' === $title || ( $start && $start > time() ) || ( $end && $end < time() ) ) {
 			continue;
 		}
+		// The default third banner offers quotations, so it steps aside if they are switched off.
+		$schema     = nexora_settings_schema();
+		$is_default = (string) $schema[ "promo{$n}_title" ][2] === $title;
+		if ( 3 === $n && $is_default && ! nexora_rfq_enabled() ) {
+			continue;
+		}
+		$url = (string) nexora_option( "promo{$n}_cta_url" );
+		if ( '' === $url && $is_default && nexora_has_store() ) {
+			$url = 2 === $n ? nexora_shop_url() : ( 3 === $n ? nexora_rfq_url() : '' );
+		}
 		$image    = (int) nexora_option( "promo{$n}_image" );
 		$slides[] = array(
 			'eyebrow' => (string) nexora_option( "promo{$n}_eyebrow" ),
@@ -223,7 +233,7 @@ function nexora_promo_slides() {
 			'badge'   => (string) nexora_option( "promo{$n}_badge" ),
 			'code'    => (string) nexora_option( "promo{$n}_code" ),
 			'label'   => (string) nexora_option( "promo{$n}_cta_label" ),
-			'url'     => (string) nexora_option( "promo{$n}_cta_url" ),
+			'url'     => $url,
 			'image'   => $image ? $image : (int) nexora_option( 'hero_image' ),
 			'ends'    => $end,
 		);

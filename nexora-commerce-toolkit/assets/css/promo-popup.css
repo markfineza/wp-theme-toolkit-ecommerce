@@ -1,0 +1,15 @@
+/* Freshtastic Toolkit: promo pop-up. */
+.nx-popup { position: fixed; inset: 0; width: min(720px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); margin: auto; padding: 0; overflow: visible; border: 0; border-radius: 16px; background: #fff; box-shadow: 0 24px 70px rgba(10, 20, 50, .45); }
+.nx-popup:not([open]) { display: none; }
+.nx-popup::backdrop { background: rgba(10, 20, 50, .62); }
+html.nx-popup-open { overflow: hidden; }
+.nx-popup__slide[hidden] { display: none; }
+.nx-popup__slide a { display: block; }
+.nx-popup__slide img { display: block; width: 100%; height: auto; max-height: calc(100dvh - 96px); object-fit: contain; border-radius: 16px; background: #fff; }
+.nx-popup__close { position: absolute; top: -12px; right: -12px; z-index: 1; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: #fff; color: #0f1b3d; cursor: pointer; box-shadow: 0 4px 14px rgba(10, 20, 50, .35); }
+.nx-popup__close:hover { background: #f5f7fb; }
+.nx-popup button:focus-visible { outline: 3px solid var(--nx-secondary, #f47a20); outline-offset: 2px; }
+.nx-popup__nav { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 6px; color: #0f1b3d; font-size: .875rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.nx-popup__nav button { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }
+.nx-popup__nav button:hover { background: #eef1f8; }
+@media (max-width: 760px) { .nx-popup__close { top: 6px; right: 6px; } }

@@ -190,50 +190,24 @@
 .nx-ty .woocommerce-customer-details address { border: 0; padding: 0; }
 .nx-ty__actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
-/* 7. Account navigation --------------------------------------------------- */
-.woocommerce-account .woocommerce { grid-template-columns: 270px minmax(0, 1fr); }
+/* 7. Account navigation: a horizontal row above the page ------------------- */
+.woocommerce-account .woocommerce { grid-template-columns: minmax(0, 1fr); gap: 20px; }
 /* WooCommerce's clearfix pseudo-elements would otherwise take the first grid cells. */
 .woocommerce-account .woocommerce::before, .woocommerce-account .woocommerce::after { display: none; }
-.nx-acc-nav { background: var(--nx-surface); border: 1px solid var(--nx-border); border-radius: var(--nx-radius-lg); padding: 10px; }
-.woocommerce-account .nx-acc-nav ul { padding: 0; border: 0; background: none; border-radius: 0; }
-.nx-acc-nav__profile { display: flex; gap: 12px; align-items: center; padding: 10px 10px 16px; margin-bottom: 8px; border-bottom: 1px solid var(--nx-border); }
-.nx-acc-nav__who { display: grid; min-width: 0; }
-.nx-acc-nav__who strong { font-size: var(--nx-fs-sm); }
-.nx-acc-nav__who span { font-size: var(--nx-fs-xs); color: var(--nx-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.woocommerce-account .nx-acc-nav a { display: flex; gap: 12px; align-items: center; padding: 11px 12px; position: relative; }
-.woocommerce-account .nx-acc-nav a svg { color: var(--nx-muted); flex-shrink: 0; }
-.woocommerce-account .nx-acc-nav .is-active a { background: var(--nx-primary-soft); color: var(--nx-primary-ink); }
-.woocommerce-account .nx-acc-nav .is-active a svg { color: var(--nx-primary-ink); }
-.woocommerce-account .nx-acc-nav .is-active a::before { content: ""; position: absolute; left: -10px; top: 8px; bottom: 8px; width: 4px; border-radius: 0 4px 4px 0; background: var(--nx-primary); }
-.woocommerce-account .nx-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--nx-border); }
+.woocommerce-account .woocommerce-MyAccount-navigation.nx-acc-nav { position: static; min-width: 0; padding: 6px; border: 1px solid var(--nx-border); border-radius: 18px; background: var(--nx-surface); box-shadow: 0 10px 26px -20px color-mix(in srgb, var(--nx-primary) 60%, transparent); }
+.woocommerce-account .nx-acc-nav ul { display: flex; gap: 4px; margin: 0; padding: 0; overflow-x: auto; border: 0; border-radius: 0; background: none; scrollbar-width: none; }
+.woocommerce-account .nx-acc-nav ul::-webkit-scrollbar { display: none; }
+.woocommerce-account .nx-acc-nav li { flex: none; margin: 0; }
+.woocommerce-account .nx-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout { margin-left: auto; }
+.woocommerce-account .nx-acc-nav a { display: flex; gap: 8px; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 14px; border-radius: 13px; font-size: var(--nx-fs-sm); font-weight: 650; white-space: nowrap; }
+.woocommerce-account .nx-acc-nav a svg { flex-shrink: 0; color: var(--nx-muted); }
+.woocommerce-account .nx-acc-nav a:hover { background: var(--nx-primary-soft); color: var(--nx-primary-ink); }
+.woocommerce-account .nx-acc-nav a:focus-visible { outline: 2px solid var(--nx-primary); outline-offset: -2px; }
+.woocommerce-account .nx-acc-nav .is-active a { background: var(--nx-primary); color: #fff; }
+.woocommerce-account .nx-acc-nav .is-active a svg { color: var(--nx-secondary); }
 .woocommerce-account .nx-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout a svg { color: var(--nx-sale-ink); }
 .nx-avatar { flex-shrink: 0; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, var(--nx-primary), var(--nx-dark)); color: #fff; font-family: var(--nx-font-heading); font-weight: 800; letter-spacing: .02em; }
 .nx-avatar--lg { width: 64px; height: 64px; border-radius: 20px; font-size: 1.35rem; }
-@media (max-width: 1023px) {
-	.woocommerce-account .woocommerce { grid-template-columns: minmax(0, 1fr); }
-	.nx-acc-nav { min-width: 0; }
-	.woocommerce-account .nx-acc-nav ul { overflow-x: auto; }
-	.nx-acc-nav__profile { display: none; }
-	.woocommerce-account .nx-acc-nav .is-active a::before { display: none; }
-	.woocommerce-account .nx-acc-nav .woocommerce-MyAccount-navigation-link--customer-logout { margin: 0; padding: 0; border: 0; }
-}
-
-/* Collapsible sidebar (desktop only: below 1024px the menu is already a horizontal strip). main.js adds the button. */
-.nx-acc-nav__toggle { flex-shrink: 0; display: grid; place-items: center; width: 36px; height: 36px; margin-left: auto; padding: 0; border: 0; border-radius: 10px; background: transparent; color: var(--nx-muted); cursor: pointer; }
-.nx-acc-nav__toggle:hover { background: var(--nx-primary-soft); color: var(--nx-primary-ink); }
-.nx-acc-nav__toggle:focus-visible { outline: 2px solid var(--nx-primary); outline-offset: 2px; }
-@media (min-width: 1024px) {
-	.nx-acc-collapsed .woocommerce-account .woocommerce { grid-template-columns: 76px minmax(0, 1fr); }
-	.nx-acc-collapsed .nx-acc-nav__profile { flex-direction: column; gap: 8px; padding: 6px 0 12px; }
-	.nx-acc-collapsed .nx-acc-nav__toggle { margin-left: 0; }
-	.nx-acc-collapsed .nx-acc-nav__toggle svg { transform: rotate(180deg); }
-	.nx-acc-collapsed .woocommerce-account .nx-acc-nav a { justify-content: center; padding: 12px 0; }
-	/* Hidden visually, still read by screen readers. */
-	.nx-acc-collapsed .nx-acc-nav__who, .nx-acc-collapsed .woocommerce-account .nx-acc-nav a > span { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-}
-@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-	.woocommerce-account .woocommerce { transition: grid-template-columns .2s ease; }
-}
 
 /* 8. Profile and address forms -------------------------------------------- */
 .nx-profile-head { display: flex; gap: 16px; align-items: center; margin: 0 0 28px; padding-bottom: 24px; border-bottom: 1px solid var(--nx-border); }
@@ -340,6 +314,13 @@
 .nx-dash-btn--primary { background: var(--nx-primary); color: #fff; }
 .nx-dash-btn--primary:hover { background: var(--nx-primary-ink); color: #fff; }
 
+.nx-dash-hero .nx-dash-stats { flex: 1 1 100%; }
+.nx-dash-hero .nx-dash-stat a { border-color: rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .09); color: #fff; }
+.nx-dash-hero .nx-dash-stat a:hover { border-color: rgba(255, 255, 255, .5); background: rgba(255, 255, 255, .16); color: #fff; }
+.nx-dash-hero .nx-dash-stat strong { color: #fff; }
+.nx-dash-hero .nx-dash-stat a > span:last-child { color: #D5DDEE; }
+.nx-dash-hero .nx-dash-stat__icon, .nx-dash-hero .nx-dash-stat:nth-child(even) .nx-dash-stat__icon { background: rgba(255, 255, 255, .14); color: #FFB27A; }
+
 .nx-dash-next { padding: 20px 22px; border-radius: 18px; background: var(--nx-surface); border: 1px solid var(--nx-border); box-shadow: inset 5px 0 0 var(--nx-primary); }
 .nx-dash-next.is-ready { background: #FFF6EE; border-color: #F8C9A6; box-shadow: inset 5px 0 0 var(--nx-secondary); }
 .nx-dash-next__head { display: flex; gap: 14px; align-items: flex-start; }
@@ -370,7 +351,7 @@
 
 .nx-dash-grid { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(240px, 1fr); gap: 18px; align-items: start; }
 .nx-dash-side { display: grid; gap: 18px; min-width: 0; }
-.nx-dash-panel { padding: 20px 22px; border-radius: 18px; background: var(--nx-surface); border: 1px solid var(--nx-border); min-width: 0; }
+.nx-dash-panel { padding: 20px 22px; border-radius: 18px; background: var(--nx-surface); border: 1px solid var(--nx-border); box-shadow: 0 10px 26px -22px color-mix(in srgb, var(--nx-primary) 60%, transparent); min-width: 0; }
 .nx-dash-panel__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
 .nx-dash-panel__head h2 { margin: 0; font-size: var(--nx-fs-lg); color: var(--nx-primary); }
 .nx-dash-panel__head a { font-size: var(--nx-fs-sm); font-weight: 650; color: var(--nx-primary); }
@@ -423,6 +404,3 @@
 .woocommerce-account .woocommerce-ResetPassword { max-width: 520px; margin-inline: auto; padding: 28px; border-radius: var(--nx-radius-lg); background: var(--nx-surface); border: 1px solid var(--nx-border); }
 .woocommerce-account .woocommerce-ResetPassword .form-row { width: 100%; float: none; }
 .woocommerce-account .woocommerce-ResetPassword .input-text { min-height: 50px; border-radius: 12px; }
-
-/* A link inside a checkbox label must stand out without relying on colour. */
-.nx-check a { text-decoration: underline; }

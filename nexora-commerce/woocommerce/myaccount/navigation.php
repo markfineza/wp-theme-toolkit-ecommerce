@@ -1,6 +1,6 @@
 <?php
 /**
- * Freshtastic account navigation: profile card plus icon links.
+ * Freshtastic account navigation: a horizontal row of icon links above the page.
  *
  * @package NexoraCommerce
  * @version 9.3.0
@@ -10,19 +10,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$nexora_user = wp_get_current_user();
-
 do_action( 'woocommerce_before_account_navigation' );
 ?>
 
 <nav class="woocommerce-MyAccount-navigation nx-acc-nav" aria-label="<?php esc_attr_e( 'Account pages', 'woocommerce' ); ?>">
-	<div class="nx-acc-nav__profile">
-		<span class="nx-avatar" aria-hidden="true"><?php echo esc_html( nexora_user_initials( $nexora_user ) ); ?></span>
-		<span class="nx-acc-nav__who">
-			<strong><?php echo esc_html( $nexora_user->display_name ); ?></strong>
-			<span><?php echo esc_html( $nexora_user->user_email ); ?></span>
-		</span>
-	</div>
 	<ul>
 		<?php foreach ( wc_get_account_menu_items() as $endpoint => $label ) : ?>
 			<li class="<?php echo wc_get_account_menu_item_classes( $endpoint ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>">

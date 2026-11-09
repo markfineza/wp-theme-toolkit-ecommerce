@@ -3,7 +3,8 @@
  * Demo content importer and cleanup (Tools → Freshtastic Demo Content, or `wp nexora demo`).
  *
  * Safety rules:
- *  - Admin-only (manage_options + manage_woocommerce), nonce-protected, explicit confirmation.
+ *  - Works on the built-in store without WooCommerce, or on WooCommerce.
+ *  - Admin-only (manage_options + store or WooCommerce management), nonce-protected, explicit confirmation.
  *  - Everything created is tagged with `_nexora_demo` (post/term/comment meta) plus a stable
  *    `_nexora_demo_key`, so re-running skips existing items instead of duplicating them.
  *  - Cleanup removes only tagged items. Orders, customers and users are never touched.
@@ -283,7 +284,7 @@ class Nexora_Toolkit_Demo_Importer {
 	private static function step_check() {
 		$messages = array();
 		if ( ! class_exists( 'WooCommerce' ) && ! Nexora_Store::active() ) {
-			return array( 'done' => true, 'error' => true, 'messages' => array( __( 'WooCommerce must be active before importing demo products.', 'nexora-commerce-toolkit' ) ) );
+			return array( 'done' => true, 'error' => true, 'messages' => array( __( 'No store is running. Turn on the built-in store under Settings → Freshtastic Toolkit (WooCommerce is not needed), then import again.', 'nexora-commerce-toolkit' ) ) );
 		}
 		if ( ! is_writable( wp_upload_dir()['basedir'] ) ) { // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
 			return array( 'done' => true, 'error' => true, 'messages' => array( __( 'The uploads folder is not writable, so demo images cannot be added.', 'nexora-commerce-toolkit' ) ) );
@@ -1324,6 +1325,36 @@ class Nexora_Toolkit_Demo_Importer {
 	}
 
 	/**
+	 * Whether this user may switch the store engine from the importer.
+	 *
+	 * @return bool
+	 */
+	private static function can_switch() {
+		return current_user_can( 'manage_options' ) && current_user_can( 'activate_plugins' );
+	}
+
+	/**
+	 * Engine running on this request: native, woocommerce or '' (none).
+	 *
+	 * @return string
+	 */
+	public static function running() {
+		if ( Nexora_Store::active() ) {
+			return 'native';
+		}
+		return class_exists( 'WooCommerce' ) ? 'woocommerce' : '';
+	}
+
+	/**
+	 * Per-user key for an import waiting on an engine switch.
+	 *
+	 * @return string
+	 */
+	private static function pending_key() {
+		return 'nexora_demo_pending_' . get_current_user_id();
+	}
+
+	/**
 	 * Menu.
 	 */
 	public static function menu() {
@@ -1352,51 +1383,105 @@ class Nexora_Toolkit_Demo_Importer {
 					'confirmCleanup' => __( 'Remove all Freshtastic demo content? Only items created by the importer are deleted. Orders, customers and your own content are not touched.', 'nexora-commerce-toolkit' ),
 					'failed'         => __( 'The step failed. You can safely run the importer again; it will continue where it stopped.', 'nexora-commerce-toolkit' ),
 					'done'           => __( 'Done.', 'nexora-commerce-toolkit' ),
+					'switching'      => __( 'Switching the store, then importing…', 'nexora-commerce-toolkit' ),
+					'confirmSwitch'  => array(
+						'native'      => __( 'Switch the shop to the built-in store and import the demo? WooCommerce, if active, is deactivated (not deleted). You can switch back later.', 'nexora-commerce-toolkit' ),
+						'woocommerce' => __( 'Switch the shop to WooCommerce and import the demo? WooCommerce is activated, or downloaded from WordPress.org first. The built-in store pauses and its orders stay saved.', 'nexora-commerce-toolkit' ),
+					),
 				),
 			)
 		);
-		wp_add_inline_style( 'common', '.nexora-demo .card{max-width:820px}.nexora-progress{height:10px;background:#e6e8f0;border-radius:6px;overflow:hidden;margin:12px 0}.nexora-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#6759F5,#17C8B0);transition:width .3s}.nexora-log{max-height:280px;overflow:auto;background:#f6f7f7;padding:10px 14px;border-radius:4px;font-family:monospace;font-size:12px}.nexora-log li{margin:2px 0}.nexora-log .is-error{color:#b32d2e}.nexora-counts{display:flex;flex-wrap:wrap;gap:8px}.nexora-counts span{background:#f0f0f1;padding:4px 10px;border-radius:12px}' );
+		wp_add_inline_style( 'common', '.nexora-demo .card{max-width:820px}.nexora-progress{height:10px;background:#e6e8f0;border-radius:6px;overflow:hidden;margin:12px 0}.nexora-progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#6759F5,#17C8B0);transition:width .3s}.nexora-log{max-height:280px;overflow:auto;background:#f6f7f7;padding:10px 14px;border-radius:4px;font-family:monospace;font-size:12px}.nexora-log li{margin:2px 0}.nexora-log .is-error{color:#b32d2e}.nexora-counts{display:flex;flex-wrap:wrap;gap:8px}.nexora-counts span{background:#f0f0f1;padding:4px 10px;border-radius:12px}.nexora-engines{margin:0 0 16px}.nexora-engines legend{margin-bottom:8px}.nexora-engine{display:flex;gap:10px;align-items:flex-start;border:1px solid #c3c4c7;border-radius:6px;padding:12px 14px;margin:0 0 8px;cursor:pointer;background:#fff}.nexora-engine input{margin-top:3px}.nexora-engine:has(input:checked){border-color:#2271b1;box-shadow:0 0 0 1px #2271b1;background:#f6f9fc}.nexora-engine em{margin-left:8px;font-style:normal;font-size:11px;background:#d1e7dd;color:#0a3622;padding:1px 8px;border-radius:10px}.nexora-engine .description{display:block;margin-top:4px}' );
 	}
 
 	/**
 	 * Admin page.
 	 */
 	public static function render() {
-		if ( ! self::can() ) {
+		if ( ! self::can() && ! self::can_switch() ) {
 			echo '<div class="wrap"><p>' . esc_html__( 'You need administrator and shop manager permissions to import demo content.', 'nexora-commerce-toolkit' ) . '</p></div>';
 			return;
 		}
-		$counts = self::counts();
-		$state  = self::state();
-		$has    = array_sum( $counts ) > 0;
+		$counts  = self::counts();
+		$state   = self::state();
+		$has     = array_sum( $counts ) > 0;
+		$running = self::running();
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$notice = isset( $_GET['nexora_result'] ) ? sanitize_key( $_GET['nexora_result'] ) : '';
+		$notice  = isset( $_GET['nexora_result'] ) ? sanitize_key( $_GET['nexora_result'] ) : '';
+		$names   = array(
+			'native'      => __( 'Built-in store', 'nexora-commerce-toolkit' ),
+			'woocommerce' => __( 'WooCommerce', 'nexora-commerce-toolkit' ),
+		);
+
+		// An import waiting on an engine switch from the previous request.
+		$pending   = get_transient( self::pending_key() );
+		$autostart = null;
+		$checked   = array( 'content' => true, 'reviews' => true, 'homepage' => true, 'settings' => false );
+		if ( is_array( $pending ) ) {
+			delete_transient( self::pending_key() );
+			if ( empty( $pending['error'] ) && isset( $pending['engine'] ) && $pending['engine'] !== $running ) {
+				$pending['error'] = __( 'The store could not be switched. Check Plugins for errors and try again.', 'nexora-commerce-toolkit' );
+			}
+			if ( empty( $pending['error'] ) && self::can() ) {
+				$autostart = (array) $pending['choices'];
+				$checked   = array_merge( array_fill_keys( array_keys( $checked ), false ), array_map( 'boolval', $autostart ) );
+			}
+		}
+		$selected = $running ? $running : 'native';
 		?>
 		<div class="wrap nexora-demo">
 			<h1><?php esc_html_e( 'Freshtastic Demo Content', 'nexora-commerce-toolkit' ); ?></h1>
 			<?php if ( $notice ) : ?>
 				<div class="notice <?php echo 'ok' === $notice ? 'notice-success' : 'notice-error'; ?>"><p><?php echo 'ok' === $notice ? esc_html__( 'Finished.', 'nexora-commerce-toolkit' ) : esc_html__( 'Something went wrong. Check requirements and try again.', 'nexora-commerce-toolkit' ); ?></p></div>
 			<?php endif; ?>
-			<?php if ( ! class_exists( 'WooCommerce' ) && ! Nexora_Store::active() ) : ?>
-				<div class="notice notice-error"><p><?php esc_html_e( 'Activate WooCommerce first.', 'nexora-commerce-toolkit' ); ?></p></div>
+			<?php if ( is_array( $pending ) && ! empty( $pending['error'] ) ) : ?>
+				<div class="notice notice-error"><p><?php echo esc_html( $pending['error'] ); ?></p></div>
+			<?php elseif ( null !== $autostart ) : ?>
+				<div class="notice notice-info"><p>
+					<?php
+					/* translators: %s: store engine name */
+					echo esc_html( sprintf( __( 'Your shop now runs on: %s. The demo import continues below. If it does not start, press Import demo content.', 'nexora-commerce-toolkit' ), $names[ $running ] ) );
+					?>
+				</p></div>
+			<?php elseif ( ! $running ) : ?>
+				<div class="notice notice-warning"><p><?php esc_html_e( 'No store is running yet. Choose one below; the importer turns it on first.', 'nexora-commerce-toolkit' ); ?></p></div>
 			<?php endif; ?>
 
 			<div class="card">
 				<h2><?php esc_html_e( 'Import the demo store', 'nexora-commerce-toolkit' ); ?></h2>
 				<p><?php esc_html_e( 'Adds 36 fictional wet and dry market products (rice, vegetables, fruits, meat, poultry, eggs, fish, dry goods) in Wet Market and Dry Market categories, with units, origins, price history and original artwork, plus optional pages (including Request a Quote), journal posts, menus and labelled sample reviews. Running it again skips anything that already exists.', 'nexora-commerce-toolkit' ); ?></p>
-				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" data-nexora-import>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" data-nexora-import data-running="<?php echo esc_attr( $running ); ?>"<?php echo null !== $autostart ? ' data-autostart' : ''; ?>>
 					<input type="hidden" name="action" value="nexora_demo_run">
 					<input type="hidden" name="mode" value="import">
 					<?php wp_nonce_field( 'nexora_demo', 'nexora_nonce' ); ?>
+					<fieldset class="nexora-engines">
+						<legend><strong><?php esc_html_e( 'Which store should run the demo?', 'nexora-commerce-toolkit' ); ?></strong></legend>
+						<label class="nexora-engine">
+							<input type="radio" name="engine" value="native" <?php checked( 'native', $selected ); ?>>
+							<span>
+								<strong><?php esc_html_e( 'Without WooCommerce: built-in store (recommended)', 'nexora-commerce-toolkit' ); ?></strong>
+								<?php if ( 'native' === $running ) : ?><em><?php esc_html_e( 'Running now', 'nexora-commerce-toolkit' ); ?></em><?php endif; ?>
+								<span class="description"><?php esc_html_e( 'Shop, cart, checkout, pickup and courier, orders and customer accounts run inside the Freshtastic Toolkit. No other plugin is installed.', 'nexora-commerce-toolkit' ); ?></span>
+							</span>
+						</label>
+						<label class="nexora-engine">
+							<input type="radio" name="engine" value="woocommerce" <?php checked( 'woocommerce', $selected ); ?>>
+							<span>
+								<strong><?php esc_html_e( 'With WooCommerce', 'nexora-commerce-toolkit' ); ?></strong>
+								<?php if ( 'woocommerce' === $running ) : ?><em><?php esc_html_e( 'Running now', 'nexora-commerce-toolkit' ); ?></em><?php endif; ?>
+								<span class="description"><?php esc_html_e( 'Use this if you need WooCommerce payment gateways or add-ons. WooCommerce is activated, or downloaded from WordPress.org first if it is not installed.', 'nexora-commerce-toolkit' ); ?></span>
+							</span>
+						</label>
+						<p class="description"><?php esc_html_e( 'Choosing the store that is not running switches the shop to it before the import. You can switch back any time under Settings → Freshtastic Toolkit; products, categories, coupons and customers carry over.', 'nexora-commerce-toolkit' ); ?></p>
+					</fieldset>
 					<fieldset>
-						<legend class="screen-reader-text"><?php esc_html_e( 'What to import', 'nexora-commerce-toolkit' ); ?></legend>
+						<legend><strong><?php esc_html_e( 'What to import', 'nexora-commerce-toolkit' ); ?></strong></legend>
 						<p><label><input type="checkbox" checked disabled> <?php esc_html_e( 'Products, categories, attributes and images (required)', 'nexora-commerce-toolkit' ); ?></label></p>
-						<p><label><input type="checkbox" name="choices[content]" value="1" checked> <?php esc_html_e( 'Pages (About, Request a Quote, Contact, Delivery and Returns, FAQ, Terms, Wishlist), journal posts and menus', 'nexora-commerce-toolkit' ); ?></label></p>
-						<p><label><input type="checkbox" name="choices[reviews]" value="1" checked> <?php esc_html_e( 'Sample reviews and testimonials (always labelled “Sample”)', 'nexora-commerce-toolkit' ); ?></label></p>
-						<p><label><input type="checkbox" name="choices[homepage]" value="1" checked> <?php esc_html_e( 'Set a static homepage and apply demo banner images', 'nexora-commerce-toolkit' ); ?></label></p>
-						<?php if ( ! Nexora_Store::active() ) : ?>
-							<p><label><input type="checkbox" name="choices[settings]" value="1"> <?php esc_html_e( 'Apply Philippine store settings: ₱ currency, PH-only selling, demo shipping zone with store pickup and courier delivery booked by the customer, Pay at pickup and Bank transfer', 'nexora-commerce-toolkit' ); ?></label></p>
-						<?php endif; ?>
+						<p><label><input type="checkbox" name="choices[content]" value="1" <?php checked( $checked['content'] ); ?>> <?php esc_html_e( 'Pages (About, Request a Quote, Contact, Delivery and Returns, FAQ, Terms, Wishlist), journal posts and menus', 'nexora-commerce-toolkit' ); ?></label></p>
+						<p><label><input type="checkbox" name="choices[reviews]" value="1" <?php checked( $checked['reviews'] ); ?>> <?php esc_html_e( 'Sample reviews and testimonials (always labelled “Sample”)', 'nexora-commerce-toolkit' ); ?></label></p>
+						<p><label><input type="checkbox" name="choices[homepage]" value="1" <?php checked( $checked['homepage'] ); ?>> <?php esc_html_e( 'Set a static homepage and apply demo banner images', 'nexora-commerce-toolkit' ); ?></label></p>
+						<p data-nexora-woo-only><label><input type="checkbox" name="choices[settings]" value="1" <?php checked( $checked['settings'] ); ?>> <?php esc_html_e( 'WooCommerce only: apply Philippine store settings (₱ currency, PH-only selling, demo shipping zone with store pickup and courier delivery booked by the customer, Pay at pickup and Bank transfer)', 'nexora-commerce-toolkit' ); ?></label></p>
+						<p class="description" data-nexora-native-only><?php esc_html_e( 'The built-in store already uses ₱ and Philippine addresses. Set your pickup points and payment details under Store → Settings.', 'nexora-commerce-toolkit' ); ?></p>
 					</fieldset>
 					<p><label><input type="checkbox" name="confirm" value="1" required> <strong><?php esc_html_e( 'I understand this adds demo content to this site.', 'nexora-commerce-toolkit' ); ?></strong></label></p>
 					<?php submit_button( __( 'Import demo content', 'nexora-commerce-toolkit' ), 'primary', 'submit', false ); ?>
@@ -1508,11 +1593,33 @@ class Nexora_Toolkit_Demo_Importer {
 	 */
 	public static function nojs_run() {
 		check_admin_referer( 'nexora_demo', 'nexora_nonce' );
-		if ( ! self::can() || empty( $_POST['confirm'] ) ) {
+		if ( empty( $_POST['confirm'] ) ) {
 			wp_die( esc_html__( 'Permission denied or confirmation missing.', 'nexora-commerce-toolkit' ), 403 );
 		}
-		$mode = isset( $_POST['mode'] ) && 'cleanup' === $_POST['mode'] ? 'cleanup' : 'import';
-		$ok   = self::run_all( $mode, self::choices( isset( $_POST['choices'] ) ? wp_unslash( $_POST['choices'] ) : array() ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$mode    = isset( $_POST['mode'] ) && 'cleanup' === $_POST['mode'] ? 'cleanup' : 'import';
+		$choices = self::choices( isset( $_POST['choices'] ) ? wp_unslash( $_POST['choices'] ) : array() ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$engine  = isset( $_POST['engine'] ) && 'woocommerce' === $_POST['engine'] ? 'woocommerce' : 'native';
+
+		// The chosen store is not the one running: switch first. The new engine only loads on the
+		// next request, so the import continues on the page this redirects to.
+		if ( 'import' === $mode && $engine !== self::running() ) {
+			if ( ! self::can_switch() || ( 'woocommerce' === $engine && ! file_exists( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' ) && ! current_user_can( 'install_plugins' ) ) ) {
+				wp_die( esc_html__( 'You are not allowed to change the store engine.', 'nexora-commerce-toolkit' ), 403 );
+			}
+			$error = Nexora_Store_Admin::switch_engine( $engine );
+			if ( $error ) {
+				set_transient( self::pending_key(), array( 'error' => $error ), 10 * MINUTE_IN_SECONDS );
+			} else {
+				set_transient( self::pending_key(), array( 'engine' => $engine, 'choices' => $choices ), 10 * MINUTE_IN_SECONDS );
+			}
+			wp_safe_redirect( admin_url( 'tools.php?page=nexora-demo' ) );
+			exit;
+		}
+
+		if ( ! self::can() ) {
+			wp_die( esc_html__( 'Permission denied or confirmation missing.', 'nexora-commerce-toolkit' ), 403 );
+		}
+		$ok = self::run_all( $mode, $choices );
 		wp_safe_redirect( admin_url( 'tools.php?page=nexora-demo&nexora_result=' . ( $ok ? 'ok' : 'error' ) ) );
 		exit;
 	}
@@ -1544,12 +1651,28 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			 * : Static homepage and banner images.
 			 *
 			 * [--settings]
-			 * : Philippine store settings, demo shipping zone and offline payment methods.
+			 * : WooCommerce only: Philippine store settings, demo shipping zone and offline payment methods.
+			 *
+			 * [--engine=<engine>]
+			 * : Store to import into. If it is not the one running, the shop is switched and you run the command again.
+			 * ---
+			 * options:
+			 *   - native
+			 *   - woocommerce
+			 * ---
 			 *
 			 * @param array $args  Args.
 			 * @param array $assoc Assoc args.
 			 */
 			public function import( $args, $assoc ) {
+				if ( isset( $assoc['engine'] ) && $assoc['engine'] !== Nexora_Toolkit_Demo_Importer::running() ) {
+					$error = Nexora_Store_Admin::switch_engine( 'woocommerce' === $assoc['engine'] ? 'woocommerce' : 'native' );
+					if ( $error ) {
+						WP_CLI::error( $error );
+					}
+					WP_CLI::success( 'Store switched to ' . $assoc['engine'] . '. Run the same command again to import.' );
+					return;
+				}
 				$ok = Nexora_Toolkit_Demo_Importer::run_all(
 					'import',
 					array(

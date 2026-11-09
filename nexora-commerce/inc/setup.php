@@ -136,12 +136,13 @@ function nexora_missing_woocommerce_notice() {
 	if ( $screen && in_array( $screen->id, array( 'update', 'plugin-install' ), true ) ) {
 		return;
 	}
+	$toolkit = class_exists( 'Nexora_Store' );
 	printf(
 		'<div class="notice notice-warning"><p><strong>%1$s</strong> %2$s <a href="%3$s">%4$s</a></p></div>',
 		esc_html__( 'Freshtastic Food Hub:', 'nexora-commerce' ),
-		esc_html__( 'WooCommerce is not active. The blog, pages and navigation still work, but shop sections, cart and product templates are hidden until WooCommerce is activated.', 'nexora-commerce' ),
-		esc_url( admin_url( 'plugin-install.php?s=woocommerce&tab=search&type=term' ) ),
-		esc_html__( 'Install WooCommerce', 'nexora-commerce' )
+		esc_html__( 'No store is running. The blog, pages and navigation still work, but shop sections, cart and product templates are hidden. The Freshtastic Food Hub Toolkit plugin has a built-in store, so WooCommerce is optional.', 'nexora-commerce' ),
+		esc_url( $toolkit ? admin_url( 'options-general.php?page=nexora-toolkit#nexora-engine' ) : admin_url( 'plugins.php' ) ),
+		$toolkit ? esc_html__( 'Turn on the built-in store', 'nexora-commerce' ) : esc_html__( 'Activate the Freshtastic Food Hub Toolkit', 'nexora-commerce' )
 	);
 }
 add_action( 'admin_notices', 'nexora_missing_woocommerce_notice' );

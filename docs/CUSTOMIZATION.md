@@ -13,7 +13,7 @@
 | Footer intro, payment badges, copyright | Freshtastic Theme → Footer |
 | WebP sub-sizes, bundled fonts on/off | Freshtastic Theme → Performance |
 | **Homepage sections: show/hide and order** | Customize → **Freshtastic Homepage → Sections and order** |
-| Hero copy, buttons, image, feature card | Freshtastic Homepage → Hero |
+| Hero banners: up to 3 that slide sideways, each with text, button, coupon code, dates and image. A banner with no image shows only the navy and orange background. Clear a banner's headline to remove it | Freshtastic Homepage → Hero promotional banner |
 | Product section titles, limits, sources, categories | Freshtastic Homepage → Product sections |
 | Campaign banner (image, copy, schedule) | Freshtastic Homepage → Campaign banner |
 | Benefits, newsletter copy, journal count, final banner | Freshtastic Homepage → Benefits, newsletter and banners |

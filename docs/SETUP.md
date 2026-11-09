@@ -13,10 +13,9 @@
 
 1. **Appearance → Themes → Add New → Upload Theme** → choose `nexora-commerce.zip` → **Install** → **Activate**.
 2. **Plugins → Add New → Upload Plugin** → choose `nexora-commerce-toolkit.zip` → **Install** → **Activate Plugin**.
-   - The toolkit then **downloads, installs and activates WooCommerce automatically** from WordPress.org. Wait a few seconds; a notice says *"Installed and activated WooCommerce"*. WooCommerce may then open its own setup wizard, which you can complete or skip.
-   - If your host does not allow automatic plugin installs (it asks for FTP details, `DISALLOW_FILE_MODS` is set, or it's a multisite), a notice with an **Install** button appears instead.
-   - With WP-CLI: `wp nexora install-dependencies`.
-   - Only WooCommerce is required. Optional integrations (payment gateways, Mailchimp for WooCommerce and so on) are your choice; see [MARKETING.md](MARKETING.md). Developers can add plugins to the automatic list with the `nexora_toolkit_required_plugins` filter.
+   - **Site without WooCommerce:** the toolkit starts its **built-in store**. WooCommerce is not installed and not needed, including for the demo import. Fill in your address, pickup points and payment details under **Store → Settings**. See [BUILT-IN-STORE.md](BUILT-IN-STORE.md).
+   - **Site already running WooCommerce:** WooCommerce keeps running the shop. You can switch later under **Settings → Freshtastic Toolkit → Store engine**.
+   - **Want WooCommerce on a new site?** Choose **Settings → Freshtastic Toolkit → Store engine → Use WooCommerce**. The toolkit then downloads, installs and activates it from WordPress.org. If your host does not allow automatic plugin installs (it asks for FTP details, `DISALLOW_FILE_MODS` is set, or it's a multisite), a notice with an **Install** button appears instead. With WP-CLI: `wp nexora install-dependencies`. Developers can add plugins to that list with the `nexora_toolkit_required_plugins` filter.
 3. **Settings → Permalinks**: choose *Post name* and save (needed for clean shop and wishlist URLs).
 
 The theme works without the toolkit. You lose the demo importer, wishlist, newsletter, analytics events and testimonials, and the matching UI hides itself. The theme also works without WooCommerce: blog, pages and menus render, shop sections hide, and admins see a notice.
@@ -25,13 +24,22 @@ The theme works without the toolkit. You lose the demo importer, wishlist, newsl
 
 **Tools → Freshtastic Demo Content**
 
+First choose **which store should run the demo**. The demo content is the same for both:
+
+| Store | What happens |
+|---|---|
+| **Without WooCommerce: built-in store** *(recommended)* | The Freshtastic Toolkit runs the shop, cart, checkout, pickup and courier, orders and accounts. No other plugin is installed. |
+| **With WooCommerce** | For WooCommerce payment gateways or add-ons. WooCommerce is activated, or downloaded from WordPress.org first. |
+
+If you pick the store that is not running, the importer switches the shop to it, reloads the page and continues the import by itself. Switching is reversible under **Settings → Freshtastic Toolkit → Store engine**; products, categories, coupons and customers carry over, and each store keeps its own orders. If WooCommerce cannot be installed (for example the host blocks plugin downloads), the shop stays on the store it had and the page says why.
+
 | Option | What it does |
 |---|---|
 | Products, categories, attributes, images *(always)* | 36 wet and dry market products in *Wet Market* (Vegetables, Fruits, Meat, Poultry and Eggs, Fish and Seafood) and *Dry Market* (Rice and Grains, Dry Goods and Condiments), with units, origins, pack sizes, illustrative price history, 89 images and cross-sells. |
 | Pages, journal posts and menus | About, **Request a Quote**, Contact, Delivery and Returns, FAQ, Terms, Wishlist, Market Journal; 5 market guides; 5 menus (only fills **empty** menu locations). |
 | Sample reviews and testimonials | 13 reviews and 3 testimonials, all visibly labelled "Sample". |
 | Static homepage and banner images | Creates a "Home" page as the front page and sets hero/campaign/CTA images. |
-| Philippine store settings *(off by default)* | ₱ currency, Metro Manila base, PH-only selling, demo delivery zone with *Store pickup* and *Courier delivery (customer books)*, Pay at pickup (cash) and Bank transfer, required mobile number. Then click **Use the Freshtastic checkout** in the admin notice — see [CHECKOUT-AND-ORDER-DESK.md](CHECKOUT-AND-ORDER-DESK.md). |
+| Philippine store settings *(WooCommerce only, off by default; the built-in store already uses ₱)* | ₱ currency, Metro Manila base, PH-only selling, demo delivery zone with *Store pickup* and *Courier delivery (customer books)*, Pay at pickup (cash) and Bank transfer, required mobile number. Then click **Use the Freshtastic checkout** in the admin notice — see [CHECKOUT-AND-ORDER-DESK.md](CHECKOUT-AND-ORDER-DESK.md). |
 
 Tick **I understand…** and click **Import demo content**. A progress bar and log show each step. The import takes about a minute; if it is interrupted, run it again and it continues where it stopped.
 
@@ -40,7 +48,9 @@ Tick **I understand…** and click **Import demo content**. A progress bar and l
 **WP-CLI:**
 
 ```bash
-wp nexora demo import --content --reviews --homepage --settings
+wp nexora demo import --content --reviews --homepage                    # into the running store
+wp nexora demo import --engine=native --content --reviews --homepage    # built-in store; switches first, then run it again
+wp nexora demo import --engine=woocommerce --content --reviews --homepage --settings
 wp nexora demo status
 wp nexora demo cleanup --yes
 ```
