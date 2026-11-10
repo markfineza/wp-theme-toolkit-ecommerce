@@ -34,6 +34,7 @@ Full instructions: [docs/SETUP.md](docs/SETUP.md).
 - [**Branding and customer accounts**](docs/BRANDING-AND-CUSTOMER-ACCOUNT.md)
 - [**Built-in store (no WooCommerce)**](docs/BUILT-IN-STORE.md)
 - [**Facebook and Instagram: catalog sync and auto-posting**](docs/META.md)
+- [**Online payments with PayMongo (GCash, Maya, cards, QR Ph)**](docs/PAYMONGO.md)
 - [WooCommerce configuration checklist](docs/WOOCOMMERCE-CHECKLIST.md)
 - [Philippine store configuration (₱, shipping, GCash/Maya/cards)](docs/PHILIPPINES-STORE-SETUP.md)
 - [Marketing integrations (SEO, email, analytics, feeds)](docs/MARKETING.md)

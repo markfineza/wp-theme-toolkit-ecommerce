@@ -620,6 +620,14 @@ class Nexora_Store_Admin {
 						<?php /* translators: 1: payment, 2: reference */ ?>
 						<p><strong><?php esc_html_e( 'Payment:', 'nexora-commerce-toolkit' ); ?></strong> <?php echo esc_html( $order->payment_title . ( $order->payment_ref ? ' · ' . $order->payment_ref : '' ) ); ?><?php echo $order->paid_at ? ' ✓' : ''; ?></p>
 					</section>
+					<?php
+					/**
+					 * Extra cards in the order screen's side column (e.g. an online payment with refunds).
+					 *
+					 * @param object $order Order.
+					 */
+					do_action( 'nexora_store_admin_order_side', $order );
+					?>
 					<section class="nx-store-admin-card">
 						<h2><?php esc_html_e( 'Fulfilment', 'nexora-commerce-toolkit' ); ?></h2>
 						<?php if ( ! empty( $f['type'] ) ) : ?>

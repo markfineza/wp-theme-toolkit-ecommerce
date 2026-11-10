@@ -90,7 +90,8 @@ class Nexora_Store_Checkout {
 	 * Payment methods.
 	 *
 	 * Each: title, desc, types (delivery options it works with, empty = all), status (after ordering),
-	 * needs_ref (customer enters a reference). A gateway may add `process`: callable( $order_id ) returning a redirect URL.
+	 * needs_ref (customer enters a reference). A gateway may add `process`: callable( $order_id ) returning a redirect URL,
+	 * and `defer_mail` (true) to send the order emails itself once the payment is confirmed.
 	 *
 	 * @return array<string,array>
 	 */
@@ -379,7 +380,9 @@ class Nexora_Store_Checkout {
 		Nexora_Store_Cart::clear();
 
 		$status = (float) $t['total'] <= 0 ? 'processing' : $gateways[ $pay ]['status'];
-		Nexora_Store_Orders::mail_new_order( $id );
+		if ( empty( $gateways[ $pay ]['defer_mail'] ) || (float) $t['total'] <= 0 ) {
+			Nexora_Store_Orders::mail_new_order( $id );
+		}
 		if ( 'pending' !== $status ) {
 			self::silently_set_initial_status( $id, $status );
 		}
@@ -855,7 +858,7 @@ class Nexora_Store_Checkout {
 					<div>
 						<?php /* translators: %s: first name */ ?>
 						<h2 class="nx-ty__title"><?php echo esc_html( $first ? sprintf( __( 'Thank you, %s!', 'nexora-commerce-toolkit' ), $first ) : __( 'Thank you!', 'nexora-commerce-toolkit' ) ); ?></h2>
-						<p class="woocommerce-notice"><?php esc_html_e( 'Your order has been received. We sent the details to your email.', 'nexora-commerce-toolkit' ); ?></p>
+						<p class="woocommerce-notice"><?php echo esc_html( (string) apply_filters( 'nexora_store_received_message', __( 'Your order has been received. We sent the details to your email.', 'nexora-commerce-toolkit' ), $order ) ); ?></p>
 					</div>
 				</header>
 				<ul class="woocommerce-order-overview order_details nx-ty__facts">
@@ -864,6 +867,14 @@ class Nexora_Store_Checkout {
 					<li><?php esc_html_e( 'Total:', 'nexora-commerce-toolkit' ); ?> <strong><?php echo Nexora_Store::price( $order->total ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></strong></li>
 					<li><?php esc_html_e( 'Payment method:', 'nexora-commerce-toolkit' ); ?> <strong><?php echo esc_html( $order->payment_title ); ?></strong></li>
 				</ul>
+				<?php
+				/**
+				 * Before the payment instructions on the order received page (e.g. online payment status).
+				 *
+				 * @param object $order Order.
+				 */
+				do_action( 'nexora_store_received_payment', $order );
+				?>
 				<?php if ( 'bank' === $order->payment_method && Nexora_Store::get( 'bank_details' ) && ! $order->paid_at ) : ?>
 					<section class="nexora-fulfilment-card"><h2 class="nexora-fulfilment-card__title"><?php esc_html_e( 'How to pay', 'nexora-commerce-toolkit' ); ?></h2><p><?php echo nl2br( esc_html( (string) Nexora_Store::get( 'bank_details' ) ) ); ?></p></section>
 				<?php endif; ?>

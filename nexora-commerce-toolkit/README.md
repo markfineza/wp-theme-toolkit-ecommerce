@@ -14,6 +14,7 @@ Companion plugin for the Freshtastic Food Hub theme. It holds the features that 
 | Promo pop-up | Modal with up to 3 banner images, with dates, audience, frequency and delay | Settings → Freshtastic Promo Pop-up |
 | Security | Required Terms and Privacy consent with a time-stamped record, optional marketing choice, draft Philippine legal pages, reCAPTCHA v2 Checkbox or v3 (score) on every registration form, email activation for new customer accounts (no automatic sign-in), email login codes for staff and customers. See `docs/SECURITY-AND-CONSENT.md` | Settings → Freshtastic Security |
 | Emails | Sender name and address (replaces "WordPress"), Reply-To, logo, colours and footer for every email; subject, heading, message and on/off for each notification, with preview and test send; WordPress's plain-text emails in the same design; WooCommerce emails can follow. See `docs/EMAILS.md` | Settings → Freshtastic Emails |
+| PayMongo | GCash, Maya, cards, QR Ph, GrabPay, ShopeePay, BillEase and online banking at the built-in store's checkout through PayMongo Checkout; signed webhook confirmation, unpaid orders cancelled after a time limit, refunds from the order screen. See `docs/PAYMONGO.md` | Store → PayMongo |
 | Facebook and Instagram (Meta) | Catalog sync to Commerce Manager (products, options, prices, stock, removals) through the Catalog Batch API, a private CSV data feed, and automatic Facebook Page and Instagram posts for new products. Works on both engines. See `docs/META.md` | Settings → Freshtastic Meta |
 | Rewards | Free-item coupons with conditions, one use per signed-in customer; first customers promotion with personal one-use coupons. Works with WooCommerce and the built-in store | Coupon screen → Free item; Store or WooCommerce → First customers |
 | Customer registration | Name and mobile number on the My Account form, saved to profile and billing; switches WooCommerce registration on once | WooCommerce → Settings → Accounts & Privacy |
@@ -31,7 +32,7 @@ Works with any theme. The wishlist page and account tab render with WooCommerce'
 
 ## Security notes
 
-- API keys are write-only in the admin and can be set as `wp-config.php` constants instead (`NEXORA_MAILCHIMP_API_KEY`, `NEXORA_BREVO_API_KEY`, `NEXORA_KLAVIYO_PRIVATE_KEY`, `NEXORA_META_ACCESS_TOKEN`, `NEXORA_META_APP_SECRET`). They are never sent to the browser.
+- API keys are write-only in the admin and can be set as `wp-config.php` constants instead (`NEXORA_MAILCHIMP_API_KEY`, `NEXORA_BREVO_API_KEY`, `NEXORA_KLAVIYO_PRIVATE_KEY`, `NEXORA_META_ACCESS_TOKEN`, `NEXORA_META_APP_SECRET`, `NEXORA_PAYMONGO_LIVE_SECRET`, `NEXORA_PAYMONGO_LIVE_WEBHOOK_SECRET` and the test equivalents). They are never sent to the browser.
 - Every admin action checks capabilities and nonces. The importer requires `manage_options` and `manage_woocommerce`.
 - The public newsletter endpoint uses a honeypot and per-IP rate limiting (salted hash), and requires consent.
 - Declares compatibility with WooCommerce HPOS and Cart/Checkout blocks.

@@ -72,6 +72,7 @@ class Nexora_Store {
 		Nexora_Store_Account::init();
 		Nexora_Store_Admin::init();
 		Nexora_Store_Importer::init();
+		Nexora_Store_Paymongo::init();
 
 		add_action( 'init', array( __CLASS__, 'endpoints' ), 5 );
 		add_action( 'init', array( __CLASS__, 'maybe_flush' ), 99 );

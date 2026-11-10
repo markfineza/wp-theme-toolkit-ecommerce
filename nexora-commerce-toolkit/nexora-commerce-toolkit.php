@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       Freshtastic Food Hub Toolkit
  * Plugin URI:        https://example.com/nexora-commerce
- * Description:       Companion plugin for the Freshtastic Food Hub theme: optional built-in store that runs without WooCommerce, market data (units, origin, price history), request for quotation, store pickup and customer-booked courier delivery with time slots, modern order screens and an Order Desk staff role, sales, product and review analytics with a daily report, a customer coupon wallet and points page, package products, a promo pop-up, Facebook and Instagram catalog sync and auto-posting, registration consent records, reCAPTCHA and email login codes, demo content importer and cleanup, wishlist, newsletter provider integrations (Mailchimp, Brevo, Klaviyo), consent-aware analytics events (GA4, GTM, Meta Pixel, Google Ads) and testimonials. Features keep working if you switch themes.
- * Version:           2.12.0
+ * Description:       Companion plugin for the Freshtastic Food Hub theme: optional built-in store that runs without WooCommerce (with PayMongo online payments), market data (units, origin, price history), request for quotation, store pickup and customer-booked courier delivery with time slots, modern order screens and an Order Desk staff role, sales, product and review analytics with a daily report, a customer coupon wallet and points page, package products, a promo pop-up, Facebook and Instagram catalog sync and auto-posting, registration consent records, reCAPTCHA and email login codes, demo content importer and cleanup, wishlist, newsletter provider integrations (Mailchimp, Brevo, Klaviyo), consent-aware analytics events (GA4, GTM, Meta Pixel, Google Ads) and testimonials. Features keep working if you switch themes.
+ * Version:           2.13.0
  * Requires at least: 6.5
  * Requires PHP:      7.4
  * Author:            Freshtastic Food Hub Team
@@ -19,7 +19,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'NEXORA_TOOLKIT_VERSION', '2.12.0' );
+define( 'NEXORA_TOOLKIT_VERSION', '2.13.0' );
 define( 'NEXORA_TOOLKIT_FILE', __FILE__ );
 define( 'NEXORA_TOOLKIT_DIR', plugin_dir_path( __FILE__ ) );
 define( 'NEXORA_TOOLKIT_URL', plugin_dir_url( __FILE__ ) );
@@ -64,6 +64,7 @@ require NEXORA_TOOLKIT_DIR . 'includes/store/class-store-checkout.php';
 require NEXORA_TOOLKIT_DIR . 'includes/store/class-store-account.php';
 require NEXORA_TOOLKIT_DIR . 'includes/store/class-store-admin.php';
 require NEXORA_TOOLKIT_DIR . 'includes/store/class-store-importer.php';
+require NEXORA_TOOLKIT_DIR . 'includes/store/class-store-paymongo.php';
 
 /**
  * Boot modules.

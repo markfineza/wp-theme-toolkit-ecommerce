@@ -684,9 +684,11 @@ class Nexora_Store_Orders {
 	/**
 	 * Emails sent when an order is placed.
 	 *
-	 * @param int $id Order.
+	 * @param int  $id       Order.
+	 * @param bool $customer Also email the customer (false: only the store, e.g. when the
+	 *                       customer already gets the "being prepared" email after paying online).
 	 */
-	public static function mail_new_order( $id ) {
+	public static function mail_new_order( $id, $customer = true ) {
 		$order = self::get( $id );
 		if ( ! $order ) {
 			return;
@@ -703,7 +705,7 @@ class Nexora_Store_Orders {
 			'customer_email' => $order->email,
 			'customer_phone' => $order->phone,
 		);
-		$m = Nexora_Toolkit_Emails::compose( 'order_received', $vars );
+		$m = $customer ? Nexora_Toolkit_Emails::compose( 'order_received', $vars ) : null;
 		if ( $m ) {
 			$body = $m['message'] . $extra . self::mail_summary( $order ) . '<p><a href="' . esc_url( Nexora_Store_Checkout::received_url( $order ) ) . '">' . esc_html__( 'View your order', 'nexora-commerce-toolkit' ) . '</a></p>';
 			self::send_mail( $order->email, $m['subject'], $m['heading'], $body );

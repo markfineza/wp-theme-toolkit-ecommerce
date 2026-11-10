@@ -47,7 +47,7 @@ To load the demo store, go to **Tools → Freshtastic Demo Content**. It adds pr
 
 The built-in methods are **manual**: Pay at pickup (cash), Bank transfer, and GCash/Maya sent by the customer with a reference number. You check the payment, then set the order to Processing.
 
-**Automatic online card or wallet payments are not included.** They need an integration with a provider such as PayMongo or Xendit, added through the `nexora_store_gateways` filter. WooCommerce payment plugins do not work with the built-in store.
+**Automatic online payments: PayMongo is built in.** Turn it on under **Store → PayMongo** for GCash, Maya, cards, QR Ph and more. Payments are confirmed automatically and you can refund from the order screen. See [PAYMONGO.md](PAYMONGO.md). Other providers can be added through the `nexora_store_gateways` filter. WooCommerce payment plugins do not work with the built-in store.
 
 ## What it does not do
 

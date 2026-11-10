@@ -207,6 +207,23 @@ Tested on the built-in store: the four background choices, the overlay limits (3
 
 - [ ] Your own photo with the overlay you like, on a real phone.
 
+## PayMongo (2.13) checks
+
+Tested on the built-in store against a stand-in for PayMongo's API and payment page (39 of 39 automatic checks). No real money and no real PayMongo account were involved.
+- **Checkout:** the option and its test-mode note, the session request (secret-key login, amount in centavos, PHP, methods, return links, order number), the order kept "Pending payment" with stock held and no email before paying, and the time limit scheduled.
+- **Paying:** cancel and **Pay now** (reusing the open session), paying by card (order Processing, payment ID and "Visa •••• 4242" saved, one customer email plus the store email, no repeats on reload), and a return link without payment or with a wrong key changing nothing.
+- **Webhook:** wrong, missing or live-mode signatures refused, a session that does not match the order ignored, a valid call marking the order paid, and retries without duplicate emails.
+- **Edge cases:** an underpaid amount sent On hold, the time limit expiring the session, cancelling the order and returning stock (and retrying later when PayMongo is unreachable), and a PayMongo error at checkout with a working "try again".
+- **Refunds:** partial and full refunds from the order screen (including the `/v1/refunds` fallback), the order marked Refunded with stock back, too-large amounts refused, no refund form for Order Desk staff, and dashboard refunds noted once.
+- **Settings:** keys never printed, wrong key types refused, and Connect webhook on an `http://` site explained.
+
+Cash and bank-transfer orders still send their "Order received" email. Screenshots at 390px of the checkout option and the "Payment not completed yet" page, with no sideways scrolling. Still to check by hand with your PayMongo account (test mode first, on the live https site):
+
+- [ ] **Connect webhook (test mode)** succeeds, then a test order paid with test GCash or a test card turns Processing, also when you close the tab right after paying.
+- [ ] Each payment method you ticked opens on PayMongo's page (only activated methods work).
+- [ ] A test refund appears in the PayMongo dashboard.
+- [ ] After going live: one small real payment and a refund.
+
 ## Facebook and Instagram (2.12) checks
 
 Tested on the built-in store against a stand-in for Meta's servers (51 of 51 automatic checks), so nothing was posted to a real Page:

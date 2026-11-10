@@ -37,7 +37,7 @@ The theme never fakes a payment method. The footer and product page list only ga
 |---|---|
 | Cash on delivery | Built in. Enabled by the demo settings step. |
 | Bank transfer (BACS) | Built in. Enter real account details before going live; the demo text says it is a demo. |
-| GCash, Maya, cards, GrabPay, online banking | Install a gateway plugin from a payment provider that supports the Philippines (for example PayMongo, Xendit, Maya Business or 2C2P), create a merchant account, complete their verification, then enter API keys in that plugin's settings. Test in sandbox mode first. |
+| GCash, Maya, cards, GrabPay, online banking | **Built-in store:** use **Store → PayMongo** (see [PAYMONGO.md](PAYMONGO.md)). **WooCommerce:** install a gateway plugin from a payment provider that supports the Philippines (for example PayMongo, Xendit, Maya Business or 2C2P), create a merchant account, complete their verification, then enter API keys in that plugin's settings. Test in sandbox mode first. |
 
 Gateway availability, fees and onboarding are set by each provider. Check their current documentation.
 
